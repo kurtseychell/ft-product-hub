@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Hub — Lifecycle Flow</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0f0f1a;
+      color: #e2e8f0;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 24px 40px;
+      border-bottom: 1px solid #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .logo {
+      width: 36px; height: 36px;
+      background: #4f46e5;
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+    }
+    header h1 { font-size: 18px; font-weight: 600; color: #f1f5f9; }
+    header span { font-size: 13px; color: #64748b; margin-left: 8px; }
+
+    .tabs {
+      display: flex;
+      gap: 4px;
+      padding: 16px 40px 0;
+      border-bottom: 1px solid #1e293b;
+    }
+    .tab {
+      padding: 8px 20px;
+      border-radius: 6px 6px 0 0;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      color: #64748b;
+      border: 1px solid transparent;
+      border-bottom: none;
+      transition: all 0.15s;
+    }
+    .tab.active {
+      background: #1e293b;
+      color: #f1f5f9;
+      border-color: #334155;
+    }
+    .tab:hover:not(.active) { color: #94a3b8; }
+
+    .canvas-wrapper {
+      padding: 40px;
+      overflow-x: auto;
+    }
+
+    svg {
+      display: block;
+      min-width: 900px;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      gap: 24px;
+      padding: 0 40px 24px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .legend-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+    }
+
+    /* Tooltip */
+    #tooltip {
+      position: fixed;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #e2e8f0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      max-width: 220px;
+      line-height: 1.5;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"></div>
+  <h1>Product Hub</h1>
+  <span>Lifecycle Flow — Living Document</span>
+</header>
+
+<div class="tabs">
+  <div class="tab active" onclick="showFlow('full')">Full Lifecycle</div>
+  <div class="tab" onclick="showFlow('auth')">Register & Login</div>
+  <div class="tab" onclick="showFlow('submission')">Submission & PRD</div>
+  <div class="tab" onclick="showFlow('evaluation')">Evaluation</div>
+  <div class="tab" onclick="showFlow('states')">Status States</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#4f46e5"></div> System / Platform</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#0ea5e9"></div> Stakeholder / Requestor</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div> Product Manager / Lead</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div> Decision Point</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div> Rejected / Blocked</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div> AI / LLM Action</div>
+</div>
+
+<div class="canvas-wrapper">
+  <svg id="flowSvg" width="1200" height="2400" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+
+<div id="tooltip"></div>
+
+<script>
+const flows = {
+  full: {
+    width: 1100, height: 2200,
+    nodes: [
+      // Auth
+      { id: 'start', x: 520, y: 40, w: 160, h: 40, r: 20, fill: '#0ea5e9', text: 'User visits Product Hub', type: 'pill', info: 'Any user navigating to the platform for the first time or returning.' },
+      { id: 'domain', x: 460, y: 120, w: 180, h: 50, r: 6, fill: '#f59e0b', text: 'Domain whitelisted?', type: 'diamond', info: 'System checks the email domain against the Admin-managed whitelist.' },
+      { id: 'blocked', x: 720, y: 115, w: 140, h: 40, r: 6, fill: '#ef4444', text: 'Access Restricted', type: 'rect', info: 'User is shown a message to contact their Admin.' },
+      { id: 'otp', x: 460, y: 210, w: 180, h: 40, r: 6, fill: '#4f46e5', text: 'Send OTP to email', type: 'rect', info: 'One-time passcode sent. Expires if not used promptly.' },
+      { id: 'profile', x: 460, y: 290, w: 180, h: 40, r: 6, fill: '#0ea5e9', text: 'Profile Setup\n(first time only)', type: 'rect', info: 'Full Name, Alias, Role, Department, Avatar (AI-generated).' },
+      { id: 'dashboard', x: 460, y: 370, w: 180, h: 40, r: 6, fill: '#4f46e5', text: 'Dashboard\n(read-only default)', type: 'rect', info: 'All pages visible but blank until assigned to a Group.' },
+      { id: 'group', x: 460, y: 450, w: 180, h: 50, r: 6, fill: '#f59e0b', text: 'Assigned to\na Group?', type: 'diamond', info: 'Admin assigns user to a group with specific permissions.' },
+      { id: 'request_access', x: 720, y: 445, w: 150, h: 40, r: 6, fill: '#334155', text: 'Request Access\non each page', type: 'rect', info: 'User sees blank pages with Request Access button + reason field.' },
+      { id: 'full_access', x: 460, y: 540, w: 180, h: 40, r: 6, fill: '#10b981', text: 'Access granted\nper Group permissions', type: 'rect', info: 'User can now interact with platform features their group allows.' },
+
+      // Submission
+      { id: 'sub_type', x: 460, y: 640, w: 180, h: 40, r: 6, fill: '#0ea5e9', text: 'Select Request Type\nIdea · Change · Bug', type: 'rect', info: 'First step of the submission flow. Determines the PRD template used.' },
+      { id: 'sub_form', x: 460, y: 720, w: 180, h: 40, r: 6, fill: '#0ea5e9', text: 'Title · Brief · Attachment', type: 'rect', info: 'Simple 3-field form. Attachment is optional.' },
+      { id: 'saved_v1', x: 460, y: 800, w: 180, h: 40, r: 6, fill: '#4f46e5', text: 'Saved as v1\nStatus: Request Review', type: 'rect', info: 'Immutable snapshot of the original submission.' },
+      { id: 'prd_builder', x: 360, y: 880, w: 380, h: 60, r: 8, fill: '#1e1b4b', text: 'PRD Builder Workspace\nLeft: Request  |  Middle: Agent  |  Right: Artifact', type: 'rect', info: 'Three-panel workspace. Agent uses SpecKit + Custom Skills.' },
+      { id: 'agent_q', x: 460, y: 980, w: 180, h: 50, r: 6, fill: '#f59e0b', text: 'Submission Score\npassing?', type: 'diamond', info: 'SpecKit checklist + LLM quality score + custom question answers all evaluated.' },
+      { id: 'agent_fail', x: 720, y: 975, w: 150, h: 40, r: 6, fill: '#ef4444', text: 'Agent highlights\nfailing sections', type: 'rect', info: 'Agent points to missing or low-quality sections for the requestor to fix.' },
+      { id: 'happy', x: 460, y: 1070, w: 180, h: 50, r: 6, fill: '#f59e0b', text: 'Requestor\nhappy with PRD?', type: 'diamond', info: 'Requestor manually approves the final version.' },
+      { id: 'finalise', x: 460, y: 1160, w: 180, h: 40, r: 6, fill: '#10b981', text: 'Finalise Submission\nStatus: Submitted', type: 'rect', info: 'PRD locked. Requestor receives tracking link.' },
+
+      // Evaluation
+      { id: 'eval_queue', x: 460, y: 1260, w: 180, h: 40, r: 6, fill: '#10b981', text: 'PM / HoP evaluates\nfrom open queue', type: 'rect', info: 'Any PM or Head of Product can pick up and evaluate.' },
+      { id: 'eval_decision', x: 460, y: 1340, w: 180, h: 50, r: 6, fill: '#f59e0b', text: 'Evaluation\nDecision', type: 'diamond', info: 'Scorecard + written rationale required before any decision.' },
+      { id: 'eval_reject', x: 720, y: 1335, w: 140, h: 40, r: 6, fill: '#ef4444', text: 'Rejected\nRequestor notified', type: 'rect', info: 'Requestor receives rationale via tracking link notification.' },
+      { id: 'eval_revise', x: 200, y: 1335, w: 150, h: 40, r: 6, fill: '#f59e0b', text: 'Back to PRD Builder\nwith comments', type: 'rect', info: 'Reviewer comments visible in PRD Builder for the requestor.' },
+      { id: 'domain_split', x: 460, y: 1430, w: 180, h: 50, r: 6, fill: '#f59e0b', text: 'Single or\nmulti-domain?', type: 'diamond', info: 'If multiple domains are impacted, the request is split into streams.' },
+      { id: 'single_assign', x: 280, y: 1525, w: 160, h: 40, r: 6, fill: '#10b981', text: 'Assign to Domain PM\nStatus: In Research', type: 'rect', info: 'One PM owns the full lifecycle for this stream.' },
+      { id: 'multi_split', x: 620, y: 1525, w: 160, h: 40, r: 6, fill: '#10b981', text: 'Split into Streams\nOne per domain', type: 'rect', info: 'Each stream is a child of the original request, independently tracked.' },
+
+      // Onwards
+      { id: 'research', x: 460, y: 1630, w: 180, h: 40, r: 6, fill: '#8b5cf6', text: 'Research & Analysis\n(AI-assisted)', type: 'rect', info: 'Domain PM uses AI to analyse market, competitors, feasibility.' },
+      { id: 'rice', x: 460, y: 1710, w: 180, h: 40, r: 6, fill: '#8b5cf6', text: 'RICE Scoring\n(Multiple Agents)', type: 'rect', info: 'Three AI agents score independently. Consensus score generated.' },
+      { id: 'specs', x: 460, y: 1790, w: 180, h: 40, r: 6, fill: '#8b5cf6', text: 'SpecKit Specs\nGeneration (AI)', type: 'rect', info: 'PRD transformed into typed spec items.' },
+      { id: 'figma', x: 460, y: 1870, w: 180, h: 40, r: 6, fill: '#8b5cf6', text: 'Figma Design\nGeneration (AI)', type: 'rect', info: 'UI concepts generated from PRD and specs.' },
+      { id: 'backlog', x: 460, y: 1950, w: 180, h: 40, r: 6, fill: '#10b981', text: 'Backlog + Roadmap', type: 'rect', info: 'Global and domain backlog views. Quarterly roadmap placement.' },
+      { id: 'handover', x: 460, y: 2030, w: 180, h: 40, r: 6, fill: '#10b981', text: 'Tech Handover\nPackage', type: 'rect', info: 'All assets packaged for engineering.' },
+      { id: 'uat', x: 460, y: 2110, w: 180, h: 40, r: 6, fill: '#0ea5e9', text: 'UAT + Release Notes\n+ Success Metrics', type: 'rect', info: 'Post-engineering handback. Platform ownership resumes.' },
+    ],
+    edges: [
+      { from: 'start', to: 'domain' },
+      { from: 'domain', to: 'blocked', label: 'No' },
+      { from: 'domain', to: 'otp', label: 'Yes' },
+      { from: 'otp', to: 'profile' },
+      { from: 'profile', to: 'dashboard' },
+      { from: 'dashboard', to: 'group' },
+      { from: 'group', to: 'request_access', label: 'No' },
+      { from: 'group', to: 'full_access', label: 'Yes' },
+      { from: 'full_access', to: 'sub_type' },
+      { from: 'sub_type', to: 'sub_form' },
+      { from: 'sub_form', to: 'saved_v1' },
+      { from: 'saved_v1', to: 'prd_builder' },
+      { from: 'prd_builder', to: 'agent_q' },
+      { from: 'agent_q', to: 'agent_fail', label: 'No' },
+      { from: 'agent_q', to: 'happy', label: 'Yes' },
+      { from: 'happy', to: 'agent_q', label: 'No' },
+      { from: 'happy', to: 'finalise', label: 'Yes' },
+      { from: 'finalise', to: 'eval_queue' },
+      { from: 'eval_queue', to: 'eval_decision' },
+      { from: 'eval_decision', to: 'eval_reject', label: 'Reject' },
+      { from: 'eval_decision', to: 'eval_revise', label: 'Revise' },
+      { from: 'eval_decision', to: 'domain_split', label: 'Approve' },
+      { from: 'domain_split', to: 'single_assign', label: 'Single' },
+      { from: 'domain_split', to: 'multi_split', label: 'Multi' },
+      { from: 'single_assign', to: 'research' },
+      { from: 'multi_split', to: 'research' },
+      { from: 'research', to: 'rice' },
+      { from: 'rice', to: 'specs' },
+      { from: 'specs', to: 'figma' },
+      { from: 'figma', to: 'backlog' },
+      { from: 'backlog', to: 'handover' },
+      { from: 'handover', to: 'uat' },
+    ]
+  }
+};
+
+const tooltip = document.getElementById('tooltip');
+let activeFlow = 'full';
+
+function showFlow(name) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    const names = ['full','auth','submission','evaluation','states'];
+    t.classList.toggle('active', names[i] === name);
+  });
+  activeFlow = name;
+  render(name === 'full' ? flows.full : flows.full); // placeholder - extend per tab
+}
+
+function getNodeCenter(node) {
+  return { x: node.x + node.w / 2, y: node.y + node.h / 2 };
+}
+
+function render(flow) {
+  const svg = document.getElementById('flowSvg');
+  svg.setAttribute('width', flow.width || 1100);
+  svg.setAttribute('height', flow.height || 2200);
+  svg.innerHTML = '';
+
+  // Defs
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  defs.innerHTML = `
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+    </marker>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  `;
+  svg.appendChild(defs);
+
+  const nodeMap = {};
+  flow.nodes.forEach(n => nodeMap[n.id] = n);
+
+  // Draw edges first
+  flow.edges.forEach(edge => {
+    const from = nodeMap[edge.from];
+    const to = nodeMap[edge.to];
+    if (!from || !to) return;
+
+    const fc = getNodeCenter(from);
+    const tc = getNodeCenter(to);
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', fc.x);
+    line.setAttribute('y1', from.y + from.h);
+    line.setAttribute('x2', tc.x);
+    line.setAttribute('y2', to.y);
+    line.setAttribute('stroke', '#334155');
+    line.setAttribute('stroke-width', '1.5');
+    line.setAttribute('marker-end', 'url(#arrow)');
+    svg.appendChild(line);
+
+    if (edge.label) {
+      const mx = (fc.x + tc.x) / 2;
+      const my = (from.y + from.h + to.y) / 2;
+      const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      bg.setAttribute('x', mx - 22);
+      bg.setAttribute('y', my - 9);
+      bg.setAttribute('width', 44);
+      bg.setAttribute('height', 16);
+      bg.setAttribute('rx', 4);
+      bg.setAttribute('fill', '#0f0f1a');
+      svg.appendChild(bg);
+      const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      lbl.setAttribute('x', mx);
+      lbl.setAttribute('y', my + 2);
+      lbl.setAttribute('text-anchor', 'middle');
+      lbl.setAttribute('font-size', '10');
+      lbl.setAttribute('fill', '#94a3b8');
+      lbl.setAttribute('font-family', 'Inter, sans-serif');
+      lbl.textContent = edge.label;
+      svg.appendChild(lbl);
+    }
+  });
+
+  // Draw nodes
+  flow.nodes.forEach(node => {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.style.cursor = 'pointer';
+
+    if (node.type === 'pill') {
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', node.x); rect.setAttribute('y', node.y);
+      rect.setAttribute('width', node.w); rect.setAttribute('height', node.h);
+      rect.setAttribute('rx', node.r); rect.setAttribute('fill', node.fill);
+      rect.setAttribute('opacity', '0.15');
+      g.appendChild(rect);
+      const rect2 = rect.cloneNode();
+      rect2.setAttribute('fill', 'none');
+      rect2.setAttribute('stroke', node.fill);
+      rect2.setAttribute('stroke-width', '1.5');
+      rect2.setAttribute('opacity', '1');
+      g.appendChild(rect2);
+    } else if (node.type === 'diamond') {
+      const cx = node.x + node.w / 2;
+      const cy = node.y + node.h / 2;
+      const diamond = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      const pts = `${cx},${node.y} ${node.x + node.w},${cy} ${cx},${node.y + node.h} ${node.x},${cy}`;
+      diamond.setAttribute('points', pts);
+      diamond.setAttribute('fill', node.fill);
+      diamond.setAttribute('opacity', '0.15');
+      g.appendChild(diamond);
+      const diamond2 = diamond.cloneNode();
+      diamond2.setAttribute('fill', 'none');
+      diamond2.setAttribute('stroke', node.fill);
+      diamond2.setAttribute('stroke-width', '1.5');
+      diamond2.setAttribute('opacity', '1');
+      g.appendChild(diamond2);
+    } else {
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', node.x); rect.setAttribute('y', node.y);
+      rect.setAttribute('width', node.w); rect.setAttribute('height', node.h);
+      rect.setAttribute('rx', node.r || 6);
+      rect.setAttribute('fill', node.fill);
+      rect.setAttribute('opacity', '0.12');
+      g.appendChild(rect);
+      const border = rect.cloneNode();
+      border.setAttribute('fill', 'none');
+      border.setAttribute('stroke', node.fill);
+      border.setAttribute('stroke-width', '1');
+      border.setAttribute('opacity', '0.6');
+      g.appendChild(border);
+    }
+
+    // Text
+    const lines = node.text.split('\n');
+    const lineHeight = 14;
+    const totalH = lines.length * lineHeight;
+    const startY = node.y + node.h / 2 - totalH / 2 + lineHeight - 2;
+
+    lines.forEach((line, i) => {
+      const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      txt.setAttribute('x', node.x + node.w / 2);
+      txt.setAttribute('y', startY + i * lineHeight);
+      txt.setAttribute('text-anchor', 'middle');
+      txt.setAttribute('font-size', lines.length > 1 ? '10' : '11');
+      txt.setAttribute('font-weight', i === 0 ? '500' : '400');
+      txt.setAttribute('fill', '#f1f5f9');
+      txt.setAttribute('font-family', 'Inter, sans-serif');
+      txt.textContent = line;
+      g.appendChild(txt);
+    });
+
+    g.addEventListener('mouseenter', (e) => {
+      tooltip.style.opacity = '1';
+      tooltip.innerHTML = `<strong style="color:${node.fill}">${node.text.replace('\n', ' ')}</strong><br/>${node.info || ''}`;
+    });
+    g.addEventListener('mousemove', (e) => {
+      tooltip.style.left = (e.clientX + 16) + 'px';
+      tooltip.style.top = (e.clientY - 10) + 'px';
+    });
+    g.addEventListener('mouseleave', () => {
+      tooltip.style.opacity = '0';
+    });
+
+    svg.appendChild(g);
+  });
+}
+
+render(flows.full);
+</script>
+</body>
+</html>
