@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SaaS PM Backoffice - Success Metrics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#0f62fe",
+                        "on-surface-variant": "#525252",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#fff1f1",
+                        "secondary-fixed": "#e0e0e0",
+                        "on-primary-fixed-variant": "#0043ce",
+                        "surface-container-highest": "#c6c6c6",
+                        "outline-variant": "#e0e0e0",
+                        "on-secondary-container": "#525252",
+                        "on-tertiary": "#ffffff",
+                        "background": "#ffffff",
+                        "surface-container-high": "#e0e0e0",
+                        "surface-container": "#f4f4f4",
+                        "on-secondary-fixed-variant": "#525252",
+                        "on-primary-fixed": "#001d6c",
+                        "surface": "#ffffff",
+                        "inverse-surface": "#393939",
+                        "on-surface": "#161616",
+                        "on-background": "#161616",
+                        "secondary-container": "#e0e0e0",
+                        "on-tertiary-container": "#044317",
+                        "inverse-on-surface": "#f4f4f4",
+                        "surface-dim": "#e0e0e0",
+                        "primary": "#4F46E5", /* Indigo accent per user request */
+                        "tertiary-fixed-dim": "#42be65",
+                        "primary-fixed": "#d0e2ff",
+                        "error": "#da1e28",
+                        "tertiary-fixed": "#a7f0ba",
+                        "secondary": "#6f6f6f",
+                        "on-secondary-fixed": "#161616",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#f4f4f4",
+                        "surface-bright": "#ffffff",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "primary-container": "#EEF2FF",
+                        "on-tertiary-fixed": "#022d0d",
+                        "inverse-primary": "#78a9ff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#f4f4f4",
+                        "on-tertiary-fixed-variant": "#044317",
+                        "on-primary-container": "#4F46E5",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#a7f0ba",
+                        "primary-fixed-dim": "#78a9ff",
+                        "outline": "#8d8d8d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["IBM Plex Sans"],
+                        "body": ["IBM Plex Sans"],
+                        "label": ["IBM Plex Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'IBM Plex Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .chart-grid { background-image: radial-gradient(#e0e0e0 1px, transparent 1px); background-size: 20px 20px; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen">
+<!-- TopNavBar (Shared Component) -->
+<header class="sticky top-0 z-40 flex justify-between items-center px-4 h-12 w-full bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 font-sans text-sm font-normal tracking-tight flat no shadows">
+<div class="flex items-center gap-4">
+<span class="text-lg font-semibold text-gray-900 dark:text-white">SaaS PM Backoffice</span>
+<div class="ml-4 flex items-center bg-surface-container px-3 py-1 border-b border-outline">
+<span class="material-symbols-outlined text-on-surface-variant mr-2 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-xs w-64" placeholder="Search product data..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors p-1">calendar_month</button>
+<button class="material-symbols-outlined text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors p-1">filter_alt</button>
+<button class="material-symbols-outlined text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors p-1">account_circle</button>
+</div>
+</header>
+<!-- SideNavBar (Shared Component) -->
+<aside class="flex flex-col h-screen fixed left-0 top-0 pt-12 bg-gray-50 dark:bg-gray-900 w-64 border-r border-gray-200 dark:border-gray-800 z-30">
+<div class="px-6 py-6">
+<h2 class="text-xl font-bold text-gray-900 dark:text-white">Product Ops</h2>
+<p class="text-[10px] uppercase tracking-widest text-secondary font-semibold">Enterprise Tier</p>
+</div>
+<nav class="flex-1 px-0 mt-4 space-y-1">
+<a class="flex items-center px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 text-xs font-medium transition-all" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center px-6 py-3 text-blue-600 dark:text-blue-400 border-l-4 border-blue-600 dark:border-blue-500 bg-white dark:bg-gray-800 text-xs font-medium transition-all translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">analytics</span>
+                Success Metrics
+            </a>
+<a class="flex items-center px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 text-xs font-medium transition-all" href="#">
+<span class="material-symbols-outlined mr-3">map</span>
+                Roadmap
+            </a>
+<a class="flex items-center px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 text-xs font-medium transition-all" href="#">
+<span class="material-symbols-outlined mr-3">list_alt</span>
+                Backlog
+            </a>
+<a class="flex items-center px-6 py-3 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 text-xs font-medium transition-all" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+                Settings
+            </a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-8 pb-24 bg-white min-h-screen">
+<!-- Header Section -->
+<header class="flex justify-between items-end mb-8 border-b border-outline-variant pb-6">
+<div>
+<h1 class="text-3xl font-light text-on-surface tracking-tight">Success Metrics</h1>
+<p class="text-on-surface-variant text-sm mt-1">Real-time performance overview across product lifecycle stages.</p>
+</div>
+<div class="flex gap-2">
+<div class="flex items-center bg-surface-container px-3 py-2 border-b border-outline h-10">
+<span class="material-symbols-outlined text-sm mr-2">calendar_today</span>
+<select class="bg-transparent border-none focus:ring-0 text-xs font-medium py-0 pr-8">
+<option>Last 30 Days</option>
+<option>Last 60 Days</option>
+<option>Last 90 Days</option>
+<option>Custom Range</option>
+</select>
+</div>
+<div class="flex items-center bg-surface-container px-3 py-2 border-b border-outline h-10">
+<span class="material-symbols-outlined text-sm mr-2">language</span>
+<select class="bg-transparent border-none focus:ring-0 text-xs font-medium py-0 pr-8">
+<option>All Domains</option>
+<option>Fintech</option>
+<option>Logistics</option>
+<option>User Growth</option>
+</select>
+</div>
+</div>
+</header>
+<!-- KPI Row 1 -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<!-- Ideas Submitted -->
+<div class="bg-surface-container p-4 border-b border-outline-variant flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Ideas Submitted</span>
+<span class="text-tertiary flex items-center text-xs font-medium">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>+12%
+                    </span>
+</div>
+<div class="flex items-baseline gap-3">
+<span class="text-4xl font-light text-on-surface">47</span>
+<div class="flex-1 h-8 flex items-end gap-0.5 pb-1">
+<div class="w-1 bg-primary/20 h-2"></div>
+<div class="w-1 bg-primary/30 h-4"></div>
+<div class="w-1 bg-primary/40 h-3"></div>
+<div class="w-1 bg-primary/50 h-5"></div>
+<div class="w-1 bg-primary/60 h-4"></div>
+<div class="w-1 bg-primary h-6"></div>
+</div>
+</div>
+</div>
+<!-- PRDs Generated -->
+<div class="bg-surface-container p-4 border-b border-outline-variant flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">PRDs Generated</span>
+<span class="text-tertiary flex items-center text-xs font-medium">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>+8%
+                    </span>
+</div>
+<div class="flex items-baseline gap-3">
+<span class="text-4xl font-light text-on-surface">31</span>
+<div class="flex-1 h-8 flex items-end gap-0.5 pb-1">
+<div class="w-1 bg-primary/20 h-4"></div>
+<div class="w-1 bg-primary/30 h-3"></div>
+<div class="w-1 bg-primary/40 h-5"></div>
+<div class="w-1 bg-primary/50 h-4"></div>
+<div class="w-1 bg-primary/60 h-6"></div>
+<div class="w-1 bg-primary h-5"></div>
+</div>
+</div>
+</div>
+<!-- Avg. Time to Ship -->
+<div class="bg-surface-container p-4 border-b border-outline-variant flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Avg. Time to Ship</span>
+<span class="text-tertiary flex items-center text-xs font-medium">
+<span class="material-symbols-outlined text-sm mr-1">trending_down</span>-15%
+                    </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-light text-on-surface">23</span>
+<span class="text-sm font-medium text-on-surface-variant">days</span>
+</div>
+</div>
+<!-- Release Adoption -->
+<div class="bg-surface-container p-4 border-b border-outline-variant flex flex-col justify-between h-32">
+<div class="flex justify-between items-start">
+<span class="text-[11px] font-semibold text-on-surface-variant uppercase tracking-wider">Release Adoption</span>
+<span class="text-tertiary flex items-center text-xs font-medium">
+<span class="material-symbols-outlined text-sm mr-1">trending_up</span>+5%
+                    </span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-light text-on-surface">78</span>
+<span class="text-sm font-medium text-on-surface-variant">%</span>
+</div>
+</div>
+</section>
+<!-- Charts Row 2 -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+<!-- Left Chart -->
+<div class="bg-surface-container p-6 border border-outline-variant">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-sm font-semibold text-on-surface uppercase tracking-wider">Submissions to Release Pipeline</h3>
+<div class="flex gap-4">
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span><span class="text-[10px] text-on-surface-variant">Released</span></div>
+<div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary/40"></span><span class="text-[10px] text-on-surface-variant">Submitted</span></div>
+</div>
+</div>
+<div class="h-64 chart-grid relative flex items-end justify-between px-2 border-l border-b border-outline">
+<!-- Simple SVG representation of a multi-line funnel chart -->
+<svg class="absolute inset-0 w-full h-full px-2" preserveaspectratio="none" viewbox="0 0 400 200">
+<path d="M0 180 Q50 160 100 140 T200 120 T300 80 T400 40" fill="none" stroke="#4F46E5" stroke-width="2"></path>
+<path d="M0 160 Q50 140 100 130 T200 110 T300 90 T400 70" fill="none" opacity="0.5" stroke="#4F46E5" stroke-dasharray="4" stroke-width="1.5"></path>
+<path d="M0 140 Q50 130 100 120 T200 100 T300 110 T400 100" fill="none" opacity="0.3" stroke="#4F46E5" stroke-dasharray="2" stroke-width="1.5"></path>
+</svg>
+<div class="absolute bottom-0 left-0 w-full flex justify-between px-2 pt-2 translate-y-6 text-[10px] text-on-surface-variant">
+<span>WK 1</span><span>WK 2</span><span>WK 3</span><span>WK 4</span><span>WK 5</span><span>WK 6</span>
+</div>
+</div>
+</div>
+<!-- Right Chart -->
+<div class="bg-surface-container p-6 border border-outline-variant">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-sm font-semibold text-on-surface uppercase tracking-wider">Domain Distribution</h3>
+<span class="text-[10px] text-on-surface-variant">Ideas by Domain / Month</span>
+</div>
+<div class="space-y-4 h-64 overflow-y-auto pr-2">
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] font-medium"><span class="text-on-surface">Fintech</span><span>84 ideas</span></div>
+<div class="w-full h-2 bg-secondary-fixed flex">
+<div class="h-full bg-primary" style="width: 60%"></div>
+<div class="h-full bg-primary/60" style="width: 25%"></div>
+<div class="h-full bg-primary/30" style="width: 15%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] font-medium"><span class="text-on-surface">Logistics</span><span>52 ideas</span></div>
+<div class="w-full h-2 bg-secondary-fixed flex">
+<div class="h-full bg-primary" style="width: 40%"></div>
+<div class="h-full bg-primary/60" style="width: 30%"></div>
+<div class="h-full bg-primary/30" style="width: 30%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] font-medium"><span class="text-on-surface">User Growth</span><span>120 ideas</span></div>
+<div class="w-full h-2 bg-secondary-fixed flex">
+<div class="h-full bg-primary" style="width: 70%"></div>
+<div class="h-full bg-primary/60" style="width: 15%"></div>
+<div class="h-full bg-primary/30" style="width: 15%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[11px] font-medium"><span class="text-on-surface">Infrastructure</span><span>28 ideas</span></div>
+<div class="w-full h-2 bg-secondary-fixed flex">
+<div class="h-full bg-primary" style="width: 30%"></div>
+<div class="h-full bg-primary/60" style="width: 50%"></div>
+<div class="h-full bg-primary/30" style="width: 20%"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Panels Row 3 -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Table Panel -->
+<div class="bg-surface-container border border-outline-variant overflow-hidden">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-white">
+<h3 class="text-sm font-semibold text-on-surface uppercase tracking-wider">Top Performing Releases</h3>
+<button class="material-symbols-outlined text-on-surface-variant text-lg">more_vert</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-semibold uppercase tracking-tighter border-b border-outline-variant">
+<th class="px-4 py-3">Release</th>
+<th class="px-4 py-3">Domain</th>
+<th class="px-4 py-3">Adoption</th>
+<th class="px-4 py-3">Sat.</th>
+<th class="px-4 py-3">Impact</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-primary-container transition-colors">
+<td class="px-4 py-3 font-medium">Auto-Billing V2</td>
+<td class="px-4 py-3">Fintech</td>
+<td class="px-4 py-3">92%</td>
+<td class="px-4 py-3 flex text-primary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 0;">star</span>
+</td>
+<td class="px-4 py-3 text-tertiary">High</td>
+</tr>
+<tr class="hover:bg-primary-container transition-colors bg-surface-container-low">
+<td class="px-4 py-3 font-medium">Smart Dispatch</td>
+<td class="px-4 py-3">Logistics</td>
+<td class="px-4 py-3">85%</td>
+<td class="px-4 py-3 flex text-primary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 0;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 0;">star</span>
+</td>
+<td class="px-4 py-3 text-tertiary">Medium</td>
+</tr>
+<tr class="hover:bg-primary-container transition-colors">
+<td class="px-4 py-3 font-medium">User Profiles 3.0</td>
+<td class="px-4 py-3">User Growth</td>
+<td class="px-4 py-3">78%</td>
+<td class="px-4 py-3 flex text-primary">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</td>
+<td class="px-4 py-3 text-tertiary">Extreme</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Scatter Plot Panel -->
+<div class="bg-surface-container border border-outline-variant p-6 flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-sm font-semibold text-on-surface uppercase tracking-wider">RICE Score Accuracy</h3>
+<div class="bg-primary/10 text-primary px-2 py-0.5 text-[10px] font-bold">R² = 0.84</div>
+</div>
+<div class="flex-1 chart-grid relative border-l border-b border-outline mb-2 min-h-[180px]">
+<!-- Scatter dots -->
+<div class="absolute w-2 h-2 rounded-full bg-primary" style="bottom: 20%; left: 15%;"></div>
+<div class="absolute w-2 h-2 rounded-full bg-primary" style="bottom: 40%; left: 35%;"></div>
+<div class="absolute w-2 h-2 rounded-full bg-primary" style="bottom: 35%; left: 45%;"></div>
+<div class="absolute w-2 h-2 rounded-full bg-primary" style="bottom: 60%; left: 55%;"></div>
+<div class="absolute w-2 h-2 rounded-full bg-primary" style="bottom: 75%; left: 80%;"></div>
+<div class="absolute w-2 h-2 rounded-full bg-primary" style="bottom: 90%; left: 85%;"></div>
+<!-- Trend line -->
+<div class="absolute h-0.5 bg-primary/30 w-[110%] top-[90%] left-0 origin-bottom-left -rotate-[40deg]"></div>
+<div class="absolute bottom-0 left-0 -translate-x-full pr-2 text-[9px] text-on-surface-variant flex flex-col justify-between h-full py-1">
+<span>High</span><span>Med</span><span>Low</span>
+</div>
+</div>
+<div class="flex justify-between px-2 text-[9px] text-on-surface-variant uppercase font-medium tracking-widest">
+<span>Predicted Score</span>
+<span>Actual Impact</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Action Bar (Shared Component) -->
+<footer class="fixed bottom-0 right-0 left-64 flex justify-between items-center px-6 py-3 z-30 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800 shadow-sm font-sans text-xs">
+<div class="flex items-center gap-4">
+<span class="text-gray-500 dark:text-gray-400">© 2024 Product Management Backoffice</span>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<a class="text-blue-600 font-bold hover:underline" href="#">Generate Report</a>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 border border-outline text-on-surface hover:bg-surface-container transition-transform active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">picture_as_pdf</span> PDF
+            </button>
+<button class="px-4 py-2 border border-outline text-on-surface hover:bg-surface-container transition-transform active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">table_view</span> CSV
+            </button>
+<button class="px-6 py-2 bg-primary text-white hover:opacity-90 transition-transform active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">send</span> Email Stakeholders
+            </button>
+</div>
+</footer>
+</body></html>

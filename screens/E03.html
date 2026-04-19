@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Release Notes Editor | Product Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px);
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#191c1e",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#7e3000",
+                    "on-surface-variant": "#464555",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#181445",
+                    "on-tertiary-container": "#ffd2be",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#2d3133",
+                    "tertiary-fixed": "#ffdbcc",
+                    "on-tertiary-fixed-variant": "#7b2f00",
+                    "on-secondary-fixed-variant": "#444173",
+                    "on-background": "#191c1e",
+                    "on-primary-container": "#dad7ff",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#4f46e5",
+                    "primary-fixed": "#e2dfff",
+                    "outline": "#777587",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "surface-container": "#eceef0",
+                    "surface": "#f7f9fb",
+                    "tertiary-container": "#a44100",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-secondary-container": "#514f81",
+                    "secondary": "#5b598c",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f2f4f6",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#c7c3fe",
+                    "inverse-on-surface": "#eff1f3",
+                    "surface-tint": "#4d44e3",
+                    "on-tertiary-fixed": "#351000",
+                    "outline-variant": "#c7c4d8",
+                    "surface-bright": "#f7f9fb",
+                    "on-primary-fixed": "#0f0069",
+                    "background": "#f7f9fb",
+                    "surface-dim": "#d8dadc",
+                    "surface-container-high": "#e6e8ea",
+                    "secondary-fixed": "#e3dfff",
+                    "inverse-primary": "#c3c0ff",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "secondary-fixed-dim": "#c4c1fb",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "surface-variant": "#e0e3e5",
+                    "primary": "#3525cd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl fixed top-0 w-full z-50 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-8 h-16 w-full max-w-full mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-slate-900 dark:text-white tracking-tight font-['Manrope']">Product Hub</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="font-['Manrope'] font-semibold text-slate-500 dark:text-slate-400 hover:text-indigo-500 duration-200 ease-in-out" href="#">Dashboard</a>
+<a class="font-['Manrope'] font-semibold text-slate-500 dark:text-slate-400 hover:text-indigo-500 duration-200 ease-in-out" href="#">Products</a>
+<a class="font-['Manrope'] font-semibold text-slate-500 dark:text-slate-400 hover:text-indigo-500 duration-200 ease-in-out" href="#">Roadmap</a>
+<a class="font-['Manrope'] font-semibold text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 pb-1 duration-200 ease-in-out" href="#">Releases</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-4 py-2 text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors rounded-lg font-['Manrope'] font-semibold">Save Draft</button>
+<button class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-['Manrope'] font-semibold shadow-md hover:bg-indigo-700 duration-200">Publish</button>
+<div class="flex items-center gap-2 ml-4">
+<span class="material-symbols-outlined text-slate-500 p-2 hover:bg-slate-50 rounded-full cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-slate-500 p-2 hover:bg-slate-50 rounded-full cursor-pointer">settings</span>
+<div class="w-8 h-8 rounded-full overflow-hidden ml-2 bg-slate-200">
+<img alt="User profile" data-alt="User profile portrait of a smiling product manager in a professional office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbR5wuZVRim5jzFL-FbJ6sTPuGExEoYXnvn62JvNRGwzw3cgmxO7kaUnM2A0aKcaP7zPFamZ6VPJAWiG4IDFdihelKWigC4K2TAT-_O0lvSv9dGDHXetmkZ2D9T0D1QIUMrpSER4un1OZFu78eLnP3i7sxKPy_18IerhhTJnKHE4O6lJ62J9uq-6mL9JSpoFei3RIrB29X0Xi8hK3XDtBHRv22ejiUvWewgV3wu9qC3g3Born0gDJCks1F3yhpgcUH-GbXnMSmtsY"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="bg-slate-900 h-screen w-64 fixed left-0 top-0 z-40 flex flex-col pt-20 pb-6">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">rocket_launch</span>
+</div>
+<div>
+<h2 class="text-lg font-black text-white font-['Inter']">Release Engine</h2>
+<p class="text-xs text-slate-400 font-['Inter'] opacity-60">V 2.4.0</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-slate-400 px-4 py-3 flex items-center gap-3 opacity-60 hover:bg-slate-800 hover:opacity-100 transition-all scale-95 active:scale-100 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span> Drafts
+            </a>
+<a class="text-slate-400 px-4 py-3 flex items-center gap-3 opacity-60 hover:bg-slate-800 hover:opacity-100 transition-all scale-95 active:scale-100 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="event">event</span> Scheduled
+            </a>
+<a class="text-slate-400 px-4 py-3 flex items-center gap-3 opacity-60 hover:bg-slate-800 hover:opacity-100 transition-all scale-95 active:scale-100 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span> Published
+            </a>
+<a class="bg-indigo-600/10 text-white font-bold border-r-4 border-indigo-500 px-4 py-3 flex items-center gap-3 scale-95 active:scale-100 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="share">share</span> Distribution
+            </a>
+<a class="text-slate-400 px-4 py-3 flex items-center gap-3 opacity-60 hover:bg-slate-800 hover:opacity-100 transition-all scale-95 active:scale-100 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span> Audience
+            </a>
+</nav>
+<div class="px-4 mt-auto space-y-2">
+<button class="w-full py-2 bg-indigo-600 text-white rounded font-bold text-sm mb-4">Auto-Generate</button>
+<a class="text-slate-400 px-4 py-2 flex items-center gap-3 opacity-60 hover:opacity-100 text-sm font-['Inter']" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span> Help Center
+            </a>
+<a class="text-slate-400 px-4 py-2 flex items-center gap-3 opacity-60 hover:opacity-100 text-sm font-['Inter']" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span> API Logs
+            </a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 pt-16 flex min-h-screen">
+<!-- Editor Column -->
+<div class="flex-1 p-8 bg-surface-container-low overflow-y-auto">
+<!-- Page Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h1 class="text-3xl font-extrabold text-on-surface tracking-tight mb-2">Release Notes</h1>
+<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-surface-container-lowest rounded-lg border border-outline-variant/15 cursor-pointer hover:bg-white transition-colors">
+<span class="text-sm font-semibold text-primary">v2.4.0 — April 2026</span>
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-5 py-2.5 bg-primary-container text-white rounded-lg font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        Auto-Generate from PRDs
+                    </button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-transparent border border-outline/20 text-primary rounded-lg font-semibold hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+                        Preview
+                    </button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-[#10b981] text-white rounded-lg font-semibold hover:bg-[#059669] transition-colors">
+<span class="material-symbols-outlined text-[18px]">send</span>
+                        Publish
+                    </button>
+</div>
+</div>
+<!-- Rich Text Editor Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden border border-outline-variant/10">
+<!-- Toolbar -->
+<div class="flex items-center gap-1 p-2 border-b border-surface-container-high bg-surface-container-low/50">
+<button class="p-2 hover:bg-surface-container-high rounded text-on-surface-variant"><span class="material-symbols-outlined">format_bold</span></button>
+<button class="p-2 hover:bg-surface-container-high rounded text-on-surface-variant"><span class="material-symbols-outlined">format_italic</span></button>
+<div class="h-6 w-px bg-outline-variant/20 mx-1"></div>
+<button class="p-2 hover:bg-surface-container-high rounded text-on-surface-variant"><span class="material-symbols-outlined">format_h1</span></button>
+<button class="p-2 hover:bg-surface-container-high rounded text-on-surface-variant"><span class="material-symbols-outlined">format_h2</span></button>
+<div class="h-6 w-px bg-outline-variant/20 mx-1"></div>
+<button class="p-2 hover:bg-surface-container-high rounded text-on-surface-variant"><span class="material-symbols-outlined">format_list_bulleted</span></button>
+<button class="p-2 hover:bg-surface-container-high rounded text-on-surface-variant"><span class="material-symbols-outlined">format_list_numbered</span></button>
+<div class="h-6 w-px bg-outline-variant/20 mx-1"></div>
+<button class="p-2 hover:bg-surface-container-high rounded text-on-surface-variant"><span class="material-symbols-outlined">link</span></button>
+<button class="p-2 hover:bg-surface-container-high rounded text-on-surface-variant"><span class="material-symbols-outlined">image</span></button>
+</div>
+<!-- Editor Body -->
+<div class="p-10 min-h-[800px] outline-none font-body prose prose-slate max-w-none">
+<h1 class="text-4xl font-extrabold font-headline mb-8 border-b-4 border-primary/10 pb-4">Product Hub v2.4.0 — April 2026</h1>
+<!-- Section: New Features -->
+<div class="mb-10">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">rocket</span>
+<h2 class="text-2xl font-bold font-headline m-0">New Features</h2>
+</div>
+<ul class="space-y-6 list-none p-0">
+<li class="relative pl-0">
+<p class="text-lg text-on-surface m-0 font-semibold">Bento Grid Dashboard Layout</p>
+<p class="text-on-surface-variant mt-1 mb-2">Introduced a modular, high-density dashboard system that allows users to customize their view with drag-and-drop tiles for specific metrics.</p>
+<a class="text-xs font-bold text-primary hover:underline" href="#">PRD-042</a>
+</li>
+<li class="relative pl-0">
+<p class="text-lg text-on-surface m-0 font-semibold">Multi-Currency Transaction Support</p>
+<p class="text-on-surface-variant mt-1 mb-2">Support for 42 global currencies including automatic daily exchange rate syncing for accurate cross-border reporting.</p>
+<a class="text-xs font-bold text-primary hover:underline" href="#">PRD-055</a>
+</li>
+<li class="relative pl-0">
+<p class="text-lg text-on-surface m-0 font-semibold">Advanced Permission Matrix</p>
+<p class="text-on-surface-variant mt-1 mb-2">A completely redesigned access control layer for granular permissioning at the folder and project level.</p>
+<a class="text-xs font-bold text-primary hover:underline" href="#">PRD-061</a>
+</li>
+</ul>
+</div>
+<!-- Section: Improvements -->
+<div class="mb-10">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-secondary">build</span>
+<h2 class="text-2xl font-bold font-headline m-0">Improvements</h2>
+</div>
+<ul class="space-y-3 text-on-surface-variant">
+<li>Performance boost: 40% reduction in cold-boot time for the Analytics Engine. <span class="text-primary text-xs font-bold ml-2">PRD-039</span></li>
+<li>Enhanced accessibility: High-contrast modes now fully support WCAG 2.1 Level AAA. <span class="text-primary text-xs font-bold ml-2">PRD-048</span></li>
+<li>Updated iconography: Replaced legacy SVGs with Material Symbols for better scaling. <span class="text-primary text-xs font-bold ml-2">PRD-050</span></li>
+<li>Refined search logic: Improved fuzzy matching and predictive results in the Global Search. <span class="text-primary text-xs font-bold ml-2">PRD-052</span></li>
+</ul>
+</div>
+<!-- Section: Bug Fixes -->
+<div class="mb-10">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-error">bug_report</span>
+<h2 class="text-2xl font-bold font-headline m-0">Bug Fixes</h2>
+</div>
+<ul class="space-y-3 text-on-surface-variant">
+<li>Resolved a race condition during concurrent user edits on the Roadmap view.</li>
+<li>Fixed an issue where SVG exports would occasionally omit the legend labels.</li>
+</ul>
+</div>
+<!-- Section: Known Issues -->
+<div class="mb-10 p-4 bg-tertiary-fixed rounded-lg border-l-4 border-tertiary">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-tertiary">warning</span>
+<h2 class="text-lg font-bold font-headline m-0 text-on-tertiary-fixed">Known Issues</h2>
+</div>
+<p class="text-on-tertiary-fixed-variant text-sm">Users on legacy versions of Safari may experience slight misalignment in the new Bento Grid layouts. Patch incoming for v2.4.1.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Config -->
+<aside class="w-[340px] bg-white border-l border-surface-container flex flex-col h-full sticky top-0 overflow-y-auto p-6 space-y-8">
+<!-- Section: Audience -->
+<section>
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Audience</h3>
+<div class="space-y-3">
+<label class="flex items-center gap-3 group cursor-pointer">
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Internal Stakeholders</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-sm font-medium text-on-surface group-hover:text-primary transition-colors">External Customers</span>
+</label>
+<label class="flex items-center gap-3 group cursor-pointer">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-sm font-medium text-on-surface group-hover:text-primary transition-colors">Engineering Team</span>
+</label>
+</div>
+</section>
+<!-- Section: Distribution -->
+<section>
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Distribution Channels</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3 rounded-lg border border-outline-variant/30 hover:border-primary/50 transition-colors flex flex-col gap-2 items-center text-center cursor-pointer">
+<span class="material-symbols-outlined text-primary">mail</span>
+<span class="text-[10px] font-bold">EMAIL</span>
+</div>
+<div class="p-3 rounded-lg border border-primary bg-primary/5 flex flex-col gap-2 items-center text-center cursor-pointer">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">chat</span>
+<span class="text-[10px] font-bold text-primary">SLACK</span>
+</div>
+<div class="p-3 rounded-lg border border-primary bg-primary/5 flex flex-col gap-2 items-center text-center cursor-pointer">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+<span class="text-[10px] font-bold text-primary">IN-APP</span>
+</div>
+<div class="p-3 rounded-lg border border-outline-variant/30 hover:border-primary/50 transition-colors flex flex-col gap-2 items-center text-center cursor-pointer">
+<span class="material-symbols-outlined text-slate-400">article</span>
+<span class="text-[10px] font-bold text-slate-400">CONFLUENCE</span>
+</div>
+</div>
+</section>
+<!-- Section: Included Items -->
+<section class="flex-1 flex flex-col min-h-0">
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Included PRD Items</h3>
+<div class="flex-1 overflow-y-auto space-y-2 border-y border-surface-container py-2 pr-2">
+<div class="p-3 bg-surface rounded-lg hover:bg-surface-container transition-colors flex items-start gap-3">
+<input checked="" class="mt-1 w-4 h-4 rounded border-outline-variant text-primary" type="checkbox"/>
+<div>
+<p class="text-xs font-bold text-on-surface">PRD-042: Bento Dash</p>
+<span class="px-1.5 py-0.5 bg-secondary-container text-on-secondary-container text-[9px] font-black rounded uppercase">Layout</span>
+</div>
+</div>
+<div class="p-3 bg-surface rounded-lg hover:bg-surface-container transition-colors flex items-start gap-3">
+<input checked="" class="mt-1 w-4 h-4 rounded border-outline-variant text-primary" type="checkbox"/>
+<div>
+<p class="text-xs font-bold text-on-surface">PRD-055: Global Currencies</p>
+<span class="px-1.5 py-0.5 bg-tertiary-fixed text-on-tertiary-fixed-variant text-[9px] font-black rounded uppercase">Payments</span>
+</div>
+</div>
+<div class="p-3 bg-surface rounded-lg hover:bg-surface-container transition-colors flex items-start gap-3">
+<input checked="" class="mt-1 w-4 h-4 rounded border-outline-variant text-primary" type="checkbox"/>
+<div>
+<p class="text-xs font-bold text-on-surface">PRD-061: Auth Matrix</p>
+<span class="px-1.5 py-0.5 bg-blue-100 text-blue-800 text-[9px] font-black rounded uppercase">Auth</span>
+</div>
+</div>
+<div class="p-3 bg-surface rounded-lg hover:bg-surface-container transition-colors flex items-start gap-3 opacity-50">
+<input class="mt-1 w-4 h-4 rounded border-outline-variant text-primary" type="checkbox"/>
+<div>
+<p class="text-xs font-bold text-on-surface">PRD-099: Dark Mode V3</p>
+<span class="px-1.5 py-0.5 bg-slate-200 text-slate-600 text-[9px] font-black rounded uppercase">UI</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Schedule -->
+<section>
+<h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Schedule Release</h3>
+<div class="space-y-4">
+<div class="relative group">
+<input class="w-full bg-surface-container-high border-none border-b-2 border-primary/20 focus:border-primary focus:ring-0 text-sm font-semibold rounded-t-lg transition-all pt-6 pb-2 px-3" type="text" value="April 12, 2026"/>
+<span class="absolute top-2 left-3 text-[10px] font-bold text-primary uppercase">Date</span>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">calendar_today</span>
+</div>
+<div class="relative group">
+<input class="w-full bg-surface-container-high border-none border-b-2 border-primary/20 focus:border-primary focus:ring-0 text-sm font-semibold rounded-t-lg transition-all pt-6 pb-2 px-3" type="text" value="09:00 AM"/>
+<span class="absolute top-2 left-3 text-[10px] font-bold text-primary uppercase">Time</span>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">schedule</span>
+</div>
+</div>
+</section>
+</aside>
+</main>
+</body></html>

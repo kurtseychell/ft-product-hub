@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "stitch": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "cwd": "<ABSOLUTE_PATH_TO>/Modern AI Product Hub/stitch-mcp-server",
+      "env": {
+        "STITCH_API_KEY": "${STITCH_API_KEY}"
+      }
+    }
+  }
+}

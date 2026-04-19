@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Login | Product Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#0f0069",
+                    "surface-bright": "#f9f9ff",
+                    "outline-variant": "#c7c4d8",
+                    "surface-container-low": "#f0f3ff",
+                    "surface-dim": "#cfdaf2",
+                    "on-background": "#111c2d",
+                    "primary-fixed": "#e2dfff",
+                    "secondary": "#712ae2",
+                    "on-surface": "#111c2d",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed": "#2c0051",
+                    "error": "#ba1a1a",
+                    "primary-container": "#4f46e5",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#464555",
+                    "primary": "#3525cd",
+                    "tertiary-fixed-dim": "#ddb7ff",
+                    "inverse-on-surface": "#ecf1ff",
+                    "surface": "#f9f9ff",
+                    "on-primary-container": "#dad7ff",
+                    "tertiary-container": "#862dd4",
+                    "on-secondary": "#ffffff",
+                    "background": "#f9f9ff",
+                    "tertiary-fixed": "#f0dbff",
+                    "outline": "#777587",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "secondary-fixed-dim": "#d2bbff",
+                    "secondary-container": "#8a4cfc",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "tertiary": "#6b00b7",
+                    "surface-tint": "#4d44e3",
+                    "inverse-surface": "#263143",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#25005a",
+                    "surface-container": "#e7eeff",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#dee8ff",
+                    "secondary-fixed": "#eaddff",
+                    "on-secondary-fixed-variant": "#5a00c6",
+                    "on-tertiary-fixed-variant": "#6900b3",
+                    "on-secondary-container": "#fffbff",
+                    "surface-container-highest": "#d8e3fb",
+                    "inverse-primary": "#c3c0ff",
+                    "on-tertiary-container": "#ebd2ff",
+                    "surface-variant": "#d8e3fb",
+                    "error-container": "#ffdad6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .perspective-panel {
+            background: linear-gradient(135deg, #3525cd 0%, #712ae2 100%);
+        }
+        .custom-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased overflow-hidden">
+<main class="flex min-h-screen">
+<!-- Left Side: Identity Panel -->
+<section class="hidden lg:flex lg:w-1/2 perspective-panel relative overflow-hidden flex-col p-16 justify-between">
+<!-- Background Decoration -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" data-alt="subtle abstract geometric line art pattern with hexagonal cubes in a repeating grid on a dark indigo background" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCq9zjxoAied9XgKslCqP9qeNxdm5SH2tATkGx0LRQFU3HT0oZVLmcvj_FXMXz5MCfHmyCvnHAsWfA0VvvEi1cdVsHRAr7-Ypa_hOomeGrbigC28ubRMAFp3wscRYE0G28i_R4K0fiXUCujEKTUdtFYekqTiFs7r8unioPM8ivBNCIAW0AOCGZtSr6O0YmE-SBBKdCPwAhztboEQMYIC-wZUKNLkJag7fJiND1LhdCddQSgH51obRp2rziMtrKEy_nA_zguwpY53sE');">
+</div>
+<!-- Logo Cluster -->
+<div class="relative z-10 flex items-center gap-3">
+<div class="w-12 h-12 bg-white flex items-center justify-center rounded-xl shadow-lg">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="hexagon" style="font-variation-settings: 'FILL' 1;">hexagon</span>
+</div>
+<h1 class="text-3xl font-black tracking-tighter text-white">Product Hub</h1>
+</div>
+<!-- Hero Message -->
+<div class="relative z-10 max-w-lg">
+<h2 class="text-5xl font-extrabold text-white leading-tight tracking-tight mb-6">
+                    From idea to delivery — powered by AI
+                </h2>
+<div class="h-1 w-24 bg-white/30 rounded-full"></div>
+</div>
+<!-- Social Proof / Decorative Elements -->
+<div class="relative z-10 flex flex-col gap-4">
+<div class="flex items-center gap-2 text-white/70 text-sm font-medium tracking-wide">
+<span class="material-symbols-outlined text-xs" data-icon="verified">verified</span>
+<span class="uppercase tracking-widest text-[10px]">Trusted by 500+ Engineering Teams</span>
+</div>
+<div class="flex -space-x-3">
+<img class="w-10 h-10 rounded-full border-2 border-primary ring-2 ring-white/10" data-alt="portrait of a software engineer in a modern office environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2JXcsipH9m0tv9hOp8p9863SU8bPV723kvS89UQMGbld7jTPKFfxj_8kLeptDPgu_WJOvz5KLwqQzVT99bY9Cn7VnaiZPyN3o5_qC-kP9i1d5WzPUgrWVOkzos3-2J8ngOzayaAkEDYgCmoiDP7qVfTY6bVwnlRB_KSde__g802D1ouMvWoAT0cwR9lu_WyhbSgKWy1tiY9KH9uQUWYNOBb77R8san6WDdORa3qZxB4Rhul3ypslNnjK3XgSrSaPhGusmxm4qgNI"/>
+<img class="w-10 h-10 rounded-full border-2 border-primary ring-2 ring-white/10" data-alt="professional woman smiling in a bright creative studio space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNfqlGvzInAFIIHmfGo8ZoiEEi7AKcLA_asfZxc-anKZNQBdgDeQooX6T_30jq1V63yDoKUkK5Tqj5E_lOBz43r8B3dTdiKnb_r2KIaq_cOO_QLHV3IMTP2DFY7sCvpxjW3i44kZM1N6qsDW01l2qL_ahjVLATxpVlnyN62Aj2CYVpkBHvbS9-PFXoYTclucBkJ5A12ZWhONWvXf0jMGxt-fJSgPcxFgWmpPbc1Jp2Oq51iV4y8UWq77qCi3tgveS2DqhRUXWaszI"/>
+<img class="w-10 h-10 rounded-full border-2 border-primary ring-2 ring-white/10" data-alt="developer working with multiple screens in a dark mode setup" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOaAp-MSLDGnCoLnSRlHsiLI4ghcgBlE46A2fJuX5qdWff6mGJKk_XgQyGc1qsD_2Hrh3NdhS1ZxvpXpbA0QIAMntIwUMX89h8YimP8H57P3VYGfYtjehG1Cnmfmj4vCm3A0McebNZmwSy99u_LYKb_zUYcHfXTR0PI-q-Aou1KfRjC-AvEkGwK18jvvFFSdePvx5j4J_PS5hCVQUxRyeTwJwddZqWinbKHlIYN2_ssuhAltodfn5po1MJLN7vfRa9midgzTgsgr4"/>
+</div>
+</div>
+</section>
+<!-- Right Side: Interaction Canvas -->
+<section class="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 lg:p-24 bg-surface-container-lowest">
+<div class="w-full max-w-md flex flex-col">
+<!-- Mobile Logo (Visible only on small screens) -->
+<div class="lg:hidden flex items-center gap-2 mb-12">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="hexagon" style="font-variation-settings: 'FILL' 1;">hexagon</span>
+<span class="text-2xl font-black tracking-tighter text-primary">Product Hub</span>
+</div>
+<div class="mb-10">
+<h3 class="text-3xl font-bold text-on-surface mb-2 tracking-tight">Welcome back</h3>
+<p class="text-on-surface-variant font-medium">Sign in to your account</p>
+</div>
+<form class="space-y-6">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="text-sm font-semibold text-on-surface-variant px-1 tracking-wide" for="email">EMAIL ADDRESS</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary transition-colors" data-icon="mail">mail</span>
+</div>
+<input class="block w-full pl-12 pr-4 py-4 bg-surface-container-low border-0 rounded-xl focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all text-on-surface font-medium placeholder:text-outline/60" id="email" placeholder="name@company.com" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<label class="text-sm font-semibold text-on-surface-variant px-1 tracking-wide" for="password">PASSWORD</label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline group-focus-within:text-primary transition-colors" data-icon="lock">lock</span>
+</div>
+<input class="block w-full pl-12 pr-12 py-4 bg-surface-container-low border-0 rounded-xl focus:ring-2 focus:ring-primary/20 focus:bg-white transition-all text-on-surface font-medium placeholder:text-outline/60" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute inset-y-0 right-0 pr-4 flex items-center text-outline hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember & Forgot Row -->
+<div class="flex items-center justify-between">
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="relative flex items-center justify-center">
+<input class="peer h-5 w-5 rounded border-outline-variant text-primary focus:ring-primary/20 transition-all" type="checkbox"/>
+</div>
+<span class="text-sm font-medium text-on-surface-variant group-hover:text-on-surface transition-colors">Remember me</span>
+</label>
+<a class="text-sm font-bold text-primary hover:text-primary-container transition-colors" href="#">Forgot password?</a>
+</div>
+<!-- Sign In Button -->
+<button class="w-full py-4 bg-primary text-white rounded-xl font-bold text-lg shadow-xl shadow-primary/20 hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2" type="submit">
+                        Sign In
+                        <span class="material-symbols-outlined text-xl" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<!-- Divider -->
+<div class="relative py-4">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-outline-variant/30"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="bg-surface-container-lowest px-4 text-outline font-bold uppercase tracking-widest text-[10px]">or</span>
+</div>
+</div>
+<!-- Google Button -->
+<button class="w-full py-4 bg-white border-2 border-outline-variant/30 text-on-surface rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-surface-container-low transition-colors active:scale-[0.98]" type="button">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z" fill="#EA4335"></path>
+</svg>
+                        Sign in with Google
+                    </button>
+</form>
+<!-- Bottom Actions -->
+<div class="mt-10 text-center space-y-8">
+<p class="text-on-surface-variant font-medium">
+                        Don't have an account? 
+                        <a class="text-primary font-bold hover:underline ml-1" href="#">Request Access</a>
+</p>
+<div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-primary/30">
+<p class="text-[12px] leading-relaxed text-on-surface-variant font-medium italic">
+                            Access is restricted to whitelisted email addresses. Contact your admin to be added.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Cluster (Simplified for Login) -->
+<footer class="fixed bottom-0 right-0 p-8 hidden lg:block">
+<div class="flex items-center gap-6">
+<a class="text-[10px] font-bold text-outline uppercase tracking-widest hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-[10px] font-bold text-outline uppercase tracking-widest hover:text-primary transition-colors" href="#">Terms of Service</a>
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">© 2024 Product Hub.</span>
+</div>
+</footer>
+</body></html>

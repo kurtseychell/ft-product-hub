@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Submit a Request | Product Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#4e339c",
+                        "error-dim": "#a70138",
+                        "on-surface": "#2c2f30",
+                        "primary-dim": "#3d30d4",
+                        "tertiary-fixed": "#fd8bca",
+                        "on-tertiary": "#ffeff4",
+                        "on-tertiary-container": "#610244",
+                        "surface-container-high": "#e0e3e4",
+                        "on-secondary-fixed": "#3a1b88",
+                        "on-secondary": "#f7f0ff",
+                        "tertiary-container": "#fd8bca",
+                        "tertiary-fixed-dim": "#ee7ebc",
+                        "inverse-on-surface": "#9b9d9e",
+                        "on-primary-fixed": "#000000",
+                        "secondary": "#6249b2",
+                        "primary-fixed": "#9795ff",
+                        "secondary-fixed": "#d8caff",
+                        "inverse-primary": "#8582ff",
+                        "background": "#f5f6f7",
+                        "outline-variant": "#abadae",
+                        "on-surface-variant": "#595c5d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f5f6f7",
+                        "primary-container": "#9795ff",
+                        "tertiary": "#983772",
+                        "primary-fixed-dim": "#8885ff",
+                        "secondary-container": "#d8caff",
+                        "primary": "#4a40e0",
+                        "surface-container": "#e6e8ea",
+                        "error": "#b41340",
+                        "tertiary-dim": "#892a65",
+                        "error-container": "#f74b6d",
+                        "on-primary": "#f4f1ff",
+                        "surface-container-highest": "#dadddf",
+                        "secondary-fixed-dim": "#cbbaff",
+                        "surface-bright": "#f5f6f7",
+                        "on-error": "#ffefef",
+                        "surface-tint": "#4a40e0",
+                        "surface-dim": "#d1d5d7",
+                        "on-tertiary-fixed-variant": "#6d104e",
+                        "on-primary-fixed-variant": "#1a0099",
+                        "on-tertiary-fixed": "#360024",
+                        "on-error-container": "#510017",
+                        "secondary-dim": "#563ca5",
+                        "on-primary-container": "#14007e",
+                        "surface-variant": "#dadddf",
+                        "on-background": "#2c2f30",
+                        "inverse-surface": "#0c0f10",
+                        "surface-container-low": "#eff1f2",
+                        "outline": "#757778",
+                        "on-secondary-fixed-variant": "#573da6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "manrope": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .signature-glow {
+            background: linear-gradient(135deg, #4a40e0 0%, #9795ff 100%);
+            box-shadow: 0 4px 14px 0 rgba(74, 64, 224, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 z-40 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md flex items-center justify-between px-8 border-b border-slate-100 dark:border-slate-800 transition-all duration-300 ease-in-out">
+<div class="flex items-center gap-8">
+<span class="hidden font-manrope font-bold text-2xl text-[#4F46E5]">Product Hub</span>
+<nav class="hidden md:flex gap-6 items-center font-manrope font-bold">
+<a class="text-slate-500 hover:text-[#4F46E5] transition-all duration-300" href="#">Dashboard</a>
+<a class="text-[#4F46E5] border-b-2 border-[#4F46E5] pb-1 transition-all duration-300" href="#">Requests</a>
+<a class="text-slate-500 hover:text-[#4F46E5] transition-all duration-300" href="#">Roadmap</a>
+<a class="text-slate-500 hover:text-[#4F46E5] transition-all duration-300" href="#">PRDs</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container-low rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 w-64 border-none" placeholder="Search requests..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-slate-500 p-2 hover:text-[#4F46E5] transition-all">notifications</button>
+<button class="material-symbols-outlined text-slate-500 p-2 hover:text-[#4F46E5] transition-all">apps</button>
+<img alt="User profile" class="w-8 h-8 rounded-full bg-surface-container-highest" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxdmssAN9rTq3AJk36bZXXAXBdT5aZuYT8X2yITpxC4FMSrA5AjUsKS6VYEUAhggZkzQjNioACyoMbdf5MFjhvzcwL0hSt-hZnW4kfJJauVczjR250i4u9wJwTJ5x8M6OI2__d105YOlALfv8_sZE_hkLm0qexMrBfT6zxsuthFiMU0AbWPmEbk2pllCWtylb6ULNaLDRoXfcshv51XX4uTxSRhVz-Jpo-vwTYcK0e0Bh6M-rRyAkQJuhyF_g6SpIF8hzd0iKHqug"/>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-[#1E1B4B] dark:bg-slate-950 py-6 transition-all duration-200">
+<div class="px-6 mb-8">
+<div class="flex flex-col">
+<h2 class="text-xl font-bold text-white uppercase tracking-widest font-manrope">Product Hub</h2>
+<p class="text-[10px] uppercase tracking-wider text-white/50 font-bold font-manrope">Enterprise Suite</p>
+</div>
+</div>
+<div class="px-4 mb-6">
+<button class="w-full signature-glow text-on-primary font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 scale-95 transition-transform duration-200 active:scale-90">
+<span class="material-symbols-outlined">add</span>
+<span>New Request</span>
+</button>
+</div>
+<nav class="flex-1 px-4 space-y-1 font-manrope tracking-tight font-medium">
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-[#ECEEF0]/10 text-white font-semibold rounded-lg scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">pending_actions</span> Requests
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined text-xl">analytics</span> Evaluation
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined text-xl">inventory_2</span> SpecKit
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined text-xl">science</span> Research
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined text-xl">view_list</span> Backlog
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined text-xl">local_shipping</span> Delivery
+            </a>
+</nav>
+<div class="mt-auto px-4 space-y-1 font-manrope tracking-tight font-medium pt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined text-xl">settings</span> Settings
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined text-xl">help</span> Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:pl-64 pt-24 pb-12 px-6 flex justify-center">
+<div class="w-full max-w-[640px] animate-in fade-in duration-700">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-6 text-sm text-on-surface-variant font-medium">
+<span>Product Backlog</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-on-surface">Submit Request</span>
+</div>
+<!-- Main Request Card -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm">
+<!-- Header -->
+<div class="flex items-center justify-between mb-10">
+<h1 class="text-2xl font-bold text-on-surface">Submit a Request</h1>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        Powered by Luminary AI
+                    </div>
+</div>
+<!-- SECTION 1: Request Type -->
+<div class="mb-10">
+<label class="block text-sm font-bold text-on-surface-variant mb-4 tracking-wide uppercase">Select Request Type</label>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<!-- Selected Card -->
+<div class="relative p-4 rounded-lg border-2 border-primary bg-primary/5 cursor-pointer transition-all hover:shadow-md">
+<div class="absolute top-2 right-2 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="material-symbols-outlined text-primary mb-3 block" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<h3 class="font-bold text-sm text-on-surface mb-1">New Idea</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">Propose a new feature or product direction</p>
+</div>
+<!-- Inactive Card 1 -->
+<div class="p-4 rounded-lg border border-outline-variant/30 hover:border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<span class="material-symbols-outlined text-outline mb-3 block">edit</span>
+<h3 class="font-bold text-sm text-on-surface mb-1">Change Request</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">Improve or adjust something existing</p>
+</div>
+<!-- Inactive Card 2 -->
+<div class="p-4 rounded-lg border border-outline-variant/30 hover:border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<span class="material-symbols-outlined text-outline mb-3 block">bug_report</span>
+<h3 class="font-bold text-sm text-on-surface mb-1">Bug</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed">Something is broken or behaving incorrectly</p>
+</div>
+</div>
+</div>
+<!-- SECTION 2: Title -->
+<div class="mb-10 relative">
+<label class="block text-sm font-bold text-on-surface mb-2">Request Title *</label>
+<input class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg text-on-surface placeholder:text-on-surface-variant/60 focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all font-medium" placeholder="Give your request a clear, specific title" type="text"/>
+<div class="absolute right-0 -bottom-6 text-[11px] font-medium text-on-surface-variant">0 / 120</div>
+</div>
+<!-- SECTION 3: Brief -->
+<div class="mb-10">
+<div class="flex items-baseline gap-2 mb-2">
+<label class="block text-sm font-bold text-on-surface">Brief *</label>
+<span class="text-xs text-on-surface-variant">(This is your source of truth — the AI will work from this)</span>
+</div>
+<textarea class="w-full px-4 py-3 bg-surface-container-low border-none rounded-lg text-on-surface placeholder:text-on-surface-variant/60 focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all font-medium resize-none" placeholder="Describe the problem, the goal, and any specific constraints or opportunities you've identified..." rows="6"></textarea>
+<div class="mt-3 flex items-start gap-3 p-4 bg-[#e7f3ff] rounded-lg">
+<span class="material-symbols-outlined text-[#0066cc] text-lg">info</span>
+<p class="text-xs text-[#004a99] leading-relaxed">
+                            Your brief will be saved as v1 in the PRD Builder. You can iterate on this later, but provide as much context as possible now for a better initial AI draft.
+                        </p>
+</div>
+</div>
+<!-- SECTION 4: Attachments -->
+<div class="mb-12">
+<label class="block text-sm font-medium text-on-surface-variant italic mb-3">Attachments (optional)</label>
+<div class="h-24 w-full border-2 border-dashed border-outline-variant/40 rounded-lg flex flex-col items-center justify-center gap-1 hover:bg-surface-container-low cursor-pointer transition-all group">
+<div class="flex items-center gap-2 text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-xl">upload_file</span>
+<span class="text-sm font-bold">Drag files here or click to browse</span>
+</div>
+<span class="text-[11px] text-on-surface-variant font-medium">PDF, DOCX, PNG up to 10MB each</span>
+</div>
+</div>
+<!-- FOOTER -->
+<div class="pt-8 border-t border-outline-variant/10 flex flex-col items-end gap-6">
+<div class="flex items-center justify-between w-full">
+<p class="text-xs text-on-surface-variant/80 italic font-medium max-w-[280px]">
+                            Submitting will open the PRD Builder workspace immediately.
+                        </p>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2.5 text-sm font-bold text-on-surface-variant hover:text-on-surface transition-colors">Cancel</button>
+<button class="signature-glow text-on-primary font-bold py-3 px-6 rounded-lg flex items-center gap-2 active:scale-95 transition-transform">
+                                Submit &amp; Open PRD Builder
+                                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<div class="flex items-center gap-2 text-[11px] font-bold text-on-surface-variant/60">
+<span>Saved as v1</span>
+<span class="w-1 h-1 bg-outline-variant/40 rounded-full"></span>
+<span class="text-primary/70">Status: Request Review</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Page Footer Credit -->
+<div class="mt-8 text-center">
+<p class="text-[11px] text-on-surface-variant/40 font-medium">
+                    © 2024 Product Hub SaaS. All rights reserved. 
+                </p>
+</div>
+</div>
+</main>
+</body></html>

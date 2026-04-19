@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Research &amp; Analysis | Product Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e6e8ea",
+                    "tertiary-container": "#a44100",
+                    "inverse-surface": "#2d3133",
+                    "secondary-fixed": "#e3dfff",
+                    "primary-container": "#4f46e5",
+                    "tertiary-fixed": "#ffdbcc",
+                    "inverse-primary": "#c3c0ff",
+                    "surface-dim": "#d8dadc",
+                    "secondary": "#5b598c",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#444173",
+                    "on-error": "#ffffff",
+                    "primary-fixed": "#e2dfff",
+                    "on-primary-fixed": "#0f0069",
+                    "surface": "#f7f9fb",
+                    "outline-variant": "#c7c4d8",
+                    "primary": "#3525cd",
+                    "surface-container": "#eceef0",
+                    "on-background": "#191c1e",
+                    "on-secondary-container": "#514f81",
+                    "outline": "#777587",
+                    "on-primary-container": "#dad7ff",
+                    "surface-tint": "#4d44e3",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#191c1e",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#181445",
+                    "tertiary": "#7e3000",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-tertiary-fixed": "#351000",
+                    "surface-bright": "#f7f9fb",
+                    "secondary-fixed-dim": "#c4c1fb",
+                    "surface-container-low": "#f2f4f6",
+                    "on-surface-variant": "#464555",
+                    "background": "#f7f9fb",
+                    "surface-variant": "#e0e3e5",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary-fixed-variant": "#7b2f00",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#c7c3fe",
+                    "on-tertiary-container": "#ffd2be"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2dfff;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen overflow-hidden">
+<!-- SideNavBar (Updated to match COMPONENTS_54) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-[#1E1B4B] dark:bg-slate-950 flex flex-col py-6 px-4 z-50">
+<div class="mb-10 px-2 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h1 class="text-xl font-bold text-white uppercase tracking-widest font-manrope">Product Hub</h1>
+<p class="text-xs text-white/40 font-medium">Enterprise Suite</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white/80 hover:bg-white/5 transition-colors font-manrope tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white/80 hover:bg-white/5 transition-colors font-manrope tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="pending_actions">pending_actions</span>
+<span>Requests</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white/80 hover:bg-white/5 transition-colors font-manrope tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Evaluation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white/80 hover:bg-white/5 transition-colors font-manrope tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>SpecKit</span>
+</a>
+<!-- Active State: Research -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-[#ECEEF0]/10 text-white font-semibold font-manrope tracking-tight" href="#">
+<span class="material-symbols-outlined" data-icon="science" style="font-variation-settings: 'FILL' 1;">science</span>
+<span>Research</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white/80 hover:bg-white/5 transition-colors font-manrope tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="view_list">view_list</span>
+<span>Backlog</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white/80 hover:bg-white/5 transition-colors font-manrope tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span>Delivery</span>
+</a>
+</nav>
+<div class="mt-auto px-2 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white/80 hover:bg-white/5 transition-colors font-manrope tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white/80 hover:bg-white/5 transition-colors font-manrope tracking-tight font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Support</span>
+</a>
+<div class="mt-6 flex items-center gap-3 pt-6 border-t border-white/10">
+<div class="w-10 h-10 rounded-full bg-slate-700 overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="professional portrait of a senior product manager in a modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoSgGdnWNGuSG8a5853elYG5AhgD2afqpy0kr_YSZwrkr9JnvnkGsEdTpv9Esxng4kav8XDbuWNLPCpZfmbcr2nEsScl6WRXW4RhbpnKZkH9T851nSpSBBDZMGHii73bkkvwKaIbVb9Ya_ACg97Amv9BNizqeBHcO1SX4eyF32YxfwhBeNv6q3-Ie6G6xMoFVL-Jan7mC_ljh6WShq9fsgrAbM2lJZuNoFHZnCbEQTMZ_M5UiFWYvWfFiOCcitCzJxCt_NjVC5SWA"/>
+</div>
+<div>
+<p class="text-sm font-bold text-white">Analyst Profile</p>
+<p class="text-xs text-white/40">Researcher</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopNavBar (Updated to match COMPONENTS_54) -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md flex justify-between items-center px-8 z-40 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-8">
+<div class="hidden">Product Hub</div> <!-- Hidden as per style_brand_logo: "hidden" -->
+<div class="text-2xl font-bold font-manrope text-on-surface">Research Assistant</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-500 hover:text-[#4F46E5] font-manrope text-sm transition-all" href="#">Collaborators</a>
+<a class="text-slate-500 hover:text-[#4F46E5] font-manrope text-sm transition-all" href="#">History</a>
+<a class="text-slate-500 hover:text-[#4F46E5] font-manrope text-sm transition-all" href="#">Export</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined text-slate-500 hover:text-[#4F46E5] cursor-pointer transition-all duration-300" data-icon="notifications">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</div>
+<span class="material-symbols-outlined text-slate-500 hover:text-[#4F46E5] cursor-pointer transition-all duration-300" data-icon="apps">apps</span>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-slate-200">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoSgGdnWNGuSG8a5853elYG5AhgD2afqpy0kr_YSZwrkr9JnvnkGsEdTpv9Esxng4kav8XDbuWNLPCpZfmbcr2nEsScl6WRXW4RhbpnKZkH9T851nSpSBBDZMGHii73bkkvwKaIbVb9Ya_ACg97Amv9BNizqeBHcO1SX4eyF32YxfwhBeNv6q3-Ie6G6xMoFVL-Jan7mC_ljh6WShq9fsgrAbM2lJZuNoFHZnCbEQTMZ_M5UiFWYvWfFiOCcitCzJxCt_NjVC5SWA"/>
+</div>
+<button class="bg-[#4F46E5] hover:bg-[#3525CD] text-white px-5 py-2 rounded-lg text-sm font-bold transition-all opacity-80 hover:opacity-100 scale-95 active:scale-90">
+            Share Report
+        </button>
+</div>
+</header>
+<!-- Main Content Layout -->
+<main class="ml-64 mt-16 flex-1 flex h-[calc(100vh-4rem)] bg-surface overflow-hidden">
+<!-- Left Panel: AI Chat Interface (55%) -->
+<section class="w-[55%] flex flex-col bg-surface border-r border-outline-variant/15">
+<!-- Chat Header -->
+<div class="p-6 pb-4 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="sparkles" style="font-variation-settings: 'FILL' 1;">colors_spark</span>
+<h2 class="text-xl font-extrabold font-manrope tracking-tight">Research &amp; Analysis</h2>
+</div>
+<div class="flex items-center gap-2 bg-surface-container rounded-full px-3 py-1.5 text-sm font-medium text-on-surface-variant">
+<span>Research Mode:</span>
+<div class="flex bg-surface-container-high p-1 rounded-full gap-1">
+<button class="px-3 py-1 rounded-full text-xs hover:bg-surface-container-lowest transition-colors">Quick Scan</button>
+<button class="px-3 py-1 rounded-full text-xs bg-primary text-white shadow-sm">Standard</button>
+<button class="px-3 py-1 rounded-full text-xs hover:bg-surface-container-lowest transition-colors">Deep Dive</button>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex-1 bg-surface-container-lowest border-b-2 border-primary/20 px-4 py-2.5 flex items-center justify-between cursor-pointer group">
+<span class="text-sm font-semibold text-on-surface">Payment Retry Logic — PRD-042</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 pt-2">
+<button class="px-4 py-1.5 rounded-full border border-outline-variant/20 bg-surface-container-lowest text-xs font-bold text-on-surface-variant hover:border-primary/40 hover:text-primary transition-all">Market Analysis</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant/20 bg-surface-container-lowest text-xs font-bold text-on-surface-variant hover:border-primary/40 hover:text-primary transition-all">Competitor Scan</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant/20 bg-surface-container-lowest text-xs font-bold text-on-surface-variant hover:border-primary/40 hover:text-primary transition-all">User Sentiment</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant/20 bg-surface-container-lowest text-xs font-bold text-on-surface-variant hover:border-primary/40 hover:text-primary transition-all">Tech Feasibility</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant/20 bg-surface-container-lowest text-xs font-bold text-on-surface-variant hover:border-primary/40 hover:text-primary transition-all">Full Research</button>
+</div>
+</div>
+<!-- Chat Conversation Area -->
+<div class="flex-1 overflow-y-auto px-6 space-y-6 pb-6 custom-scrollbar">
+<!-- AI Message 1 -->
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="flex-1 space-y-3">
+<div class="bg-surface-container-low p-4 rounded-xl rounded-tl-none border border-outline-variant/10 text-on-surface leading-relaxed">
+                        I've loaded <span class="font-bold text-primary">PRD-042: Payment Retry Logic</span>. Starting market analysis... 
+                        <a class="inline-flex items-center gap-1 text-primary font-bold text-sm ml-2 underline decoration-primary/30" href="#">[3 sources]</a>
+</div>
+</div>
+</div>
+<!-- AI Message 2: Table -->
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="flex-1 space-y-3">
+<div class="bg-surface-container-low p-4 rounded-xl rounded-tl-none border border-outline-variant/10">
+<p class="mb-4">Here is a comparison of retry strategies among top competitors:</p>
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/20 overflow-hidden">
+<table class="w-full text-left text-xs">
+<thead class="bg-surface-container-high/50 text-on-surface-variant">
+<tr>
+<th class="px-4 py-3 font-bold">Platform</th>
+<th class="px-4 py-3 font-bold">Retry Logic</th>
+<th class="px-4 py-3 font-bold">Max Retries</th>
+<th class="px-4 py-3 font-bold">Smart Routing</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr>
+<td class="px-4 py-3 font-bold">Stripe</td>
+<td class="px-4 py-3">Exponential backoff</td>
+<td class="px-4 py-3">4</td>
+<td class="px-4 py-3 text-primary"><span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span></td>
+</tr>
+<tr>
+<td class="px-4 py-3 font-bold">Adyen</td>
+<td class="px-4 py-3">Rule-based triggers</td>
+<td class="px-4 py-3">6</td>
+<td class="px-4 py-3 text-primary"><span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span></td>
+</tr>
+<tr>
+<td class="px-4 py-3 font-bold">Braintree</td>
+<td class="px-4 py-3">Merchant defined</td>
+<td class="px-4 py-3">Unlimited</td>
+<td class="px-4 py-3 text-slate-300"><span class="material-symbols-outlined text-xs" data-icon="cancel">cancel</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-4 flex-row-reverse">
+<div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="person">person</span>
+</div>
+<div class="bg-primary-container text-on-primary-container p-4 rounded-xl rounded-tr-none border border-primary/20 max-w-[80%]">
+                    What's the user sentiment around failed payment retries?
+                </div>
+</div>
+<!-- AI Message 3: Sentiment -->
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="flex-1 space-y-3">
+<div class="bg-surface-container-low p-4 rounded-xl rounded-tl-none border border-outline-variant/10">
+<p class="mb-4">Sentiment analysis from Trustpilot and internal CS feedback for subscription models reveals high friction during retries:</p>
+<div class="space-y-4">
+<div class="flex items-center justify-between text-xs font-bold mb-1">
+<span class="text-on-surface">Sentiment Overview</span>
+<span class="text-on-surface-variant">Avg: 2.1/5.0</span>
+</div>
+<div class="h-8 w-full flex rounded-lg overflow-hidden">
+<div class="h-full bg-error flex items-center justify-center text-[10px] text-white font-bold" style="width: 72%">72% NEGATIVE</div>
+<div class="h-full bg-outline-variant flex items-center justify-center text-[10px] text-white font-bold" style="width: 18%">18%</div>
+<div class="h-full bg-primary flex items-center justify-center text-[10px] text-white font-bold" style="width: 10%">10%</div>
+</div>
+<div class="flex justify-between text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
+<span>Negative (Intrusive)</span>
+<span>Neutral</span>
+<span>Positive (Helpful)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Chat Input Container -->
+<div class="p-6 pt-0">
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-4 shadow-sm focus-within:border-primary/50 transition-all">
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-sm resize-none placeholder:text-on-surface-variant/50" placeholder="Ask a research question..." rows="2"></textarea>
+<div class="flex items-center justify-between mt-2 border-t border-outline-variant/10 pt-3">
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="attach_file">attach_file</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-lg transition-colors">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+</button>
+</div>
+<button class="bg-primary text-white p-2.5 rounded-lg flex items-center justify-center hover:bg-primary-container transition-all shadow-md active:scale-95">
+<span class="material-symbols-outlined" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Live Document (45%) -->
+<section class="w-[45%] flex flex-col bg-surface-container-lowest">
+<!-- Document Tabs -->
+<div class="flex border-b border-outline-variant/15">
+<button class="flex-1 py-4 text-sm font-bold text-[#4F46E5] border-b-2 border-[#4F46E5]">Live Report</button>
+<button class="flex-1 py-4 text-sm font-bold text-on-surface-variant hover:text-on-surface transition-colors">Sources</button>
+<button class="flex-1 py-4 text-sm font-bold text-on-surface-variant hover:text-on-surface transition-colors">History</button>
+</div>
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar space-y-10">
+<!-- Header -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Technical Strategy</span>
+<span class="text-xs text-on-surface-variant">Last updated 2 mins ago</span>
+</div>
+<h2 class="text-3xl font-extrabold font-manrope text-on-surface tracking-tight leading-tight">Optimizing Payment Retry Recovery Rates</h2>
+</div>
+<!-- Sections -->
+<div class="space-y-8">
+<!-- Executive Summary -->
+<section>
+<h3 class="text-xs font-black uppercase tracking-widest text-on-surface-variant mb-3 flex items-center gap-2">
+                        Executive Summary
+                        <div class="h-[1px] flex-1 bg-outline-variant/20"></div>
+</h3>
+<p class="text-sm leading-relaxed text-on-surface-variant">The current retry strategy (3 linear attempts) fails to recover 42% of legitimate transaction failures. Moving to a smart, event-driven backoff model could improve revenue retention by 12.5% YoY.</p>
+</section>
+<!-- Market Landscape -->
+<section>
+<h3 class="text-xs font-black uppercase tracking-widest text-on-surface-variant mb-3 flex items-center gap-2">
+                        Market Landscape
+                        <div class="h-[1px] flex-1 bg-outline-variant/20"></div>
+</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-lg">
+<span class="text-2xl font-black text-primary font-manrope">$24.2B</span>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase mt-1">Churn due to failures</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg">
+<span class="text-2xl font-black text-primary font-manrope">68%</span>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase mt-1">Market adoption of AI-retries</p>
+</div>
+</div>
+</section>
+<!-- User Sentiment Score -->
+<section>
+<h3 class="text-xs font-black uppercase tracking-widest text-on-surface-variant mb-4 flex items-center gap-2">
+                        User Sentiment
+                        <div class="h-[1px] flex-1 bg-outline-variant/20"></div>
+</h3>
+<div class="bg-surface p-4 rounded-xl border border-outline-variant/10">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-bold">User Friction Score</span>
+<span class="text-sm font-bold text-error">High Friction (7.8/10)</span>
+</div>
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-error rounded-full" style="width: 78%"></div>
+</div>
+<p class="text-xs mt-3 text-on-surface-variant italic">"Repeated notifications without providing alternative payment methods was the top complaint."</p>
+</div>
+</section>
+<!-- Priority Recommendation -->
+<div class="bg-primary/5 rounded-2xl p-6 border-l-4 border-primary">
+<div class="flex items-center justify-between mb-4">
+<span class="bg-primary text-white text-[10px] font-black px-2 py-1 rounded tracking-widest">PURSUE</span>
+<div class="flex items-center gap-2">
+<span class="text-xs font-bold text-primary">78% Confidence Score</span>
+<span class="material-symbols-outlined text-primary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<h4 class="font-bold text-on-surface mb-3">Implement Smart Routing with Card-Type Specific Backoff</h4>
+<ul class="space-y-2">
+<li class="flex items-start gap-2 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xs mt-0.5" data-icon="check">check</span>
+                            Map retries to issuer-specific decline codes (R1 vs R0).
+                        </li>
+<li class="flex items-start gap-2 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xs mt-0.5" data-icon="check">check</span>
+                            Delay retry attempts by 36 hours for NSF (Non-Sufficient Funds).
+                        </li>
+<li class="flex items-start gap-2 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xs mt-0.5" data-icon="check">check</span>
+                            Integrate "Seamless Update" service for expired cards.
+                        </li>
+</ul>
+</div>
+<!-- Risk Flags -->
+<section>
+<h3 class="text-xs font-black uppercase tracking-widest text-on-surface-variant mb-3 flex items-center gap-2">
+                        Technical Feasibility
+                        <div class="h-[1px] flex-1 bg-outline-variant/20"></div>
+</h3>
+<div class="flex items-center gap-3 bg-surface-container-high/30 p-3 rounded-lg">
+<span class="material-symbols-outlined text-tertiary" data-icon="warning">warning</span>
+<span class="text-sm font-medium">Integration with legacy processor 'LegacyPay' may require 4-week middleware refactor.</span>
+</div>
+</section>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="p-8 pt-4 bg-surface-container-lowest border-t border-outline-variant/15">
+<div class="grid grid-cols-2 gap-3 mb-3">
+<button class="bg-[#4F46E5] hover:bg-[#3525CD] text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2 shadow-lg shadow-indigo-200 transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="picture_as_pdf">picture_as_pdf</span>
+                    Generate PDF Report
+                </button>
+<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="link">link</span>
+                    Attach to PRD
+                </button>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<button class="border border-outline-variant/30 hover:bg-surface-container-low text-on-surface-variant py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="share">share</span>
+                    Share with Team
+                </button>
+<button class="border border-outline-variant/30 hover:bg-surface-container-low text-on-surface-variant py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="terminal">terminal</span>
+                    Export Markdown
+                </button>
+</div>
+</div>
+</section>
+</main>
+</body></html>

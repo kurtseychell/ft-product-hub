@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Luminary Backoffice | Design Generation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#e7eeff",
+                        "outline-variant": "#c7c4d8",
+                        "tertiary": "#6b00b7",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "surface-bright": "#f9f9ff",
+                        "on-primary-fixed": "#0f0069",
+                        "background": "#f9f9ff",
+                        "on-tertiary-fixed": "#2c0051",
+                        "error-container": "#ffdad6",
+                        "primary": "#3525cd",
+                        "inverse-on-surface": "#ecf1ff",
+                        "outline": "#777587",
+                        "on-secondary-fixed": "#25005a",
+                        "surface-variant": "#d8e3fb",
+                        "on-secondary-container": "#fffbff",
+                        "surface-tint": "#4d44e3",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "on-tertiary-container": "#ebd2ff",
+                        "tertiary-fixed": "#f0dbff",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#cfdaf2",
+                        "on-surface": "#111c2d",
+                        "secondary-container": "#8a4cfc",
+                        "tertiary-fixed-dim": "#ddb7ff",
+                        "on-surface-variant": "#464555",
+                        "tertiary-container": "#862dd4",
+                        "surface-container-high": "#dee8ff",
+                        "primary-container": "#4f46e5",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-background": "#111c2d",
+                        "surface-container-low": "#f0f3ff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "secondary-fixed": "#eaddff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#6900b3",
+                        "surface-container-highest": "#d8e3fb",
+                        "surface": "#f9f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "secondary": "#712ae2",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#263143",
+                        "on-primary-container": "#dad7ff",
+                        "inverse-primary": "#c3c0ff",
+                        "primary-fixed": "#e2dfff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-slate-50/50 dark:bg-slate-900/50 backdrop-blur-lg border-r border-indigo-100/10 flex flex-col gap-y-2 p-6 z-50">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-10 h-10 bg-gradient-to-br from-primary to-secondary-container rounded-xl flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h1 class="text-lg font-bold text-slate-900 dark:text-slate-100 leading-none">Kinetic SaaS</h1>
+<p class="text-[10px] text-on-surface-variant font-label tracking-widest uppercase mt-1">Enterprise Tier</p>
+</div>
+</div>
+<nav class="space-y-1">
+<p class="text-[10px] font-bold text-outline-variant tracking-widest uppercase mb-2 px-4">Core</p>
+<a class="text-slate-600 dark:text-slate-400 py-2 px-4 hover:translate-x-1 transition-transform duration-300 ease-out flex items-center gap-3 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined">map</span> Roadmap
+            </a>
+<a class="text-slate-600 dark:text-slate-400 py-2 px-4 hover:translate-x-1 transition-transform duration-300 ease-out flex items-center gap-3 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined">list_alt</span> Backlog
+            </a>
+<p class="text-[10px] font-bold text-outline-variant tracking-widest uppercase mb-2 mt-6 px-4">Product</p>
+<a class="bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-300 shadow-sm rounded-lg py-2 px-4 flex items-center gap-3 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">polyline</span> Figma Designs
+            </a>
+<a class="text-slate-600 dark:text-slate-400 py-2 px-4 hover:translate-x-1 transition-transform duration-300 ease-out flex items-center gap-3 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined">insights</span> Analytics
+            </a>
+<a class="text-slate-600 dark:text-slate-400 py-2 px-4 hover:translate-x-1 transition-transform duration-300 ease-out flex items-center gap-3 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined">group</span> Team
+            </a>
+<a class="text-slate-600 dark:text-slate-400 py-2 px-4 hover:translate-x-1 transition-transform duration-300 ease-out flex items-center gap-3 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+</nav>
+<div class="mt-auto space-y-1">
+<a class="text-slate-600 dark:text-slate-400 py-2 px-4 hover:translate-x-1 transition-transform duration-300 ease-out flex items-center gap-3 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined">description</span> Documentation
+            </a>
+<a class="text-slate-600 dark:text-slate-400 py-2 px-4 hover:translate-x-1 transition-transform duration-300 ease-out flex items-center gap-3 font-inter text-sm font-medium" href="#">
+<span class="material-symbols-outlined">help</span> Support
+            </a>
+</div>
+</aside>
+<div class="ml-64 min-h-screen flex flex-col">
+<!-- TopNavBar Shell -->
+<header class="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl sticky top-0 z-40 w-full h-20 px-8 flex justify-between items-center shadow-[0px_12px_32px_rgba(17,28,45,0.06)]">
+<div class="flex flex-col">
+<div class="flex items-center gap-2 text-xs text-on-surface-variant font-label tracking-tight">
+<span>Product</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Figma Designs</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-semibold">PRD-042: Payment Retry Logic</span>
+</div>
+<div class="flex items-center gap-4 mt-1">
+<h2 class="text-2xl font-extrabold tracking-tight text-on-surface">Design Generation</h2>
+<div class="flex items-center bg-surface-container-low px-3 py-1 rounded-full gap-2 text-sm font-medium border border-outline-variant/15">
+<span class="text-primary">PRD-042</span>
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<!-- View Toggle -->
+<div class="bg-surface-container-low p-1 rounded-xl flex items-center gap-1 border border-outline-variant/10">
+<button class="px-4 py-1.5 rounded-lg text-sm font-semibold bg-white shadow-sm text-primary">Gallery</button>
+<button class="px-4 py-1.5 rounded-lg text-sm font-medium text-on-surface-variant hover:bg-white/50">Flow View</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/20 mx-2"></div>
+<button class="bg-white border border-outline-variant/20 px-5 py-2.5 rounded-xl text-on-surface font-semibold text-sm flex items-center gap-2 hover:bg-slate-50 transition-all">
+<img alt="Figma" class="w-4 h-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG4EXDDpDkjfqdBrA8orvLXdnDH_NhFnbJd6mc9XXxNVmmrNW7rI-J5-y2_o5VGRcLadNE4g7pyrfENDfeIJdQrLwOHR2N19Z-d7JOL7d9bpi9z5rlC21D88o1KQr3HWozqpbn52FvsO3G3JQC_ReR9oyUOCI888iLtjpzN05HWdpGnUCgt29CImXLjnfJ3ETSMpe7x_t1hhSGzAmjSOwj6BgWV7jyIYI11wKWCXr255w7ST8icQj_9TWgOyG7ngr3IRfxDFbujlA"/>
+                    Push All to Figma
+                </button>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-105 transition-all">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                    Generate Designs
+                </button>
+<div class="ml-4 flex items-center gap-3">
+<img alt="User profile" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-sm" data-alt="Professional portrait of a design manager in a minimalist studio setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDuBvzEb3bvru1x8cn26cUypK3L_29Uc5-iT24e6yJHMgKGLS--5RJaJ-591vI17a0IX00YC2rh2SBS2IXUtMAMB9boDVYoJyjVp6NecP7IMWbuF3057M5s0r9KYGjgMehLmISBrAO3qq0O-tdll7Ny0e__4anhYcYmGnavK2a1hux_f3iMeI5skj8pXOoXGhWuVzA6yS9QnQTKj0ubV2mKd51le1iH9aSfTDWAnmfu6quQM5GCLLH4mSCFX69V3fuuhufZTPcnKk"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="p-8 space-y-8 flex-grow">
+<!-- Configuration Panel (Collapsible Card, Expanded) -->
+<section class="bg-surface-container-lowest rounded-2xl p-8 shadow-sm border border-outline-variant/10">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</div>
+<h3 class="text-xl font-bold tracking-tight">Generation Parameters</h3>
+</div>
+<span class="material-symbols-outlined text-outline cursor-pointer">expand_less</span>
+</div>
+<div class="grid grid-cols-12 gap-10">
+<!-- Design Style Selector -->
+<div class="col-span-4">
+<label class="text-[10px] font-bold text-on-surface-variant tracking-widest uppercase block mb-4">Design Style</label>
+<div class="grid grid-cols-1 gap-3">
+<div class="border border-outline-variant/30 rounded-xl p-4 flex items-center justify-between cursor-pointer hover:bg-surface-container-low transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">check_box_outline_blank</span>
+<span class="font-semibold">Wireframe</span>
+</div>
+<span class="text-xs text-on-surface-variant">Low Fidelity</span>
+</div>
+<div class="border border-outline-variant/30 rounded-xl p-4 flex items-center justify-between cursor-pointer hover:bg-surface-container-low transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-outline">check_box_outline_blank</span>
+<span class="font-semibold">Low-Fidelity</span>
+</div>
+<span class="text-xs text-on-surface-variant">Interactive</span>
+</div>
+<div class="border-2 border-primary bg-primary/5 rounded-xl p-4 flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-bold text-primary">High-Fidelity</span>
+</div>
+<span class="text-xs text-primary/80 font-medium">Production Ready</span>
+</div>
+</div>
+</div>
+<!-- Screens Checklist -->
+<div class="col-span-8">
+<div class="flex items-center justify-between mb-4">
+<label class="text-[10px] font-bold text-on-surface-variant tracking-widest uppercase">Screens to Generate</label>
+<button class="text-primary text-xs font-bold flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[14px]">add</span>
+                                Add Custom Screen
+                            </button>
+</div>
+<div class="grid grid-cols-2 gap-x-8 gap-y-4">
+<div class="flex items-center gap-3 py-2 border-b border-outline-variant/10">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<span class="text-sm font-medium">Retry Configuration Panel</span>
+</div>
+<div class="flex items-center gap-3 py-2 border-b border-outline-variant/10">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<span class="text-sm font-medium">Retry Status Dashboard</span>
+</div>
+<div class="flex items-center gap-3 py-2 border-b border-outline-variant/10">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<span class="text-sm font-medium">Notification Settings</span>
+</div>
+<div class="flex items-center gap-3 py-2 border-b border-outline-variant/10">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<span class="text-sm font-medium">Payment Retry History</span>
+</div>
+<div class="flex items-center gap-3 py-2 border-b border-outline-variant/10">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<span class="text-sm font-medium">Retry Analytics View</span>
+</div>
+<div class="flex items-center gap-3 py-2 border-b border-outline-variant/10">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_box</span>
+<span class="text-sm font-medium">Error State &amp; Fallback</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Gallery View -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Card 1: Approved -->
+<div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-outline-variant/10">
+<div class="aspect-[16/10] bg-surface-container relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center">
+<img alt="Dashboard preview" class="w-full h-full object-cover opacity-80" data-alt="Clean minimalist web interface dashboard showing complex financial graphs and data visualization in soft blue and white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgwxLqEQkvr3XUpnjRsmfQwJCefg4yDBkZU4XsNWyUfpl4IjduAXuKAuUscJ4NBs2QRLxmJ4Ao73XmZpHnRzEwf8DIYWxOMEZXGbMhFMGNbuafspX4O-tFFxSHzJL6ZFKiPTxWqZ9wU1FFHTYZPsvE6Zr9vxzO23OBZaMuqeKCE1b4fXVzdBfGVotC559jp2kSTFWKU-hdTikU2EMys9BHOBfWBQobqpf4U4cvZFPRP__ig2gpN76yLOQiQuWM1HnW8ST_kUNsp7c"/>
+</div>
+<div class="absolute top-4 left-4 bg-green-500 text-white text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded">Approved</div>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">layers</span> 3 variants
+                        </div>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+<button class="bg-white p-2 rounded-full shadow-lg text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined">zoom_in</span></button>
+<button class="bg-white p-2 rounded-full shadow-lg text-primary hover:scale-110 transition-transform"><span class="material-symbols-outlined">refresh</span></button>
+</div>
+</div>
+<div class="p-5">
+<h4 class="font-bold text-lg mb-1">Retry Configuration Panel</h4>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container-low text-[10px] font-bold text-on-surface-variant px-2 py-1 rounded-full uppercase tracking-tighter">PRD Section: Requirements</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<div class="flex gap-2">
+<button class="p-2 text-outline hover:text-primary"><span class="material-symbols-outlined text-[20px]">compare</span></button>
+<button class="p-2 text-outline hover:text-primary"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+<button class="text-sm font-bold text-primary flex items-center gap-1">
+                                Push to Figma <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2: Generating -->
+<div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-primary/30 relative">
+<div class="aspect-[16/10] bg-surface-container-low flex items-center justify-center relative">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center">
+<div class="flex flex-col items-center gap-4">
+<div class="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+<span class="text-sm font-bold text-primary animate-pulse">Generating UI...</span>
+</div>
+</div>
+<div class="absolute top-4 left-4 bg-primary text-white text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] animate-spin">sync</span> Generating
+                        </div>
+</div>
+<div class="p-5">
+<h4 class="font-bold text-lg mb-1">Retry Status Dashboard</h4>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container-low text-[10px] font-bold text-on-surface-variant px-2 py-1 rounded-full uppercase tracking-tighter">PRD Section: Visualization</span>
+</div>
+<div class="h-1 bg-surface-container-low w-full rounded-full overflow-hidden mb-4">
+<div class="h-full bg-primary w-[65%]"></div>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10 grayscale opacity-50">
+<div class="flex gap-2">
+<span class="material-symbols-outlined">compare</span>
+<span class="material-symbols-outlined">delete</span>
+</div>
+<span class="text-sm font-bold">Processing...</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Pushed to Figma -->
+<div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant/10">
+<div class="aspect-[16/10] bg-surface-container relative">
+<img alt="Notification settings preview" class="w-full h-full object-cover grayscale" data-alt="Technical wireframe of a mobile application layout with placeholders for images and text in a dark theme" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH9lRmLhZ7Djy4IsIRtbplWxsjCf_l0t1ROf_oCboAHSoGUY1dRNrPHdNHCT5Ju1fe54HopTncxoXlR1ukxAecnnt9392tvHdY_qdQJtgmyLAtK2jZJWPpRzVLcFceBcRCT2Oy1UABHYkd5AZj5-RoRnUFKJ_YBEMBpGWJJspiCV8I-38qooR7t5XybqOrt8c4CqK7GlPSnT6pufy4rw90D7M9Tt7u-0aBXfc9ww-UigD-AsEYhhZPxO-Pss9uGjHH0AzWQpjojYc"/>
+<div class="absolute top-4 left-4 bg-purple-600 text-white text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded flex items-center gap-1">
+<img alt="" class="w-3 h-3 invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFUZtQ5NHRDJDnf4ZlPWjVnawL28n1oD1z5B8ni-uSlnfkK4QeUsbX_I10zlKx2Z0W2DGs6lfZ37uzyF-cMHncBp70knV-1P2jP_V4aEhAf4_66qa2jy-HS0Rx35BrA0idTV_Z5f6JL6JDEeSsWwnBW4DQsRQjtYNxfU0zYd_0q4dnhDHk9XmT9TaOTHEFkhiDE22GUhH7TQTq0Xpl6zV-oExCX-Eoi4g-ZYRTnaMoX3Y5LHpIG7uv8sfxRenAlTgyqbOMQhSLrlw"/> Pushed to Figma
+                        </div>
+</div>
+<div class="p-5">
+<h4 class="font-bold text-lg mb-1">Notification Settings</h4>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container-low text-[10px] font-bold text-on-surface-variant px-2 py-1 rounded-full uppercase tracking-tighter">PRD Section: User Comm</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<div class="flex gap-2">
+<button class="p-2 text-outline hover:text-primary"><span class="material-symbols-outlined text-[20px]">open_in_new</span></button>
+<button class="p-2 text-outline hover:text-primary"><span class="material-symbols-outlined text-[20px]">refresh</span></button>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Sync: 2m ago</span>
+</div>
+</div>
+</div>
+<!-- Card 4: Draft -->
+<div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant/10">
+<div class="aspect-[16/10] bg-surface-container relative">
+<div class="absolute inset-0 bg-slate-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant text-6xl">image_not_supported</span>
+</div>
+<div class="absolute top-4 left-4 bg-slate-400 text-white text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded">Draft</div>
+</div>
+<div class="p-5">
+<h4 class="font-bold text-lg mb-1 text-on-surface/80">Payment Retry History</h4>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container-low text-[10px] font-bold text-on-surface-variant px-2 py-1 rounded-full uppercase tracking-tighter">PRD Section: Logs</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<button class="bg-primary-container/10 text-primary text-xs font-bold px-4 py-2 rounded-lg hover:bg-primary-container/20">Generate Version 1</button>
+<button class="p-2 text-outline hover:text-primary"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Card 5: Approved -->
+<div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant/10">
+<div class="aspect-[16/10] bg-surface-container relative">
+<img alt="Analytics preview" class="w-full h-full object-cover" data-alt="Sleek analytic charts showing bar and line graphs in shades of blue and purple on a white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTumml_KufJ3fMA8ylStauSjx_J0a0tzLNA_ouJ-Xbk-j458AXExjsjiqb7x3TtAyejT6FsTES_AUlQpDDiOwEy5ez7OKKed_Xs6JRsRLjkudT5UjNyG3rtKnKRuVYmL-IYekq03xO7eL-8AndU4vR-lMi5-ROZbjXNZD4tyv9nuaaqXsuxetWc4udNBkLH45Kiz8u00r4_9B1rjZrRTMU4cjZ6uLOxuMwQIT9K8WGZk5yDcgsQncR7arEvYJv43HFXd6hQ1S4UEk"/>
+<div class="absolute top-4 left-4 bg-green-500 text-white text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded">Approved</div>
+</div>
+<div class="p-5">
+<h4 class="font-bold text-lg mb-1">Retry Analytics View</h4>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container-low text-[10px] font-bold text-on-surface-variant px-2 py-1 rounded-full uppercase tracking-tighter">PRD Section: Analytics</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<div class="flex gap-2">
+<button class="p-2 text-outline hover:text-primary"><span class="material-symbols-outlined text-[20px]">compare</span></button>
+<button class="p-2 text-outline hover:text-primary"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+<button class="text-sm font-bold text-primary flex items-center gap-1">Push to Figma</button>
+</div>
+</div>
+</div>
+<!-- Card 6: Draft -->
+<div class="group bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm border border-outline-variant/10">
+<div class="aspect-[16/10] bg-surface-container relative">
+<div class="absolute inset-0 bg-slate-50 flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant text-4xl">hourglass_empty</span>
+</div>
+<div class="absolute top-4 left-4 bg-slate-400 text-white text-[10px] font-bold tracking-widest uppercase px-2 py-1 rounded">Draft</div>
+</div>
+<div class="p-5">
+<h4 class="font-bold text-lg mb-1 text-on-surface/80">Error State &amp; Fallback</h4>
+<div class="flex items-center gap-2 mb-4">
+<span class="bg-surface-container-low text-[10px] font-bold text-on-surface-variant px-2 py-1 rounded-full uppercase tracking-tighter">PRD Section: Handling</span>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-outline-variant/10">
+<button class="bg-primary-container/10 text-primary text-xs font-bold px-4 py-2 rounded-lg hover:bg-primary-container/20">Generate Version 1</button>
+<button class="p-2 text-outline hover:text-primary"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Lightbox Overlay (Focused Card) -->
+<div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] flex items-center justify-center p-8 overflow-hidden">
+<div class="bg-white rounded-3xl w-full max-w-6xl h-full flex overflow-hidden shadow-2xl">
+<!-- Left: Design Render -->
+<div class="flex-grow bg-slate-100 flex flex-col relative">
+<div class="absolute top-6 left-6 flex items-center gap-4 bg-white/90 backdrop-blur rounded-xl p-2 shadow-sm border border-outline-variant/10">
+<button class="p-2 hover:bg-slate-100 rounded-lg"><span class="material-symbols-outlined">zoom_in</span></button>
+<button class="p-2 hover:bg-slate-100 rounded-lg"><span class="material-symbols-outlined">zoom_out</span></button>
+<div class="w-[1px] h-4 bg-outline-variant/30"></div>
+<span class="text-xs font-bold px-2">100%</span>
+</div>
+<div class="flex-grow flex items-center justify-center p-12 overflow-auto">
+<img alt="Detailed screen preview" class="max-w-full shadow-[0px_32px_64px_-12px_rgba(0,0,0,0.14)] rounded-xl border border-outline-variant/20" data-alt="Detailed high-fidelity user interface design of a fintech application dashboard with charts, transaction list, and clean typography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeuaOAApPtpadQDfWSRaV5T5-eTDdwODXWzd4bKiZV0gE0lVzl6P7nEn28qfUlzndurK-g9XcBqGg3c8VW0lbUi-gKhbaqZWTgpgKYYqYxybNUJzGqDpYgQW1OFaVNUIeiZexnB5vqSuhKlsvGsxqISQM0mmXDr1ae9nFhg1EQHX7GJMmd8p5KONXvHoP3tfCo2gjsZvhm2_PfSUUevFLaIKYEUY0vFwqSsSybf1E8FruM-Q71O8ERWoCrNcSUQL_b7Koy4RzSPk8"/>
+</div>
+<!-- Variants Strip -->
+<div class="h-24 bg-white/80 backdrop-blur-md border-t border-outline-variant/10 flex items-center gap-4 px-6">
+<div class="h-16 w-24 rounded-lg border-2 border-primary overflow-hidden relative">
+<img alt="V1" class="w-full h-full object-cover" data-alt="Miniature thumbnail of a clean dashboard UI design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwPLZY881w0Bgoioe1k0Y5wBrw19uVpjDV7z_8j7jFCXplsMkDk54t4HlUfUSFiOIRYLlzJrkwKC_bCNedO_-AaN39Tii9syU27P0pqY6nG_3h2oWRrfUUAyV091O75sJo4q3FMxPZureSxZi8kGV2v2VXQvItoiF91fEdm1Po0hw5lXw9itbnCKxpoRm4YWtYtQ5hnzAEKCjLO1krfzNGdLVLEwPzBN2kb3adYTReE7f1sbGocsqSs5z1LLCp9UmNJVIsb27oT1g"/>
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center"><span class="text-[10px] font-bold text-primary">v3 (active)</span></div>
+</div>
+<div class="h-16 w-24 rounded-lg border border-outline-variant/20 overflow-hidden opacity-50 hover:opacity-100 cursor-pointer transition-opacity">
+<img alt="V2" class="w-full h-full object-cover" data-alt="Miniature thumbnail of an analytics UI design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxuKViPrYOF2kcO-AsaaEBIKyajA83Xl-ZuVk9HLEm3QZKLaZeOzHKh2878pJJU0_48aMPYvGpkzq0CL8NNFYqzUFIRRl9ZoDhFOL9LuDkdE0e0mZle6Je_6NfipSR6lEg1jV82ss4IGEX_K-X5LJbmluB3Y_ESpK-5qghwc1FjJ4RImUxy28FBrjMxZ7YxJxvSqJPv7hme2qh6-hmtx4gZ8t8MZpev7UxD30pZJnhJGvQE_aAmEL-5KZ4dk5kOydktb9Y694CKFk"/>
+</div>
+<div class="h-16 w-24 rounded-lg border border-outline-variant/20 overflow-hidden opacity-50 hover:opacity-100 cursor-pointer transition-opacity">
+<img alt="V1" class="w-full h-full object-cover" data-alt="Miniature thumbnail of a settings UI design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-FINLd_op8wAYCs4kBwMLzn7AnFqLb-22qmo8ujPchB7DiDvKdNo-Pe5GRSfm_z6GNOcEsC-xQe0rxfIoUciwPoGLAqaoQR2jJCIRCAvJyneXXKIYyA11gxJ6y8g8ev-zD_6J1lw61yu1rnl-4pzrqzfz_8cbYgyKUn_RgxgavpXolUc8nveFsDlOq5uQ18kPT8Nr0OLo4EqdfavkRlWCmVCo7snzqOtDj8uZGOEdAFgfT4q49BIUtZKwcf_hkVlFvR4NZOWtINY"/>
+</div>
+<button class="w-10 h-10 rounded-full border-2 border-dashed border-outline-variant flex items-center justify-center text-outline-variant hover:text-primary hover:border-primary">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<!-- Right: Sidebar -->
+<aside class="w-[340px] bg-white border-l border-outline-variant/20 flex flex-col">
+<div class="p-6 border-b border-outline-variant/10 flex items-center justify-between">
+<div>
+<h3 class="font-bold text-lg">Screen Details</h3>
+<p class="text-xs text-on-surface-variant">Retry Configuration Panel</p>
+</div>
+<button class="text-outline hover:text-on-surface"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="flex-grow overflow-y-auto p-6 space-y-8">
+<!-- Linked Specs -->
+<div>
+<h4 class="text-[10px] font-bold text-on-surface-variant tracking-widest uppercase mb-3">Linked Specs</h4>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container-low text-[11px] font-semibold rounded-full text-primary border border-primary/10">Requirement #4.2</span>
+<span class="px-3 py-1 bg-surface-container-low text-[11px] font-semibold rounded-full text-primary border border-primary/10">User Flow A1</span>
+<span class="px-3 py-1 bg-surface-container-low text-[11px] font-semibold rounded-full text-primary border border-primary/10">Design Token V2</span>
+</div>
+</div>
+<!-- Feedback & Comments -->
+<div>
+<h4 class="text-[10px] font-bold text-on-surface-variant tracking-widest uppercase mb-4">Feedback &amp; Comments</h4>
+<div class="space-y-4">
+<div class="flex gap-3">
+<img alt="Sarah Dev" class="w-8 h-8 rounded-full" data-alt="Portrait of a female developer with a bright friendly expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsLDvoea_XmxCZ7KbAFj60fTi0Y2F5fwG4sQG11E6TBl6lGF3wArHTfYcqsJvExuGV_9Shu2DPPsjycjhW-p_tSWpftmkpCdtBSQTy0x-w42E_36AonisP4GMfW8OA-ZeFl1KY3J48Xg8pDJJ27hSrkh4-n3L66IKG9ymiFznWFTELSFJipWB4IheI7dNz3w-VigbCU0lFsRB3tXSYbfGH1dFzIKFLhLmjAAkTrHHHTNT2MYO_2HgLtgkZ1Wc1XuAwPXBxjHZku2o"/>
+<div class="bg-surface-container-low p-3 rounded-2xl rounded-tl-none">
+<p class="text-[10px] font-bold text-on-surface mb-1">Sarah Chen (Lead Dev)</p>
+<p class="text-xs text-on-surface-variant">The padding on the retry button seems tight. Can we increase to 24px?</p>
+</div>
+</div>
+<div class="flex gap-3">
+<img alt="Alex PM" class="w-8 h-8 rounded-full" data-alt="Portrait of a male product manager in casual professional attire" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQobdEBQzJZ3G48fdhS7_qRrB93MT0Ot4dxrPEAIXUWTG7a6fZF_sd74UzGXZLasHevUriBbY5uUM3Mo6VfD9mhnNiS0kmXljo04n7hNJcdQ8QPjPOcjrKAZ1_v4UsjkfJx2DggnElkstEwfhrDr2h33XrDGWZFebtBqHkcNV8yDjOgzosq21jdHiSQt_lgesCIujxYCJr8JMdWZP-wOQHtTN6AVf7GLE1C0xlIG6uW-TPOtBK0eCxDejg1xx3sbcvSlKWQidLZpU"/>
+<div class="bg-surface-container-low p-3 rounded-2xl rounded-tl-none">
+<p class="text-[10px] font-bold text-on-surface mb-1">Alex Rivera (PM)</p>
+<p class="text-xs text-on-surface-variant">Matches the PRD perfectly. Approval pending stakeholder signoff.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Regeneration Input -->
+<div>
+<h4 class="text-[10px] font-bold text-on-surface-variant tracking-widest uppercase mb-3">Refine &amp; Regenerate</h4>
+<div class="relative">
+<textarea class="w-full bg-surface-container-low border-0 rounded-xl p-3 text-xs focus:ring-2 focus:ring-primary h-24 placeholder:text-outline" placeholder="Enter feedback to refine this screen..."></textarea>
+<button class="absolute bottom-3 right-3 bg-primary text-white p-1.5 rounded-lg shadow-lg hover:scale-105 transition-all">
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Actions -->
+<div class="p-6 border-t border-outline-variant/10 grid grid-cols-2 gap-3 bg-white">
+<button class="flex items-center justify-center gap-2 border border-outline-variant/30 py-3 rounded-xl font-bold text-sm hover:bg-slate-50">
+<img alt="" class="w-4 h-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7LddDU65GnkcvGH8u6kB8PwS5opuhmZ1-q1KGAlJFJhnMfvlbBv_r3pRhilL68UoXd0-ZohPaJKLJjZUOaCxpT-MmmGv53uXiSeoBaaZMTvKonnL5EXBQpE_4tPC_3b3bQCyOVKJqdIDZgOq7AX-ZtHnvVhBDEUorN7uN1bOqI9-rgTZkvr9TQf_ODdrSVdnuEn4se6HyByXD6FvMIjvqRoCI7iGQDCCTUE24Cv1fjeGmZprG2ZuUGKgjTmTv5HEf8pKoqfiGX2I"/>
+                        Figma
+                    </button>
+<button class="bg-green-600 text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-green-700 transition-all shadow-lg shadow-green-600/10">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Approve
+                    </button>
+</div>
+</aside>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Product Hub — Prototype v2</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --indigo: #4F46E5;
+  --navy: #1A1740;
+  --sidebar: 300px;
+  --topbar: 50px;
+  --bottombar: 42px;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #0d0d12;
+  color: #fff;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── TOP BAR ── */
+#topbar {
+  height: var(--topbar);
+  background: #111118;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  flex-shrink: 0;
+  z-index: 30;
+}
+
+.logo-mark {
+  width: 26px; height: 26px;
+  background: var(--indigo);
+  clip-path: polygon(50% 0%,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 800; flex-shrink: 0;
+}
+
+.top-divider {
+  width: 1px; height: 20px;
+  background: rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+
+#screen-id {
+  font-size: 11px; font-weight: 700;
+  padding: 3px 9px; border-radius: 5px;
+  flex-shrink: 0;
+}
+
+#screen-title {
+  font-size: 12.5px; font-weight: 500;
+  color: rgba(255,255,255,0.75);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  flex: 1; min-width: 0;
+}
+
+.topbar-right {
+  display: flex; align-items: center; gap: 6px;
+  margin-left: auto; flex-shrink: 0;
+}
+
+.nav-btn {
+  width: 30px; height: 30px;
+  border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);
+  background: transparent; color: rgba(255,255,255,0.55);
+  font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.12s; line-height: 1;
+}
+.nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.08); color: #fff; }
+.nav-btn:disabled { opacity: 0.2; cursor: default; }
+
+.counter {
+  font-size: 11px; color: rgba(255,255,255,0.28);
+  font-variant-numeric: tabular-nums; padding: 0 2px;
+}
+
+/* ── BODY ROW ── */
+#body-row {
+  flex: 1; display: flex; overflow: hidden; min-height: 0;
+}
+
+/* ── SIDEBAR ── */
+#sidebar {
+  width: var(--sidebar); min-width: var(--sidebar);
+  background: var(--navy);
+  display: flex; flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  z-index: 20;
+}
+
+/* Sidebar nav */
+#sidebar-nav {
+  flex: 1; overflow-y: auto; padding: 8px 0;
+  min-height: 0;
+}
+#sidebar-nav::-webkit-scrollbar { width: 3px; }
+#sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+.flow-group { margin-bottom: 2px; }
+
+.flow-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 5px 16px 3px;
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.28);
+  cursor: pointer; user-select: none;
+  transition: color 0.12s;
+}
+.flow-header:hover { color: rgba(255,255,255,0.5); }
+.flow-chevron { font-size: 8px; transition: transform 0.2s; }
+.flow-header.collapsed .flow-chevron { transform: rotate(-90deg); }
+
+.flow-screens { overflow: hidden; transition: max-height 0.22s ease; }
+.flow-screens.collapsed { max-height: 0 !important; }
+
+.screen-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 6px 14px 6px 16px;
+  cursor: pointer; border-left: 2px solid transparent;
+  font-size: 11px; color: rgba(255,255,255,0.45);
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.screen-item:hover { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.75); }
+.screen-item.active {
+  background: rgba(79,70,229,0.16);
+  border-left-color: var(--indigo);
+  color: #fff; font-weight: 500;
+}
+
+.id-chip {
+  font-size: 9px; font-weight: 700;
+  padding: 2px 5px; border-radius: 3px;
+  flex-shrink: 0; letter-spacing: 0.04em;
+}
+
+/* ── SIDEBAR INFO PANEL ── */
+#sidebar-info {
+  flex-shrink: 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 16px 18px 18px;
+  background: rgba(0,0,0,0.25);
+  overflow-y: auto;
+  max-height: 320px;
+}
+#sidebar-info::-webkit-scrollbar { width: 3px; }
+#sidebar-info::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+
+.info-eyebrow {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.2);
+  margin-bottom: 10px;
+}
+
+#info-flow-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px; border-radius: 20px;
+  font-size: 10px; font-weight: 600;
+  margin-bottom: 9px;
+}
+
+#info-heading {
+  font-size: 13px; font-weight: 700; color: #fff;
+  line-height: 1.3; margin-bottom: 8px;
+}
+
+#info-body {
+  font-size: 11px; line-height: 1.65;
+  color: rgba(255,255,255,0.48);
+  margin-bottom: 12px;
+}
+
+#info-features { display: flex; flex-direction: column; gap: 5px; }
+
+.feat-row {
+  display: flex; align-items: flex-start; gap: 7px;
+  font-size: 10.5px; color: rgba(255,255,255,0.38); line-height: 1.4;
+}
+.feat-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 5px;
+}
+
+/* ── MAIN AREA ── */
+#main {
+  flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0;
+}
+
+/* ── VIEWPORT ── */
+#viewport {
+  flex: 1; position: relative; overflow: hidden;
+  background: #09090e;
+}
+
+/* Scrollable wrapper — always scrollable vertically */
+#frame-wrapper {
+  position: absolute; inset: 0;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+#frame-wrapper::-webkit-scrollbar { width: 7px; height: 7px; }
+#frame-wrapper::-webkit-scrollbar-track { background: #09090e; }
+#frame-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 4px; }
+#frame-wrapper::-webkit-scrollbar-corner { background: #09090e; }
+
+#screen-frame {
+  display: block;
+  border: none;
+  pointer-events: none; /* KEY: blocks all iframe interaction */
+  background: #fff;
+  transition: opacity 0.18s ease;
+}
+#screen-frame.fading { opacity: 0; }
+
+/* Zoom controls */
+.top-sep { width: 1px; height: 18px; background: rgba(255,255,255,0.07); flex-shrink: 0; }
+#zoom-display {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.45); min-width: 38px; text-align: center;
+  cursor: default;
+}
+#zoom-display.zoomed-in { color: #818CF8; }
+
+/* Click-zone overlay — intercepts ALL mouse events from iframe */
+#overlay {
+  position: absolute; inset: 0;
+  z-index: 10;
+  display: flex;
+}
+
+.click-zone {
+  flex: 1; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+  font-size: 32px; color: rgba(255,255,255,0.7);
+  font-weight: 300;
+}
+.click-zone:hover { opacity: 1; }
+
+#zone-prev { background: linear-gradient(to right, rgba(0,0,0,0.18), transparent); }
+#zone-next { background: linear-gradient(to left, rgba(0,0,0,0.18), transparent); }
+
+/* ── BOTTOM BAR ── */
+#bottombar {
+  height: var(--bottombar);
+  background: #111118;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+  gap: 5px; flex-shrink: 0; padding: 0 16px;
+}
+
+.dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  cursor: pointer; flex-shrink: 0;
+  transition: all 0.15s;
+}
+.dot:hover { background: rgba(255,255,255,0.35); }
+.dot.active { width: 16px; border-radius: 3px; background: var(--indigo); }
+.dot.visited { background: rgba(79,70,229,0.38); }
+
+/* ── FLOW COLOR TOKENS ── */
+/* Applied via JS inline styles using FLOW_COLORS map */
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="logo-mark">PH</div>
+  <div class="top-divider"></div>
+  <div id="screen-id"></div>
+  <div id="screen-title"></div>
+  <div class="topbar-right">
+    <button class="nav-btn" id="btn-prev" title="Previous (←)">‹</button>
+    <span class="counter" id="counter"></span>
+    <button class="nav-btn" id="btn-next" title="Next (→)">›</button>
+    <div class="top-sep"></div>
+    <button class="nav-btn" id="btn-zoom-out" title="Zoom out (−)">−</button>
+    <span id="zoom-display">Fit</span>
+    <button class="nav-btn" id="btn-zoom-in" title="Zoom in (+)">+</button>
+    <button class="nav-btn" id="btn-zoom-reset" title="Reset zoom to 1×" style="font-size:9px;letter-spacing:0.04em;width:auto;padding:0 7px;">1×</button>
+  </div>
+</div>
+
+<!-- BODY ROW -->
+<div id="body-row">
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div id="sidebar-nav"></div>
+
+    <div id="sidebar-info">
+      <div class="info-eyebrow">About This Screen</div>
+      <div id="info-flow-chip"></div>
+      <div id="info-heading"></div>
+      <div id="info-body"></div>
+      <div id="info-features"></div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div id="viewport">
+      <div id="frame-wrapper">
+        <iframe id="screen-frame" tabindex="-1" scrolling="no"></iframe>
+      </div>
+      <div id="overlay">
+        <div class="click-zone" id="zone-prev">‹</div>
+        <div class="click-zone" id="zone-next">›</div>
+      </div>
+    </div>
+    <div id="bottombar"></div>
+  </div>
+
+</div>
+
+<script>
+const RAW = id => `screens/${id}.html`;
+
+const FC = {
+  A: { text: '#60A5FA', bg: 'rgba(96,165,250,0.14)',  name: 'Authentication'    },
+  B: { text: '#A78BFA', bg: 'rgba(167,139,250,0.14)', name: 'Submission & PRD'  },
+  C: { text: '#34D399', bg: 'rgba(52,211,153,0.14)',  name: 'AI Processing'     },
+  D: { text: '#FBBF24', bg: 'rgba(251,191,36,0.14)',  name: 'Backlog & Planning' },
+  E: { text: '#F87171', bg: 'rgba(248,113,113,0.14)', name: 'Delivery'          },
+  Z: { text: '#9CA3AF', bg: 'rgba(156,163,175,0.14)', name: 'Admin'             },
+};
+
+const SCREENS = [
+
+  // ── A — Authentication ──────────────────────────────────────────────
+  {
+    id: 'A01', flow: 'A',
+    nodeId: '2089366f99e34f589babaa243a95f00c',
+    w: 2560, h: 2048,
+    title: 'Login — Product Hub',
+    about: {
+      heading: 'Secure Entry Point',
+      body: 'Authenticates product team members using SSO (Google / Okta) or email and password. After login, role-based routing sends PMs, Developers, and Stakeholders to their relevant workspace view.',
+      features: [
+        'Google SSO & Okta integration',
+        'Role-based workspace routing',
+        'Multi-team / multi-workspace',
+        'Session persistence & MFA'
+      ]
+    }
+  },
+  {
+    id: 'A02', flow: 'A',
+    nodeId: '6dbe16f984864cb988e003ecb561b42b',
+    w: 2560, h: 2560,
+    title: 'Product Hub Dashboard',
+    about: {
+      heading: 'Command Centre',
+      body: 'Birds-eye overview of the entire product pipeline — active submissions, PRD statuses, backlog health, and delivery progress — surfaced in one actionable view. AI highlights blocked items and recent decisions.',
+      features: [
+        'Pipeline health at a glance',
+        'AI-surfaced blockers & risks',
+        'Quick-navigate to any flow',
+        'Team activity & audit trail'
+      ]
+    }
+  },
+
+  // ── B — Submission & PRD ────────────────────────────────────────────
+  {
+    id: 'B01', flow: 'B',
+    nodeId: '04deacba32f54514b239bb6e03c6076f',
+    w: 2560, h: 2692,
+    title: 'Submit a Request',
+    about: {
+      heading: 'Structured Idea Intake',
+      body: 'Captures new product ideas, feature requests, or bug fixes through a structured form. Requires problem statement, business impact, target customer segment, and a rough priority estimate. AI pre-fills context from similar past submissions.',
+      features: [
+        'AI-assisted form pre-fill',
+        'Business impact framing',
+        'Customer segment tagging',
+        'Triggers PRD Builder pipeline'
+      ]
+    }
+  },
+  {
+    id: 'B02', flow: 'B',
+    nodeId: '6fdd155dd5fd45f28b3b803c37aa45a9',
+    w: 2688, h: 2048,
+    title: 'PRD Builder Workspace',
+    about: {
+      heading: 'AI-Powered PRD Authoring',
+      body: 'Three-panel workspace: Luminary AI conversation on the left, a live editable PRD document in the centre, and contextual references on the right. The AI drafts goals, success metrics, user stories, and constraints — PMs iterate inline.',
+      features: [
+        'Luminary AI co-authoring',
+        'Structured PRD sections',
+        'Inline edit & prompt iteration',
+        'Version history & change log'
+      ]
+    }
+  },
+  {
+    id: 'B03', flow: 'B',
+    nodeId: 'b8c9220fa5494d2db9a657722c59c824',
+    w: 2560, h: 3060,
+    title: 'Request Tracking',
+    about: {
+      heading: 'Submission Pipeline View',
+      body: 'Tracks a submission through every stage from intake → PRD → evaluation → backlog → delivery. Shows reviewer activity, AI confidence scores, stakeholder comments, and current blockers so PMs can act quickly.',
+      features: [
+        'Stage-by-stage pipeline tracker',
+        'Reviewer & approval history',
+        'AI confidence scores',
+        'Escalation & blocker flags'
+      ]
+    }
+  },
+  {
+    id: 'B04', flow: 'B',
+    nodeId: '05dce0772a084bffa0388a76e583fba4',
+    w: 2560, h: 5352,
+    title: 'PRD Document Viewer',
+    about: {
+      heading: 'Rich PRD Review',
+      body: 'Read-only structured view of the finalised PRD with sections for Overview, Problem Statement, Goals, Non-Goals, User Stories, Success Metrics, and Risks. Supports inline stakeholder comments and version diffs.',
+      features: [
+        'Structured, navigable sections',
+        'Inline stakeholder comments',
+        'Version history & diffs',
+        'Export: Confluence / Notion / PDF'
+      ]
+    }
+  },
+  {
+    id: 'B05', flow: 'B',
+    nodeId: '0d06fbc1c3ee4fa0b4c8e97144e722ba',
+    w: 2560, h: 2048,
+    title: 'PRD Evaluation Dashboard',
+    about: {
+      heading: 'Stakeholder Approval Gate',
+      body: 'AI evaluates the PRD against business goals, technical feasibility, and resource constraints. Stakeholders see scoring with risk flags and can approve, request revisions, or escalate before the feature enters the priority backlog.',
+      features: [
+        'AI feasibility scoring',
+        'Risk & dependency flags',
+        'Stakeholder approval flow',
+        'Feeds directly into backlog'
+      ]
+    }
+  },
+
+  // ── C — AI Processing ───────────────────────────────────────────────
+  {
+    id: 'C01', flow: 'C',
+    nodeId: '8d7fbfe38e10455e8d0c06e472cdb637',
+    w: 2560, h: 2048,
+    title: 'Research & Analysis',
+    about: {
+      heading: 'Automated Research Layer',
+      body: 'Pulls market data, competitor intelligence, and customer feedback related to the PRD topic. Luminary AI synthesises findings, highlights knowledge gaps, and suggests supporting evidence for prioritisation decisions.',
+      features: [
+        'Market data aggregation',
+        'Competitor intelligence',
+        'Customer feedback synthesis',
+        'Gap analysis & evidence links'
+      ]
+    }
+  },
+  {
+    id: 'C02', flow: 'C',
+    nodeId: '3515e57fb9614b98a6889037aa5dc65a',
+    w: 2560, h: 2594,
+    title: 'RICE Scoring',
+    about: {
+      heading: 'Priority Scoring Engine',
+      body: 'Applies Reach, Impact, Confidence, and Effort criteria to rank the feature objectively. AI pre-populates scores using PRD content and historical delivery data, which PMs can adjust with written justifications.',
+      features: [
+        'AI-suggested RICE scores',
+        'Manual override with notes',
+        'Comparative ranking view',
+        'Direct backlog integration'
+      ]
+    }
+  },
+  {
+    id: 'C03', flow: 'C',
+    nodeId: '80c0c9a2a0df4c35a30e167424de3b6f',
+    w: 2560, h: 2048,
+    title: 'SpecKit — PRD to User Stories',
+    about: {
+      heading: 'Story Breakdown Engine',
+      body: 'Automatically decomposes the approved PRD into Jira-ready user stories, acceptance criteria, and technical tasks. AI maps work to domain teams and provides story point estimates, ready for sprint planning.',
+      features: [
+        'Auto-generated user stories',
+        'Acceptance criteria per story',
+        'Domain team auto-assignment',
+        'Jira / Linear / CSV export'
+      ]
+    }
+  },
+  {
+    id: 'C04', flow: 'C',
+    nodeId: '0a50411d60b24880b11e829f786d650c',
+    w: 2560, h: 2620,
+    title: 'Figma Design Generation',
+    about: {
+      heading: 'Design Brief Creation',
+      body: 'Generates a structured design brief from the PRD — component suggestions, layout requirements, and user flow diagrams. Connects to Figma via API to scaffold initial frames, giving designers a ready-to-build starting point.',
+      features: [
+        'AI design brief from PRD',
+        'Component & pattern suggestions',
+        'User flow diagram generation',
+        'Figma API frame scaffolding'
+      ]
+    }
+  },
+
+  // ── D — Backlog & Planning ──────────────────────────────────────────
+  {
+    id: 'D01', flow: 'D',
+    nodeId: 'ae8f0f07601345b995c0cebbb618299b',
+    w: 2560, h: 2048,
+    title: 'Priority Backlog Board',
+    about: {
+      heading: 'Unified Feature Backlog',
+      body: 'Kanban view of all approved features sorted by RICE score and strategic alignment. Drag-and-drop to reorder. Filters by domain, quarter, and team capacity. Shows dependencies and release constraints in context.',
+      features: [
+        'RICE-sorted kanban layout',
+        'Drag-and-drop reprioritisation',
+        'Dependency & blocker links',
+        'Capacity & velocity view'
+      ]
+    }
+  },
+  {
+    id: 'D02', flow: 'D',
+    nodeId: '63a3075a5ec24cbea317ef521ce04e36',
+    w: 2560, h: 2524,
+    title: 'Domain Backlogs',
+    about: {
+      heading: 'Team-Scoped Queues',
+      body: 'Each product domain (Payments, Auth, Checkout, etc.) has its own filtered backlog. Domain leads manage their queue independently while cross-domain dependencies remain visible to the whole organisation.',
+      features: [
+        'Domain-filtered backlog views',
+        'Team capacity planning',
+        'Cross-domain dependency flags',
+        'Distributed ownership model'
+      ]
+    }
+  },
+  {
+    id: 'D03', flow: 'D',
+    nodeId: '528fc28fe55c4d19979024c97f054571',
+    w: 2560, h: 2132,
+    title: 'Quarterly Roadmap — Q2 2026',
+    about: {
+      heading: 'Strategic Timeline',
+      body: 'Visual timeline of committed and tentative features across the quarter, colour-coded by domain. Stakeholders can track planned releases and milestones. Auto-updated as backlog priorities shift, exportable for leadership reviews.',
+      features: [
+        'Quarter-level timeline view',
+        'Domain colour-coded lanes',
+        'Release milestone markers',
+        'Export to slides / PDF'
+      ]
+    }
+  },
+  {
+    id: 'D04', flow: 'D',
+    nodeId: '990029391a7f45d0a932a0d88ea69765',
+    w: 2560, h: 2422,
+    title: 'Tech Handover Package',
+    about: {
+      heading: 'Engineering Handover',
+      body: 'Auto-generated from the PRD and SpecKit stories. Contains system diagrams, API contracts, data models, and full acceptance criteria. Tracks open questions and technical debt items so engineering starts with full context.',
+      features: [
+        'Auto-generated from PRD + SpecKit',
+        'API contracts & data models',
+        'Open questions tracker',
+        'Replaces unstructured handover meetings'
+      ]
+    }
+  },
+
+  // ── E — Delivery ────────────────────────────────────────────────────
+  {
+    id: 'E01', flow: 'E',
+    nodeId: '08a180be6af44819a884626a604de84a',
+    w: 2560, h: 2048,
+    title: 'Delivery Tracker Dashboard',
+    about: {
+      heading: 'Real-Time Delivery View',
+      body: 'Live status of all features in active development, pulling data from Jira, Linear, and CI pipelines. Sprint burn-down, blocker cards, and AI-suggested mitigation actions surface when delays are detected.',
+      features: [
+        'Jira / Linear live sync',
+        'Sprint burn-down charts',
+        'Blocker & delay alerts',
+        'AI mitigation suggestions'
+      ]
+    }
+  },
+  {
+    id: 'E02', flow: 'E',
+    nodeId: '27bcb99d262546d9b3f4104d2ca2a2fd',
+    w: 2560, h: 2048,
+    title: 'UAT Testing',
+    about: {
+      heading: 'Acceptance Testing Workflow',
+      body: 'Auto-generated test cases from acceptance criteria in SpecKit. Testers record pass/fail, attach screenshots as evidence, and raise issues. AI triages defects and suggests fixes. Sign-off required before release notes are generated.',
+      features: [
+        'Auto-generated test cases',
+        'Evidence attachment per test',
+        'AI defect triage & suggestions',
+        'Sign-off gate before release'
+      ]
+    }
+  },
+  {
+    id: 'E03', flow: 'E',
+    nodeId: '5095788a0a7a468ba402e920a65a1714',
+    w: 2560, h: 3454,
+    title: 'Release Notes Editor',
+    about: {
+      heading: 'Release Communication',
+      body: 'AI drafts release notes from completed user stories and UAT results. PMs control tone for internal, external, or technical audiences. One-click publish to product changelog, Slack channel, or email digest.',
+      features: [
+        'AI-drafted from UAT results',
+        'Audience tone selector',
+        'Publish to changelog / Slack',
+        'Versioned release history'
+      ]
+    }
+  },
+  {
+    id: 'E04', flow: 'E',
+    nodeId: '44b26eb2adf344e78023fb942230cbfe',
+    w: 2560, h: 2262,
+    title: 'Success Metrics Dashboard',
+    about: {
+      heading: 'Post-Release Monitoring',
+      body: 'Tracks PRD-defined KPIs post-launch using real analytics data from Amplitude, Mixpanel, or Segment. AI compares actuals vs. targets, surfaces anomalies, and closes the product feedback loop.',
+      features: [
+        'Analytics platform integrations',
+        'KPI vs. target tracking',
+        'AI anomaly detection',
+        'Closes the PRD feedback loop'
+      ]
+    }
+  },
+
+  // ── Z — Admin ───────────────────────────────────────────────────────
+  {
+    id: 'Z01', flow: 'Z',
+    nodeId: '94b950f09b9347398ddb9ec7c6eaab2c',
+    w: 2560, h: 3246,
+    title: 'Admin Settings — LLM Usage & Costs',
+    about: {
+      heading: 'Workspace Administration',
+      body: 'Manages AI model usage, API key configuration, and cost attribution by feature and team. Admins set budget alerts, choose models per workflow, and access full audit logs. Restricted to workspace administrators.',
+      features: [
+        'Token usage by team & flow',
+        'Budget alerts & spend limits',
+        'Model selection per workflow',
+        'Audit logs & compliance export'
+      ]
+    }
+  },
+];
+
+// ── State ──────────────────────────────────────────────────────────────
+let current = 0;
+const visited = new Set([0]);
+
+// ── Sidebar nav ────────────────────────────────────────────────────────
+function buildNav() {
+  const nav = document.getElementById('sidebar-nav');
+  const flows = [...new Set(SCREENS.map(s => s.flow))];
+
+  flows.forEach(flow => {
+    const fc = FC[flow];
+    const flowScreens = SCREENS.filter(s => s.flow === flow);
+
+    const group = document.createElement('div');
+    group.className = 'flow-group';
+
+    // Header
+    const hdr = document.createElement('div');
+    hdr.className = 'flow-header';
+    hdr.style.color = fc.text;
+    hdr.innerHTML = `<span>${flow} — ${fc.name}</span><span class="flow-chevron">▾</span>`;
+    hdr.addEventListener('click', () => {
+      screensEl.classList.toggle('collapsed');
+      hdr.classList.toggle('collapsed');
+    });
+
+    // Screens list
+    const screensEl = document.createElement('div');
+    screensEl.className = 'flow-screens';
+    screensEl.style.maxHeight = (flowScreens.length * 32) + 'px';
+
+    flowScreens.forEach(s => {
+      const idx = SCREENS.indexOf(s);
+      const item = document.createElement('div');
+      item.className = 'screen-item';
+      item.id = `nav-${s.id}`;
+
+      const chip = document.createElement('span');
+      chip.className = 'id-chip';
+      chip.style.background = fc.bg;
+      chip.style.color = fc.text;
+      chip.textContent = s.id;
+
+      const lbl = document.createElement('span');
+      lbl.textContent = s.title;
+      lbl.style.cssText = 'overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;';
+
+      item.append(chip, lbl);
+      item.addEventListener('click', () => goTo(idx));
+      screensEl.appendChild(item);
+    });
+
+    group.append(hdr, screensEl);
+    nav.appendChild(group);
+  });
+}
+
+// ── Zoom state (per screen id) ─────────────────────────────────────────
+const zoomMap = {};
+const ZOOM_STEPS = [0.5, 0.67, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0];
+
+function getUserZoom(id)       { return zoomMap[id] ?? 1.0; }
+function setUserZoom(id, val)  { zoomMap[id] = Math.max(0.5, Math.min(3.0, val)); }
+
+function stepZoom(dir) {
+  const id = SCREENS[current].id;
+  const cur = getUserZoom(id);
+  // Find nearest step and move one in dir
+  let idx = ZOOM_STEPS.reduce((best, v, i) =>
+    Math.abs(v - cur) < Math.abs(ZOOM_STEPS[best] - cur) ? i : best, 0);
+  idx = Math.max(0, Math.min(ZOOM_STEPS.length - 1, idx + dir));
+  setUserZoom(id, ZOOM_STEPS[idx]);
+  scaleFrame(SCREENS[current]);
+  updateZoomUI();
+}
+
+function resetZoom() {
+  setUserZoom(SCREENS[current].id, 1.0);
+  scaleFrame(SCREENS[current]);
+  updateZoomUI();
+}
+
+function updateZoomUI() {
+  const z = getUserZoom(SCREENS[current].id);
+  const el = document.getElementById('zoom-display');
+  el.textContent = `${z}×`;
+  el.classList.toggle('zoomed-in', z !== 1.0);
+  document.getElementById('btn-zoom-reset').style.opacity = z === 1.0 ? '0.35' : '1';
+}
+
+// ── Iframe scaling ─────────────────────────────────────────────────────
+// Always render at BASE_WIDTH pixels wide. Height scrolls freely.
+const BASE_WIDTH = 1280;
+
+function scaleFrame(s) {
+  const vp      = document.getElementById('viewport');
+  const wrapper = document.getElementById('frame-wrapper');
+  const frame   = document.getElementById('screen-frame');
+  const vw      = vp.clientWidth;
+
+  const baseScale = BASE_WIDTH / s.w;       // normalise to 1280px
+  const userZoom  = getUserZoom(s.id);
+  const totalZoom = baseScale * userZoom;
+
+  const scaledW = s.w * totalZoom;          // = 1280 * userZoom
+
+  frame.style.width  = s.w + 'px';
+  frame.style.height = s.h + 'px';
+  frame.style.zoom   = totalZoom;           // CSS zoom → layout-aware, scrollbar works
+
+  // Centre horizontally if narrower than viewport; start from top always
+  frame.style.marginLeft = Math.max(0, (vw - scaledW) / 2) + 'px';
+  frame.style.marginTop  = '0px';
+
+  wrapper.scrollTop  = 0;
+  wrapper.scrollLeft = 0;
+}
+
+// ── Render ─────────────────────────────────────────────────────────────
+function render(idx) {
+  const s = SCREENS[idx];
+  const fc = FC[s.flow];
+  const frame = document.getElementById('screen-frame');
+
+  // Fade swap iframe
+  frame.classList.add('fading');
+  setTimeout(() => {
+    frame.src = RAW(s.id);
+    scaleFrame(s);
+    frame.classList.remove('fading');
+  }, 160);
+
+  updateZoomUI();
+
+  // Top bar
+  const idEl = document.getElementById('screen-id');
+  idEl.textContent = s.id;
+  idEl.style.background = fc.bg;
+  idEl.style.color = fc.text;
+  document.getElementById('screen-title').textContent = s.title;
+  document.getElementById('counter').textContent = `${idx + 1} / ${SCREENS.length}`;
+  document.getElementById('btn-prev').disabled = idx === 0;
+  document.getElementById('btn-next').disabled = idx === SCREENS.length - 1;
+
+  // Sidebar active
+  document.querySelectorAll('.screen-item').forEach(el => el.classList.remove('active'));
+  const active = document.getElementById(`nav-${s.id}`);
+  if (active) {
+    active.classList.add('active');
+    active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  // Info panel
+  const chip = document.getElementById('info-flow-chip');
+  chip.textContent = `${s.flow} · ${fc.name}`;
+  chip.style.background = fc.bg;
+  chip.style.color = fc.text;
+
+  document.getElementById('info-heading').textContent = s.about.heading;
+  document.getElementById('info-body').textContent = s.about.body;
+
+  const featsEl = document.getElementById('info-features');
+  featsEl.innerHTML = '';
+  s.about.features.forEach(f => {
+    const row = document.createElement('div');
+    row.className = 'feat-row';
+    const dot = document.createElement('div');
+    dot.className = 'feat-dot';
+    dot.style.background = fc.text;
+    dot.style.opacity = '0.45';
+    const txt = document.createElement('span');
+    txt.textContent = f;
+    row.append(dot, txt);
+    featsEl.appendChild(row);
+  });
+
+  // Dots
+  const bar = document.getElementById('bottombar');
+  bar.innerHTML = '';
+  SCREENS.filter(sc => sc.flow === s.flow).forEach(sc => {
+    const i = SCREENS.indexOf(sc);
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === idx ? ' active' : '') + (visited.has(i) && i !== idx ? ' visited' : '');
+    dot.style.background = i === idx ? fc.text : '';
+    dot.title = sc.id;
+    dot.addEventListener('click', () => goTo(i));
+    bar.appendChild(dot);
+  });
+
+  visited.add(idx);
+}
+
+// ── Navigation ─────────────────────────────────────────────────────────
+function goTo(idx) {
+  if (idx < 0 || idx >= SCREENS.length) return;
+  current = idx;
+  render(idx);
+}
+
+function navigate(dir) {
+  goTo(Math.max(0, Math.min(SCREENS.length - 1, current + dir)));
+}
+
+// ── Events ─────────────────────────────────────────────────────────────
+document.getElementById('btn-prev').addEventListener('click', () => navigate(-1));
+document.getElementById('btn-next').addEventListener('click', () => navigate(1));
+
+document.getElementById('zone-prev').addEventListener('click', () => navigate(-1));
+document.getElementById('zone-next').addEventListener('click', () => navigate(1));
+
+document.getElementById('btn-zoom-in').addEventListener('click',    () => stepZoom(1));
+document.getElementById('btn-zoom-out').addEventListener('click',   () => stepZoom(-1));
+document.getElementById('btn-zoom-reset').addEventListener('click', () => resetZoom());
+
+// Always forward wheel/scroll to wrapper (content always taller than viewport)
+document.getElementById('overlay').addEventListener('wheel', e => {
+  e.preventDefault();
+  const wrapper = document.getElementById('frame-wrapper');
+  wrapper.scrollTop  += e.deltaY;
+  wrapper.scrollLeft += e.deltaX;
+}, { passive: false });
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+  if (e.key === 'Home') goTo(0);
+  if (e.key === 'End')  goTo(SCREENS.length - 1);
+  // Zoom: + / = to zoom in, - to zoom out, 0 to reset
+  if ((e.key === '+' || e.key === '=') && !e.ctrlKey && !e.metaKey) stepZoom(1);
+  if (e.key === '-' && !e.ctrlKey && !e.metaKey) stepZoom(-1);
+  if (e.key === '0' && !e.ctrlKey && !e.metaKey) resetZoom();
+
+  const k = e.key.toUpperCase();
+  if (['A','B','C','D','E','Z'].includes(k) && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    const idx = SCREENS.findIndex(s => s.flow === k);
+    if (idx >= 0) goTo(idx);
+  }
+});
+
+// Resize
+window.addEventListener('resize', () => scaleFrame(SCREENS[current]));
+
+// ── Init ───────────────────────────────────────────────────────────────
+buildNav();
+render(0);
+</script>
+</body>
+</html>

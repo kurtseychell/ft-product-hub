@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Admin - LLM Usage &amp; Costs</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#e0e0e0",
+                    "surface-container": "#f4f4f4",
+                    "tertiary-container": "#a7f0ba",
+                    "error-container": "#fff1f1",
+                    "primary-fixed": "#d0e2ff",
+                    "inverse-surface": "#393939",
+                    "on-tertiary-fixed-variant": "#044317",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#f4f4f4",
+                    "on-surface": "#161616",
+                    "on-error-container": "#750e13",
+                    "tertiary-fixed-dim": "#42be65",
+                    "tertiary": "#198038",
+                    "on-tertiary-container": "#044317",
+                    "secondary-fixed-dim": "#c6c6c6",
+                    "on-primary-fixed": "#001d6c",
+                    "on-error": "#ffffff",
+                    "inverse-primary": "#78a9ff",
+                    "surface-container-low": "#f4f4f4",
+                    "on-tertiary-fixed": "#022d0d",
+                    "on-secondary-container": "#525252",
+                    "error": "#da1e28",
+                    "primary-container": "#d0e2ff",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#a7f0ba",
+                    "surface-tint": "#0f62fe",
+                    "on-secondary-fixed-variant": "#525252",
+                    "on-secondary-fixed": "#161616",
+                    "surface-variant": "#f4f4f4",
+                    "secondary-container": "#e0e0e0",
+                    "outline": "#8d8d8d",
+                    "on-background": "#161616",
+                    "primary": "#4f46e5",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#c6c6c6",
+                    "secondary": "#6f6f6f",
+                    "on-primary-fixed-variant": "#0043ce",
+                    "on-primary-container": "#161616",
+                    "background": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "on-surface-variant": "#525252",
+                    "surface-dim": "#e0e0e0",
+                    "surface-container-high": "#e0e0e0",
+                    "surface-bright": "#ffffff",
+                    "surface": "#ffffff",
+                    "outline-variant": "#e0e0e0",
+                    "primary-fixed-dim": "#78a9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["IBM Plex Sans"],
+                    "body": ["IBM Plex Sans"],
+                    "label": ["IBM Plex Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'IBM Plex Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f4f4f4; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c6c6c6; }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 border-r fixed left-0 top-0 bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 flex flex-col py-4 z-50">
+<div class="px-6 mb-8">
+<h1 class="text-lg font-bold text-zinc-900 dark:text-zinc-50 tracking-tighter">Product Admin</h1>
+</div>
+<div class="px-4 mb-4">
+<p class="text-[10px] uppercase tracking-widest text-secondary mb-2 px-2">Administration</p>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 font-sans text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">monitoring</span>
+<span>LLM Usage &amp; Costs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 font-sans text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span>Manage Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-zinc-200 dark:bg-zinc-800 text-primary dark:text-blue-400 font-sans text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Platform Settings</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto px-4">
+<a class="flex items-center gap-3 px-3 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-800 font-sans text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 ml-64 min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="w-full sticky top-0 z-40 border-b bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 flex items-center justify-between px-6 h-14">
+<div class="flex items-center gap-8">
+<h2 class="text-xl font-semibold tracking-tighter text-zinc-900 dark:text-zinc-50">Admin Settings</h2>
+<nav class="flex h-14">
+<a class="flex items-center px-4 text-primary font-medium border-b-2 border-primary text-sm h-full" href="#">LLM Usage &amp; Costs</a>
+<a class="flex items-center px-4 text-zinc-400 cursor-not-allowed text-sm h-full" href="#">Manage Users</a>
+<a class="flex items-center px-4 text-zinc-400 cursor-not-allowed text-sm h-full" href="#">Platform Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-zinc-500 hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-zinc-500 hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-8 bg-zinc-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Professional male avatar with warm lighting and neutral background for enterprise profile icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7AXDtVmEcZnO5SVFXUlEyzjAYe4Bzm7R5f3ChdtNpponxRzPnVxdPOY3fLHq7soNmqUlsaq8w4MYCfbI1IqwEqyql4lTrJb5NTH829V5fItiTcgc3RP1i0j_yOyyn3aMal8fnzcB_5TMD079MB-am7TIEzv9UCxU8Yxw8KWSqlqT7jGsfOjSQHpcCFChiRs00iFRXIh6olR-Ge1o8_Q0sJsXExJFisjVxhnxJZdUTmbibEoV-8hanBzPW_yE0dD9TiejdO_bI6Go"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-8 max-w-7xl w-full mx-auto space-y-8">
+<!-- Top Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Monthly Spend -->
+<div class="bg-surface-container p-4 space-y-4">
+<div class="flex justify-between items-start">
+<span class="text-xs font-semibold text-secondary uppercase tracking-wider">Monthly Spend</span>
+<span class="material-symbols-outlined text-primary">account_balance_wallet</span>
+</div>
+<div>
+<div class="text-3xl font-light">$2,847</div>
+<div class="mt-2 flex items-center justify-between text-[10px] text-on-surface-variant">
+<span>Used 71% of $4,000 budget</span>
+</div>
+<div class="mt-1 h-1 w-full bg-secondary-container">
+<div class="h-1 bg-primary" style="width: 71%"></div>
+</div>
+</div>
+</div>
+<!-- Total API Calls -->
+<div class="bg-surface-container p-4 space-y-4">
+<div class="flex justify-between items-start">
+<span class="text-xs font-semibold text-secondary uppercase tracking-wider">Total API Calls</span>
+<span class="material-symbols-outlined text-primary">api</span>
+</div>
+<div>
+<div class="text-3xl font-light">12,430</div>
+<div class="mt-2 text-[10px] text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">trending_up</span>
+<span>+12% from last month</span>
+</div>
+</div>
+</div>
+<!-- Avg Cost per PRD -->
+<div class="bg-surface-container p-4 space-y-4">
+<div class="flex justify-between items-start">
+<span class="text-xs font-semibold text-secondary uppercase tracking-wider">Avg Cost per PRD</span>
+<span class="material-symbols-outlined text-primary">description</span>
+</div>
+<div>
+<div class="text-3xl font-light">$1.24</div>
+<div class="mt-2 text-[10px] text-on-surface-variant">Optimized for GPT-4o-mini</div>
+</div>
+</div>
+</div>
+<!-- Main Grid: Chart and Configuration -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Chart Area -->
+<div class="lg:col-span-2 bg-surface-container p-6">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="text-sm font-semibold text-on-surface">Daily LLM Spend</h3>
+<p class="text-xs text-on-surface-variant">Last 30 days usage trajectory</p>
+</div>
+<div class="flex items-center gap-4 text-[10px] font-medium text-on-surface-variant">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 bg-primary"></span> Spend
+                            </div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 border-t-2 border-dashed border-error"></span> Threshold
+                            </div>
+</div>
+</div>
+<div class="h-64 flex items-end gap-1 relative">
+<!-- Threshold Line -->
+<div class="absolute bottom-[180px] left-0 w-full border-t border-dashed border-error z-10 opacity-50"></div>
+<!-- Simplified Visual Chart Bars/Sparks -->
+<div class="flex-1 bg-primary/20 h-[30%]"></div>
+<div class="flex-1 bg-primary/20 h-[35%]"></div>
+<div class="flex-1 bg-primary/20 h-[32%]"></div>
+<div class="flex-1 bg-primary/30 h-[45%]"></div>
+<div class="flex-1 bg-primary/30 h-[48%]"></div>
+<div class="flex-1 bg-primary/20 h-[40%]"></div>
+<div class="flex-1 bg-primary/40 h-[55%]"></div>
+<div class="flex-1 bg-primary/50 h-[65%]"></div>
+<div class="flex-1 bg-primary/40 h-[60%]"></div>
+<div class="flex-1 bg-primary/30 h-[50%]"></div>
+<div class="flex-1 bg-primary/60 h-[75%]"></div>
+<div class="flex-1 bg-primary/70 h-[85%]"></div>
+<div class="flex-1 bg-primary/60 h-[70%]"></div>
+<div class="flex-1 bg-primary/50 h-[62%]"></div>
+<div class="flex-1 bg-primary/40 h-[58%]"></div>
+<div class="flex-1 bg-primary/30 h-[45%]"></div>
+<div class="flex-1 bg-primary/40 h-[52%]"></div>
+<div class="flex-1 bg-primary/60 h-[78%]"></div>
+<div class="flex-1 bg-primary/50 h-[65%]"></div>
+<div class="flex-1 bg-primary/40 h-[55%]"></div>
+<div class="flex-1 bg-primary/30 h-[48%]"></div>
+<div class="flex-1 bg-primary/40 h-[60%]"></div>
+<div class="flex-1 bg-primary/50 h-[68%]"></div>
+<div class="flex-1 bg-primary/60 h-[82%]"></div>
+<div class="flex-1 bg-primary/70 h-[92%]"></div>
+<div class="flex-1 bg-primary/80 h-[95%]"></div>
+<div class="flex-1 bg-primary/70 h-[88%]"></div>
+<div class="flex-1 bg-primary/60 h-[75%]"></div>
+<div class="flex-1 bg-primary/50 h-[68%]"></div>
+<div class="flex-1 bg-primary/60 h-[80%]"></div>
+</div>
+</div>
+<!-- Model Configuration -->
+<div class="bg-surface-container p-6 space-y-6">
+<div>
+<h3 class="text-sm font-semibold text-on-surface">Model Configuration</h3>
+<p class="text-xs text-on-surface-variant">Default feature inference models</p>
+</div>
+<div class="space-y-4">
+<div class="space-y-2">
+<label class="text-[10px] font-bold uppercase text-on-surface-variant tracking-wider">PRD Generator</label>
+<select class="w-full h-10 px-3 bg-white border-b border-outline-variant text-sm focus:border-primary outline-none transition-colors">
+<option>GPT-4o</option>
+<option>Claude Sonnet</option>
+<option>Gemini Pro</option>
+</select>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant pt-1">
+<span>Max Tokens: 4,000</span>
+<input class="w-2/3 h-1 bg-secondary-container appearance-none accent-primary cursor-pointer" type="range"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-bold uppercase text-on-surface-variant tracking-wider">Research Bot</label>
+<select class="w-full h-10 px-3 bg-white border-b border-outline-variant text-sm focus:border-primary outline-none transition-colors">
+<option>Claude Sonnet</option>
+<option>GPT-4o</option>
+<option>Gemini Pro</option>
+</select>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant pt-1">
+<span>Max Tokens: 2,500</span>
+<input class="w-2/3 h-1 bg-secondary-container appearance-none accent-primary cursor-pointer" type="range"/>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full bg-primary text-white h-12 text-sm font-semibold hover:opacity-90 transition-opacity">Save Configurations</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Cost Alerts Section -->
+<div class="bg-surface-container p-6">
+<div class="mb-6">
+<h3 class="text-sm font-semibold text-on-surface">Cost Alerts</h3>
+<p class="text-xs text-on-surface-variant">Notification triggers for budget management</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="flex items-center justify-between p-4 bg-white border border-outline-variant">
+<div>
+<div class="text-sm font-medium">50% Threshold</div>
+<div class="text-[10px] text-on-surface-variant">Notify admin@org.com</div>
+</div>
+<input checked="" class="h-5 w-10 bg-secondary-container checked:bg-primary appearance-none cursor-pointer transition-colors relative before:content-[''] before:absolute before:top-1 before:left-1 before:w-3 before:h-3 before:bg-white before:transition-transform checked:before:translate-x-5" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between p-4 bg-white border border-outline-variant">
+<div>
+<div class="text-sm font-medium">75% Threshold</div>
+<div class="text-[10px] text-on-surface-variant">Notify admin@org.com</div>
+</div>
+<input checked="" class="h-5 w-10 bg-secondary-container checked:bg-primary appearance-none cursor-pointer transition-colors relative before:content-[''] before:absolute before:top-1 before:left-1 before:w-3 before:h-3 before:bg-white before:transition-transform checked:before:translate-x-5" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between p-4 bg-white border border-outline-variant">
+<div>
+<div class="text-sm font-medium">90% Threshold</div>
+<div class="text-[10px] text-on-surface-variant">All critical stakeholders</div>
+</div>
+<input class="h-5 w-10 bg-secondary-container checked:bg-primary appearance-none cursor-pointer transition-colors relative before:content-[''] before:absolute before:top-1 before:left-1 before:w-3 before:h-3 before:bg-white before:transition-transform checked:before:translate-x-5" type="checkbox"/>
+</div>
+</div>
+</div>
+<!-- Table: Cost & Usage Breakdown -->
+<div class="bg-surface-container overflow-hidden">
+<div class="p-6 border-b border-outline-variant">
+<h3 class="text-sm font-semibold text-on-surface">Cost &amp; Usage Breakdown</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-white border-b border-outline-variant">
+<tr>
+<th class="p-4 font-semibold text-xs text-on-surface-variant uppercase tracking-wider">Feature</th>
+<th class="p-4 font-semibold text-xs text-on-surface-variant uppercase tracking-wider">API Calls</th>
+<th class="p-4 font-semibold text-xs text-on-surface-variant uppercase tracking-wider">Tokens Used</th>
+<th class="p-4 font-semibold text-xs text-on-surface-variant uppercase tracking-wider">Cost</th>
+<th class="p-4 font-semibold text-xs text-on-surface-variant uppercase tracking-wider">Avg Latency</th>
+<th class="p-4 font-semibold text-xs text-on-surface-variant uppercase tracking-wider">Sparkline</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-white transition-colors">
+<td class="p-4 font-medium">PRD Generator</td>
+<td class="p-4">4,280</td>
+<td class="p-4">2.1M</td>
+<td class="p-4">$1,142.50</td>
+<td class="p-4">1.2s</td>
+<td class="p-4">
+<div class="h-6 w-24 flex items-end gap-0.5">
+<div class="w-full bg-primary h-[30%]"></div>
+<div class="w-full bg-primary h-[60%]"></div>
+<div class="w-full bg-primary h-[40%]"></div>
+<div class="w-full bg-primary h-[80%]"></div>
+<div class="w-full bg-primary h-[50%]"></div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-white transition-colors">
+<td class="p-4 font-medium">RICE Scoring</td>
+<td class="p-4">1,120</td>
+<td class="p-4">450k</td>
+<td class="p-4">$285.40</td>
+<td class="p-4">0.8s</td>
+<td class="p-4">
+<div class="h-6 w-24 flex items-end gap-0.5">
+<div class="w-full bg-primary h-[20%]"></div>
+<div class="w-full bg-primary h-[30%]"></div>
+<div class="w-full bg-primary h-[25%]"></div>
+<div class="w-full bg-primary h-[40%]"></div>
+<div class="w-full bg-primary h-[35%]"></div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-white transition-colors">
+<td class="p-4 font-medium">UAT Assistant</td>
+<td class="p-4">3,890</td>
+<td class="p-4">1.8M</td>
+<td class="p-4">$945.20</td>
+<td class="p-4">1.5s</td>
+<td class="p-4">
+<div class="h-6 w-24 flex items-end gap-0.5">
+<div class="w-full bg-primary h-[50%]"></div>
+<div class="w-full bg-primary h-[70%]"></div>
+<div class="w-full bg-primary h-[60%]"></div>
+<div class="w-full bg-primary h-[90%]"></div>
+<div class="w-full bg-primary h-[85%]"></div>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-white transition-colors">
+<td class="p-4 font-medium">Research Bot</td>
+<td class="p-4">3,140</td>
+<td class="p-4">920k</td>
+<td class="p-4">$473.90</td>
+<td class="p-4">2.1s</td>
+<td class="p-4">
+<div class="h-6 w-24 flex items-end gap-0.5">
+<div class="w-full bg-primary h-[40%]"></div>
+<div class="w-full bg-primary h-[45%]"></div>
+<div class="w-full bg-primary h-[50%]"></div>
+<div class="w-full bg-primary h-[48%]"></div>
+<div class="w-full bg-primary h-[55%]"></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Previews for Other Tabs (Grayed Out) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 opacity-40 pointer-events-none filter grayscale">
+<!-- Manage Users Preview -->
+<div class="bg-surface-container p-6 space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="text-sm font-semibold">Manage Users</h3>
+<div class="px-3 py-1 bg-primary text-white text-[10px] font-bold">INVITE USER</div>
+</div>
+<div class="space-y-2">
+<div class="h-8 bg-white w-full border-b border-outline-variant flex items-center px-2 text-[10px]">Name: Alex Carter (Admin)</div>
+<div class="h-8 bg-white w-full border-b border-outline-variant flex items-center px-2 text-[10px]">Name: Sarah Jin (PM)</div>
+<div class="h-8 bg-white w-full border-b border-outline-variant flex items-center px-2 text-[10px]">Name: Mike Ross (Stakeholder)</div>
+</div>
+<div class="pt-2">
+<div class="text-[10px] font-bold uppercase text-on-surface-variant mb-1">Email Whitelist</div>
+<div class="h-10 bg-white border border-outline-variant p-2 text-[10px]">@company.com, @partners.org</div>
+</div>
+</div>
+<!-- Platform Settings Preview -->
+<div class="bg-surface-container p-6 space-y-4">
+<h3 class="text-sm font-semibold">Platform Settings</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">Organization</span>
+<div class="h-8 bg-white border-b border-outline-variant px-2 flex items-center text-[10px]">IndiSaaS Pro</div>
+</div>
+<div class="space-y-1">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">SSO Config</span>
+<div class="h-8 bg-white border-b border-outline-variant px-2 flex items-center text-[10px]">Okta Enabled</div>
+</div>
+<div class="space-y-1">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">Default Domain</span>
+<div class="h-8 bg-white border-b border-outline-variant px-2 flex items-center text-[10px]">indisaas.io</div>
+</div>
+<div class="space-y-1">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">Notifications</span>
+<div class="h-8 bg-white border-b border-outline-variant px-2 flex items-center text-[10px]">Daily Summary</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kinetic Luminary | Backlog</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f9f9ff",
+                        "primary-fixed": "#e2dfff",
+                        "tertiary-container": "#862dd4",
+                        "on-primary-fixed": "#0f0069",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "surface": "#f9f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#dad7ff",
+                        "on-secondary-fixed": "#25005a",
+                        "surface-container-highest": "#d8e3fb",
+                        "on-tertiary-container": "#ebd2ff",
+                        "on-surface-variant": "#464555",
+                        "inverse-surface": "#263143",
+                        "surface-bright": "#f9f9ff",
+                        "surface-container-high": "#dee8ff",
+                        "surface-container-low": "#f0f3ff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "primary-container": "#4f46e5",
+                        "outline": "#777587",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "tertiary-fixed-dim": "#ddb7ff",
+                        "secondary-container": "#8a4cfc",
+                        "on-surface": "#111c2d",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e7eeff",
+                        "on-tertiary-fixed": "#2c0051",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c7c4d8",
+                        "on-tertiary-fixed-variant": "#6900b3",
+                        "surface-dim": "#cfdaf2",
+                        "secondary-fixed": "#eaddff",
+                        "secondary": "#712ae2",
+                        "primary": "#3525cd",
+                        "inverse-primary": "#c3c0ff",
+                        "surface-variant": "#d8e3fb",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#ecf1ff",
+                        "tertiary": "#6b00b7",
+                        "on-secondary-container": "#fffbff",
+                        "tertiary-fixed": "#f0dbff",
+                        "surface-tint": "#4d44e3",
+                        "on-background": "#111c2d",
+                        "error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "manrope": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d8e3fb; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface overflow-hidden">
+<!-- Layout Wrapper -->
+<div class="flex h-screen w-full">
+<!-- SideNavBar (Standardized) -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 bg-[#1E1B4B] dark:bg-slate-950 flex flex-col py-6">
+<div class="flex items-center gap-3 px-6 mb-8">
+<div class="w-10 h-10 rounded-xl bg-[#4F46E5] flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h1 class="text-xl font-bold text-white uppercase tracking-widest font-manrope">Product Hub</h1>
+<p class="text-[10px] text-white/50 font-medium tracking-wide uppercase">Enterprise Suite</p>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1 font-manrope tracking-tight font-medium">
+<a class="flex items-center gap-3 px-3 py-2 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">pending_actions</span>
+<span>Requests</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">analytics</span>
+<span>Evaluation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span>SpecKit</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">science</span>
+<span>Research</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-3 py-2 bg-[#ECEEF0]/10 text-white font-semibold rounded-lg transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">view_list</span>
+<span>Backlog</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+<span>Delivery</span>
+</a>
+</nav>
+<div class="mt-auto px-3 space-y-1 font-manrope tracking-tight font-medium">
+<a class="flex items-center gap-3 px-3 py-2 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-white/50 hover:text-white/80 hover:bg-white/5 rounded-lg transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 flex flex-col overflow-hidden">
+<!-- TopNavBar (Standardized) -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 z-40 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md flex items-center justify-between px-8 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-8">
+<h2 class="font-manrope font-bold text-2xl text-[#4F46E5] tracking-tight">Backlog</h2>
+<div class="flex bg-slate-100/50 dark:bg-slate-800/50 p-1 rounded-lg">
+<button class="px-4 py-1.5 text-xs font-bold bg-white dark:bg-slate-700 text-[#4F46E5] shadow-sm rounded-md flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">view_kanban</span> Board
+                </button>
+<button class="px-4 py-1.5 text-xs font-semibold text-slate-500 hover:text-[#4F46E5] transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">list</span> List
+                </button>
+<button class="px-4 py-1.5 text-xs font-semibold text-slate-500 hover:text-[#4F46E5] transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">table_chart</span> Table
+                </button>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-400">search</span>
+<input class="bg-slate-50 dark:bg-slate-800 border-none text-xs font-medium px-10 py-2 rounded-full w-64 focus:ring-2 focus:ring-[#4F46E5]/20 outline-none transition-all" placeholder="Search tasks..." type="text"/>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-2 text-slate-500 hover:text-[#4F46E5] hover:bg-slate-50 rounded-full transition-all duration-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-[#4F46E5] hover:bg-slate-50 rounded-full transition-all duration-300">
+<span class="material-symbols-outlined">apps</span>
+</button>
+</div>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+<button class="px-5 py-2 bg-[#4F46E5] text-white text-sm font-semibold rounded-lg shadow-lg shadow-[#4F46E5]/20 active:scale-95 transition-all duration-200">
+                Create Task
+            </button>
+<img alt="User profile" class="w-9 h-9 rounded-full object-cover border-2 border-white ring-1 ring-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCg_nO3M_1669qkj9psLfdaMexSazh8pOXDNRTvvaeL0CmSvGm-CmILY_Gbl-KiqEy7DmSgR27wle9CZ5StXm6B9Zn4yDQ4R0t_uKZ8SA-OiNFvPqSwc-5AduhM-yOsD2ACMawMAKJxmyS3S6ItaaAQPZks0SlHh2GWiSc3oBoFh5ViQhi9BQaCUVEJjGHh8M9CblfO_n5ROipWImWypeE3WR-8AkV9GuO--6n7O7uiPCU6DyUPgA0EnJ5DIBM7EMKrIwqmGIbYFsE"/>
+</div>
+</header>
+<!-- Content Wrapper with padding for fixed TopAppBar -->
+<div class="mt-16 flex flex-col flex-1 overflow-hidden">
+<!-- Filters Bar -->
+<div class="px-8 py-4 bg-surface flex items-center justify-between gap-4 border-b border-outline-variant/10">
+<div class="flex items-center gap-3 flex-wrap">
+<div class="relative group">
+<select class="appearance-none bg-white border border-outline-variant/30 text-xs font-medium px-4 py-2 pr-10 rounded-full focus:ring-2 focus:ring-[#4F46E5]/20 outline-none transition-all">
+<option>Domain: All</option>
+<option>Marketing</option>
+<option>Engineering</option>
+<option>Product</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none text-slate-400">expand_more</span>
+</div>
+<div class="relative group">
+<select class="appearance-none bg-white border border-outline-variant/30 text-xs font-medium px-4 py-2 pr-10 rounded-full focus:ring-2 focus:ring-[#4F46E5]/20 outline-none transition-all">
+<option>RICE Score: &gt;50</option>
+<option>&gt;80 High Priority</option>
+<option>30-50 Medium</option>
+<option>&lt;30 Low</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none text-slate-400">expand_more</span>
+</div>
+<div class="relative group">
+<select class="appearance-none bg-white border border-outline-variant/30 text-xs font-medium px-4 py-2 pr-10 rounded-full focus:ring-2 focus:ring-[#4F46E5]/20 outline-none transition-all">
+<option>Status: Active</option>
+<option>Archive</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-sm pointer-events-none text-slate-400">expand_more</span>
+</div>
+</div>
+<button class="px-4 py-2 border-2 border-[#4F46E5] text-[#4F46E5] text-xs font-bold rounded-lg hover:bg-[#4F46E5]/5 transition-colors">
+                Compare Selected
+            </button>
+</div>
+<!-- Kanban Board -->
+<div class="flex-1 overflow-x-auto p-8 flex gap-6 custom-scrollbar bg-slate-50/30">
+<!-- Column 1: New -->
+<div class="flex-shrink-0 w-80 flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-slate-400"></div>
+<h3 class="text-sm font-bold text-on-surface">New</h3>
+<span class="text-[10px] font-bold bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded-md">4</span>
+</div>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-sm">more_horiz</span></button>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Card 1 -->
+<div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-slate-300 hover:shadow-md transition-all cursor-pointer group">
+<div class="flex justify-between items-start mb-3">
+<span class="px-2 py-0.5 text-[9px] font-black uppercase tracking-wider bg-surface-container-low text-on-surface-variant rounded">Core Engine</span>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-slate-500 text-sm">drag_indicator</span>
+</div>
+<h4 class="text-sm font-bold text-on-surface leading-snug mb-3">Implement multi-region database replication</h4>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZgN58sfc2s1Y_xnTU2nrsOkUez9MhwPIrANg5_CPa9YkumZJFciUMrAl3k-5JVjVqVn2zK4qqoFL3AmDVkP_JkAD3KK-umQNRhaOidUnEC7vLmuO2oYNWZx_Vd04Tx0LG3LOth3JowOOh8qqz8TyDNwmkdxC_oD5Ci-VHHkAThCGtci81CTqd3teTwQ2UFdRtOTlHbq8gqYW1rdTlwuIkygC19XucahJeRUbtszzuQrZOrt8siOidHPKMRZdoW6DVvOj1ETgLd48"/>
+<img class="w-6 h-6 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr365BSgDZe383iaF_C15nA85qj-mRQUplHG-XUX6RLx8G__qHnNymZV-daL3V9Ir0VI36i2jDpaTJ8VQNvMp-sI483SOFqoCiw3W7aTgRnNHPEgS6lvqPB6WvmxuUIGyAbnQqzwWXFERKhr_HHFcnpw1tnLL61Ty067lhLkeDo8MRspx4cLGZySQjWQYDhmwk2Cepxv3DWcRnnVNA7TVuI2ME2numNB9ZRU9KRbDW_MchTJdZO566CtoNmsOdDxsWWE-sbfVJRX8"/>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-500 text-sm">local_fire_department</span>
+<div class="w-7 h-7 bg-[#4F46E5] text-white text-[10px] font-bold flex items-center justify-center rounded-full">64</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-slate-300 opacity-80">
+<h4 class="text-sm font-bold text-on-surface leading-snug">SAML SSO Integration phase 1</h4>
+<div class="mt-4 flex items-center justify-between">
+<span class="px-2 py-0.5 text-[9px] font-black uppercase bg-surface-container-low text-on-surface-variant rounded">Security</span>
+<div class="w-7 h-7 bg-[#4F46E5] text-white text-[10px] font-bold flex items-center justify-center rounded-full">42</div>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-slate-300 opacity-80">
+<h4 class="text-sm font-bold text-on-surface leading-snug">Revamp onboarding tooltips</h4>
+<div class="mt-4 flex items-center justify-between">
+<span class="px-2 py-0.5 text-[9px] font-black uppercase bg-surface-container-low text-on-surface-variant rounded">UX</span>
+<div class="w-7 h-7 bg-[#4F46E5] text-white text-[10px] font-bold flex items-center justify-center rounded-full">38</div>
+</div>
+</div>
+<button class="py-2 border-2 border-dashed border-outline-variant/30 rounded-xl text-[11px] font-bold text-slate-400 hover:border-[#4F46E5]/50 hover:text-[#4F46E5] transition-all uppercase tracking-widest">+ Add Task</button>
+</div>
+</div>
+<!-- Column 2: Under Review -->
+<div class="flex-shrink-0 w-80 flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-yellow-400"></div>
+<h3 class="text-sm font-bold text-on-surface">Under Review</h3>
+<span class="text-[10px] font-bold bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded-md">3</span>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-yellow-400 hover:shadow-md transition-all">
+<h4 class="text-sm font-bold text-on-surface mb-3">API Rate Limiting Polishing</h4>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEu8hcKBTqqdHiVxZPPhtaO_MOi_TTeCu6A-spMbBZpT4uh3DqhAy3Bs0FOztFkMa2E1RzSAqc3j3Ucwa73yyGxxk5TUv5QfDkNSKNYSPu3uSZgFtxZs52NxXF-2DDph9tfA95Hzhg_ujcM9k_LatU0iz3n2OtvGj5lzQuOd1tXek7TF0zRfyIKBaiPq_FGBtJOzqOWMm-yr3bPcOS_mlUCFG_apsoZ_uvCJqRrDE3KbeLrIH18Bl90JZfldn1S5STdOEEBgummjg"/>
+</div>
+<div class="w-7 h-7 bg-[#4F46E5] text-white text-[10px] font-bold flex items-center justify-center rounded-full">72</div>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-yellow-400">
+<h4 class="text-sm font-bold text-on-surface mb-3">Dark mode accessibility audit</h4>
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 text-[9px] font-black uppercase bg-surface-container-low text-on-surface-variant rounded">Design</span>
+<div class="w-7 h-7 bg-[#4F46E5] text-white text-[10px] font-bold flex items-center justify-center rounded-full">55</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: Approved -->
+<div class="flex-shrink-0 w-80 flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-blue-500"></div>
+<h3 class="text-sm font-bold text-on-surface">Approved</h3>
+<span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded-md">5</span>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Selected Card -->
+<div class="bg-white p-4 rounded-xl shadow-[0_0_20px_rgba(79,70,229,0.25)] border-l-4 border-blue-500 ring-2 ring-[#4F46E5]/30 transition-all scale-[1.02]">
+<div class="flex justify-between items-start mb-3">
+<span class="px-2 py-0.5 text-[9px] font-black uppercase tracking-wider bg-primary-fixed text-on-primary-fixed-variant rounded">Analytics</span>
+<span class="material-symbols-outlined text-[#4F46E5] text-sm">check_circle</span>
+</div>
+<h4 class="text-sm font-extrabold text-on-surface leading-snug mb-3">Predictive churn modeling v2</h4>
+<p class="text-[11px] text-on-surface-variant mb-4 line-clamp-2">Enhance the current churn prediction model using high-velocity event streams...</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<img class="w-6 h-6 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_oIrnCv7b9h4CCzc9JjAS75iVj1YkMILvsQB5LXbhcxGsN3Pvcfjfo-QOedgkA0jRigiHYcT26xvW6_TsvE4IsKS3de6qvFz-ypQgHNPR7oksunWQGNoXIarcFzgKda52CaXA5nocgjMawWAv7II8KMHT5Y5pcQNnfiTMF4sRimrCJC8dPD6C7PHQKlzqo9sgeuNlfz1CIb2j0ECrR0st60G2SCaWa_JKvHauT3AQTjskJUK9svJkfx7R9UcuVFjeWIoU-quFUkk"/>
+<img class="w-6 h-6 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJIdvn5s4RNIttEoBa97Ae521-k3ZutP2FHz6Zquz8jNe819otHplMUrQBCve_vmkP-XIiwoJ9Vh4HpJ9ihHefpYqc9kMrl0mMIOtcnNqHIDnqJ-DKXkMz75bc1-asQzGeQ_TzJMfrjvrnAVi11oAKfA3ZBa1uGqLJJ2UMqocH84BbucQjz72UTeX2SVA13FhPW0xzhfJWPMgEuX6HKYNs1MmHyKeZSCYA1_ukKPMSA-CuSz52lxxvr_b0bsV8ZXadW6Kld73ICAQ"/>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#4F46E5] text-sm">trending_up</span>
+<div class="w-8 h-8 bg-[#4F46E5] text-white text-[11px] font-black flex items-center justify-center rounded-full shadow-lg shadow-[#4F46E5]/20">92</div>
+</div>
+</div>
+</div>
+<div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-blue-500">
+<h4 class="text-sm font-bold text-on-surface mb-3">Custom reporting dashboard</h4>
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 text-[9px] font-black uppercase bg-surface-container-low text-on-surface-variant rounded">Product</span>
+<div class="w-7 h-7 bg-[#4F46E5] text-white text-[10px] font-bold flex items-center justify-center rounded-full">81</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 4: In Development -->
+<div class="flex-shrink-0 w-80 flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-indigo-600"></div>
+<h3 class="text-sm font-bold text-on-surface">In Development</h3>
+<span class="text-[10px] font-bold bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded-md">3</span>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-indigo-600 border-dashed animate-pulse-slow">
+<h4 class="text-sm font-bold text-on-surface mb-3">Elasticsearch migration</h4>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs text-indigo-600">sync</span>
+<span class="text-[10px] font-bold text-indigo-600 uppercase">Coding</span>
+</div>
+<div class="w-7 h-7 bg-[#4F46E5] text-white text-[10px] font-bold flex items-center justify-center rounded-full">77</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 5: Released -->
+<div class="flex-shrink-0 w-80 flex flex-col gap-4">
+<div class="flex items-center justify-between px-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+<h3 class="text-sm font-bold text-on-surface">Released</h3>
+<span class="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-md">2</span>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="bg-white/60 p-4 rounded-xl shadow-sm border-l-4 border-emerald-500 grayscale-[0.5]">
+<h4 class="text-sm font-bold text-slate-500 mb-3 line-through decoration-slate-300">Stripe Payment Intent Refactor</h4>
+<div class="flex items-center justify-between">
+<span class="text-[10px] font-bold text-emerald-600 flex items-center gap-1"><span class="material-symbols-outlined text-sm">verified</span> Released v1.2</span>
+<div class="w-7 h-7 bg-slate-300 text-white text-[10px] font-bold flex items-center justify-center rounded-full">85</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Task Slide-out Panel -->
+<aside class="w-[380px] h-screen bg-white shadow-[-20px_0_40px_rgba(17,28,45,0.08)] z-50 flex flex-col relative">
+<button class="absolute -left-10 top-6 w-10 h-10 bg-white border-l border-t border-b border-outline-variant/30 rounded-l-xl flex items-center justify-center text-slate-400 hover:text-[#4F46E5] transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<div class="p-8 overflow-y-auto custom-scrollbar flex-1">
+<div class="flex items-center justify-between mb-6">
+<span class="px-3 py-1 bg-primary-fixed text-on-primary-fixed-variant text-[10px] font-black uppercase tracking-widest rounded-full">Approved</span>
+<button class="text-slate-400 hover:text-on-surface"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<h2 class="text-2xl font-black text-on-surface leading-tight mb-4 tracking-tighter">Predictive churn modeling v2</h2>
+<div class="flex items-center gap-3 mb-8">
+<img class="w-8 h-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCayp5seHkv474ds_4e8xquAlbK3x3numdchNy8fkbahDvIBSiimvnV57bgdUWm2POlsHItrrlcgXaYWIzJHpcgysvSU_6ndcQN9mCmEf8Vf1vStSF9qoP7KoXpz3Cvx0JsnNZZl456vK9IIA4aNFMpmEaWMfgMy2UPBGbefqoFDXi8PiB8z5YV_0SVnRLuHKpQ-vJDcJA0_LBC1FyloxFfxCrio4n0ODA_7gLlca-d7h_EuPxdeBA3jMGsWZG3rRLP-HhK2r_3sjk"/>
+<div>
+<p class="text-xs font-bold text-on-surface">Sarah Jenkins</p>
+<p class="text-[10px] text-slate-500">Lead Product Manager</p>
+</div>
+</div>
+<!-- RICE Breakdown -->
+<div class="bg-surface-container-low p-5 rounded-2xl mb-8">
+<div class="flex items-center justify-between mb-4">
+<h4 class="text-xs font-black uppercase tracking-widest text-on-surface-variant">RICE Breakdown</h4>
+<div class="text-2xl font-black text-[#4F46E5]">92</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-slate-500 uppercase">Reach</p>
+<p class="text-sm font-black text-on-surface">15,000 users</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-slate-500 uppercase">Impact</p>
+<p class="text-sm font-black text-on-surface">3.0 (High)</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-slate-500 uppercase">Confidence</p>
+<p class="text-sm font-black text-on-surface">80%</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-slate-500 uppercase">Effort</p>
+<p class="text-sm font-black text-on-surface">4.5 Weeks</p>
+</div>
+</div>
+</div>
+<!-- Description -->
+<div class="mb-8">
+<h4 class="text-xs font-black uppercase tracking-widest text-on-surface-variant mb-3">Description</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                Implement a secondary model layer using real-time event streaming to predict user churn with 15% higher accuracy than our current static model. This will directly feed into our automated retention email workflows.
+            </p>
+</div>
+<!-- Links -->
+<div class="space-y-3 mb-8">
+<a class="flex items-center justify-between p-3 border border-outline-variant/30 rounded-xl hover:border-[#4F46E5] transition-all group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#4F46E5]">description</span>
+<span class="text-xs font-bold text-on-surface">View PRD</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-[#4F46E5] text-sm">open_in_new</span>
+</a>
+<a class="flex items-center justify-between p-3 border border-outline-variant/30 rounded-xl hover:border-[#4F46E5] transition-all group" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#4F46E5]">architecture</span>
+<span class="text-xs font-bold text-on-surface">View Specs</span>
+</div>
+<span class="material-symbols-outlined text-slate-300 group-hover:text-[#4F46E5] text-sm">open_in_new</span>
+</a>
+</div>
+<!-- Activity Timeline -->
+<div>
+<h4 class="text-xs font-black uppercase tracking-widest text-on-surface-variant mb-4">Activity Timeline</h4>
+<div class="space-y-6 relative before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-px before:bg-slate-100">
+<div class="flex gap-4 relative">
+<div class="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center z-10">
+<div class="w-2 h-2 rounded-full bg-blue-500"></div>
+</div>
+<div>
+<p class="text-[11px] text-on-surface leading-tight"><span class="font-bold">Task approved</span> by David Miller</p>
+<p class="text-[9px] text-slate-400 font-medium">2 hours ago</p>
+</div>
+</div>
+<div class="flex gap-4 relative">
+<div class="w-5 h-5 rounded-full bg-indigo-100 flex items-center justify-center z-10">
+<div class="w-2 h-2 rounded-full bg-indigo-500"></div>
+</div>
+<div>
+<p class="text-[11px] text-on-surface leading-tight"><span class="font-bold">Technical review completed</span></p>
+<p class="text-[9px] text-slate-400 font-medium">Yesterday at 4:30 PM</p>
+</div>
+</div>
+<div class="flex gap-4 relative">
+<div class="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center z-10">
+<div class="w-2 h-2 rounded-full bg-slate-400"></div>
+</div>
+<div>
+<p class="text-[11px] text-on-surface leading-tight"><span class="font-bold">Task created</span> by Sarah Jenkins</p>
+<p class="text-[9px] text-slate-400 font-medium">Oct 12, 2023</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Action -->
+<div class="p-6 border-t border-outline-variant/20 bg-white">
+<div class="flex gap-3">
+<button class="flex-1 py-3 bg-[#4F46E5] text-white text-xs font-bold rounded-xl shadow-lg shadow-[#4F46E5]/30">Start Development</button>
+<button class="p-3 bg-surface-container-low text-on-surface-variant rounded-xl hover:text-[#4F46E5] transition-colors"><span class="material-symbols-outlined text-sm">share</span></button>
+</div>
+</div>
+</aside>
+</div>
+</body></html>

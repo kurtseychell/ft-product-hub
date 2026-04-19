@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PRD-042: Payment Retry Logic | Luminary Backoffice</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .perspective-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #3525cd 0%, #8a4cfc 100%);
+            border-radius: 2px;
+        }
+        .markdown-container h1 { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.025em; color: #111c2d; margin-bottom: 1.5rem; }
+        .markdown-container h2 { font-size: 1.5rem; font-weight: 700; color: #111c2d; margin-top: 2.5rem; margin-bottom: 1rem; border-bottom: 1px solid #f0f3ff; padding-bottom: 0.5rem; }
+        .markdown-container p { margin-bottom: 1.25rem; color: #464555; line-height: 1.7; }
+        .markdown-container ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.25rem; color: #464555; }
+        .markdown-container code { background: #f0f3ff; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: monospace; font-size: 0.875rem; color: #3525cd; }
+        .markdown-container pre { background: #111c2d; color: #f9f9ff; padding: 1.5rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1.5rem; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#d8e3fb",
+                        "on-tertiary-container": "#ebd2ff",
+                        "on-surface-variant": "#464555",
+                        "inverse-surface": "#263143",
+                        "surface-bright": "#f9f9ff",
+                        "surface-container-high": "#dee8ff",
+                        "surface-container-low": "#f0f3ff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "primary-container": "#4f46e5",
+                        "outline": "#777587",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "background": "#f9f9ff",
+                        "primary-fixed": "#e2dfff",
+                        "tertiary-container": "#862dd4",
+                        "on-primary-fixed": "#0f0069",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "surface": "#f9f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#dad7ff",
+                        "on-secondary-fixed": "#25005a",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#ecf1ff",
+                        "tertiary": "#6b00b7",
+                        "on-secondary-container": "#fffbff",
+                        "tertiary-fixed": "#f0dbff",
+                        "surface-tint": "#4d44e3",
+                        "on-background": "#111c2d",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ddb7ff",
+                        "secondary-container": "#8a4cfc",
+                        "on-surface": "#111c2d",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e7eeff",
+                        "on-tertiary-fixed": "#2c0051",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#c7c4d8",
+                        "on-tertiary-fixed-variant": "#6900b3",
+                        "surface-dim": "#cfdaf2",
+                        "secondary-fixed": "#eaddff",
+                        "secondary": "#712ae2",
+                        "primary": "#3525cd",
+                        "inverse-primary": "#c3c0ff",
+                        "surface-variant": "#d8e3fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-fixed">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="fixed left-0 top-0 h-full w-[280px] bg-[#f0f3ff] dark:bg-[#111c2d] flex flex-col py-8 px-6 z-50">
+<div class="mb-10 flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#3525cd] to-[#8a4cfc] flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h1 class="text-lg font-black text-[#3525cd] dark:text-[#4f46e5] leading-none">Kinetic Luminary</h1>
+<p class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant opacity-60 mt-1">Enterprise SaaS</p>
+</div>
+</div>
+<nav class="flex-grow space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#464555] dark:text-[#c7c4d8] hover:bg-[#e0e7ff] dark:hover:bg-slate-800 transition-transform duration-200 hover:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-semibold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-[#3525cd] to-[#8a4cfc] text-white rounded-lg shadow-lg" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-sm font-semibold">Product</span>
+</a>
+<div class="pl-12 py-1 space-y-1">
+<a class="block text-xs font-medium text-on-surface-variant/80 hover:text-primary py-1" href="#">PRD Generator</a>
+<a class="block text-xs font-bold text-primary py-1 flex items-center gap-2" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    PRD Viewer
+                </a>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 text-[#464555] dark:text-[#c7c4d8] hover:bg-[#e0e7ff] dark:hover:bg-slate-800 transition-transform duration-200 hover:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-sm font-semibold">Projects</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#464555] dark:text-[#c7c4d8] hover:bg-[#e0e7ff] dark:hover:bg-slate-800 transition-transform duration-200 hover:translate-x-1 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-semibold">Settings</span>
+</a>
+</nav>
+<div class="mt-auto space-y-4">
+<div class="p-4 rounded-2xl bg-primary-container/10 border border-primary/10">
+<p class="text-xs font-bold text-primary uppercase tracking-wider mb-2">Upgrade Plan</p>
+<p class="text-[11px] text-on-surface-variant mb-3 leading-relaxed">Access advanced AI writing and PRD collaboration tools.</p>
+<button class="w-full py-2 bg-primary text-white text-xs font-bold rounded-lg shadow-sm hover:opacity-90 transition-all">Go Pro</button>
+</div>
+<div class="space-y-1 border-t border-outline-variant/20 pt-4">
+<a class="flex items-center gap-3 px-4 py-2 text-[#464555] dark:text-[#c7c4d8] hover:bg-[#e0e7ff] transition-transform duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-sm font-semibold">Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-error hover:bg-error-container/20 transition-transform duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-semibold">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- TopNavBar (Authority: JSON) -->
+<header class="fixed top-0 right-0 w-[calc(100%-280px)] h-16 bg-[#f9f9ff]/80 dark:bg-[#111c2d]/80 backdrop-blur-xl flex justify-between items-center px-8 z-40 shadow-[0px_12px_32px_rgba(17,28,45,0.06)]">
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-sm w-80 focus:ring-2 focus:ring-primary/20" placeholder="Search across documents..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-sm font-medium">
+<a class="text-[#464555] hover:text-[#3525cd] transition-colors" href="#">Docs</a>
+<a class="text-[#464555] hover:text-[#3525cd] transition-colors" href="#">Support</a>
+</div>
+<div class="flex items-center gap-3 pl-6 border-l border-outline-variant/30">
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-full transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="flex items-center gap-3 ml-2 cursor-pointer hover:bg-surface-container p-1 rounded-full transition-colors">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="close-up portrait of a professional man in a minimal office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXWkVVl-0lr5gGvCjxB-eKYYy9YiwY2i_og0NO00DIkAa1FB5E7VB--e0Y0q_kIz_sVs1aByoyh0diBPGO-asyo_JDTy_cy6OzC846icMA4GYdyNjBYtpgqvCva18dzz13cLLK1GvF8mTeGtZWGZWCnV--HNMt9lr-LZGyNmn-I4_dsyYs9UPdXNOd0QprV9yqn_4AqCPhCHFzgQyGC57QaGJRDp_o2AihsZKK_pkUyNMgbrZlpYLIYmoIIkFfT5xMgRwfjgZBCnE"/>
+<span class="material-symbols-outlined text-xs">expand_more</span>
+</div>
+<button class="ml-2 bg-primary px-4 py-2 rounded-lg text-white text-sm font-semibold shadow-md hover:scale-[0.98] transition-all">
+                    Create New
+                </button>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-[280px] pt-16 min-h-screen pb-12 flex flex-col">
+<!-- Document Header -->
+<section class="px-12 py-8 bg-surface-container-lowest/40 backdrop-blur-sm border-b border-outline-variant/10">
+<nav class="flex items-center gap-2 text-xs font-medium text-on-surface-variant/60 mb-4">
+<span>Product</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span>PRD Generator</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-primary font-bold">PRD-042: Payment Retry Logic</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span>Viewer</span>
+</nav>
+<div class="flex justify-between items-end">
+<div class="space-y-3">
+<div class="flex items-center gap-4">
+<h2 class="text-3xl font-extrabold tracking-tighter text-on-surface">PRD-042: Payment Retry Logic</h2>
+<span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-[10px] font-black uppercase tracking-widest rounded-full flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            Approved
+                        </span>
+</div>
+<p class="text-on-surface-variant/80 text-sm max-w-2xl leading-relaxed">Defining the core logic for automated transaction recovery and fallback mechanisms for subscription-based billing failures.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 border border-outline-variant/40 rounded-lg text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">share</span>
+                        Share Link
+                    </button>
+<button class="px-4 py-2 border border-outline-variant/40 rounded-lg text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">print</span>
+                        Print
+                    </button>
+<div class="relative group">
+<button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold shadow-lg hover:shadow-primary/20 flex items-center gap-2">
+                            Export
+                            <span class="material-symbols-outlined text-lg">expand_more</span>
+</button>
+<div class="absolute right-0 top-full mt-2 w-40 bg-surface-container-lowest shadow-2xl rounded-xl p-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all z-50 border border-outline-variant/10">
+<a class="block px-3 py-2 text-xs font-medium hover:bg-surface-container-low rounded-lg" href="#">.md (Markdown)</a>
+<a class="block px-3 py-2 text-xs font-medium hover:bg-surface-container-low rounded-lg" href="#">.html (HTML)</a>
+<a class="block px-3 py-2 text-xs font-medium hover:bg-surface-container-low rounded-lg" href="#">.pdf (Document)</a>
+<a class="block px-3 py-2 text-xs font-medium hover:bg-surface-container-low rounded-lg" href="#">.pptx (Slides)</a>
+<a class="block px-3 py-2 text-xs font-medium hover:bg-surface-container-low rounded-lg" href="#">.docx (Word)</a>
+</div>
+</div>
+</div>
+</div>
+<!-- View Tabs -->
+<div class="flex items-center gap-8 mt-10 border-b border-outline-variant/10">
+<button class="flex items-center gap-2 pb-4 border-b-2 border-primary text-primary text-sm font-bold">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">description</span>
+                    Markdown
+                </button>
+<button class="flex items-center gap-2 pb-4 text-on-surface-variant/60 hover:text-on-surface text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">language</span>
+                    HTML Preview
+                </button>
+<button class="flex items-center gap-2 pb-4 text-on-surface-variant/60 hover:text-on-surface text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">present_to_all</span>
+                    Slide Preview
+                </button>
+<button class="flex items-center gap-2 pb-4 text-on-surface-variant/60 hover:text-on-surface text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">picture_as_pdf</span>
+                    PDF
+                </button>
+<button class="flex items-center gap-2 pb-4 text-on-surface-variant/60 hover:text-on-surface text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-lg">image</span>
+                    Images
+                </button>
+</div>
+</section>
+<!-- Content Area -->
+<div class="flex-grow flex px-12 gap-12 mt-8 relative">
+<!-- Left Sidebar: TOC -->
+<aside class="w-1/5 sticky top-24 h-fit">
+<h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface-variant/40 mb-6">Table of Contents</h4>
+<nav class="space-y-1">
+<a class="block py-2 text-sm font-bold text-primary border-l-2 border-primary pl-4 -ml-[2px] transition-all" href="#overview">Overview</a>
+<a class="block py-2 text-sm font-medium text-on-surface-variant/70 hover:text-on-surface hover:pl-5 pl-4 transition-all border-l-2 border-transparent" href="#problem">Problem Statement</a>
+<a class="block py-2 text-sm font-medium text-on-surface-variant/70 hover:text-on-surface hover:pl-5 pl-4 transition-all border-l-2 border-transparent" href="#user-stories">User Stories</a>
+<a class="block py-2 text-sm font-medium text-on-surface-variant/70 hover:text-on-surface hover:pl-5 pl-4 transition-all border-l-2 border-transparent" href="#requirements">Requirements</a>
+<div class="pl-8 space-y-2 mt-2 mb-2">
+<a class="block text-xs font-medium text-on-surface-variant/60 hover:text-primary" href="#req-core">Core Retry Loop</a>
+<a class="block text-xs font-medium text-on-surface-variant/60 hover:text-primary" href="#req-fallback">Fallback Logic</a>
+</div>
+<a class="block py-2 text-sm font-medium text-on-surface-variant/70 hover:text-on-surface hover:pl-5 pl-4 transition-all border-l-2 border-transparent" href="#metrics">Success Metrics</a>
+<a class="block py-2 text-sm font-medium text-on-surface-variant/70 hover:text-on-surface hover:pl-5 pl-4 transition-all border-l-2 border-transparent" href="#questions">Open Questions</a>
+</nav>
+<div class="mt-12 pt-8 border-t border-outline-variant/10">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">bolt</span>
+</div>
+<span class="text-xs font-bold text-on-surface">AI Assistant</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">"This PRD covers the 95% of error scenarios but may need deeper look into 3DS2 specific delays."</p>
+</div>
+</aside>
+<!-- Right Column: Document Viewer -->
+<article class="w-4/5 pb-24 max-w-4xl">
+<div class="bg-surface-container-lowest p-16 rounded-3xl shadow-xl shadow-primary/5 border border-outline-variant/5 markdown-container">
+<h1 id="overview">Payment Retry Logic Framework</h1>
+<p>The objective of this PRD is to define an intelligent, adaptive retry mechanism for failed payments within the Kinetic platform. Currently, 14% of subscription renewals fail on the first attempt due to soft declines (insufficient funds, temporary processing errors).</p>
+<h2 id="problem">Problem Statement</h2>
+<p>Currently, the system triggers an immediate manual intervention request when a payment fails. This results in high customer friction and a 22% churn rate for "recoverable" payment failures. We lack a systematic approach to retry payments at high-probability times (e.g., salary days).</p>
+<div class="bg-surface-container-low p-6 rounded-2xl my-8 border-l-4 border-primary italic">
+                        "If we can automate just 15% of these recoveries, we projected an annual ARR retention increase of $1.2M." 
+                        <div class="mt-2 font-bold text-xs">— Finance Operations Lead</div>
+</div>
+<h2 id="user-stories">User Stories</h2>
+<ul>
+<li><strong>As a Customer,</strong> I want the system to try my card again in a few days so I don't lose access to my services if I simply forgot to transfer money.</li>
+<li><strong>As a Finance Manager,</strong> I want to see detailed logs of why a payment was retried and which attempt succeeded.</li>
+<li><strong>As a Developer,</strong> I want a clear API response indicating if a failure is terminal or retry-eligible.</li>
+</ul>
+<h2 id="requirements">Functional Requirements</h2>
+<p>The system shall implement an exponential backoff strategy with a jitter coefficient to avoid server thundering herds.</p>
+<h3 id="req-core">Core Retry Loop</h3>
+<div class="my-6 overflow-hidden rounded-xl border border-outline-variant/20">
+<table class="w-full text-left text-sm">
+<thead class="bg-surface-container text-on-surface uppercase text-[10px] font-black tracking-widest">
+<tr>
+<th class="px-4 py-3">Attempt</th>
+<th class="px-4 py-3">Delay</th>
+<th class="px-4 py-3">Logic Type</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr>
+<td class="px-4 py-4 font-bold">R1</td>
+<td class="px-4 py-4">24 Hours</td>
+<td class="px-4 py-4">Direct Retry (Same Gateway)</td>
+</tr>
+<tr>
+<td class="px-4 py-4 font-bold">R2</td>
+<td class="px-4 py-4">3 Days</td>
+<td class="px-4 py-4">Smart Scheduling (AM Window)</td>
+</tr>
+<tr>
+<td class="px-4 py-4 font-bold">R3</td>
+<td class="px-4 py-4">7 Days</td>
+<td class="px-4 py-4">Gateway Fallback (Adyen/Stripe)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="req-fallback">Code Implementation (Snippet)</h3>
+<pre><code>async function handleRetry(paymentId) {
+  const attempt = await db.getRetryCount(paymentId);
+  const strategy = strategies[attempt];
+  
+  if (strategy.maxReached) {
+    return notifyCustomer(paymentId, 'TERMINAL_FAILURE');
+  }
+  
+  await queue.delay(strategy.delayMs).push({
+    action: 'PROCESS_PAYMENT',
+    meta: { paymentId, gateway: strategy.fallbackGate }
+  });
+}</code></pre>
+<h2 id="metrics">Success Metrics</h2>
+<ul>
+<li>Recovery Rate: Target &gt; 35% within 14 days.</li>
+<li>Churn Reduction: 5% relative reduction in involuntary churn.</li>
+<li>Latency: Retry logic evaluation &lt; 200ms per transaction.</li>
+</ul>
+<h2 id="questions">Open Questions</h2>
+<p>Should we allow users to manually trigger a retry from the billing portal while an automated retry is pending? Current consensus is to disable manual trigger to prevent double-charging edge cases.</p>
+</div>
+</article>
+<!-- Right Sticky Actions -->
+<div class="fixed right-6 top-1/2 -translate-y-1/2 flex flex-col gap-3">
+<button class="w-12 h-12 bg-surface-container-lowest border border-outline-variant/10 rounded-full shadow-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:scale-110 transition-all group relative">
+<span class="material-symbols-outlined">edit</span>
+<span class="absolute right-full mr-4 bg-on-surface text-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Annotate</span>
+</button>
+<button class="w-12 h-12 bg-surface-container-lowest border border-outline-variant/10 rounded-full shadow-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:scale-110 transition-all group relative">
+<span class="material-symbols-outlined">history</span>
+<span class="absolute right-full mr-4 bg-on-surface text-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Version History</span>
+</button>
+<button class="w-12 h-12 bg-surface-container-lowest border border-outline-variant/10 rounded-full shadow-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:scale-110 transition-all group relative">
+<span class="material-symbols-outlined">chat_bubble_outline</span>
+<span class="absolute right-full mr-4 bg-on-surface text-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Comments</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Version Drawer Overlay -->
+<aside class="fixed right-0 top-0 h-full w-80 bg-surface shadow-[-20px_0_60px_rgba(17,28,45,0.1)] border-l border-outline-variant/10 z-[60] py-8 px-6 transform translate-x-0 hidden">
+<div class="flex justify-between items-center mb-8">
+<h3 class="text-sm font-black uppercase tracking-widest text-on-surface">Version History</h3>
+<button class="material-symbols-outlined text-on-surface-variant">close</button>
+</div>
+<div class="space-y-4">
+<div class="p-4 rounded-xl bg-surface-container ring-1 ring-primary/20">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold text-primary">v3 (Current)</span>
+<span class="text-[10px] font-medium text-on-surface-variant/60">Apr 12, 2026</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<img class="w-5 h-5 rounded-full" data-alt="avatar of a team member" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrMvoQ-4xX_dmC6dVuzyG1pmT5ZCWJ6o_rZ2AYEYqTZjR6Ovq2oplvp6h44e_iT7fuFiGnhXxteyNBtDHwq6t2jtwioBpQISmOy7MrQfUPJgJGDVt1y3CPnSecb6ibIfvNMlHJTCFUcrlfjLzwp1M1fmtowBDDL31r__vONyynyh2_HSAjYf-Tfqlvn-pe-vq84bvmdrJ1zk-77vuOhWsr7-H9OUcfW8_Vddy9rQxTquGY2zwbwA9VWdtIwpybuOLbT9lLGw5r0QI"/>
+<span class="text-xs font-semibold">Kurt Carabott</span>
+</div>
+<div class="flex gap-2">
+<button class="flex-grow py-1.5 bg-surface-container-lowest text-[10px] font-bold rounded-md border border-outline-variant/20">Compare</button>
+<button class="px-3 py-1.5 bg-primary text-white text-[10px] font-bold rounded-md">View</button>
+</div>
+</div>
+<div class="p-4 rounded-xl border border-outline-variant/20 hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold text-on-surface">v2</span>
+<span class="text-[10px] font-medium text-on-surface-variant/60">Mar 28, 2026</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<img class="w-5 h-5 rounded-full" data-alt="professional profile headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsKsFMEV8Hzb4KnMKpfc4KJyEL6zQV721xlZ4WbepLHNWwIJluGU7sw2iGw6VpdBq7Q-5xjrITxC2tx3rkJ5DYexeJybLWUSskqUVQMEXRZX9l2op_N_qg102rqkrlVJsxcfK3RlPd3HKvDwHF2DlvzV7FavWheVC97wwcqzW3JRmnYS9nKpcjf6rO1ZNIjI_WdAcf2muzO0_FoySUbGy-8RoA-KHqXgQC4rprHiOylQSETk6Hqe4Tssi3mpwDXkNTzdHk3VubKr4"/>
+<span class="text-xs font-semibold">Sarah Jenkins</span>
+</div>
+<div class="flex gap-2">
+<button class="flex-grow py-1.5 bg-surface-container-lowest text-[10px] font-bold rounded-md border border-outline-variant/20">Compare</button>
+<button class="px-3 py-1.5 border border-outline-variant/20 text-[10px] font-bold rounded-md">View</button>
+</div>
+</div>
+<div class="p-4 rounded-xl border border-outline-variant/20 hover:bg-surface-container transition-colors">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold text-on-surface">v1 (Initial)</span>
+<span class="text-[10px] font-medium text-on-surface-variant/60">Mar 10, 2026</span>
+</div>
+<div class="flex items-center gap-2 mb-3">
+<img class="w-5 h-5 rounded-full" data-alt="avatar headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkG_Tgp1kfpur4IdlJjy7RjY5zLEaSonFpRwceU0hpczKYoLEbM2hpG3Xpeevw-qXN7xOxI-tdIUbGHZWqCyRC66UsOSMuasaXC42wmceJQ8FERCtTbxnXYbKrANnkU0KNUN7KI5i1dkP5kXfhEtRQBccCtbcHM5pqoiz2CieuvPMaZJF79tqYqfduAoQhr-q7_py3xkemqo7rKSzCjfoCBJh6xVVo4rX63C3zIZ-jN48EzP6bTwakBnMc5v0AL3uW4EbRS8hJkvA"/>
+<span class="text-xs font-semibold">Kurt Carabott</span>
+</div>
+<div class="flex gap-2">
+<button class="flex-grow py-1.5 bg-surface-container-lowest text-[10px] font-bold rounded-md border border-outline-variant/20">Compare</button>
+<button class="px-3 py-1.5 border border-outline-variant/20 text-[10px] font-bold rounded-md">View</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Bottom Status Bar -->
+<footer class="fixed bottom-0 right-0 w-[calc(100%-280px)] h-12 bg-surface-container/60 backdrop-blur-md border-t border-outline-variant/10 flex justify-between items-center px-12 z-40">
+<div class="flex items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">person</span>
+                Author: Kurt Carabott
+            </div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">event</span>
+                Modified: Apr 12, 2026
+            </div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">format_align_left</span>
+                2,847 Words
+            </div>
+</div>
+<div class="flex items-center gap-4">
+<span class="px-2 py-0.5 bg-surface-container-highest rounded text-[10px] font-bold text-primary">#SUB-0042</span>
+<div class="flex items-center gap-2">
+<div class="perspective-bar w-24"></div>
+<span class="text-[10px] font-black text-on-surface-variant">Review 100%</span>
+</div>
+</div>
+</footer>
+</body></html>

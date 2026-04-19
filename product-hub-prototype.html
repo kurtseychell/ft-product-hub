@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Hub — Interactive Prototype</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --indigo: #4F46E5;
+    --navy: #1E1B4B;
+    --sidebar: 260px;
+    --bar: 52px;
+  }
+
+  body { font-family: 'Inter', system-ui, sans-serif; background: #0f0f13; color: #fff; height: 100vh; overflow: hidden; display: flex; }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: var(--sidebar);
+    min-width: var(--sidebar);
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    z-index: 10;
+  }
+
+  #sidebar-header {
+    padding: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+  #sidebar-header .logo {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 15px; color: #fff;
+  }
+  #sidebar-header .logo .hex {
+    width: 28px; height: 28px; background: var(--indigo);
+    clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+  }
+  #sidebar-header .badge {
+    margin-top: 6px;
+    font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  #sidebar-scroll { flex: 1; overflow-y: auto; padding: 8px 0; }
+  #sidebar-scroll::-webkit-scrollbar { width: 4px; }
+  #sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+  #sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+  .flow-group { margin-bottom: 2px; }
+  .flow-label {
+    padding: 6px 16px 4px;
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.35); text-transform: uppercase;
+    cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+    user-select: none;
+  }
+  .flow-label:hover { color: rgba(255,255,255,0.6); }
+  .flow-label .chevron { transition: transform 0.2s; font-size: 8px; }
+  .flow-label.collapsed .chevron { transform: rotate(-90deg); }
+  .flow-screens { overflow: hidden; transition: max-height 0.25s ease; }
+  .flow-screens.collapsed { max-height: 0 !important; }
+
+  .screen-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 16px 7px 20px;
+    cursor: pointer; transition: background 0.15s;
+    border-left: 2px solid transparent;
+    font-size: 12px; color: rgba(255,255,255,0.6);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .screen-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
+  .screen-item.active {
+    background: rgba(79,70,229,0.2);
+    border-left-color: var(--indigo);
+    color: #fff; font-weight: 500;
+  }
+  .screen-item .id-badge {
+    font-size: 9px; font-weight: 700; padding: 1px 5px;
+    border-radius: 3px; flex-shrink: 0; letter-spacing: 0.03em;
+  }
+  .flow-A .id-badge { background: #2563EB22; color: #60A5FA; }
+  .flow-B .id-badge { background: #7C3AED22; color: #A78BFA; }
+  .flow-C .id-badge { background: #059669220; color: #34D399; }
+  .flow-D .id-badge { background: #D9770622; color: #FBBF24; }
+  .flow-E .id-badge { background: #DC262622; color: #F87171; }
+  .flow-Z .id-badge { background: #6B728022; color: #9CA3AF; }
+
+  /* ── MAIN AREA ── */
+  #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ── TOP BAR ── */
+  #topbar {
+    height: var(--bar);
+    background: #18181f;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; flex-shrink: 0; gap: 12px;
+  }
+  #screen-info { display: flex; align-items: center; gap: 10px; }
+  #screen-badge {
+    font-size: 11px; font-weight: 700; padding: 3px 8px;
+    border-radius: 4px; background: rgba(79,70,229,0.25); color: #818CF8;
+  }
+  #screen-title { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.85); }
+  #screen-flow { font-size: 11px; color: rgba(255,255,255,0.35); }
+
+  #topbar-actions { display: flex; align-items: center; gap: 8px; }
+  .btn {
+    padding: 6px 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12);
+    font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s;
+    background: transparent; color: rgba(255,255,255,0.6);
+  }
+  .btn:hover { background: rgba(255,255,255,0.07); color: #fff; }
+  .btn-primary { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+  .btn-primary:hover { background: #4338CA; }
+
+  /* ── VIEWPORT ── */
+  #viewport {
+    flex: 1; position: relative; overflow: hidden; background: #111118;
+    display: flex; align-items: flex-start; justify-content: center;
+    cursor: pointer;
+  }
+
+  #screen-img {
+    width: 100%; height: 100%;
+    object-fit: contain; object-position: top center;
+    transition: opacity 0.25s ease;
+    display: block;
+  }
+  #screen-img.fading { opacity: 0; }
+
+  /* Click hotspots */
+  .hotspot {
+    position: absolute;
+    cursor: pointer;
+    background: rgba(79, 70, 229, 0.0);
+    border-radius: 6px;
+    transition: background 0.15s;
+    z-index: 5;
+  }
+  .hotspot:hover {
+    background: rgba(79, 70, 229, 0.18);
+    outline: 2px solid rgba(79, 70, 229, 0.6);
+  }
+  .hotspot .tooltip {
+    position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+    background: var(--indigo); color: #fff; font-size: 10px; font-weight: 600;
+    padding: 3px 8px; border-radius: 4px; white-space: nowrap; pointer-events: none;
+    opacity: 0; transition: opacity 0.15s;
+  }
+  .hotspot:hover .tooltip { opacity: 1; }
+
+  /* ── BOTTOM BAR ── */
+  #bottombar {
+    height: 44px; background: #18181f;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; flex-shrink: 0;
+  }
+
+  #flow-progress {
+    display: flex; align-items: center; gap: 4px;
+  }
+  .progress-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.15); transition: all 0.2s; cursor: pointer;
+  }
+  .progress-dot.active { background: var(--indigo); width: 18px; border-radius: 3px; }
+  .progress-dot.visited { background: rgba(79,70,229,0.5); }
+
+  #nav-controls { display: flex; align-items: center; gap: 8px; }
+  #nav-controls .counter { font-size: 11px; color: rgba(255,255,255,0.3); margin: 0 4px; }
+
+  #hint {
+    font-size: 11px; color: rgba(255,255,255,0.25);
+    display: flex; align-items: center; gap: 5px;
+  }
+  #hint kbd {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+    padding: 1px 5px; border-radius: 3px; font-size: 10px;
+  }
+
+  /* Transition overlay */
+  #overlay {
+    position: fixed; inset: 0; background: #0f0f13;
+    opacity: 0; pointer-events: none; z-index: 100;
+    transition: opacity 0.2s;
+  }
+  #overlay.show { opacity: 1; pointer-events: all; }
+
+  /* Zoom mode */
+  #viewport.zoom-mode #screen-img {
+    object-fit: none;
+    width: auto; height: auto;
+    min-width: 100%;
+    cursor: zoom-out;
+  }
+  #viewport.zoom-mode { overflow: auto; align-items: flex-start; cursor: default; }
+</style>
+</head>
+<body>
+
+<div id="overlay"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="logo">
+      <div class="hex">PH</div>
+      <span>Product Hub</span>
+    </div>
+    <div class="badge">Interactive Prototype</div>
+  </div>
+  <div id="sidebar-scroll" id="nav-list"></div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="topbar">
+    <div id="screen-info">
+      <span id="screen-badge">A01</span>
+      <span id="screen-title">Login - Product Hub</span>
+      <span id="screen-flow">Flow A — Authentication</span>
+    </div>
+    <div id="topbar-actions">
+      <button class="btn" onclick="toggleZoom()" id="zoom-btn">⤢ Fit</button>
+      <button class="btn" onclick="toggleHotspots()" id="hs-btn">◎ Hotspots</button>
+      <button class="btn btn-primary" onclick="navigate(1)">Next →</button>
+    </div>
+  </div>
+
+  <div id="viewport" onclick="handleViewportClick(event)">
+    <img id="screen-img" src="" alt="" draggable="false" />
+    <div id="hotspot-layer"></div>
+  </div>
+
+  <div id="bottombar">
+    <div id="hint"><kbd>←</kbd><kbd>→</kbd> navigate &nbsp;·&nbsp; <kbd>H</kbd> toggle hotspots &nbsp;·&nbsp; <kbd>Z</kbd> zoom</div>
+    <div id="flow-progress"></div>
+    <div id="nav-controls">
+      <button class="btn" onclick="navigate(-1)">← Prev</button>
+      <span class="counter" id="counter">1 / 20</span>
+      <button class="btn btn-primary" onclick="navigate(1)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SCREENS = [
+  // ── A FLOW — Authentication
+  {
+    id: 'A01', flow: 'A', flowName: 'Authentication',
+    title: 'Login - Product Hub',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uiZXKH6NDAKeI0svb_WJ4YPom7LFR5ZrmhdsypKL1S83LAHMevjrnsO0Yy_6POq3eBpszOj4odyeHVTeIcKx9H2NldVceS2LeBu1BByHLPgC3buwKSI2VKQMNBBXCLybBJ5jXbV2XOau81aRwfI75DP6M3KG92XFi7NOeBNbprVG8ttmenCfUZ-1zHYG3ejA2cai_sKe-qsqAHzDpma9f9ygkow_zImSEdH2U3r8c-c6sYK-uaK6Vh62UY',
+    hotspots: [
+      { label: 'Sign In → Dashboard', top: '54%', left: '55%', width: '36%', height: '7%', target: 'A02' }
+    ]
+  },
+  {
+    id: 'A02', flow: 'A', flowName: 'Authentication',
+    title: 'Product Hub Dashboard',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uixmcYL6M-lpFUxQZhrtTn3tsJU-efRDpEfDLLai6k4BniR51d_NCDH3BYULbCmTJlOUMjBFNk3KtK2nhb6Z6LQwUY_34J1vGhU_GTnHo6U70H0ac2yyFo8IiLmnIwGD6uzS8e8PWzqhTKdYcAx5RjS3rfgGxqlUSfQ0IIIm4qg8c_ZicXC0JoXIN42jtgqlrJuh9tkAOLWDOkUWXdzmxGGse0NCJW1qU5vvsb-uFfb3kizVU038J14DxI',
+    hotspots: [
+      { label: 'New Request → Submit', top: '3%', left: '80%', width: '18%', height: '5%', target: 'B01' },
+      { label: 'Submissions nav', top: '16%', left: '0%', width: '16%', height: '4%', target: 'B01' },
+      { label: 'PRD Generator nav', top: '20%', left: '0%', width: '16%', height: '4%', target: 'B02' },
+      { label: 'Research & Analysis nav', top: '24%', left: '0%', width: '16%', height: '4%', target: 'C01' },
+      { label: 'RICE Scoring nav', top: '28%', left: '0%', width: '16%', height: '4%', target: 'C02' },
+      { label: 'Speckit Specs nav', top: '32%', left: '0%', width: '16%', height: '4%', target: 'C03' },
+      { label: 'Figma Designs nav', top: '36%', left: '0%', width: '16%', height: '4%', target: 'C04' },
+      { label: 'Priority Board nav', top: '42%', left: '0%', width: '16%', height: '4%', target: 'D01' },
+      { label: 'Domain Backlogs nav', top: '46%', left: '0%', width: '16%', height: '4%', target: 'D02' },
+      { label: 'Quarterly Roadmap nav', top: '50%', left: '0%', width: '16%', height: '4%', target: 'D03' },
+      { label: 'Tech Handover nav', top: '54%', left: '0%', width: '16%', height: '4%', target: 'D04' },
+      { label: 'Delivery Tracker nav', top: '60%', left: '0%', width: '16%', height: '4%', target: 'E01' },
+      { label: 'UAT Testing nav', top: '64%', left: '0%', width: '16%', height: '4%', target: 'E02' },
+      { label: 'Release Notes nav', top: '68%', left: '0%', width: '16%', height: '4%', target: 'E03' },
+      { label: 'Success Metrics nav', top: '72%', left: '0%', width: '16%', height: '4%', target: 'E04' },
+      { label: 'Admin / LLM Costs nav', top: '80%', left: '0%', width: '16%', height: '4%', target: 'Z01' }
+    ]
+  },
+
+  // ── B FLOW — Submission & PRD
+  {
+    id: 'B01', flow: 'B', flowName: 'Submission & PRD',
+    title: 'Submit a Request',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0ujNhkgMVvRyl44mxH110T1eTjsyBOAOGQf1kxjqcoeMGL5KwYQ7_K2bo6yAci9TvQYbdWtl8gL4TkiVa0YPjXUK9dqhGWVk8HG3p_X7kQgLOSXQKkRf25m_Tg5j5QSlSPlAjK58MQKzr1HevYV7AokDY0g-thPHcYeoeRRSpLreqPqv58U0JpXruUbjV7oim43r9gi1g1cfptCuBVR6cqoSg_a0V5d0TDH44wBtu-zDEyzQlA_xXJUqk9g',
+    hotspots: [
+      { label: 'Submit & Open PRD Builder →', top: '88%', left: '58%', width: '40%', height: '6%', target: 'B02' }
+    ]
+  },
+  {
+    id: 'B02', flow: 'B', flowName: 'Submission & PRD',
+    title: 'PRD Builder Workspace',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uidwFz_9-fdZfhSzlo8ZmQtCPKgNd49AbKXjGWCt23UUF-4qIPRQXUe5Qn5SJBZRv1d_Lx9h2HRUjLO3E3EDx6tFnlpFnCt4PkdBjjzdKwtrVKt4ahzKr6YjynoO_sUoKa8i-1H0oKb7mCBpfkODNhKjdVIOZgOgdlrII1cTmunToaMhXOq8S8ZPk_OBAJ5uuZRynJ36Zj49oxf09lcP3Wtp6okHEANG6gjOohVba_b5FBT69F4h3KNRg',
+    hotspots: [
+      { label: 'Mark as Final → Request Tracking', top: '2%', left: '78%', width: '20%', height: '5%', target: 'B03' }
+    ]
+  },
+  {
+    id: 'B03', flow: 'B', flowName: 'Submission & PRD',
+    title: 'Request Tracking',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0ugVpOKn2NeSoJpsEUKojqyxJiYvDV4g7LAC9yaP1Gj166spld1OcW6YRhyBJT4gWQtXUqyUsTQBtSbrDj7tFj93tBeWD_G1CYAK2LHQuwybFEN2NmEqsPgvlrz8r12vPzKSx_I9SZN3J21Ya3fJ7ya6BV0R1wKPTuBw25OA4gq2TJaSnaFdgRh_zJrff7S-T9ETq28Jkr21RZX5SZq2YGheFFqDdpWg_S9l6A0fkHTCkykyzHjbIpPbYQ',
+    hotspots: [
+      { label: 'View Full PRD →', top: '62%', left: '16%', width: '22%', height: '5%', target: 'B04' }
+    ]
+  },
+  {
+    id: 'B04', flow: 'B', flowName: 'Submission & PRD',
+    title: 'PRD Document Viewer',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0ujx724cpUbWfwKLA8mjRaO2aYogQvTVtPlkgt_2lcMQTAcUQYiuuy3_5CHS59zwmqm1DQz0DNEvPZFTWWcxlTiAbX9Bwbig-UyMQB8gAIRkacI3yEAZk4Xe9xedhfjTl0wqHo3sHnBdpC1WJwsH9aEyfWc6wk6Ne5gc0ylNsKBDU9A6EsgoeX1b_pngX9X0ZFrq6nOrBO_Rt3h1goqUrSjYkZJSpaFneJMkO8Twdy8IsPsTqmj6Z75h3JE',
+    hotspots: [
+      { label: 'Send for Evaluation →', top: '3%', left: '75%', width: '22%', height: '5%', target: 'B05' }
+    ]
+  },
+  {
+    id: 'B05', flow: 'B', flowName: 'Submission & PRD',
+    title: 'PRD Evaluation Dashboard',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0ui8NEODzRzb0NhUiUjo0J-FEnX4dUj_QOFU_BimgKJTECBXtrLqpzeIHFVeyamX54HYe_OdhcMq6u7luqklMDhNaXljvw_lIIPlWDdObuGlyKO4JCYFkm8wkDsxsDlMR6dxtBQUBZTrjIEjj7EMdDVq-cOwQg1Gd9nce-YNuBoz162NwSvvddxYmbO7wk5LDgZvLBZLksPxA2bTS54E0n6D0-cdaovjHVOHi0XwCaiYPNO3qlgGUxgpEak',
+    hotspots: [
+      { label: 'Approve → Research & Analysis', top: '75%', left: '63%', width: '18%', height: '5%', target: 'C01' }
+    ]
+  },
+
+  // ── C FLOW — AI Processing
+  {
+    id: 'C01', flow: 'C', flowName: 'AI Processing',
+    title: 'Research & Analysis',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uhH_maHWssDcGHK-F6XAqebX_UWmyL4l9e8Z4MdAfGZrmKrV7z326o7FZkoBnl-t68hs5iSM6HuDlaKkvxyIOAMfwe9NXWaFMcAR8iWo9ERxAuQ3BJKXrgrgsHzD0qV4SPJfcfPAGRwVgnBhJyEwfNkAeA6-J56G5btuG4F68mx8lNP-HrMaVis1zpn5QHYqzhXf3wk9SC8RYXORvpMXa_qZgaO4vJhE-ZK0QR3ulUSd9JIhi7t-485ogA',
+    hotspots: [
+      { label: 'Proceed to RICE Scoring →', top: '88%', left: '16%', width: '30%', height: '6%', target: 'C02' }
+    ]
+  },
+  {
+    id: 'C02', flow: 'C', flowName: 'AI Processing',
+    title: 'RICE Scoring',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0ugXuYOLh1B2tLutcYJFt6UcQv_bgEHtvZenqSxNTdB2jK7WZ-FLTVGhxAodWNGjsQI1EarA9TGZ_4ICrRF-LzlktcH6nuuwQeIFJYCJlo8IG8Us46HA-Ylw2rBuZTsFOBZq358z3jirc0d2H3D9aqc7hJ9JWgLkU5PgXYPrdhd22S193dbQkFNA_MNQSe6TB5cWY0tlzevW5X4KzEcHONVWypVkLADTHDrRNr0vZOpN1wQeMrCJnjCyMQg',
+    hotspots: [
+      { label: 'Generate SpecKit →', top: '88%', left: '16%', width: '30%', height: '6%', target: 'C03' }
+    ]
+  },
+  {
+    id: 'C03', flow: 'C', flowName: 'AI Processing',
+    title: 'SpecKit — PRD to User Stories',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uhj3fV3Fq11-q0Zeb2bQ4UCJi_CsnmwpBo8qRPzgc3Ov6nQZj0G2bE-QWiq5W93-7MLnFn8-CSLd4rr9VbhAAkcwkl7_t1VWM4EnLM2nVFWxPkIcQjAZGTRrOsEBEv5KbROCL0H1u6R7QODIYH7LkN0mg4IQKsfDxCtNpai1idssPHClerDg1sfxCyAZM7JYRRHz7RKUGdlRFBPbDUs2dMX53r25hIAFEX2cSnOIwWZAm3YJl1z3GLnCLQ',
+    hotspots: [
+      { label: 'Generate Figma Designs →', top: '3%', left: '75%', width: '22%', height: '5%', target: 'C04' }
+    ]
+  },
+  {
+    id: 'C04', flow: 'C', flowName: 'AI Processing',
+    title: 'Figma Design Generation',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uiHbDQ4OjKZ1GbNb2IXEHrhNF1BUbUNIRRY6d_ATmLFVB1vWdZktbN_9qYWPD_gwYVzAoTtmXrmbGYg9ut1gaWEgVRka-OfSoBiVkDaQsK1crbFg7J1SnyGqlMGc_cl92N2eRrgRGGboKFea4u5ubuvBDfJ1ET0QWimZcDjEn9bW3vFjE4QK1FTiPDg0if7OUcDVVS_In2Gje3jDU5PHcZ54EW8AS_ja9d7jPy4HPyqPW7zqajdW3Tt2nA',
+    hotspots: [
+      { label: 'Add to Backlog →', top: '3%', left: '75%', width: '22%', height: '5%', target: 'D01' }
+    ]
+  },
+
+  // ── D FLOW — Backlog & Planning
+  {
+    id: 'D01', flow: 'D', flowName: 'Backlog & Planning',
+    title: 'Priority Backlog Board',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uiMO4-3AkdaBvnJ4AonD6NsV64O53TXPtas4yvIGxqftOvc6qZFXOJuNeGY3h9GzHKMZPy25La_Vs9xAw0hlgxQKtAv1CCfXb1bk-AIYAuX-iAO7hm4wesP93GHJSnhlF1UjAMRDHLoJHyWwtCQ1At7l07cnsFrFpjHh_10bJQdBqG2oFtTmclk2vIwaxSm13C5RlsEw0DO-ojSKP0E6u1nyDV2TEfqtj60Tc41iY3r77xgr__N9E3UnA',
+    hotspots: [
+      { label: 'Domain Backlogs →', top: '8%', left: '0%', width: '16%', height: '4%', target: 'D02' }
+    ]
+  },
+  {
+    id: 'D02', flow: 'D', flowName: 'Backlog & Planning',
+    title: 'Domain Backlogs',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uh6HF6gi2IqnnmPM01_Uf3qrrjq5TLqFvG3oGEriie2VMY4hLsihhphSUjByiZD2pnbQLHPB4EYXudC7e6R2VEXVppCID-U6LY3Pic94a8WiaRxPdv5ZyTRJTNU4IUHKcjyZZRCBT1DZl4tPnJ5B7D9wa6YK69bjU3wh49fvM8mGl728R_BEWmjIwP8yiJNpoeJEsFzTDpg0JFtz9SqHu1Xa3md6huXRGE6WTx-IHhACsJmcnU2nt0xzmw',
+    hotspots: [
+      { label: 'View Roadmap →', top: '8%', left: '0%', width: '16%', height: '4%', target: 'D03' }
+    ]
+  },
+  {
+    id: 'D03', flow: 'D', flowName: 'Backlog & Planning',
+    title: 'Quarterly Roadmap — Q2 2026',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uh2Up91698RrQb8g6iakfxghloJgsrv-OiI9I5UwfVgiYTgfNebsfNHIlwMHVL5gcKL_MMb_K0nXuBn2bHla9PzQokRnEhdrqEaiJldMoINEGOKwkx2AfkAE56cqS9RK9pYrqzUkD37RW24lwsveh4FAYV6t8BHtJ3AwwQW7DFxEZxxlqCdEH9SVgB8D3BGRaF2jWFmEBPztEOhbkqWjbsSOBaxlelr_KbTIX7ZiZVYJAkGFfICJLesAt4',
+    hotspots: [
+      { label: 'Tech Handover →', top: '8%', left: '0%', width: '16%', height: '4%', target: 'D04' }
+    ]
+  },
+  {
+    id: 'D04', flow: 'D', flowName: 'Backlog & Planning',
+    title: 'Tech Handover Package',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0ujuXlCXdhHIQ5_wNMGX1lxs9gKFcF7WrLGFFMHyyzhk8gSQni_OFF2bN-ALp__xq5mMHw8vqV4_Cuv0wtZS1LEVWBp3IAfOv9ZR-nznZG23wgx0iaCrK0puiqELlPdzd_l0Vq4ixZPpJUOoO0qB3S7J2Vh8KFV282U4zc_PxdJTg9Z0w_W-jE9A0EO5AMoAEdByUv_IMG4FpeUbZhyyuwxp2N8AHkCMQwogrXNBHhBbY_9C96t9vcyI5J8',
+    hotspots: [
+      { label: 'Send Handover → Delivery', top: '55%', left: '72%', width: '25%', height: '5%', target: 'E01' }
+    ]
+  },
+
+  // ── E FLOW — Delivery
+  {
+    id: 'E01', flow: 'E', flowName: 'Delivery',
+    title: 'Delivery Tracker Dashboard',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0ujdJ1dp3J7cf9qFb9OHCcmnczi0BInyrCqH8A1XT8Iem0ZJsgJh_gY_pWKzssefx6TzAZkU6dUjHga_17ktD9F6eOsWykOpoP9LzQ0WapcIQ6pbZIxrhWiddPV5JzUqkPOqw9DnmiTIAy9RracHFbMw-KOchISTGBb5N-kBjW3gofmL7l0hOlFUc29bmd2Hs_GZpZ_xrY-yco10-8-AirSvPCy0TmE_NJeXyhOPQ8AOl5TkZ6r8hWv3xA',
+    hotspots: [
+      { label: 'Ready for Demo & UAT →', top: '70%', left: '55%', width: '40%', height: '5%', target: 'E02' }
+    ]
+  },
+  {
+    id: 'E02', flow: 'E', flowName: 'Delivery',
+    title: 'UAT Testing',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0ugtQQl5Uwlyoo0cEITXuofVGEo9Foazqz9OaRgHTC_KyHnq4EE2bnF3jEFmwnKMK-gzng6qfb-0r8TspuSfExAO1X8pmgKtOLqV6CADLlzk81lbrl-bkJcVHsHKD9Zo64GbBuayeVGs8R4CcplQ3MDflM3-GD8z_XoFNJlpJki1bWET5G1n_j3IuF1d1h7UELTMgsPiBu4dEF-vewgQmzGXLvqvwfTZUKK_TEVXXcZRcRXhzw8olO3Z5hc',
+    hotspots: [
+      { label: 'UAT Passed → Release Notes', top: '88%', left: '16%', width: '35%', height: '6%', target: 'E03' }
+    ]
+  },
+  {
+    id: 'E03', flow: 'E', flowName: 'Delivery',
+    title: 'Release Notes Editor',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uiCw1l6I0yBjkK75HP8FrSR2KdORw9rs8VEZLGs0w9gA-dj6iWGtOZj32CGAdfBYYKDQioCxOGgNRR-YZedp01VNIbDdGGGDcuJU02FGWZ88YjFzqKeG2MzWPClZwK1K_9qLGfto6cAI7UK0tQa1ZahrCItGeYySp3V0ZAib37s4l3M23AutMSlcD3g4cO4R_4_419t6c2ixugiywDCek_AuyQxV3VCkL1ZS9lY9EayPK4Gie2E3lMq6Ek',
+    hotspots: [
+      { label: 'Publish → Success Metrics', top: '3%', left: '74%', width: '12%', height: '5%', target: 'E04' }
+    ]
+  },
+  {
+    id: 'E04', flow: 'E', flowName: 'Delivery',
+    title: 'Success Metrics Dashboard',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0ujLORyaqapSqtmefLSgYQKHA0m26F7MVW8EIql6SsjJJ8S9OIkm7Kr24jRxKcB-EGGaGphZM7D-q0GOf3DIKNPUKZbU0a4p2TxwTfbUrqGr2ioxBTAsQhTC7xuUPJ-bEo8G3j5vCvMzjOwAH0kN1QA2PY_V3ZN85pi3t-_LxSYyZtTxUOC1eCUZQlxFk_59RwEnYLN6oYQ0bkO7tFvL43odlwhb_Wyajqnk0SXG25tRfMZYYd0oy7SMqgs',
+    hotspots: []
+  },
+
+  // ── Z FLOW — Admin
+  {
+    id: 'Z01', flow: 'Z', flowName: 'Admin',
+    title: 'Admin Settings — LLM Usage & Costs',
+    img: 'https://lh3.googleusercontent.com/aida/ADBb0uh_gM7az6PSH5QVB1ihk-vYZvpCCBP0oPSN3RpiEn0DcfdM2L5PRsjf4ps0q7yJpKUYZBV7_ecr2kl3yY9g95AdbsdB5mKXggFdZla2xHahOWYAYqJxxMFDvqA55GE0EnOaFujuSa2SFpre0f14dSRYHVXbq13BkgTl4wPZGlFeZTlc05bcDWd_Gj1ZHRtHqOIyOfvtTvduX5NVgSD_grdqRtuYyCwdQ328IBCopeg7aC5Goq6xYTMN9_c',
+    hotspots: []
+  }
+];
+
+const FLOW_COLORS = { A: '#60A5FA', B: '#A78BFA', C: '#34D399', D: '#FBBF24', E: '#F87171', Z: '#9CA3AF' };
+const FLOW_NAMES  = { A: 'Authentication', B: 'Submission & PRD', C: 'AI Processing', D: 'Backlog & Planning', E: 'Delivery', Z: 'Admin' };
+
+let current = 0;
+let hotspotsVisible = true;
+let visited = new Set([0]);
+
+// ── Build Sidebar ──
+function buildSidebar() {
+  const container = document.getElementById('sidebar-scroll');
+  const flows = [...new Set(SCREENS.map(s => s.flow))];
+
+  flows.forEach(flow => {
+    const screens = SCREENS.filter(s => s.flow === flow);
+    const group = document.createElement('div');
+    group.className = 'flow-group';
+
+    const label = document.createElement('div');
+    label.className = `flow-label flow-${flow}`;
+    label.innerHTML = `<span style="color:${FLOW_COLORS[flow]}">${flow} — ${FLOW_NAMES[flow]}</span><span class="chevron">▾</span>`;
+    label.onclick = () => {
+      const screensEl = group.querySelector('.flow-screens');
+      screensEl.classList.toggle('collapsed');
+      label.classList.toggle('collapsed');
+    };
+
+    const screensEl = document.createElement('div');
+    screensEl.className = 'flow-screens';
+    screensEl.style.maxHeight = screens.length * 38 + 'px';
+
+    screens.forEach((s, i) => {
+      const idx = SCREENS.indexOf(s);
+      const item = document.createElement('div');
+      item.className = `screen-item flow-${flow}`;
+      item.id = `nav-${s.id}`;
+      item.innerHTML = `<span class="id-badge">${s.id}</span><span>${s.title}</span>`;
+      item.onclick = () => goTo(idx);
+      screensEl.appendChild(item);
+    });
+
+    group.appendChild(label);
+    group.appendChild(screensEl);
+    container.appendChild(group);
+  });
+}
+
+// ── Render Screen ──
+function render(idx, dir = 1) {
+  const s = SCREENS[idx];
+  const img = document.getElementById('screen-img');
+
+  img.classList.add('fading');
+  setTimeout(() => {
+    img.src = s.img;
+    img.onload = () => img.classList.remove('fading');
+    img.onerror = () => img.classList.remove('fading');
+  }, 180);
+
+  // Update info
+  document.getElementById('screen-badge').textContent = s.id;
+  document.getElementById('screen-badge').style.background = `${FLOW_COLORS[s.flow]}22`;
+  document.getElementById('screen-badge').style.color = FLOW_COLORS[s.flow];
+  document.getElementById('screen-title').textContent = s.title;
+  document.getElementById('screen-flow').textContent = `Flow ${s.flow} — ${s.flowName}`;
+  document.getElementById('counter').textContent = `${idx + 1} / ${SCREENS.length}`;
+
+  // Hotspots
+  renderHotspots(s);
+
+  // Progress dots
+  renderProgress(idx);
+
+  // Sidebar active
+  document.querySelectorAll('.screen-item').forEach(el => el.classList.remove('active'));
+  const activeItem = document.getElementById(`nav-${s.id}`);
+  if (activeItem) {
+    activeItem.classList.add('active');
+    activeItem.scrollIntoView({ block: 'nearest' });
+  }
+
+  // Mark visited
+  visited.add(idx);
+  updateVisited();
+}
+
+function renderHotspots(screen) {
+  const layer = document.getElementById('hotspot-layer');
+  layer.innerHTML = '';
+  if (!hotspotsVisible) return;
+
+  screen.hotspots.forEach(hs => {
+    const el = document.createElement('div');
+    el.className = 'hotspot';
+    el.style.top = hs.top;
+    el.style.left = hs.left;
+    el.style.width = hs.width;
+    el.style.height = hs.height;
+    el.innerHTML = `<div class="tooltip">→ ${hs.label}</div>`;
+    el.onclick = (e) => {
+      e.stopPropagation();
+      const targetIdx = SCREENS.findIndex(s => s.id === hs.target);
+      if (targetIdx >= 0) goTo(targetIdx);
+    };
+    layer.appendChild(el);
+  });
+}
+
+function renderProgress(idx) {
+  const bar = document.getElementById('flow-progress');
+  const flowScreens = SCREENS.filter(s => s.flow === SCREENS[idx].flow);
+  bar.innerHTML = '';
+  flowScreens.forEach(s => {
+    const dot = document.createElement('div');
+    const i = SCREENS.indexOf(s);
+    dot.className = 'progress-dot' + (i === idx ? ' active' : '') + (visited.has(i) && i !== idx ? ' visited' : '');
+    dot.onclick = () => goTo(i);
+    dot.title = s.id;
+    bar.appendChild(dot);
+  });
+}
+
+function updateVisited() {
+  SCREENS.forEach((s, i) => {
+    const el = document.getElementById(`nav-${s.id}`);
+    if (el && visited.has(i) && i !== current) {
+      el.style.opacity = '0.7';
+    }
+  });
+}
+
+// ── Navigation ──
+function goTo(idx) {
+  if (idx < 0 || idx >= SCREENS.length) return;
+  current = idx;
+  render(idx);
+}
+
+function navigate(dir) {
+  goTo(Math.max(0, Math.min(SCREENS.length - 1, current + dir)));
+}
+
+function handleViewportClick(e) {
+  if (e.target.closest('.hotspot')) return;
+  navigate(1);
+}
+
+function toggleZoom() {
+  const vp = document.getElementById('viewport');
+  vp.classList.toggle('zoom-mode');
+  document.getElementById('zoom-btn').textContent = vp.classList.contains('zoom-mode') ? '⤡ Fit' : '⤢ Fit';
+}
+
+function toggleHotspots() {
+  hotspotsVisible = !hotspotsVisible;
+  document.getElementById('hs-btn').textContent = hotspotsVisible ? '◎ Hotspots' : '○ Hotspots';
+  document.getElementById('hs-btn').style.opacity = hotspotsVisible ? '1' : '0.5';
+  renderHotspots(SCREENS[current]);
+}
+
+// ── Keyboard ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+  if (e.key.toLowerCase() === 'h') toggleHotspots();
+  if (e.key.toLowerCase() === 'z') toggleZoom();
+  if (e.key === 'Home') goTo(0);
+  if (e.key === 'End')  goTo(SCREENS.length - 1);
+  // Jump to flow: press 'a','b','c','d','e','z'
+  const flowKey = e.key.toUpperCase();
+  if (['A','B','C','D','E','Z'].includes(flowKey)) {
+    const idx = SCREENS.findIndex(s => s.flow === flowKey);
+    if (idx >= 0) goTo(idx);
+  }
+});
+
+// ── Init ──
+buildSidebar();
+render(0);
+</script>
+</body>
+</html>

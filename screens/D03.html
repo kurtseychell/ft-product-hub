@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quarterly Roadmap | Architect Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c3c0ff",
+                        "secondary-fixed-dim": "#c4c1fb",
+                        "tertiary": "#7e3000",
+                        "secondary-container": "#c7c3fe",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "surface-tint": "#4d44e3",
+                        "inverse-surface": "#2d3133",
+                        "surface-container": "#eceef0",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "on-secondary-fixed-variant": "#444173",
+                        "surface-container-high": "#e6e8ea",
+                        "secondary-fixed": "#e3dfff",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#181445",
+                        "on-tertiary-container": "#ffd2be",
+                        "inverse-primary": "#c3c0ff",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e0e3e5",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-secondary-container": "#514f81",
+                        "outline-variant": "#c7c4d8",
+                        "surface-bright": "#f7f9fb",
+                        "on-primary-fixed": "#0f0069",
+                        "primary-fixed": "#e2dfff",
+                        "on-background": "#191c1e",
+                        "secondary": "#5b598c",
+                        "on-tertiary-fixed": "#351000",
+                        "on-surface": "#191c1e",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-dim": "#d8dadc",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "surface": "#f7f9fb",
+                        "on-primary-container": "#dad7ff",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#4f46e5",
+                        "error": "#ba1a1a",
+                        "primary": "#3525cd",
+                        "on-surface-variant": "#464555",
+                        "on-secondary": "#ffffff",
+                        "outline": "#777587",
+                        "tertiary-fixed": "#ffdbcc",
+                        "background": "#f7f9fb",
+                        "tertiary-container": "#a44100"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c7c4d8;
+            border-radius: 10px;
+        }
+        .gantt-grid {
+            background-image: linear-gradient(to right, #eceef0 1px, transparent 1px);
+            background-size: calc(100% / 12) 100%;
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface flex min-h-screen">
+<!-- SideNavBar (Authority Source: JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-50 bg-indigo-950 flex flex-col py-6 px-4 shadow-2xl">
+<div class="mb-10 px-4">
+<span class="text-white font-headline font-extrabold uppercase tracking-widest text-lg">Architect Intelligence</span>
+<div class="mt-4 flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-white font-bold">A</div>
+<div>
+<p class="text-white text-xs font-headline font-bold">Product Hub</p>
+<p class="text-slate-400 text-[10px] uppercase tracking-tighter">Enterprise Strategy</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="text-slate-400/60 hover:text-white px-4 py-3 flex items-center gap-3 font-medium text-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<!-- Active State Logic Applied to Quarterly Roadmap -->
+<a class="bg-indigo-900/50 text-white rounded-lg px-4 py-3 flex items-center gap-3 font-medium text-sm active:scale-[0.98] transition-all" href="#">
+<span class="material-symbols-outlined">event_note</span>
+                Quarterly Roadmap
+            </a>
+<a class="text-slate-400/60 hover:text-white px-4 py-3 flex items-center gap-3 font-medium text-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+                Product Backlog
+            </a>
+<a class="text-slate-400/60 hover:text-white px-4 py-3 flex items-center gap-3 font-medium text-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+                Resource Planning
+            </a>
+<a class="text-slate-400/60 hover:text-white px-4 py-3 flex items-center gap-3 font-medium text-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+                Settings
+            </a>
+</nav>
+<div class="mt-auto px-4 pt-6 border-t border-white/10">
+<div class="flex items-center gap-3">
+<img alt="User" class="w-8 h-8 rounded-full border border-white/20" data-alt="close up professional portrait of a product manager in a modern office environment with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcUphg3rqmfwzOxM-Nzj3kpL46F3k_yD9VTxLjxyh8zh8FobjgnrJVQdw2VYaOjPRsQIOSlcHk4aI1u965aXcCPCOxgUJZyBpjv1jl91wrGTmx2q7KZtEv-zocqhD5Z93OszmmxSzQvc88Ejh_3ftA9mcdNaaJq9i3kBAzkq9h0lUq0nxP9xtAHqdr5RZeD1Ll4UrfbAxVo2jV2yNtX6RTx38L1SSVH8iZM-OMPfp2tUTKc__PPvySc0He5ResIGTnJt3symoULOs"/>
+<div class="overflow-hidden">
+<p class="text-white text-xs font-bold truncate">Alex Chen</p>
+<p class="text-slate-400 text-[10px] truncate">Principal Architect</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="flex-1 ml-64 min-h-screen flex flex-col">
+<!-- TopNavBar (Authority Source: JSON) -->
+<header class="w-full sticky top-0 z-40 bg-white/85 backdrop-blur-xl border-b border-indigo-500/15 shadow-sm flex justify-between items-center px-8 h-16">
+<div class="flex items-center gap-4">
+<h1 class="text-indigo-600 font-headline tracking-tight font-bold text-xl">Quarterly Roadmap</h1>
+<nav class="hidden md:flex items-center ml-8 gap-6 h-full">
+<a class="text-slate-500 font-medium hover:text-indigo-600 transition-colors py-5" href="#">Q1 2026</a>
+<a class="text-indigo-600 font-bold border-b-2 border-indigo-600 py-5" href="#">Q2 2026</a>
+<a class="text-slate-500 font-medium hover:text-indigo-600 transition-colors py-5" href="#">Q3 2026</a>
+<a class="text-slate-500 font-medium hover:text-indigo-600 transition-colors py-5" href="#">Q4 2026</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<!-- Action Buttons -->
+<div class="flex items-center bg-surface-container rounded-lg p-1 mr-4">
+<button class="px-3 py-1 text-xs font-bold bg-white text-primary rounded shadow-sm">Timeline</button>
+<button class="px-3 py-1 text-xs font-medium text-on-surface-variant hover:bg-white/50 transition-all rounded">Swimlane</button>
+</div>
+<button class="px-4 py-2 border border-outline/20 text-primary text-sm font-bold rounded-lg hover:bg-primary/5 transition-all">
+                    Export
+                </button>
+<button class="px-5 py-2 bg-gradient-to-br from-primary to-primary-container text-white text-sm font-bold rounded-lg shadow-lg hover:shadow-indigo-500/20 transition-all">
+                    Add Item
+                </button>
+<div class="h-6 w-px bg-outline-variant/30 mx-2"></div>
+<div class="flex items-center gap-3">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-8 space-y-8 flex-1">
+<!-- Timeline Header -->
+<div class="flex items-end mb-4 border-b border-surface-container pb-4">
+<div class="w-48 shrink-0">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Product Domains</p>
+</div>
+<div class="flex-1 grid grid-cols-3 text-center">
+<div>
+<p class="text-sm font-bold text-on-surface">April</p>
+<div class="grid grid-cols-4 mt-2">
+<span class="text-[10px] text-outline font-medium">W14</span>
+<span class="text-[10px] text-outline font-medium">W15</span>
+<span class="text-[10px] text-outline font-medium">W16</span>
+<span class="text-[10px] text-outline font-medium">W17</span>
+</div>
+</div>
+<div class="border-x border-surface-container-high px-4">
+<p class="text-sm font-bold text-on-surface">May</p>
+<div class="grid grid-cols-4 mt-2">
+<span class="text-[10px] text-outline font-medium">W18</span>
+<span class="text-[10px] text-outline font-medium">W19</span>
+<span class="text-[10px] text-outline font-medium">W20</span>
+<span class="text-[10px] text-outline font-medium">W21</span>
+</div>
+</div>
+<div>
+<p class="text-sm font-bold text-on-surface">June</p>
+<div class="grid grid-cols-4 mt-2">
+<span class="text-[10px] text-outline font-medium">W22</span>
+<span class="text-[10px] text-outline font-medium">W23</span>
+<span class="text-[10px] text-outline font-medium">W24</span>
+<span class="text-[10px] text-outline font-medium">W25</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Gantt Chart Main -->
+<div class="relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-surface-container-high">
+<!-- Today Indicator Line -->
+<div class="absolute left-[calc(48px+((100%-48px)/12)*1.5)] top-0 bottom-0 w-px bg-error z-20 pointer-events-none">
+<div class="bg-error text-white text-[8px] font-bold px-1 py-0.5 rounded-b absolute -top-0 -left-4">TODAY</div>
+</div>
+<!-- Grid Background -->
+<div class="absolute inset-0 gantt-grid left-48 pointer-events-none opacity-50"></div>
+<!-- Rows -->
+<div class="relative z-10">
+<!-- Payments Domain -->
+<div class="flex border-b border-surface-container-low group hover:bg-surface-container-lowest transition-colors">
+<div class="w-48 p-4 bg-surface-container-low/30 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+<span class="text-sm font-semibold">Payments</span>
+</div>
+<div class="flex-1 p-4 relative min-h-[64px]">
+<!-- Initiative Bar: Completed -->
+<div class="absolute left-[8%] w-[25%] top-4 h-8 bg-emerald-500 text-white rounded-lg flex items-center px-3 shadow-md">
+<span class="material-symbols-outlined text-sm mr-2" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-xs font-bold truncate">Stripe Connect Sync</span>
+<div class="ml-auto bg-white/20 px-1.5 py-0.5 rounded text-[8px] font-black">RICE 45</div>
+</div>
+<!-- Dependency Arrow (Dashed Line Placeholder) -->
+<div class="absolute left-[33%] top-8 w-[10%] border-t border-dashed border-outline-variant"></div>
+<!-- Initiative Bar: In Progress -->
+<div class="absolute left-[45%] w-[30%] top-4 h-8 bg-emerald-500 rounded-lg flex items-center px-0 overflow-hidden shadow-md">
+<div class="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.1),rgba(255,255,255,0.1)_10px,transparent_10px,transparent_20px)] opacity-30"></div>
+<div class="relative flex items-center px-3 w-full text-white">
+<span class="text-xs font-bold truncate">Web3 Ledger Engine</span>
+<div class="ml-auto bg-white/20 px-1.5 py-0.5 rounded text-[8px] font-black">RICE 82</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Onboarding Domain -->
+<div class="flex border-b border-surface-container-low group">
+<div class="w-48 p-4 bg-surface-container-low/30 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-blue-500"></div>
+<span class="text-sm font-semibold">Onboarding</span>
+</div>
+<div class="flex-1 p-4 relative min-h-[64px]">
+<!-- Initiative Bar: Planned -->
+<div class="absolute left-[15%] w-[40%] top-4 h-8 bg-blue-500/50 text-blue-900 border border-blue-200/50 rounded-lg flex items-center px-3">
+<span class="text-xs font-bold truncate">KYC Automation v2</span>
+<div class="ml-auto bg-blue-600/10 px-1.5 py-0.5 rounded text-[8px] font-black">RICE 66</div>
+</div>
+</div>
+</div>
+<!-- Risk Domain -->
+<div class="flex border-b border-surface-container-low group">
+<div class="w-48 p-4 bg-surface-container-low/30 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-orange-500"></div>
+<span class="text-sm font-semibold">Risk</span>
+</div>
+<div class="flex-1 p-4 relative min-h-[64px]">
+<!-- Initiative Bar: In Progress -->
+<div class="absolute left-[5%] w-[20%] top-4 h-8 bg-orange-500 text-white rounded-lg flex items-center px-3 shadow-md">
+<div class="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.1),rgba(255,255,255,0.1)_10px,transparent_10px,transparent_20px)] opacity-30"></div>
+<span class="text-xs font-bold truncate relative">AML Real-time Guard</span>
+<div class="ml-auto bg-white/20 px-1.5 py-0.5 rounded text-[8px] font-black relative">RICE 94</div>
+</div>
+<div class="absolute left-[60%] w-[35%] top-4 h-8 bg-orange-500/50 text-orange-900 border border-orange-200/50 rounded-lg flex items-center px-3">
+<span class="text-xs font-bold truncate">Audit Log Archival</span>
+<div class="ml-auto bg-orange-600/10 px-1.5 py-0.5 rounded text-[8px] font-black">RICE 32</div>
+</div>
+</div>
+</div>
+<!-- Growth Domain -->
+<div class="flex border-b border-surface-container-low group">
+<div class="w-48 p-4 bg-surface-container-low/30 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-purple-500"></div>
+<span class="text-sm font-semibold">Growth</span>
+</div>
+<div class="flex-1 p-4 relative min-h-[64px]">
+<div class="absolute left-[40%] w-[55%] top-4 h-8 bg-purple-500/50 text-purple-900 border border-purple-200/50 rounded-lg flex items-center px-3">
+<span class="text-xs font-bold truncate">Referral Engine Redesign</span>
+<div class="ml-auto bg-purple-600/10 px-1.5 py-0.5 rounded text-[8px] font-black">RICE 54</div>
+</div>
+</div>
+</div>
+<!-- Platform Domain -->
+<div class="flex border-b border-surface-container-low group">
+<div class="w-48 p-4 bg-surface-container-low/30 flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-slate-500"></div>
+<span class="text-sm font-semibold">Platform</span>
+</div>
+<div class="flex-1 p-4 relative min-h-[64px]">
+<div class="absolute left-[2%] w-[18%] top-4 h-8 bg-slate-500 text-white rounded-lg flex items-center px-3 shadow-md">
+<span class="material-symbols-outlined text-sm mr-2" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-xs font-bold truncate">K8s Cluster Upgrade</span>
+<div class="ml-auto bg-white/20 px-1.5 py-0.5 rounded text-[8px] font-black">RICE 12</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Summary: Resource Allocation -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 bg-surface-container-lowest p-6 rounded-xl border border-surface-container-high shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-sm font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">donut_small</span>
+                            Monthly Resource Allocation
+                        </h3>
+<div class="flex gap-4 text-[10px] font-bold uppercase text-on-surface-variant">
+<div class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-primary"></div> Dev</div>
+<div class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-secondary-container"></div> QA</div>
+<div class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-primary-fixed-dim"></div> Product</div>
+</div>
+</div>
+<div class="flex items-end justify-around h-32 gap-12 px-8">
+<!-- April -->
+<div class="w-full flex flex-col items-center gap-2">
+<div class="w-12 flex flex-col-reverse h-full rounded-t-lg overflow-hidden">
+<div class="h-[60%] bg-primary"></div>
+<div class="h-[20%] bg-secondary-container"></div>
+<div class="h-[20%] bg-primary-fixed-dim"></div>
+</div>
+<span class="text-xs font-semibold">April</span>
+</div>
+<!-- May -->
+<div class="w-full flex flex-col items-center gap-2">
+<div class="w-12 flex flex-col-reverse h-full rounded-t-lg overflow-hidden">
+<div class="h-[75%] bg-primary"></div>
+<div class="h-[15%] bg-secondary-container"></div>
+<div class="h-[10%] bg-primary-fixed-dim"></div>
+</div>
+<span class="text-xs font-semibold">May</span>
+</div>
+<!-- June -->
+<div class="w-full flex flex-col items-center gap-2">
+<div class="w-12 flex flex-col-reverse h-full rounded-t-lg overflow-hidden">
+<div class="h-[45%] bg-primary"></div>
+<div class="h-[30%] bg-secondary-container"></div>
+<div class="h-[25%] bg-primary-fixed-dim"></div>
+</div>
+<span class="text-xs font-semibold">June</span>
+</div>
+</div>
+</div>
+<!-- Strategic Context -->
+<div class="bg-surface-container-low p-6 rounded-xl border border-surface-container-high flex flex-col">
+<h3 class="text-sm font-bold text-on-surface mb-4">Strategic Capacity</h3>
+<div class="space-y-4 flex-1">
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface-variant font-medium">Headcount Allocated</span>
+<span class="font-bold">24 / 28 FTE</span>
+</div>
+<div class="w-full bg-white rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 85%"></div>
+</div>
+<div class="flex justify-between items-center text-xs">
+<span class="text-on-surface-variant font-medium">Budget Consumed</span>
+<span class="font-bold">$420k / $600k</span>
+</div>
+<div class="w-full bg-white rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 70%"></div>
+</div>
+<div class="mt-4 p-3 bg-white rounded-lg border border-primary-fixed-dim/30">
+<p class="text-[10px] leading-relaxed text-on-surface-variant">
+<strong class="text-primary">Note:</strong> Velocity increased by 12% in March due to new CI/CD pipelines. Q2 projects are prioritized by RICE score descending.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Roadmap Notes Collapsible -->
+<div class="bg-surface-container-lowest border border-surface-container-high rounded-xl overflow-hidden">
+<button class="w-full p-4 flex items-center justify-between text-left hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">description</span>
+<span class="text-sm font-bold">Roadmap Notes: Q2 Goals &amp; Key Decisions</span>
+</div>
+<span class="material-symbols-outlined">expand_more</span>
+</button>
+<div class="p-6 pt-0 text-sm text-on-surface-variant space-y-4">
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h4 class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Q2 Objectives</h4>
+<ul class="space-y-2 list-disc pl-4">
+<li>Reduce checkout latency by 400ms across EU regions.</li>
+<li>Launch multi-entity ledger support for enterprise partners.</li>
+<li>Achieve 99.99% uptime for core risk scoring services.</li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold text-primary uppercase tracking-widest mb-2">Resource Shifting</h4>
+<p class="leading-relaxed">
+                                Due to the upcoming EU compliance deadline, 2 developers from "Growth" have been re-allocated to "Risk" for May and June. The "Referral Engine" initiative is now marked as 50% capacity.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

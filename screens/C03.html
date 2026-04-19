@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SpecKit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "tertiary": "#6b00b7",
+                        "surface-dim": "#cfdaf2",
+                        "surface-container-highest": "#d8e3fb",
+                        "on-primary-container": "#dad7ff",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#111c2d",
+                        "primary-fixed": "#e2dfff",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#d2bbff",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#263143",
+                        "on-secondary-fixed": "#25005a",
+                        "tertiary-fixed": "#f0dbff",
+                        "inverse-primary": "#c3c0ff",
+                        "on-tertiary-fixed": "#2c0051",
+                        "inverse-on-surface": "#ecf1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#e7eeff",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "outline": "#777587",
+                        "surface-bright": "#f9f9ff",
+                        "surface-variant": "#d8e3fb",
+                        "on-tertiary-fixed-variant": "#6900b3",
+                        "on-primary-fixed": "#0f0069",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "surface": "#f9f9ff",
+                        "surface-container-low": "#f0f3ff",
+                        "surface-tint": "#4d44e3",
+                        "on-surface-variant": "#464555",
+                        "on-secondary-fixed-variant": "#5a00c6",
+                        "secondary-container": "#8a4cfc",
+                        "on-secondary-container": "#fffbff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "secondary": "#712ae2",
+                        "outline-variant": "#c7c4d8",
+                        "background": "#f9f9ff",
+                        "on-surface": "#111c2d",
+                        "primary": "#3525cd",
+                        "tertiary-fixed-dim": "#ddb7ff",
+                        "tertiary-container": "#862dd4",
+                        "primary-container": "#4f46e5",
+                        "surface-container-high": "#dee8ff",
+                        "on-tertiary-container": "#ebd2ff",
+                        "secondary-fixed": "#eaddff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "manrope": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-manrope { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+        /* Custom scrollbar for better UX in side panes */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased overflow-hidden">
+<!-- SideNavBar Implementation matching {{DATA:COMPONENTS:COMPONENTS_54}} -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col bg-[#1E1B4B] dark:bg-slate-950 font-manrope tracking-tight font-medium z-50">
+<div class="flex flex-col h-full py-6">
+<!-- Brand Header -->
+<div class="flex items-center gap-3 px-6 mb-10">
+<div class="w-10 h-10 rounded-lg bg-[#4F46E5] flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<div>
+<div class="text-xl font-bold text-white uppercase tracking-widest leading-none">Product Hub</div>
+<div class="text-[10px] uppercase tracking-wider text-white/40 font-bold mt-1">Enterprise Suite</div>
+</div>
+</div>
+<!-- Main Navigation -->
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/50 hover:text-white/80 hover:bg-white/5 transition-all duration-200 group active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/50 hover:text-white/80 hover:bg-white/5 transition-all duration-200 group active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">pending_actions</span>
+<span>Requests</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/50 hover:text-white/80 hover:bg-white/5 transition-all duration-200 group active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">analytics</span>
+<span>Evaluation</span>
+</a>
+<!-- Active State for SpecKit -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#ECEEF0]/10 text-white font-semibold transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span>SpecKit</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/50 hover:text-white/80 hover:bg-white/5 transition-all duration-200 group active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">science</span>
+<span>Research</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/50 hover:text-white/80 hover:bg-white/5 transition-all duration-200 group active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">view_list</span>
+<span>Backlog</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/50 hover:text-white/80 hover:bg-white/5 transition-all duration-200 group active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">local_shipping</span>
+<span>Delivery</span>
+</a>
+</nav>
+<!-- Footer Navigation -->
+<div class="px-3 pt-6 border-t border-white/5 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/50 hover:text-white/80 hover:bg-white/5 transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-white/50 hover:text-white/80 hover:bg-white/5 transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">help</span>
+<span>Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- TopNavBar Implementation matching {{DATA:COMPONENTS:COMPONENTS_54}} -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-16 z-40 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md flex items-center justify-between px-8 border-b border-slate-100 dark:border-slate-800 font-manrope">
+<div class="flex items-center">
+<!-- Breadcrumb / Context as substitute for missing brand logo in component spec -->
+<div class="flex items-center gap-2 text-sm text-slate-400">
+<span>SpecKit</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="font-bold text-slate-900">SpecKit</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<!-- Trailing Icon Actions -->
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:text-[#4F46E5] hover:bg-slate-50 transition-all duration-300">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:text-[#4F46E5] hover:bg-slate-50 transition-all duration-300">
+<span class="material-symbols-outlined">apps</span>
+</button>
+</div>
+<!-- Profile -->
+<div class="flex items-center gap-3 pl-6 border-l border-slate-100">
+<div class="text-right hidden sm:block">
+<div class="text-sm font-bold text-slate-900">Alex Rivera</div>
+<div class="text-[10px] text-slate-500 font-medium uppercase tracking-tight">Lead Product Manager</div>
+</div>
+<div class="w-9 h-9 rounded-full overflow-hidden border-2 border-white shadow-sm ring-1 ring-slate-100">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2DOg4zkTTuFvdRBfSrwsVgNWS9l8Zs_Sr8VGEGmGvPH2uzjS4fRvUzybwsKGBknMe5SiOHYdnMehJlnSVV-CzuWIEZKmhvN4Vft4NHeB7zUCDFSvszquWzuVToZArk8CYNBhgHhK1EAM_2lmoMrTBJa9gVjXmagT7nC6HO2In4ZzCHFjD2DiPWbbNPJ1PIUm8bHvtrD_GzF3qstxaHqySH6_e4B33VXqlQ2PRMnZhF4gWa4m6J5A_5_A8eEIfb0phfEuqcxUCDw8"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex h-screen pt-16 pl-64 overflow-hidden">
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto bg-surface-container-low p-8 relative">
+<!-- Header Section -->
+<div class="max-w-6xl mx-auto mb-8 flex justify-between items-end">
+<div class="space-y-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-xs font-bold tracking-widest text-[#4F46E5] uppercase">Current Specification</span>
+<div class="h-px w-12 bg-indigo-200"></div>
+</div>
+<h1 class="text-4xl font-black tracking-tight text-on-surface">Smart Notifications Engine</h1>
+<p class="text-on-surface-variant font-medium">Drafting User Stories from PRD v2.4</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-outline-variant/20">
+<span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+<span class="text-xs font-bold text-indigo-900 uppercase tracking-wider">User Stories Drafted</span>
+</div>
+<button class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-2 rounded-full font-semibold shadow-xl shadow-indigo-200 hover:scale-105 transition-transform active:scale-95 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+                    Submit for PM Review
+                </button>
+</div>
+</div>
+<!-- Bento Workspace -->
+<div class="max-w-6xl mx-auto grid grid-cols-12 gap-6 pb-24">
+<!-- Left Column: Source PRD (33%) -->
+<div class="col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-outline-variant/10 h-[700px] flex flex-col overflow-hidden">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-indigo-600">article</span>
+                            Source PRD
+                        </h3>
+<button class="text-xs font-bold text-indigo-600 uppercase tracking-tighter">View Full</button>
+</div>
+<div class="flex-1 overflow-y-auto space-y-8 pr-2">
+<section>
+<label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Overview</label>
+<p class="text-sm leading-relaxed text-on-surface-variant">
+                                The Smart Notification Engine aims to reduce user fatigue by intelligently batching alerts based on user activity patterns and priority scores.
+                            </p>
+</section>
+<section>
+<label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Primary Goals</label>
+<ul class="text-sm space-y-3 text-on-surface-variant">
+<li class="flex gap-2">
+<span class="text-indigo-500 font-bold">•</span>
+                                    Achieve 30% reduction in notification dismissals.
+                                </li>
+<li class="flex gap-2">
+<span class="text-indigo-500 font-bold">•</span>
+                                    Increase high-priority action completion by 15%.
+                                </li>
+<li class="flex gap-2">
+<span class="text-indigo-500 font-bold">•</span>
+                                    Enable user-defined 'quiet hours' automatically via LLM activity detection.
+                                </li>
+</ul>
+</section>
+<section>
+<label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Target Audience</label>
+<div class="flex flex-wrap gap-2">
+<span class="bg-surface-container-low px-3 py-1 rounded-full text-xs font-medium text-slate-600">High-volume users</span>
+<span class="bg-surface-container-low px-3 py-1 rounded-full text-xs font-medium text-slate-600">Mobile app users</span>
+<span class="bg-surface-container-low px-3 py-1 rounded-full text-xs font-medium text-slate-600">Enterprise admins</span>
+</div>
+</section>
+<div class="bg-surface-container-low p-4 rounded-xl">
+<p class="text-[11px] text-slate-500 italic">"The system should feel like a personal assistant that knows exactly when to interrupt and when to hold back." - Product Vision</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: AI Workspace (67%) -->
+<div class="col-span-8 flex flex-col gap-6">
+<!-- AI Control Toolbar -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/10 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<span class="text-sm font-bold text-on-surface">LLM Spec Assistant</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-1.5 rounded-lg text-xs font-bold text-on-surface-variant hover:bg-surface-container hover:text-indigo-600 transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">add_circle</span>
+                            Add more detail
+                        </button>
+<button class="px-4 py-1.5 rounded-lg text-xs font-bold text-on-surface-variant hover:bg-surface-container hover:text-indigo-600 transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">accessibility_new</span>
+                            Ensure accessibility
+                        </button>
+<button class="bg-indigo-600 text-white px-4 py-1.5 rounded-lg text-xs font-bold hover:bg-indigo-700 transition-colors flex items-center gap-1 shadow-md shadow-indigo-100">
+<span class="material-symbols-outlined text-sm">checklist</span>
+                            Generate Acceptance Criteria
+                        </button>
+</div>
+</div>
+<!-- Generated User Stories List -->
+<div class="flex-1 space-y-4">
+<!-- Story Card 1 -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-l-indigo-600 border border-outline-variant/10 group hover:shadow-lg transition-all">
+<div class="flex justify-between items-start mb-3">
+<div class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest">Story US-101</div>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="material-symbols-outlined text-slate-400 hover:text-indigo-600 text-[20px]">edit</button>
+<button class="material-symbols-outlined text-slate-400 hover:text-indigo-600 text-[20px]">content_copy</button>
+<button class="material-symbols-outlined text-slate-400 hover:text-error text-[20px]">delete</button>
+</div>
+</div>
+<h4 class="text-lg font-bold text-indigo-900 mb-2 leading-tight">Smart Batching Logic</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+<span class="font-bold text-slate-500 italic">As a</span> frequent user, <span class="font-bold text-slate-500 italic">I want</span> my low-priority notifications to be batched and delivered twice daily <span class="font-bold text-slate-500 italic">so that</span> I am not constantly interrupted during my deep-work hours.
+                        </p>
+<div class="mt-6 pt-4 border-t border-slate-100 space-y-2">
+<div class="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">
+<span class="material-symbols-outlined text-sm">fact_check</span>
+                                Acceptance Criteria
+                            </div>
+<ul class="text-xs text-on-surface-variant space-y-1 pl-6 list-disc">
+<li>Batch times must be configurable (e.g., 9 AM and 4 PM).</li>
+<li>Any 'Critical' alert must bypass batching immediately.</li>
+<li>Users can view the 'Batched' tray at any time to see pending alerts.</li>
+</ul>
+</div>
+</div>
+<!-- Story Card 2 -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border-l-4 border-l-purple-500 border border-outline-variant/10 group hover:shadow-lg transition-all">
+<div class="flex justify-between items-start mb-3">
+<div class="bg-purple-50 text-purple-700 px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-widest">Story US-102</div>
+<div class="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="material-symbols-outlined text-slate-400 hover:text-indigo-600 text-[20px]">edit</button>
+<button class="material-symbols-outlined text-slate-400 hover:text-indigo-600 text-[20px]">content_copy</button>
+<button class="material-symbols-outlined text-slate-400 hover:text-error text-[20px]">delete</button>
+</div>
+</div>
+<h4 class="text-lg font-bold text-indigo-900 mb-2 leading-tight">Activity-Aware Delivery</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+<span class="font-bold text-slate-500 italic">As a</span> mobile user, <span class="font-bold text-slate-500 italic">I want</span> the app to detect when I am actively using my device <span class="font-bold text-slate-500 italic">so that</span> it can deliver non-critical alerts as subtle in-app banners instead of loud push notifications.
+                        </p>
+</div>
+<!-- Story Card 3 (Empty State Placeholder) -->
+<div class="border-2 border-dashed border-indigo-200 rounded-2xl p-10 flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-indigo-50/30 transition-colors">
+<div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">auto_fix_high</span>
+</div>
+<h5 class="font-bold text-indigo-900">Generate More Stories</h5>
+<p class="text-xs text-on-surface-variant max-w-xs mt-1">Our AI detects missing edge cases for 'Offline Access' and 'Multi-device Syncing'. Click to expand the spec.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Interaction Bar (The Perspective Bar) -->
+<div class="fixed bottom-6 left-[280px] right-8 z-30">
+<div class="glass-panel border border-outline-variant/10 rounded-2xl p-6 shadow-2xl flex items-center gap-8">
+<div class="flex-1">
+<div class="flex justify-between mb-2">
+<span class="text-xs font-bold uppercase tracking-widest text-indigo-900">Transformation Velocity</span>
+<span class="text-xs font-bold text-indigo-600">82% Accurate to PRD</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden flex">
+<div class="h-full bg-gradient-to-r from-primary to-secondary w-[82%] relative">
+<div class="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.2)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.2)_50%,rgba(255,255,255,0.2)_75%,transparent_75%,transparent)] bg-[length:20px_20px]"></div>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-surface-container-highest text-primary px-6 py-3 rounded-xl font-bold text-sm hover:translate-y-[-2px] transition-transform shadow-sm">
+                        Compare Versions
+                    </button>
+<button class="bg-primary text-white px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2 hover:translate-y-[-2px] transition-transform shadow-xl shadow-indigo-200">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+                        Finalize Stories
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

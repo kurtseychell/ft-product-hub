@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Precision Curator | UAT Testing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#464555",
+                        "surface": "#f8f9ff",
+                        "surface-bright": "#f8f9ff",
+                        "surface-dim": "#cbdbf5",
+                        "surface-container-high": "#dce9ff",
+                        "outline-variant": "#c7c4d8",
+                        "primary-fixed-dim": "#c3c0ff",
+                        "on-primary-container": "#dad7ff",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#3323cc",
+                        "secondary": "#58579b",
+                        "background": "#f8f9ff",
+                        "primary": "#3525cd",
+                        "tertiary-fixed": "#ffdbcc",
+                        "surface-tint": "#4d44e3",
+                        "on-secondary-fixed-variant": "#413f82",
+                        "on-secondary-fixed": "#140f54",
+                        "surface-variant": "#d3e4fe",
+                        "outline": "#777587",
+                        "secondary-container": "#b6b4ff",
+                        "on-background": "#0b1c30",
+                        "surface-container-low": "#eff4ff",
+                        "on-tertiary-fixed": "#351000",
+                        "on-secondary-container": "#454386",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#4f46e5",
+                        "on-primary-fixed": "#0f0069",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "inverse-primary": "#c3c0ff",
+                        "on-error": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#ffb695",
+                        "tertiary": "#7e3000",
+                        "on-tertiary-container": "#ffd2be",
+                        "secondary-fixed": "#e2dfff",
+                        "surface-container": "#e5eeff",
+                        "tertiary-container": "#a44100",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#213145",
+                        "primary-fixed": "#e2dfff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "inverse-on-surface": "#eaf1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px);
+        }
+        .btn-primary-gradient {
+            background: linear-gradient(135deg, #3525cd 0%, #4f46e5 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 flex-shrink-0 bg-[#dce9ff] dark:bg-slate-900 flex flex-col py-8 px-4 z-50">
+<div class="mb-10 px-2 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-lg" data-icon="token">token</span>
+</div>
+<div>
+<h1 class="text-lg font-black text-indigo-700 dark:text-indigo-300 leading-tight">Enterprise Admin</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Product Strategy</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-white/50 rounded-xl transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="dashboard">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-white/50 rounded-xl transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="description">description</span>
+<span class="font-medium text-sm">PRD Generator</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-white/50 rounded-xl transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="list_alt">list_alt</span>
+<span class="font-medium text-sm">Backlog</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-white dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-200 shadow-sm rounded-xl transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="fact_check">fact_check</span>
+<span class="font-medium text-sm">UAT Testing</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-outline-variant/15 space-y-1">
+<button class="w-full btn-primary-gradient text-white py-3 rounded-xl font-bold text-sm shadow-lg shadow-primary/10 flex items-center justify-center gap-2 mb-6">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                New Initiative
+            </button>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-white/50 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-white/50 rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm">Archive</span>
+</a>
+</div>
+</aside>
+<div class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="w-full h-16 bg-[#f8f9ff] dark:bg-slate-950 flex justify-between items-center px-6 sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold tracking-tight text-indigo-600 dark:text-indigo-400">Precision Curator</span>
+<div class="h-4 w-px bg-outline-variant/30"></div>
+<nav class="flex gap-6">
+<span class="text-indigo-700 dark:text-indigo-300 font-semibold text-sm cursor-default">Execution Console</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg" data-icon="search">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-1.5 text-sm focus:ring-2 focus:ring-primary w-64 transition-all" placeholder="Find test case..." type="text"/>
+</div>
+<button class="p-2 text-slate-500 hover:bg-indigo-50/50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-indigo-50/50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<img alt="User profile" class="w-8 h-8 rounded-full object-cover border border-outline-variant/20" data-alt="professional headshot of a tech product manager wearing glasses neutral minimalist office background soft lighting high quality photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2KAWBl7UM-cJ2Rrz5ZLn0X-PlFmrbwNRLSwA_-VDgA383ibhny788yr-3d1WA4ZqyUGfgLZUVA-aRvFe6BMiOIsBDUgyTHHiP0vke1kjcnLA37Q0-_W-TuoUOAhyTG3V60nlka4UkO4IYvTPIS4mD55sNv61WKaspSd5w5YH6mRYbStWY8hbR4MpPSnESDfwFkiwTgvhCc2U54hsY4hdVOJUx2IRQpQ5DlY9Sqn-OfAaXcPGq3TNh_NiPe2Ju_hDRPnvvVY7ucFU"/>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex min-h-0">
+<!-- Left Panel: UAT Test Execution (55%) -->
+<section class="w-[55%] flex flex-col bg-surface-container-low overflow-y-auto">
+<div class="p-8 space-y-8">
+<!-- Header -->
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider">UAT In Progress</span>
+<span class="text-on-surface-variant text-xs">Started 2 hours ago • ID: PM-402</span>
+</div>
+<h2 class="text-3xl font-extrabold text-on-surface tracking-tight">Payment Retry Logic</h2>
+</div>
+<button class="px-5 py-2.5 bg-surface-container-lowest border border-outline-variant/30 rounded-xl text-sm font-semibold hover:shadow-sm transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="ios_share">ios_share</span>
+                            Share Report
+                        </button>
+</div>
+<!-- Progress Section -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border border-outline-variant/10">
+<div class="flex justify-between items-end mb-4">
+<div>
+<p class="text-sm font-semibold text-on-surface">Execution Progress</p>
+<p class="text-xs text-on-surface-variant">9 of 14 criteria tested — 7 passed, 2 failed</p>
+</div>
+<span class="text-2xl font-black text-primary">64%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-high rounded-full overflow-hidden flex">
+<div class="h-full bg-emerald-500" style="width: 50%"></div>
+<div class="h-full bg-error" style="width: 14%"></div>
+<div class="h-full bg-surface-container-highest" style="width: 36%"></div>
+</div>
+</div>
+<!-- Acceptance Criteria List -->
+<div class="space-y-4">
+<h3 class="title-sm font-bold text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="checklist">checklist</span>
+                            Acceptance Criteria
+                        </h3>
+<!-- Criterion 1: Passed -->
+<div class="group bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 transition-all hover:translate-x-1 border border-transparent hover:border-outline-variant/10">
+<div class="w-6 h-6 rounded bg-emerald-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-600 text-lg font-bold" data-icon="check">check</span>
+</div>
+<span class="flex-1 text-sm font-medium text-on-surface">User receives retry notification within 30 seconds</span>
+<div class="flex items-center gap-3">
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="photo_camera">photo_camera</span>
+</button>
+<select class="bg-surface-container-low border-none rounded-lg text-xs font-bold py-1.5 pr-8 focus:ring-primary text-emerald-700">
+<option selected="">Pass</option>
+<option>Fail</option>
+<option>Blocked</option>
+<option>Skipped</option>
+</select>
+</div>
+</div>
+<!-- Criterion 2: Failed -->
+<div class="group bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 transition-all hover:translate-x-1 border border-transparent hover:border-outline-variant/10">
+<div class="w-6 h-6 rounded bg-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-lg" data-icon="close">close</span>
+</div>
+<span class="flex-1 text-sm font-medium text-on-surface">System logs 3 attempts</span>
+<div class="flex items-center gap-3">
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="photo_camera">photo_camera</span>
+</button>
+<select class="bg-surface-container-low border-none rounded-lg text-xs font-bold py-1.5 pr-8 focus:ring-primary text-error">
+<option>Pass</option>
+<option selected="">Fail</option>
+<option>Blocked</option>
+<option>Skipped</option>
+</select>
+</div>
+</div>
+<!-- Criterion 3: Pending -->
+<div class="group bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 transition-all hover:translate-x-1 border border-transparent hover:border-outline-variant/10">
+<div class="w-6 h-6 rounded bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-lg" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</div>
+<span class="flex-1 text-sm font-medium text-on-surface">API returns 429 after limit</span>
+<div class="flex items-center gap-3">
+<button class="p-1.5 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors">
+<span class="material-symbols-outlined text-lg" data-icon="photo_camera">photo_camera</span>
+</button>
+<select class="bg-surface-container-low border-none rounded-lg text-xs font-bold py-1.5 pr-8 focus:ring-primary text-on-surface-variant">
+<option disabled="" selected="">Select Status</option>
+<option>Pass</option>
+<option>Fail</option>
+<option>Blocked</option>
+<option>Skipped</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Bug Report Section (Collapsible) -->
+<div class="bg-surface-container-lowest rounded-2xl shadow-sm border border-outline-variant/10 overflow-hidden">
+<div class="p-4 bg-surface-container flex items-center justify-between cursor-pointer">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error" data-icon="bug_report">bug_report</span>
+<span class="font-bold text-sm">Create Bug Report</span>
+</div>
+<span class="material-symbols-outlined" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+<div class="p-6 space-y-4">
+<div>
+<label class="text-[10px] uppercase font-bold text-on-surface-variant tracking-widest mb-1 block">Issue Title</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl py-2.5 text-sm focus:ring-primary" placeholder="Retry counter resetting prematurely" type="text"/>
+</div>
+<div>
+<label class="text-[10px] uppercase font-bold text-on-surface-variant tracking-widest mb-1 block">Description</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-xl py-2.5 text-sm focus:ring-primary" placeholder="Describe the steps to reproduce..." rows="3"></textarea>
+</div>
+<div class="flex gap-4">
+<div class="flex-1">
+<label class="text-[10px] uppercase font-bold text-on-surface-variant tracking-widest mb-1 block">Severity</label>
+<select class="w-full bg-surface-container-low border-none rounded-xl py-2.5 text-sm focus:ring-primary">
+<option>Low</option>
+<option>Medium</option>
+<option selected="">High</option>
+<option>Critical</option>
+</select>
+</div>
+<div class="flex items-end">
+<button class="bg-error text-white px-8 py-2.5 rounded-xl text-sm font-bold hover:bg-red-700 transition-colors">Submit Bug</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Panel: AI Test Assistant (45%) -->
+<section class="w-[45%] bg-surface-container-high border-l border-outline-variant/10 flex flex-col relative">
+<div class="p-6 border-b border-outline-variant/10 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<div>
+<h2 class="font-bold text-on-surface">AI Test Assistant</h2>
+<p class="text-[10px] text-primary font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
+                                ANALYZING SPEC V4.2
+                            </p>
+</div>
+</div>
+<button class="p-2 text-on-surface-variant hover:bg-white/50 rounded-lg">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- AI Message -->
+<div class="flex gap-4 max-w-[90%]">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-on-surface-variant leading-relaxed">
+                            Based on the PRD, I've identified 3 edge cases not covered by current test criteria. Would you like me to add them?
+                            <div class="mt-3 flex gap-2">
+<span class="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-[11px] font-bold border border-indigo-100">Insufficient funds retry</span>
+<span class="px-3 py-1 bg-indigo-50 text-indigo-600 rounded-full text-[11px] font-bold border border-indigo-100">Gateway timeout</span>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-4 max-w-[90%] ml-auto flex-row-reverse">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="person">person</span>
+</div>
+<div class="btn-primary-gradient p-4 rounded-2xl rounded-tr-none shadow-md text-sm text-white font-medium">
+                            Yes, add them
+                        </div>
+</div>
+<!-- AI Message -->
+<div class="flex gap-4 max-w-[90%]">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm text-sm text-on-surface-variant leading-relaxed">
+                            Added. I also notice criteria <span class="font-bold text-primary">#4</span> conflicts with the updated spec from April 8th. The timeout was changed from 30s to 45s. Shall I update?
+                            <div class="mt-4 flex gap-2">
+<button class="px-4 py-2 bg-primary text-white text-xs font-bold rounded-lg">Update spec</button>
+<button class="px-4 py-2 bg-surface-container-low text-on-surface-variant text-xs font-bold rounded-lg">Dismiss</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Input Field -->
+<div class="p-6 bg-surface-container-high/50 backdrop-blur-md">
+<div class="relative group">
+<input class="w-full bg-white border-outline-variant/20 rounded-2xl py-4 pl-6 pr-14 text-sm shadow-xl focus:ring-primary focus:border-transparent transition-all" placeholder="Ask the AI about test coverage..." type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-primary-container text-white rounded-xl flex items-center justify-center hover:scale-105 transition-transform active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+<p class="text-[10px] text-on-surface-variant/60 text-center mt-3">Press Enter to send. AI may hallucinate edge cases.</p>
+</div>
+</section>
+</main>
+</div>
+<!-- Floating Priority Tray -->
+<div class="fixed right-0 bottom-12 w-12 hover:w-72 transition-all duration-300 group z-50 overflow-hidden">
+<div class="bg-surface-container-highest h-96 rounded-l-3xl shadow-2xl border-l border-y border-outline-variant/20 flex">
+<div class="w-12 h-full flex flex-col items-center py-6 gap-6">
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="history">history</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="layers">layers</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="flag">flag</span>
+</div>
+<div class="flex-1 p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+<h4 class="text-xs font-black uppercase tracking-widest mb-6">Recent Executions</h4>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
+<div class="text-xs">
+<p class="font-bold">OAuth 2.0 Flow</p>
+<p class="text-[10px] text-on-surface-variant">Completed yesterday</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-error"></div>
+<div class="text-xs">
+<p class="font-bold">Refund API</p>
+<p class="text-[10px] text-on-surface-variant">Failed 2 days ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>
