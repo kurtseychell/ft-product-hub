@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product Hub — Deliverables</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script>
+tailwind.config = {
+  darkMode:'class',
+  theme: { extend: {
+    colors: {
+      primary:'#3525cd','primary-container':'#4f46e5','primary-fixed':'#e2dfff','primary-fixed-dim':'#c3c0ff',
+      'on-primary':'#ffffff','on-primary-container':'#dad7ff',
+      secondary:'#5b598c','secondary-container':'#c7c3fe','on-secondary-container':'#514f81',
+      tertiary:'#7e3000','tertiary-container':'#a44100',
+      background:'#f7f9fb',surface:'#f7f9fb',
+      'surface-container-lowest':'#ffffff','surface-container-low':'#f2f4f6','surface-container':'#eceef0',
+      'surface-container-high':'#e6e8ea','surface-container-highest':'#e0e3e5',
+      'on-surface':'#191c1e','on-surface-variant':'#464555',
+      outline:'#777587','outline-variant':'#c7c4d8',
+      error:'#ba1a1a','error-container':'#ffdad6','on-error-container':'#93000a',
+      sidebar:'#1E1B4B'
+    },
+    borderRadius:{ DEFAULT:'0.25rem', lg:'0.5rem', xl:'0.75rem', full:'9999px' },
+    fontFamily:{ body:['Inter'], headline:['Manrope'], label:['Inter'] }
+  }}
+};
+</script>
+<link rel="stylesheet" href="system.css" />
+<style>
+  body { font-family:'Inter', sans-serif; background:#eceef0; }
+  .screen {
+    max-width:1440px; margin:40px auto; background:#f7f9fb;
+    border-radius:12px; overflow:hidden; box-shadow:0 24px 64px rgba(25,28,30,.08), 0 2px 6px rgba(25,28,30,.04);
+    scroll-margin-top:80px;
+  }
+  .screen-label {
+    max-width:1440px; margin:60px auto 0; padding:0 4px;
+    display:flex; align-items:baseline; justify-content:space-between;
+  }
+  .eyebrow { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.18em; color:#3525cd; }
+  .topnav { background:rgba(255,255,255,.90); backdrop-filter:blur(12px); }
+  /* sticky index */
+  .toc {
+    position:fixed; left:24px; top:50%; transform:translateY(-50%);
+    z-index:40; background:white; border:1px solid rgba(199,196,216,.5); border-radius:12px;
+    padding:12px 10px; box-shadow:0 12px 32px rgba(25,28,30,.08); font-family:'Inter'; font-size:11px;
+  }
+  .toc a { display:flex; align-items:center; gap:6px; padding:5px 8px; border-radius:6px; color:#464555; font-weight:600; }
+  .toc a:hover { background:#f2f4f6; color:#191c1e; }
+  .toc a.active { background:rgba(53,37,205,.08); color:#3525cd; }
+  .toc .toc-group { font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.16em; color:#777587; padding:8px 8px 4px; }
+  @media (max-width:1280px){ .toc { display:none; } }
+
+  .pill { display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:9999px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; }
+  .pill-sm { padding:1px 8px; font-size:10px; }
+  .ph-pill-approved{background:#d1fae5;color:#065f46}.ph-pill-review{background:#fef3c7;color:#92400e}
+  .ph-pill-revised{background:#dbeafe;color:#1d4ed8}.ph-pill-pending{background:#f1f5f9;color:#334155}
+  .ph-pill-rejected{background:#fee2e2;color:#991b1b}.ph-pill-primary{background:rgba(53,37,205,.10);color:#3525cd}
+  .ph-pill-domain-identity{background:rgba(126,48,0,.10);color:#7e3000}
+  .ph-pill-domain-infra{background:#e0e3e5;color:#464555}
+  .ph-pill-domain-growth{background:#c7c3fe;color:#514f81}
+  .ph-pill-severity-critical{background:#fee2e2;color:#991b1b}
+  .ph-pill-severity-high{background:#ffedd5;color:#9a3412}
+  .ph-pill-severity-medium{background:#fef3c7;color:#92400e}
+  .ph-pill-severity-low{background:#dbeafe;color:#1d4ed8}
+
+  .ai-chip { background:linear-gradient(135deg,#3525cd 0%,#7c3aed 100%); color:white; }
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; vertical-align:middle; }
+  .msym-fill { font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24; }
+  .no-scrollbar::-webkit-scrollbar{display:none} .no-scrollbar{scrollbar-width:none}
+
+  .ph-input { background:#f2f4f6; border:1px solid transparent; border-radius:.5rem; padding:9px 12px; font-size:13px; width:100%; transition:all .15s; }
+  .ph-input:focus { outline:none; background:#fff; border-color:#3525cd; box-shadow:0 0 0 4px rgba(53,37,205,.10); }
+
+  .sidebar-nav a { display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:.5rem; font-size:13px; font-weight:500; color:rgba(255,255,255,.50); transition:all .15s; font-family:'Inter'; }
+  .sidebar-nav a:hover { color:rgba(255,255,255,.80); background:rgba(255,255,255,.05); }
+  .sidebar-nav a.active { color:white; background:rgba(255,255,255,.10); font-weight:600; }
+  .sidebar-nav .section { font-size:10px; font-weight:800; color:rgba(255,255,255,.30); text-transform:uppercase; letter-spacing:.16em; padding:14px 14px 6px; }
+
+  h1,h2,h3,h4,.h-head { font-family:'Manrope', sans-serif; letter-spacing:-.01em; }
+  .spec { font-family:'Inter'; font-size:11px; color:#464555; }
+  .chart-grid { background-image: linear-gradient(#e0e3e5 1px, transparent 1px), linear-gradient(90deg, #e0e3e5 1px, transparent 1px); background-size: 100% 25%, 16.66% 100%; }
+
+  /* simple chart path */
+  .spark path, .spark polyline { fill:none; stroke:#3525cd; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .spark .area { fill:rgba(53,37,205,.12); stroke:none; }
+</style>
+</head>
+
+<body>
+
+<!-- Floating TOC -->
+<nav class="toc">
+  <div class="toc-group">Cover</div>
+  <a href="#cover"><span class="material-symbols-outlined text-[14px]">home</span>Overview</a>
+  <div class="toc-group">Re-skins</div>
+  <a href="#c02"><span class="w-4 text-[10px] font-mono text-primary">C02</span>RICE Scoring</a>
+  <a href="#e04"><span class="w-4 text-[10px] font-mono text-primary">E04</span>Success Metrics</a>
+  <a href="#z01"><span class="w-4 text-[10px] font-mono text-primary">Z01</span>LLM Usage</a>
+  <div class="toc-group">Bug pipeline</div>
+  <a href="#f01"><span class="w-4 text-[10px] font-mono text-primary">F01</span>Intake</a>
+  <a href="#f02"><span class="w-4 text-[10px] font-mono text-primary">F02</span>Triage</a>
+  <a href="#f03"><span class="w-4 text-[10px] font-mono text-primary">F03</span>Workspace</a>
+  <a href="#f04"><span class="w-4 text-[10px] font-mono text-primary">F04</span>Analytics</a>
+  <div class="toc-group">Admin v2</div>
+  <a href="#g01"><span class="w-4 text-[10px] font-mono text-primary">G01</span>Users &amp; Roles</a>
+  <a href="#g02"><span class="w-4 text-[10px] font-mono text-primary">G02</span>Integrations</a>
+  <a href="#g03"><span class="w-4 text-[10px] font-mono text-primary">G03</span>Audit Log</a>
+</nav>
+
+<!-- =============================== -->
+<!-- COVER                            -->
+<!-- =============================== -->
+<div id="cover" class="screen p-12" style="scroll-margin-top:40px">
+  <div class="flex items-center gap-4 mb-8">
+    <div class="w-12 h-12 rounded-xl bg-sidebar text-white flex items-center justify-center"><span class="material-symbols-outlined msym-fill">hexagon</span></div>
+    <div>
+      <div class="eyebrow">Product Hub · Design Handoff</div>
+      <h1 class="font-headline font-extrabold text-4xl tracking-tight mt-1">10 screens, one system.</h1>
+    </div>
+  </div>
+  <p class="text-on-surface-variant max-w-3xl leading-relaxed">
+    This document collects every new and re-skinned screen into a single scrollable artifact. Three screens (C02, E04, Z01) were previously built against IBM Carbon; they are now rebuilt on the canonical Product Hub kit — indigo <b>#3525CD</b>, Inter + Manrope, dark-navy sidebar, rounded tokens, Material 3 color roles. The four Bug screens and three Admin v2 screens are net-new, composed entirely from existing primitives.
+  </p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-10">
+    <div class="p-5 rounded-xl border border-outline-variant/40 bg-white">
+      <div class="eyebrow">3 · Re-skins</div>
+      <div class="font-headline font-bold text-lg mt-1">From Carbon → Product Hub</div>
+      <div class="spec mt-2">C02 RICE Scoring, E04 Success Metrics, Z01 LLM Usage &amp; Costs. Same information architecture, new visual language.</div>
+    </div>
+    <div class="p-5 rounded-xl border border-outline-variant/40 bg-white">
+      <div class="eyebrow">4 · Bug pipeline</div>
+      <div class="font-headline font-bold text-lg mt-1">Net-new workstream</div>
+      <div class="spec mt-2">Intake (form), Triage (queue), Workspace (3-panel AI), Analytics (trends). Mirrors B-series PRD flow.</div>
+    </div>
+    <div class="p-5 rounded-xl border border-outline-variant/40 bg-white">
+      <div class="eyebrow">3 · Admin v2</div>
+      <div class="font-headline font-bold text-lg mt-1">Platform operations</div>
+      <div class="spec mt-2">Users &amp; Roles, Integrations, Audit Log. Extends Z01 admin shell with the full settings catalog.</div>
+    </div>
+  </div>
+  <p class="spec mt-6">Scroll through the whole document, or use the floating index on the left.</p>
+</div>
+
+<!-- Reusable markup macros live as raw HTML in each screen.
+     Every screen has the same shell: 240px sidebar + 56px topbar + main canvas. -->
+
+<!-- =============================== -->
+<!-- C02  RICE SCORING (re-skin)      -->
+<!-- =============================== -->
+<div class="screen-label"><div><span class="eyebrow">Re-skin · 01</span><h2 class="font-headline font-extrabold text-2xl mt-1">C02 · RICE Scoring</h2></div><div class="spec">Was: IBM Carbon · Now: Product Hub canonical</div></div>
+<div id="c02" class="screen" data-screen-label="C02 RICE Scoring">
+  <div class="flex h-[900px]">
+    <!-- Sidebar -->
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Product Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Management Suite</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span>Main</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Product</a>
+        <a href="#" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">calculate</span>RICE Scoring</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>Backlog</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span>Delivery</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">insights</span>Insights</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">settings</span>Admin</a>
+      </nav>
+      <div class="pt-4 border-t border-white/5 space-y-0.5">
+        <a href="#" class="sidebar-nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-white/50 text-[13px] font-medium"><span class="material-symbols-outlined text-[18px]">help</span>Help</a>
+      </div>
+    </aside>
+
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <!-- Topbar -->
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40 shrink-0">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant">
+          <span>Backlog</span><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span>SUB-8842: Payment Retry Logic</span><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary">RICE Scoring</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="px-3 py-1.5 text-xs font-bold text-primary border border-primary/25 rounded-lg hover:bg-primary/5">Export CSV</button>
+          <button class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20 flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">auto_awesome</span>Re-run Agents</button>
+          <div class="h-6 w-px bg-outline-variant/40"></div>
+          <span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <!-- Hero summary -->
+        <section class="bg-white border border-outline-variant/30 rounded-xl p-6 mb-6">
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <h2 class="font-headline font-extrabold text-2xl tracking-tight">Payment Retry Logic</h2>
+                <span class="pill ph-pill-approved">PRD Approved</span>
+              </div>
+              <p class="text-sm text-on-surface-variant max-w-2xl">Improving checkout conversion with intelligent exponential backoff for failed transactions across all gateway types.</p>
+            </div>
+            <button class="px-3 py-2 text-xs font-bold text-primary border border-primary/25 rounded-lg flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">edit</span>Edit Details</button>
+          </div>
+          <div class="grid grid-cols-4 gap-4 mt-6 pt-6 border-t border-outline-variant/40">
+            <!-- 4 score circles -->
+            <div class="flex flex-col items-center gap-2">
+              <span class="eyebrow">Reach</span>
+              <div class="w-20 h-20 rounded-full border-[6px] border-primary-fixed flex items-center justify-center text-primary font-headline font-extrabold text-xl">8k</div>
+              <div class="spec">users/qtr</div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="eyebrow">Impact</span>
+              <div class="w-20 h-20 rounded-full border-[6px] border-primary-fixed flex items-center justify-center text-primary font-headline font-extrabold text-xl">3.0</div>
+              <div class="spec">massive</div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="eyebrow">Confidence</span>
+              <div class="w-20 h-20 rounded-full border-[6px] border-primary-fixed flex items-center justify-center text-primary font-headline font-extrabold text-xl">80%</div>
+              <div class="spec">high</div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="eyebrow">Effort</span>
+              <div class="w-20 h-20 rounded-full border-[6px] border-error-container flex items-center justify-center text-error font-headline font-extrabold text-xl">2.5</div>
+              <div class="spec">person-mo</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="grid grid-cols-12 gap-6">
+          <!-- Left: agent assessments -->
+          <div class="col-span-12 lg:col-span-7">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="material-symbols-outlined text-primary text-[18px]">smart_toy</span>
+              <h3 class="eyebrow">PM-BOT · Agent Assessments</h3>
+            </div>
+            <div class="space-y-3">
+              <!-- Market -->
+              <div class="bg-white border border-outline-variant/30 rounded-xl p-5 hover:shadow-[0_4px_12px_rgba(25,28,30,.06)] transition-shadow">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-primary text-white flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[20px]">query_stats</span></div>
+                  <div class="flex-1">
+                    <div class="flex items-start justify-between mb-2">
+                      <div>
+                        <div class="font-bold text-sm">Market Analyst Agent</div>
+                        <div class="text-[10px] font-bold text-primary uppercase tracking-widest mt-0.5">Claude 3.5 Sonnet</div>
+                      </div>
+                      <div class="flex gap-1.5">
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">R · 8.2k</span>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">I · 2.5</span>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">C · 90%</span>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">E · 1.5</span>
+                      </div>
+                    </div>
+                    <p class="text-xs text-on-surface-variant leading-relaxed mb-2">High reach predicted due to global payment processing footprint. Competitor benchmarking shows a 12% lift in similar implementations across Stripe, Adyen, and Braintree cohorts.</p>
+                    <button class="flex items-center gap-1 text-[11px] font-bold text-primary">View full analysis<span class="material-symbols-outlined text-[14px]">expand_more</span></button>
+                  </div>
+                </div>
+              </div>
+              <!-- Technical -->
+              <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[20px]">developer_board</span></div>
+                  <div class="flex-1">
+                    <div class="flex items-start justify-between mb-2">
+                      <div>
+                        <div class="font-bold text-sm">Technical Feasibility Agent</div>
+                        <div class="text-[10px] font-bold text-primary uppercase tracking-widest mt-0.5">GPT-4o</div>
+                      </div>
+                      <div class="flex gap-1.5">
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">R · 8.0k</span>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">I · 3.0</span>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">C · 75%</span>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">E · 4.0</span>
+                      </div>
+                    </div>
+                    <p class="text-xs text-on-surface-variant leading-relaxed mb-2">Core architectural changes required in the transaction engine. High effort due to regression testing requirements for legacy gateways and PCI scope implications.</p>
+                    <button class="flex items-center gap-1 text-[11px] font-bold text-primary">View full analysis<span class="material-symbols-outlined text-[14px]">expand_more</span></button>
+                  </div>
+                </div>
+              </div>
+              <!-- Business -->
+              <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+                <div class="flex items-start gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[20px]">account_balance</span></div>
+                  <div class="flex-1">
+                    <div class="flex items-start justify-between mb-2">
+                      <div>
+                        <div class="font-bold text-sm">Business Strategy Agent</div>
+                        <div class="text-[10px] font-bold text-primary uppercase tracking-widest mt-0.5">Claude 3.5 Sonnet</div>
+                      </div>
+                      <div class="flex gap-1.5">
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">R · 8.5k</span>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">I · 4.0</span>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">C · 85%</span>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant/40">E · 2.0</span>
+                      </div>
+                    </div>
+                    <p class="text-xs text-on-surface-variant leading-relaxed mb-2">Directly impacts churn metrics for enterprise accounts. Revenue retention impact is weighted high for the upcoming Q4 goals — protects ~$2.1M ARR.</p>
+                    <button class="flex items-center gap-1 text-[11px] font-bold text-primary">View full analysis<span class="material-symbols-outlined text-[14px]">expand_more</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Consensus banner -->
+            <div class="mt-5 rounded-xl p-6 flex items-center justify-between text-white relative overflow-hidden" style="background:linear-gradient(135deg,#3525cd 0%,#4f46e5 60%,#7c3aed 100%)">
+              <div>
+                <div class="text-[10px] font-bold tracking-widest uppercase opacity-80">Aggregate RICE Score</div>
+                <div class="flex items-baseline gap-2 mt-1"><span class="font-headline font-extrabold text-5xl tracking-tight">31.5</span><span class="text-sm opacity-70">/ 100</span></div>
+              </div>
+              <div class="text-right">
+                <div class="text-[10px] font-bold tracking-widest uppercase opacity-80">Confidence Range</div>
+                <div class="flex items-center gap-3 mt-2">
+                  <div class="w-40 h-2 bg-white/20 rounded-full overflow-hidden"><div class="h-full bg-white" style="width:78%"></div></div>
+                  <span class="text-sm font-bold">78 – 85%</span>
+                </div>
+              </div>
+              <div class="absolute -right-10 -top-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+            </div>
+          </div>
+
+          <!-- Right: radar + history + override -->
+          <div class="col-span-12 lg:col-span-5 space-y-6">
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+              <div class="flex items-center justify-between mb-5">
+                <h3 class="eyebrow">Score Dimensions</h3>
+                <button class="text-[11px] font-bold text-primary border border-primary/25 rounded-lg px-3 py-1 hover:bg-primary/5">Compare</button>
+              </div>
+              <!-- Radar SVG -->
+              <div class="flex justify-center">
+                <svg viewBox="0 0 240 200" class="w-full max-w-[280px]">
+                  <g transform="translate(120,100)">
+                    <circle r="80" fill="none" stroke="#e0e3e5" />
+                    <circle r="60" fill="none" stroke="#e0e3e5" />
+                    <circle r="40" fill="none" stroke="#e0e3e5" />
+                    <circle r="20" fill="none" stroke="#e0e3e5" />
+                    <line x1="-80" y1="0" x2="80" y2="0" stroke="#e0e3e5" />
+                    <line x1="0" y1="-80" x2="0" y2="80" stroke="#e0e3e5" />
+                    <polygon points="0,-64 56,0 0,48 -52,0" fill="rgba(53,37,205,.20)" stroke="#3525cd" stroke-width="2" />
+                    <circle cx="0" cy="-64" r="4" fill="#3525cd" />
+                    <circle cx="56" cy="0" r="4" fill="#3525cd" />
+                    <circle cx="0" cy="48" r="4" fill="#3525cd" />
+                    <circle cx="-52" cy="0" r="4" fill="#3525cd" />
+                    <text x="0" y="-88" text-anchor="middle" font-size="9" font-weight="800" fill="#464555" font-family="Inter" letter-spacing="1.5">REACH</text>
+                    <text x="96" y="4" font-size="9" font-weight="800" fill="#464555" font-family="Inter" letter-spacing="1.5">IMPACT</text>
+                    <text x="0" y="96" text-anchor="middle" font-size="9" font-weight="800" fill="#464555" font-family="Inter" letter-spacing="1.5">EFFORT</text>
+                    <text x="-96" y="4" text-anchor="end" font-size="9" font-weight="800" fill="#464555" font-family="Inter" letter-spacing="1.5">CONF.</text>
+                  </g>
+                </svg>
+              </div>
+              <div class="mt-6 pt-5 border-t border-outline-variant/40">
+                <div class="eyebrow mb-3">Score History</div>
+                <div class="space-y-3">
+                  <div class="flex items-start gap-3 pl-3 border-l-2 border-primary">
+                    <div class="w-2.5 h-2.5 rounded-full bg-primary -ml-[17px] mt-1.5"></div>
+                    <div><div class="text-xs font-bold">Consensus Updated</div><div class="spec">Oct 24, 2023 · 31.5</div></div>
+                    <span class="ml-auto text-[10px] font-bold text-emerald-600">+3.3</span>
+                  </div>
+                  <div class="flex items-start gap-3 pl-3 border-l-2 border-outline-variant">
+                    <div class="w-2.5 h-2.5 rounded-full bg-outline-variant -ml-[17px] mt-1.5"></div>
+                    <div><div class="text-xs font-bold">Initial AI Assessment</div><div class="spec">Oct 23, 2023 · 28.2</div></div>
+                  </div>
+                  <div class="flex items-start gap-3 pl-3 border-l-2 border-outline-variant">
+                    <div class="w-2.5 h-2.5 rounded-full bg-outline-variant -ml-[17px] mt-1.5"></div>
+                    <div><div class="text-xs font-bold">PRD Submitted</div><div class="spec">Oct 20, 2023</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+              <h3 class="eyebrow mb-4">Manual Override</h3>
+              <div class="grid grid-cols-2 gap-4">
+                <div><label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Reach (users)</label><input class="ph-input" type="number" value="8000" /></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Impact (0–3)</label><input class="ph-input" step="0.1" type="number" value="3.0" /></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Confidence (%)</label><input class="ph-input" type="number" value="80" /></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Effort (mo)</label><input class="ph-input" step="0.1" type="number" value="2.5" /></div>
+              </div>
+              <div class="mt-4">
+                <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Audit Note</label>
+                <textarea rows="2" class="ph-input" placeholder="Reason for manual override…"></textarea>
+              </div>
+              <button class="w-full mt-4 bg-primary text-white py-2.5 rounded-lg font-bold text-xs shadow-lg shadow-primary/25">Save Override</button>
+              <p class="spec mt-3 text-center">Last modified by admin@enterprise.com · Oct 24</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- E04  SUCCESS METRICS (re-skin)   -->
+<!-- =============================== -->
+<div class="screen-label"><div><span class="eyebrow">Re-skin · 02</span><h2 class="font-headline font-extrabold text-2xl mt-1">E04 · Success Metrics</h2></div><div class="spec">Was: IBM Carbon · Now: Product Hub canonical</div></div>
+<div id="e04" class="screen" data-screen-label="E04 Success Metrics">
+  <div class="flex h-[1060px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Product Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Enterprise Tier</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <a href="#" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">analytics</span>Success Metrics</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">map</span>Roadmap</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>Backlog</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span>Delivery</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">settings</span>Admin</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant">
+          <span>Insights</span><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary">Success Metrics</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 bg-surface-container-low rounded-lg px-3 py-1.5 text-xs"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">calendar_today</span><select class="bg-transparent border-0 text-xs font-medium focus:ring-0 py-0"><option>Last 30 Days</option><option>Last 60 Days</option><option>Last 90 Days</option></select></div>
+          <div class="flex items-center gap-2 bg-surface-container-low rounded-lg px-3 py-1.5 text-xs"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">language</span><select class="bg-transparent border-0 text-xs font-medium focus:ring-0 py-0"><option>All Domains</option><option>Fintech</option><option>Logistics</option></select></div>
+          <button class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20 flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">send</span>Email Report</button>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <!-- Page header -->
+        <div class="mb-8">
+          <h1 class="font-headline font-extrabold text-3xl tracking-tight">Success Metrics</h1>
+          <p class="text-sm text-on-surface-variant mt-1">Real-time performance across the product lifecycle — ideation through release adoption.</p>
+        </div>
+
+        <!-- KPI row -->
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <!-- each tile -->
+          <div class="bg-white border border-outline-variant/30 rounded-lg p-5 hover:bg-surface-container-low transition-colors">
+            <div class="flex items-center justify-between mb-4">
+              <div class="p-2 rounded-lg bg-primary/5 text-primary"><span class="material-symbols-outlined text-[20px]">lightbulb</span></div>
+              <span class="flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full"><span class="material-symbols-outlined text-[13px]">trending_up</span>+12%</span>
+            </div>
+            <div class="eyebrow text-on-surface-variant">Ideas Submitted</div>
+            <div class="flex items-baseline gap-3 mt-1">
+              <span class="font-headline font-extrabold text-3xl tracking-tight">47</span>
+              <svg class="spark flex-1 h-8" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline points="0,22 14,18 28,20 42,14 56,16 70,10 85,12 100,6" /></svg>
+            </div>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-lg p-5 hover:bg-surface-container-low transition-colors">
+            <div class="flex items-center justify-between mb-4">
+              <div class="p-2 rounded-lg bg-primary/5 text-primary"><span class="material-symbols-outlined text-[20px]">description</span></div>
+              <span class="flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full"><span class="material-symbols-outlined text-[13px]">trending_up</span>+8%</span>
+            </div>
+            <div class="eyebrow text-on-surface-variant">PRDs Generated</div>
+            <div class="flex items-baseline gap-3 mt-1">
+              <span class="font-headline font-extrabold text-3xl tracking-tight">31</span>
+              <svg class="spark flex-1 h-8" viewBox="0 0 100 30" preserveAspectRatio="none"><polyline points="0,20 14,22 28,16 42,18 56,14 70,12 85,10 100,8" /></svg>
+            </div>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-lg p-5 hover:bg-surface-container-low transition-colors">
+            <div class="flex items-center justify-between mb-4">
+              <div class="p-2 rounded-lg bg-primary/5 text-primary"><span class="material-symbols-outlined text-[20px]">speed</span></div>
+              <span class="flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full"><span class="material-symbols-outlined text-[13px]">trending_down</span>−15%</span>
+            </div>
+            <div class="eyebrow text-on-surface-variant">Avg. Time to Ship</div>
+            <div class="flex items-baseline gap-2 mt-1"><span class="font-headline font-extrabold text-3xl tracking-tight">23</span><span class="text-on-surface-variant text-sm font-medium">days</span></div>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-lg p-5 hover:bg-surface-container-low transition-colors">
+            <div class="flex items-center justify-between mb-4">
+              <div class="p-2 rounded-lg bg-primary/5 text-primary"><span class="material-symbols-outlined text-[20px]">trending_up</span></div>
+              <span class="flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full"><span class="material-symbols-outlined text-[13px]">trending_up</span>+5%</span>
+            </div>
+            <div class="eyebrow text-on-surface-variant">Release Adoption</div>
+            <div class="flex items-baseline gap-2 mt-1"><span class="font-headline font-extrabold text-3xl tracking-tight">78</span><span class="text-on-surface-variant text-sm font-medium">%</span></div>
+          </div>
+        </section>
+
+        <!-- Charts row -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="font-headline font-bold text-base">Submissions → Release Pipeline</h3>
+              <div class="flex gap-4 text-[11px] text-on-surface-variant font-medium">
+                <div class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-primary"></span>Released</div>
+                <div class="flex items-center gap-1.5"><span class="w-3 h-0.5" style="background:#c3c0ff"></span>Approved</div>
+                <div class="flex items-center gap-1.5"><span class="w-3 h-0.5" style="background:#e0e3e5"></span>Submitted</div>
+              </div>
+            </div>
+            <div class="h-64 relative">
+              <svg viewBox="0 0 400 200" class="w-full h-full" preserveAspectRatio="none">
+                <defs><linearGradient id="areaGrad" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#3525cd" stop-opacity=".25"/><stop offset="100%" stop-color="#3525cd" stop-opacity="0"/></linearGradient></defs>
+                <g stroke="#e0e3e5" stroke-width="1"><line x1="0" y1="40" x2="400" y2="40"/><line x1="0" y1="80" x2="400" y2="80"/><line x1="0" y1="120" x2="400" y2="120"/><line x1="0" y1="160" x2="400" y2="160"/></g>
+                <path d="M0,180 L0,160 C50,150 80,130 130,120 C180,110 230,80 280,70 C330,60 370,40 400,30 L400,200 Z" fill="url(#areaGrad)" />
+                <polyline points="0,160 65,145 130,120 195,95 260,75 325,55 400,30" fill="none" stroke="#3525cd" stroke-width="2.5"/>
+                <polyline points="0,170 65,155 130,135 195,115 260,105 325,95 400,80" fill="none" stroke="#c3c0ff" stroke-width="2"/>
+                <polyline points="0,178 65,172 130,160 195,150 260,155 325,140 400,130" fill="none" stroke="#e0e3e5" stroke-width="2" stroke-dasharray="4"/>
+              </svg>
+              <div class="flex justify-between mt-2 text-[10px] font-bold tracking-widest text-on-surface-variant uppercase"><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span></div>
+            </div>
+          </div>
+
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="font-headline font-bold text-base">Domain Distribution</h3>
+              <span class="text-[11px] text-on-surface-variant font-medium">Ideas by Domain</span>
+            </div>
+            <div class="space-y-5">
+              <div><div class="flex justify-between text-xs font-semibold mb-2"><span>Fintech</span><span class="text-on-surface-variant">84 ideas</span></div><div class="h-2 flex bg-surface-container rounded-full overflow-hidden"><div class="bg-primary" style="width:60%"></div><div style="background:#7c3aed;width:25%"></div><div style="background:#c3c0ff;width:15%"></div></div></div>
+              <div><div class="flex justify-between text-xs font-semibold mb-2"><span>Logistics</span><span class="text-on-surface-variant">52 ideas</span></div><div class="h-2 flex bg-surface-container rounded-full overflow-hidden"><div class="bg-primary" style="width:40%"></div><div style="background:#7c3aed;width:30%"></div><div style="background:#c3c0ff;width:30%"></div></div></div>
+              <div><div class="flex justify-between text-xs font-semibold mb-2"><span>User Growth</span><span class="text-on-surface-variant">120 ideas</span></div><div class="h-2 flex bg-surface-container rounded-full overflow-hidden"><div class="bg-primary" style="width:70%"></div><div style="background:#7c3aed;width:15%"></div><div style="background:#c3c0ff;width:15%"></div></div></div>
+              <div><div class="flex justify-between text-xs font-semibold mb-2"><span>Infrastructure</span><span class="text-on-surface-variant">28 ideas</span></div><div class="h-2 flex bg-surface-container rounded-full overflow-hidden"><div class="bg-primary" style="width:30%"></div><div style="background:#7c3aed;width:50%"></div><div style="background:#c3c0ff;width:20%"></div></div></div>
+              <div><div class="flex justify-between text-xs font-semibold mb-2"><span>Identity</span><span class="text-on-surface-variant">19 ideas</span></div><div class="h-2 flex bg-surface-container rounded-full overflow-hidden"><div class="bg-primary" style="width:50%"></div><div style="background:#7c3aed;width:30%"></div><div style="background:#c3c0ff;width:20%"></div></div></div>
+            </div>
+            <div class="flex gap-4 mt-6 pt-4 border-t border-outline-variant/40 text-[11px] text-on-surface-variant font-medium">
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-sm bg-primary"></span>Shipped</div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-sm" style="background:#7c3aed"></span>In flight</div>
+              <div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-sm" style="background:#c3c0ff"></span>Backlog</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bottom row -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Top releases table -->
+          <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/40">
+              <h3 class="font-headline font-bold text-base">Top Performing Releases</h3>
+              <button class="material-symbols-outlined text-on-surface-variant">more_vert</button>
+            </div>
+            <table class="w-full text-sm">
+              <thead class="bg-surface-container text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
+                <tr><th class="px-5 py-3 text-left">Release</th><th class="px-4 py-3 text-left">Domain</th><th class="px-4 py-3 text-left">Adoption</th><th class="px-4 py-3 text-left">Satisfaction</th><th class="px-4 py-3 text-left">Impact</th></tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant/40">
+                <tr class="hover:bg-surface-container-low">
+                  <td class="px-5 py-3 font-semibold">Auto-Billing V2</td>
+                  <td class="px-4 py-3"><span class="pill ph-pill-primary pill-sm">Fintech</span></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2"><div class="w-14 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:92%"></div></div><span class="text-xs font-bold">92%</span></div></td>
+                  <td class="px-4 py-3 text-primary"><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined text-[14px]">star</span></td>
+                  <td class="px-4 py-3"><span class="pill ph-pill-approved pill-sm">High</span></td>
+                </tr>
+                <tr class="hover:bg-surface-container-low">
+                  <td class="px-5 py-3 font-semibold">Smart Dispatch</td>
+                  <td class="px-4 py-3"><span class="pill ph-pill-domain-identity pill-sm">Logistics</span></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2"><div class="w-14 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:85%"></div></div><span class="text-xs font-bold">85%</span></div></td>
+                  <td class="px-4 py-3 text-primary"><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined text-[14px]">star</span><span class="material-symbols-outlined text-[14px]">star</span></td>
+                  <td class="px-4 py-3"><span class="pill ph-pill-review pill-sm">Medium</span></td>
+                </tr>
+                <tr class="hover:bg-surface-container-low">
+                  <td class="px-5 py-3 font-semibold">User Profiles 3.0</td>
+                  <td class="px-4 py-3"><span class="pill ph-pill-domain-growth pill-sm">Growth</span></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2"><div class="w-14 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:78%"></div></div><span class="text-xs font-bold">78%</span></div></td>
+                  <td class="px-4 py-3 text-primary"><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span></td>
+                  <td class="px-4 py-3"><span class="pill ph-pill-approved pill-sm">Extreme</span></td>
+                </tr>
+                <tr class="hover:bg-surface-container-low">
+                  <td class="px-5 py-3 font-semibold">Notifications Revamp</td>
+                  <td class="px-4 py-3"><span class="pill ph-pill-domain-infra pill-sm">Infra</span></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2"><div class="w-14 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:66%"></div></div><span class="text-xs font-bold">66%</span></div></td>
+                  <td class="px-4 py-3 text-primary"><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined msym-fill text-[14px]">star</span><span class="material-symbols-outlined text-[14px]">star</span><span class="material-symbols-outlined text-[14px]">star</span></td>
+                  <td class="px-4 py-3"><span class="pill ph-pill-review pill-sm">Medium</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- RICE accuracy scatter -->
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-5">
+              <h3 class="font-headline font-bold text-base">RICE Score Accuracy</h3>
+              <div class="pill ph-pill-primary pill-sm">R² = 0.84</div>
+            </div>
+            <div class="h-64 relative chart-grid bg-surface-container-low/40 rounded-lg">
+              <svg viewBox="0 0 400 240" class="absolute inset-0 w-full h-full">
+                <line x1="30" y1="220" x2="390" y2="220" stroke="#c7c4d8"/>
+                <line x1="30" y1="10" x2="30" y2="220" stroke="#c7c4d8"/>
+                <line x1="30" y1="220" x2="390" y2="30" stroke="rgba(53,37,205,.35)" stroke-width="2" stroke-dasharray="5 4"/>
+                <circle cx="60" cy="190" r="5" fill="#3525cd" opacity=".7"/>
+                <circle cx="95" cy="175" r="5" fill="#3525cd" opacity=".7"/>
+                <circle cx="140" cy="150" r="6" fill="#3525cd" opacity=".8"/>
+                <circle cx="175" cy="130" r="5" fill="#3525cd" opacity=".7"/>
+                <circle cx="210" cy="125" r="7" fill="#3525cd"/>
+                <circle cx="245" cy="95" r="6" fill="#3525cd" opacity=".8"/>
+                <circle cx="280" cy="85" r="5" fill="#3525cd" opacity=".7"/>
+                <circle cx="310" cy="70" r="7" fill="#3525cd"/>
+                <circle cx="350" cy="55" r="6" fill="#3525cd" opacity=".8"/>
+                <text x="30" y="238" font-size="9" fill="#464555" font-family="Inter" font-weight="700">LOW</text>
+                <text x="380" y="238" font-size="9" fill="#464555" font-family="Inter" font-weight="700" text-anchor="end">HIGH</text>
+              </svg>
+            </div>
+            <div class="flex justify-between mt-3 text-[10px] font-bold tracking-widest text-on-surface-variant uppercase"><span>Predicted Score</span><span>Actual Impact</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- Z01 LLM USAGE (re-skin)          -->
+<!-- =============================== -->
+<div class="screen-label"><div><span class="eyebrow">Re-skin · 03</span><h2 class="font-headline font-extrabold text-2xl mt-1">Z01 · LLM Usage &amp; Costs</h2></div><div class="spec">Was: IBM Carbon · Now: Product Hub canonical</div></div>
+<div id="z01" class="screen" data-screen-label="Z01 LLM Usage &amp; Costs">
+  <div class="flex h-[1100px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Product Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Administration</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <div class="section">Platform</div>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Administration</div>
+        <a href="#" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">monitoring</span>LLM Usage &amp; Costs</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">group</span>Users &amp; Roles</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">extension</span>Integrations</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">history</span>Audit Log</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">tune</span>Platform Settings</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant">
+          <span>Admin</span><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary">LLM Usage &amp; Costs</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="px-3 py-1.5 text-xs font-bold text-primary border border-primary/25 rounded-lg">Set Budget</button>
+          <button class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Export CSV</button>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="mb-6"><h1 class="font-headline font-extrabold text-3xl tracking-tight">LLM Usage &amp; Costs</h1><p class="text-sm text-on-surface-variant mt-1">Monitor spend, tune model defaults, and govern agent budgets across the suite.</p></div>
+
+        <!-- Top tiles -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-white border border-outline-variant/30 rounded-lg p-6">
+            <div class="flex items-start justify-between mb-3">
+              <span class="eyebrow text-on-surface-variant">Monthly Spend</span>
+              <div class="p-2 rounded-lg bg-primary/5 text-primary"><span class="material-symbols-outlined text-[18px]">account_balance_wallet</span></div>
+            </div>
+            <div class="font-headline font-extrabold text-4xl tracking-tight">$2,847</div>
+            <div class="flex justify-between text-[11px] text-on-surface-variant mt-3 mb-1.5"><span>71% of $4,000 budget</span><span class="font-bold text-on-surface">29% left</span></div>
+            <div class="h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:71%"></div></div>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-lg p-6">
+            <div class="flex items-start justify-between mb-3">
+              <span class="eyebrow text-on-surface-variant">Total API Calls</span>
+              <div class="p-2 rounded-lg bg-primary/5 text-primary"><span class="material-symbols-outlined text-[18px]">api</span></div>
+            </div>
+            <div class="font-headline font-extrabold text-4xl tracking-tight">12,430</div>
+            <div class="flex items-center gap-1 text-[11px] font-bold text-emerald-700 mt-3"><span class="material-symbols-outlined text-[13px]">trending_up</span>+12% vs last month</div>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-lg p-6">
+            <div class="flex items-start justify-between mb-3">
+              <span class="eyebrow text-on-surface-variant">Avg Cost / PRD</span>
+              <div class="p-2 rounded-lg bg-primary/5 text-primary"><span class="material-symbols-outlined text-[18px]">description</span></div>
+            </div>
+            <div class="font-headline font-extrabold text-4xl tracking-tight">$1.24</div>
+            <div class="text-[11px] text-on-surface-variant mt-3">Optimized for GPT-4o-mini</div>
+          </div>
+        </section>
+
+        <!-- Chart + config -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <div class="lg:col-span-2 bg-white border border-outline-variant/30 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div><h3 class="font-headline font-bold text-base">Daily LLM Spend</h3><p class="text-[11px] text-on-surface-variant">Last 30 days · threshold at $120/day</p></div>
+              <div class="flex items-center gap-4 text-[11px] font-medium text-on-surface-variant">
+                <div class="flex items-center gap-1.5"><span class="w-3 h-2 rounded-sm bg-primary"></span>Spend</div>
+                <div class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-error"></span>Threshold</div>
+              </div>
+            </div>
+            <div class="h-56 flex items-end gap-[3px] relative">
+              <div class="absolute w-full h-px bg-error/50 top-[22%] z-10" style="border-top:1px dashed #ba1a1a"></div>
+              <!-- 30 bars -->
+              <script>/* bars rendered inline below */</script>
+              <div class="flex-1 rounded-t bg-primary/20 h-[30%]"></div><div class="flex-1 rounded-t bg-primary/25 h-[35%]"></div><div class="flex-1 rounded-t bg-primary/20 h-[32%]"></div>
+              <div class="flex-1 rounded-t bg-primary/35 h-[45%]"></div><div class="flex-1 rounded-t bg-primary/40 h-[48%]"></div><div class="flex-1 rounded-t bg-primary/30 h-[40%]"></div>
+              <div class="flex-1 rounded-t bg-primary/50 h-[55%]"></div><div class="flex-1 rounded-t bg-primary/60 h-[65%]"></div><div class="flex-1 rounded-t bg-primary/55 h-[60%]"></div>
+              <div class="flex-1 rounded-t bg-primary/45 h-[50%]"></div><div class="flex-1 rounded-t bg-primary/70 h-[75%]"></div><div class="flex-1 rounded-t bg-primary/80 h-[85%]"></div>
+              <div class="flex-1 rounded-t bg-primary/65 h-[70%]"></div><div class="flex-1 rounded-t bg-primary/55 h-[62%]"></div><div class="flex-1 rounded-t bg-primary/50 h-[58%]"></div>
+              <div class="flex-1 rounded-t bg-primary/40 h-[45%]"></div><div class="flex-1 rounded-t bg-primary/50 h-[52%]"></div><div class="flex-1 rounded-t bg-primary/70 h-[78%]"></div>
+              <div class="flex-1 rounded-t bg-primary/60 h-[65%]"></div><div class="flex-1 rounded-t bg-primary/50 h-[55%]"></div><div class="flex-1 rounded-t bg-primary/40 h-[48%]"></div>
+              <div class="flex-1 rounded-t bg-primary/50 h-[60%]"></div><div class="flex-1 rounded-t bg-primary/60 h-[68%]"></div><div class="flex-1 rounded-t bg-primary/75 h-[82%]"></div>
+              <div class="flex-1 rounded-t bg-primary/85 h-[92%]"></div><div class="flex-1 rounded-t bg-primary h-[95%]"></div><div class="flex-1 rounded-t bg-primary/85 h-[88%]"></div>
+              <div class="flex-1 rounded-t bg-primary/70 h-[75%]"></div><div class="flex-1 rounded-t bg-primary/60 h-[68%]"></div><div class="flex-1 rounded-t bg-primary/75 h-[80%]"></div>
+            </div>
+            <div class="flex justify-between mt-3 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant"><span>Oct 1</span><span>Oct 10</span><span>Oct 20</span><span>Oct 30</span></div>
+          </div>
+
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+            <h3 class="font-headline font-bold text-base">Model Configuration</h3>
+            <p class="text-[11px] text-on-surface-variant mb-5">Default inference models per agent</p>
+            <div class="space-y-5">
+              <div>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">PRD Generator</label>
+                <select class="ph-input"><option>Claude 3.5 Sonnet</option><option>GPT-4o</option><option>Gemini Pro</option></select>
+                <div class="flex items-center justify-between text-[11px] text-on-surface-variant mt-2"><span>Max tokens · 4,000</span><input type="range" class="flex-1 ml-3 accent-primary" value="80"/></div>
+              </div>
+              <div>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Research Bot</label>
+                <select class="ph-input"><option>Claude 3.5 Sonnet</option><option>GPT-4o</option></select>
+                <div class="flex items-center justify-between text-[11px] text-on-surface-variant mt-2"><span>Max tokens · 2,500</span><input type="range" class="flex-1 ml-3 accent-primary" value="50"/></div>
+              </div>
+              <div>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">RICE Agents</label>
+                <select class="ph-input"><option>GPT-4o-mini</option><option>Claude 3.5 Haiku</option></select>
+                <div class="flex items-center justify-between text-[11px] text-on-surface-variant mt-2"><span>Max tokens · 1,500</span><input type="range" class="flex-1 ml-3 accent-primary" value="30"/></div>
+              </div>
+            </div>
+            <button class="w-full mt-5 bg-primary text-white py-2.5 rounded-lg font-bold text-xs shadow-lg shadow-primary/25">Save Configuration</button>
+          </div>
+        </section>
+
+        <!-- Alerts row -->
+        <section class="bg-white border border-outline-variant/30 rounded-xl p-6 mb-6">
+          <h3 class="font-headline font-bold text-base mb-1">Cost Alerts</h3>
+          <p class="text-[11px] text-on-surface-variant mb-4">Notification triggers for budget management</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="flex items-center justify-between p-4 border border-outline-variant/40 rounded-lg bg-surface-container-low">
+              <div><div class="text-sm font-semibold">50% threshold</div><div class="spec">admin@enterprise.com</div></div>
+              <label class="relative inline-flex w-10 h-5 cursor-pointer"><input type="checkbox" class="sr-only peer" checked /><span class="w-10 h-5 bg-surface-container-high peer-checked:bg-primary rounded-full transition-colors"></span><span class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5"></span></label>
+            </div>
+            <div class="flex items-center justify-between p-4 border border-outline-variant/40 rounded-lg bg-surface-container-low">
+              <div><div class="text-sm font-semibold">75% threshold</div><div class="spec">admin@enterprise.com</div></div>
+              <label class="relative inline-flex w-10 h-5 cursor-pointer"><input type="checkbox" class="sr-only peer" checked /><span class="w-10 h-5 bg-surface-container-high peer-checked:bg-primary rounded-full transition-colors"></span><span class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5"></span></label>
+            </div>
+            <div class="flex items-center justify-between p-4 border border-outline-variant/40 rounded-lg bg-surface-container-low">
+              <div><div class="text-sm font-semibold">90% threshold</div><div class="spec">All critical stakeholders</div></div>
+              <label class="relative inline-flex w-10 h-5 cursor-pointer"><input type="checkbox" class="sr-only peer" /><span class="w-10 h-5 bg-surface-container-high peer-checked:bg-primary rounded-full transition-colors"></span><span class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full transition-transform peer-checked:translate-x-5"></span></label>
+            </div>
+          </div>
+        </section>
+
+        <!-- Breakdown table -->
+        <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+          <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/40">
+            <h3 class="font-headline font-bold text-base">Cost &amp; Usage Breakdown</h3>
+            <div class="flex gap-2"><button class="text-[11px] font-bold text-primary">This month</button><button class="text-[11px] font-semibold text-on-surface-variant">YTD</button></div>
+          </div>
+          <table class="w-full text-sm">
+            <thead class="bg-surface-container text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
+              <tr><th class="px-6 py-3 text-left">Feature</th><th class="px-4 py-3 text-left">Agent</th><th class="px-4 py-3 text-right">API Calls</th><th class="px-4 py-3 text-right">Tokens</th><th class="px-4 py-3 text-right">Cost</th><th class="px-4 py-3 text-right">Avg Latency</th><th class="px-4 py-3 text-left">30d trend</th></tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/40">
+              <tr class="hover:bg-surface-container-low">
+                <td class="px-6 py-3.5 font-semibold">PRD Generator</td>
+                <td class="px-4 py-3.5 text-on-surface-variant">Luminary</td>
+                <td class="px-4 py-3.5 text-right font-mono text-xs">4,280</td>
+                <td class="px-4 py-3.5 text-right font-mono text-xs">2.1M</td>
+                <td class="px-4 py-3.5 text-right font-bold">$1,142.50</td>
+                <td class="px-4 py-3.5 text-right text-xs">1.2 s</td>
+                <td class="px-4 py-3.5"><svg class="spark w-24 h-6" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,15 15,13 30,10 45,12 60,8 75,10 90,6 100,5"/></svg></td>
+              </tr>
+              <tr class="hover:bg-surface-container-low">
+                <td class="px-6 py-3.5 font-semibold">RICE Scoring</td>
+                <td class="px-4 py-3.5 text-on-surface-variant">Market / Tech / Biz</td>
+                <td class="px-4 py-3.5 text-right font-mono text-xs">1,120</td>
+                <td class="px-4 py-3.5 text-right font-mono text-xs">450k</td>
+                <td class="px-4 py-3.5 text-right font-bold">$285.40</td>
+                <td class="px-4 py-3.5 text-right text-xs">0.8 s</td>
+                <td class="px-4 py-3.5"><svg class="spark w-24 h-6" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,14 15,12 30,13 45,10 60,11 75,9 90,8 100,7"/></svg></td>
+              </tr>
+              <tr class="hover:bg-surface-container-low">
+                <td class="px-6 py-3.5 font-semibold">UAT Assistant</td>
+                <td class="px-4 py-3.5 text-on-surface-variant">Clarifier</td>
+                <td class="px-4 py-3.5 text-right font-mono text-xs">3,890</td>
+                <td class="px-4 py-3.5 text-right font-mono text-xs">1.8M</td>
+                <td class="px-4 py-3.5 text-right font-bold">$945.20</td>
+                <td class="px-4 py-3.5 text-right text-xs">1.5 s</td>
+                <td class="px-4 py-3.5"><svg class="spark w-24 h-6" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,12 15,10 30,9 45,7 60,6 75,4 90,5 100,3"/></svg></td>
+              </tr>
+              <tr class="hover:bg-surface-container-low">
+                <td class="px-6 py-3.5 font-semibold">Research Bot</td>
+                <td class="px-4 py-3.5 text-on-surface-variant">Scout</td>
+                <td class="px-4 py-3.5 text-right font-mono text-xs">3,140</td>
+                <td class="px-4 py-3.5 text-right font-mono text-xs">920k</td>
+                <td class="px-4 py-3.5 text-right font-bold">$473.90</td>
+                <td class="px-4 py-3.5 text-right text-xs">2.1 s</td>
+                <td class="px-4 py-3.5"><svg class="spark w-24 h-6" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,10 15,11 30,9 45,10 60,8 75,9 90,7 100,8"/></svg></td>
+              </tr>
+              <tr class="hover:bg-surface-container-low">
+                <td class="px-6 py-3.5 font-semibold">Bug Triage</td>
+                <td class="px-4 py-3.5 text-on-surface-variant">Triage Agent</td>
+                <td class="px-4 py-3.5 text-right font-mono text-xs">2,050</td>
+                <td class="px-4 py-3.5 text-right font-mono text-xs">480k</td>
+                <td class="px-4 py-3.5 text-right font-bold">$172.10</td>
+                <td class="px-4 py-3.5 text-right text-xs">0.6 s</td>
+                <td class="px-4 py-3.5"><svg class="spark w-24 h-6" viewBox="0 0 100 20" preserveAspectRatio="none"><polyline points="0,16 15,14 30,12 45,13 60,10 75,9 90,6 100,5"/></svg></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- F01  BUG INTAKE                  -->
+<!-- =============================== -->
+<div class="screen-label"><div><span class="eyebrow">Bug Pipeline · 01</span><h2 class="font-headline font-extrabold text-2xl mt-1">F01 · Intake Form</h2></div><div class="spec">Net-new · Internal + customer-facing report submission</div></div>
+<div id="f01" class="screen" data-screen-label="F01 Bug Intake">
+  <div class="flex h-[920px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Product Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Quality Ops</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Bugs</div>
+        <a href="#" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">add_circle</span>Report</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">queue</span>Triage</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">bug_report</span>All bugs</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span>Analytics</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant">
+          <span>Bugs</span><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary">Report a bug</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant">Cancel</button>
+          <button class="px-3 py-1.5 text-xs font-bold text-primary border border-primary/25 rounded-lg">Save draft</button>
+          <button class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20 flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">send</span>Submit bug</button>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="max-w-4xl mx-auto">
+          <div class="flex items-start justify-between mb-6">
+            <div><h1 class="font-headline font-extrabold text-3xl tracking-tight">Report a bug</h1><p class="text-sm text-on-surface-variant mt-1">Describe what happened. Our agent drafts severity and routes to the right squad.</p></div>
+            <div class="flex items-center gap-2 text-xs font-semibold text-on-surface-variant"><span class="material-symbols-outlined text-primary text-[18px]">auto_awesome</span>AI assist enabled</div>
+          </div>
+
+          <!-- Stepper -->
+          <ol class="flex items-center gap-2 mb-8 text-xs font-semibold">
+            <li class="flex items-center gap-2 text-primary"><span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[11px]">1</span>Describe</li>
+            <span class="flex-1 h-px bg-outline-variant"></span>
+            <li class="flex items-center gap-2 text-on-surface-variant"><span class="w-6 h-6 rounded-full border border-outline-variant flex items-center justify-center text-[11px]">2</span>Reproduce</li>
+            <span class="flex-1 h-px bg-outline-variant"></span>
+            <li class="flex items-center gap-2 text-on-surface-variant"><span class="w-6 h-6 rounded-full border border-outline-variant flex items-center justify-center text-[11px]">3</span>Classify</li>
+            <span class="flex-1 h-px bg-outline-variant"></span>
+            <li class="flex items-center gap-2 text-on-surface-variant"><span class="w-6 h-6 rounded-full border border-outline-variant flex items-center justify-center text-[11px]">4</span>Review</li>
+          </ol>
+
+          <div class="grid grid-cols-3 gap-6">
+            <div class="col-span-2 bg-white border border-outline-variant/30 rounded-xl p-6 space-y-5">
+              <div>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Title</label>
+                <input class="ph-input" value="Checkout fails when applying Loyalty Plus coupon on mobile Safari" />
+              </div>
+              <div>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Description</label>
+                <textarea rows="6" class="ph-input">After entering a valid Loyalty Plus coupon on the payment step, the Pay button spins indefinitely. No error is shown; the network tab shows a 500 from /api/orders/apply-coupon. Reloading takes the user back to the cart.</textarea>
+                <div class="flex items-center justify-between mt-2"><span class="spec">Markdown supported · 382 characters</span><button class="text-[11px] font-bold text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">auto_awesome</span>Polish with AI</button></div>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div><label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Area</label><select class="ph-input"><option>Checkout</option><option>Search</option><option>Account</option><option>Dashboard</option></select></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Environment</label><select class="ph-input"><option>Production</option><option>Staging</option><option>Dev</option></select></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Browser</label><select class="ph-input"><option>Safari 17.4 (iOS)</option><option>Chrome 120</option></select></div>
+                <div><label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">First noticed</label><input class="ph-input" value="Oct 24, 2023 · 14:22 UTC" /></div>
+              </div>
+              <div>
+                <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Attachments</label>
+                <div class="border-2 border-dashed border-outline-variant/70 rounded-lg p-6 text-center">
+                  <span class="material-symbols-outlined text-on-surface-variant">upload</span>
+                  <div class="text-sm font-semibold mt-1">Drop screenshots, videos, or HAR</div>
+                  <div class="spec mt-1">or paste from clipboard · Max 50MB / file</div>
+                </div>
+                <div class="flex gap-2 mt-3">
+                  <div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-lg px-3 py-2 text-xs"><span class="material-symbols-outlined text-primary text-[16px]">image</span>checkout-error-screenshot.png<span class="text-on-surface-variant">· 421 KB</span><span class="material-symbols-outlined text-[14px] cursor-pointer ml-1 text-on-surface-variant">close</span></div>
+                  <div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant/40 rounded-lg px-3 py-2 text-xs"><span class="material-symbols-outlined text-primary text-[16px]">description</span>network.har<span class="text-on-surface-variant">· 18 KB</span><span class="material-symbols-outlined text-[14px] cursor-pointer ml-1 text-on-surface-variant">close</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI side panel -->
+            <aside class="space-y-4">
+              <div class="rounded-xl p-5 text-white relative overflow-hidden" style="background:linear-gradient(135deg,#3525cd 0%,#7c3aed 100%)">
+                <div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined text-[18px]">auto_awesome</span><span class="eyebrow text-white">Triage Agent · Preview</span></div>
+                <div class="text-[11px] opacity-80 mb-3">Drafted from your description. Edit or accept.</div>
+                <div class="space-y-2 text-xs">
+                  <div class="flex items-center justify-between"><span class="opacity-80">Suggested severity</span><span class="pill ph-pill-severity-high">High</span></div>
+                  <div class="flex items-center justify-between"><span class="opacity-80">Suspected area</span><span class="font-semibold">Checkout / Coupon Engine</span></div>
+                  <div class="flex items-center justify-between"><span class="opacity-80">Likely owner</span><span class="font-semibold">Payments Squad</span></div>
+                  <div class="flex items-center justify-between"><span class="opacity-80">Similar open issues</span><span class="font-semibold">3 found</span></div>
+                </div>
+                <button class="w-full mt-4 bg-white text-primary text-xs font-bold py-2 rounded-lg">Apply suggestions</button>
+                <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+              </div>
+              <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+                <div class="eyebrow mb-3">Similar open bugs</div>
+                <ul class="space-y-3 text-xs">
+                  <li class="flex gap-2"><span class="pill ph-pill-severity-high pill-sm mt-0.5">HIGH</span><div><div class="font-semibold">BUG-4412 · Coupon apply 500 on iOS Safari</div><div class="spec">Payments · 4 reports · 2d ago</div></div></li>
+                  <li class="flex gap-2"><span class="pill ph-pill-severity-medium pill-sm mt-0.5">MED</span><div><div class="font-semibold">BUG-4389 · Spinner stuck on payment step</div><div class="spec">Checkout · 1 report · 5d ago</div></div></li>
+                  <li class="flex gap-2"><span class="pill ph-pill-severity-low pill-sm mt-0.5">LOW</span><div><div class="font-semibold">BUG-4321 · Loyalty badge misaligned</div><div class="spec">Marketing · closed</div></div></li>
+                </ul>
+              </div>
+              <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+                <div class="eyebrow mb-2">Submission tips</div>
+                <ul class="space-y-2 text-xs text-on-surface-variant list-disc pl-4"><li>Include network HAR when reporting 5xx errors</li><li>Note whether the issue is reproducible across sessions</li><li>Link to the Datadog trace if available</li></ul>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- F02  BUG TRIAGE QUEUE            -->
+<!-- =============================== -->
+<div class="screen-label"><div><span class="eyebrow">Bug Pipeline · 02</span><h2 class="font-headline font-extrabold text-2xl mt-1">F02 · Triage Queue</h2></div><div class="spec">Net-new · Prioritised list with bulk actions</div></div>
+<div id="f02" class="screen" data-screen-label="F02 Triage Queue">
+  <div class="flex h-[920px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Product Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Quality Ops</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Bugs</div>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">add_circle</span>Report</a>
+        <a href="#" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">queue</span>Triage</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">bug_report</span>All bugs</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span>Analytics</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><span>Bugs</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Triage queue</span></div>
+        <div class="flex items-center gap-3">
+          <div class="relative"><span class="material-symbols-outlined absolute left-2.5 top-1.5 text-[16px] text-on-surface-variant">search</span><input class="ph-input pl-8 w-64" placeholder="Search bugs, stack traces, users…" /></div>
+          <button class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20 flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">auto_awesome</span>Auto-triage 6 new</button>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="flex items-end justify-between mb-6">
+          <div>
+            <h1 class="font-headline font-extrabold text-3xl tracking-tight">Triage queue</h1>
+            <p class="text-sm text-on-surface-variant mt-1">32 open · 6 unsorted · 4 SLA at risk</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex items-center bg-white border border-outline-variant/40 rounded-lg text-xs font-semibold overflow-hidden">
+              <button class="px-3 py-1.5 bg-primary text-white">Queue</button>
+              <button class="px-3 py-1.5 text-on-surface-variant">Board</button>
+              <button class="px-3 py-1.5 text-on-surface-variant">Timeline</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stat tiles -->
+        <div class="grid grid-cols-4 gap-4 mb-6">
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Open</div><div class="font-headline font-extrabold text-3xl mt-1">32</div><div class="spec mt-2">6 unsorted</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Critical</div><div class="font-headline font-extrabold text-3xl mt-1 text-error">3</div><div class="spec mt-2">2 have workarounds</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">SLA at risk</div><div class="font-headline font-extrabold text-3xl mt-1 text-amber-600">4</div><div class="spec mt-2">Breach within 6h</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">MTTR (7d)</div><div class="font-headline font-extrabold text-3xl mt-1">18h</div><div class="spec mt-2 text-emerald-700">↓ 22% vs prev</div></div>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="bg-white border border-outline-variant/30 rounded-xl p-3 mb-4 flex items-center gap-2 flex-wrap">
+          <span class="eyebrow mr-2">Filter</span>
+          <button class="pill ph-pill-primary">Severity: any ▾</button>
+          <button class="pill ph-pill-pending">Area: any ▾</button>
+          <button class="pill ph-pill-pending">Owner: unassigned ▾</button>
+          <button class="pill ph-pill-pending">Status: open ▾</button>
+          <button class="pill ph-pill-pending">Env: production ▾</button>
+          <span class="ml-auto text-[11px] font-semibold text-on-surface-variant">Sort: <span class="text-on-surface">AI priority ▾</span></span>
+        </div>
+
+        <!-- Bulk bar (appears on select) -->
+        <div class="bg-primary text-white rounded-xl px-5 py-3 mb-4 flex items-center justify-between">
+          <div class="flex items-center gap-3 text-sm font-semibold"><span class="material-symbols-outlined">check_box</span>3 bugs selected</div>
+          <div class="flex items-center gap-2 text-xs font-bold">
+            <button class="bg-white/15 hover:bg-white/25 px-3 py-1.5 rounded-lg">Assign →</button>
+            <button class="bg-white/15 hover:bg-white/25 px-3 py-1.5 rounded-lg">Set severity ▾</button>
+            <button class="bg-white/15 hover:bg-white/25 px-3 py-1.5 rounded-lg">Link release</button>
+            <button class="bg-white/15 hover:bg-white/25 px-3 py-1.5 rounded-lg">Mark duplicate</button>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+          <table class="w-full text-sm">
+            <thead class="bg-surface-container text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
+              <tr><th class="px-4 py-3 w-8"><input type="checkbox" class="rounded border-outline-variant"/></th><th class="px-2 py-3 text-left">ID</th><th class="px-2 py-3 text-left">Title</th><th class="px-2 py-3 text-left">Sev</th><th class="px-2 py-3 text-left">Area</th><th class="px-2 py-3 text-left">Reports</th><th class="px-2 py-3 text-left">SLA</th><th class="px-2 py-3 text-left">Owner</th><th class="px-2 py-3 text-left">AI Score</th></tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/40 text-xs">
+              <tr class="hover:bg-surface-container-low bg-error/5"><td class="px-4 py-3"><input type="checkbox" class="rounded" checked/></td><td class="px-2 py-3 font-mono text-on-surface-variant">BUG-4412</td><td class="px-2 py-3 font-semibold">Coupon apply returns 500 on mobile Safari<div class="flex gap-1 mt-1"><span class="pill ph-pill-primary pill-sm">regression</span><span class="pill ph-pill-pending pill-sm">iOS</span></div></td><td class="px-2 py-3"><span class="pill ph-pill-severity-critical pill-sm">Crit</span></td><td class="px-2 py-3">Payments</td><td class="px-2 py-3 font-mono">47</td><td class="px-2 py-3 text-error font-bold">2h ⚠</td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-[10px] font-bold">RK</div>R. Kim</div></td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-12 h-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-error" style="width:95%"></div></div>9.5</div></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="px-4 py-3"><input type="checkbox" class="rounded" checked/></td><td class="px-2 py-3 font-mono text-on-surface-variant">BUG-4408</td><td class="px-2 py-3 font-semibold">Dashboard charts fail to render &gt;10k rows<div class="flex gap-1 mt-1"><span class="pill ph-pill-pending pill-sm">perf</span></div></td><td class="px-2 py-3"><span class="pill ph-pill-severity-high pill-sm">High</span></td><td class="px-2 py-3">Insights</td><td class="px-2 py-3 font-mono">12</td><td class="px-2 py-3 text-amber-600 font-bold">6h</td><td class="px-2 py-3 text-on-surface-variant italic">Unassigned</td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-12 h-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-amber-500" style="width:78%"></div></div>7.8</div></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="px-4 py-3"><input type="checkbox" class="rounded" checked/></td><td class="px-2 py-3 font-mono text-on-surface-variant">BUG-4402</td><td class="px-2 py-3 font-semibold">SSO redirect loop on Okta handoff</td><td class="px-2 py-3"><span class="pill ph-pill-severity-high pill-sm">High</span></td><td class="px-2 py-3">Identity</td><td class="px-2 py-3 font-mono">8</td><td class="px-2 py-3 text-amber-600 font-bold">5h</td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-[10px] font-bold">MJ</div>M. Jain</div></td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-12 h-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-amber-500" style="width:72%"></div></div>7.2</div></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="px-4 py-3"><input type="checkbox" class="rounded"/></td><td class="px-2 py-3 font-mono text-on-surface-variant">BUG-4399</td><td class="px-2 py-3 font-semibold">Notifications delivered twice after retry</td><td class="px-2 py-3"><span class="pill ph-pill-severity-medium pill-sm">Med</span></td><td class="px-2 py-3">Notifications</td><td class="px-2 py-3 font-mono">5</td><td class="px-2 py-3">1d</td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-[10px] font-bold">AP</div>A. Park</div></td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-12 h-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:54%"></div></div>5.4</div></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="px-4 py-3"><input type="checkbox" class="rounded"/></td><td class="px-2 py-3 font-mono text-on-surface-variant">BUG-4394</td><td class="px-2 py-3 font-semibold">Search typeahead drops diacritics</td><td class="px-2 py-3"><span class="pill ph-pill-severity-medium pill-sm">Med</span></td><td class="px-2 py-3">Search</td><td class="px-2 py-3 font-mono">3</td><td class="px-2 py-3">2d</td><td class="px-2 py-3 text-on-surface-variant italic">Unassigned</td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-12 h-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:48%"></div></div>4.8</div></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="px-4 py-3"><input type="checkbox" class="rounded"/></td><td class="px-2 py-3 font-mono text-on-surface-variant">BUG-4388</td><td class="px-2 py-3 font-semibold">Export CSV corrupts UTF-8 currency symbols</td><td class="px-2 py-3"><span class="pill ph-pill-severity-low pill-sm">Low</span></td><td class="px-2 py-3">Reports</td><td class="px-2 py-3 font-mono">2</td><td class="px-2 py-3">3d</td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-[10px] font-bold">SH</div>S. Huang</div></td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-12 h-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:31%"></div></div>3.1</div></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="px-4 py-3"><input type="checkbox" class="rounded"/></td><td class="px-2 py-3 font-mono text-on-surface-variant">BUG-4381</td><td class="px-2 py-3 font-semibold">Tooltip overlaps toolbar on narrow viewports</td><td class="px-2 py-3"><span class="pill ph-pill-severity-low pill-sm">Low</span></td><td class="px-2 py-3">Design system</td><td class="px-2 py-3 font-mono">1</td><td class="px-2 py-3">5d</td><td class="px-2 py-3 text-on-surface-variant italic">Unassigned</td><td class="px-2 py-3"><div class="flex items-center gap-2"><div class="w-12 h-1 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:22%"></div></div>2.2</div></td></tr>
+            </tbody>
+          </table>
+          <div class="flex items-center justify-between px-5 py-3 border-t border-outline-variant/40 text-xs text-on-surface-variant"><span>Showing 7 of 32</span><div class="flex gap-1"><button class="px-2 py-1 rounded border border-outline-variant/50">Prev</button><button class="px-2 py-1 rounded bg-primary text-white">1</button><button class="px-2 py-1 rounded">2</button><button class="px-2 py-1 rounded">3</button><button class="px-2 py-1 rounded border border-outline-variant/50">Next</button></div></div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- F03  BUG WORKSPACE (3-panel AI)  -->
+<!-- =============================== -->
+<div class="screen-label"><div><span class="eyebrow">Bug Pipeline · 03</span><h2 class="font-headline font-extrabold text-2xl mt-1">F03 · Bug Workspace</h2></div><div class="spec">Net-new · Single-bug deep dive with AI co-pilot</div></div>
+<div id="f03" class="screen" data-screen-label="F03 Bug Workspace">
+  <div class="flex h-[960px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Product Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Quality Ops</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Bugs</div>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">add_circle</span>Report</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">queue</span>Triage</a>
+        <a href="#" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">bug_report</span>BUG-4412</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span>Analytics</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-6 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant">
+          <span>Bugs</span><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span>Triage</span><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary font-mono">BUG-4412</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant border border-outline-variant/50 rounded-lg">← Prev</button>
+          <button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant border border-outline-variant/50 rounded-lg">Next →</button>
+          <button class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Assign fix</button>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <div class="flex-1 flex min-h-0">
+        <!-- Center: details -->
+        <main class="flex-1 overflow-y-auto p-8 bg-surface min-w-0">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="flex items-center gap-2 text-[11px] font-mono text-on-surface-variant">BUG-4412 · Payments / Checkout · Created Oct 24, 2023</div>
+              <h1 class="font-headline font-extrabold text-2xl tracking-tight mt-1">Coupon apply returns 500 on mobile Safari</h1>
+              <div class="flex items-center gap-2 mt-2 flex-wrap">
+                <span class="pill ph-pill-severity-critical">Critical</span>
+                <span class="pill ph-pill-review">Investigating</span>
+                <span class="pill ph-pill-pending">Regression</span>
+                <span class="pill ph-pill-pending">iOS-only</span>
+                <span class="pill ph-pill-pending">SLA 2h ⚠</span>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant border border-outline-variant/50 rounded-lg">Duplicate of…</button>
+              <button class="px-3 py-1.5 text-xs font-bold text-white bg-emerald-600 rounded-lg">Mark fixed</button>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="flex gap-4 border-b border-outline-variant/40 text-xs font-semibold mb-5">
+            <button class="py-2 border-b-2 border-primary text-primary">Details</button>
+            <button class="py-2 text-on-surface-variant">Reproduction (3)</button>
+            <button class="py-2 text-on-surface-variant">Telemetry</button>
+            <button class="py-2 text-on-surface-variant">History (12)</button>
+            <button class="py-2 text-on-surface-variant">Linked work</button>
+          </div>
+
+          <!-- Description card -->
+          <section class="bg-white border border-outline-variant/30 rounded-xl p-6 mb-4">
+            <h3 class="eyebrow mb-2">Description</h3>
+            <p class="text-sm leading-relaxed">After entering a valid Loyalty Plus coupon on the payment step, the Pay button spins indefinitely. No error is shown; the network tab shows a 500 from <code class="px-1.5 py-0.5 rounded bg-surface-container font-mono text-[12px]">/api/orders/apply-coupon</code>. Reloading takes the user back to the cart.</p>
+            <div class="mt-4 pt-4 border-t border-outline-variant/40 grid grid-cols-4 gap-4 text-xs">
+              <div><div class="eyebrow">Reports</div><div class="font-semibold text-base mt-1">47 users</div></div>
+              <div><div class="eyebrow">Sessions affected</div><div class="font-semibold text-base mt-1">1,284</div></div>
+              <div><div class="eyebrow">Revenue at risk</div><div class="font-semibold text-base mt-1">$18.2k/day</div></div>
+              <div><div class="eyebrow">First seen</div><div class="font-semibold text-base mt-1">Oct 23 · 09:14</div></div>
+            </div>
+          </section>
+
+          <!-- Stack trace -->
+          <section class="bg-white border border-outline-variant/30 rounded-xl p-6 mb-4">
+            <div class="flex items-center justify-between mb-3">
+              <h3 class="eyebrow">Stack trace</h3>
+              <div class="flex gap-2 text-[11px] font-semibold text-on-surface-variant"><button class="hover:text-primary">Copy</button><button class="hover:text-primary">Open in Sentry ↗</button></div>
+            </div>
+            <pre class="bg-[#0f172a] text-[#e2e8f0] rounded-lg p-4 text-[11px] leading-relaxed font-mono overflow-x-auto"><span class="text-rose-400">TypeError</span>: Cannot read properties of null (reading 'discount')
+  at applyCoupon (<span class="text-amber-300">CouponEngine.ts:128:21</span>)
+  at CheckoutController.handleApply (<span class="text-amber-300">CheckoutController.ts:412:18</span>)
+  at async Object.&lt;anonymous&gt; (<span class="text-amber-300">orders.apply-coupon:44:12</span>)
+  at PaymentGateway.settle (<span class="text-amber-300">stripe-adapter.ts:87:9</span>)</pre>
+          </section>
+
+          <!-- Reproduction + env -->
+          <section class="grid grid-cols-2 gap-4 mb-4">
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+              <h3 class="eyebrow mb-3">Reproduction</h3>
+              <ol class="list-decimal pl-4 space-y-1.5 text-sm text-on-surface">
+                <li>Open cart with any item ≥ $25</li>
+                <li>Proceed to payment</li>
+                <li>Enter coupon <code class="px-1.5 py-0.5 rounded bg-surface-container font-mono text-[11px]">LOYALTY20</code></li>
+                <li>Tap Apply — observe infinite spinner</li>
+              </ol>
+              <div class="spec mt-3">Reproducibility: 3/3 · Tested by QA</div>
+            </div>
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+              <h3 class="eyebrow mb-3">Environment</h3>
+              <dl class="grid grid-cols-2 gap-y-2 text-xs">
+                <dt class="text-on-surface-variant">Browser</dt><dd class="font-semibold">Safari 17.4 iOS</dd>
+                <dt class="text-on-surface-variant">Device</dt><dd class="font-semibold">iPhone 15 Pro</dd>
+                <dt class="text-on-surface-variant">Release</dt><dd class="font-semibold">v4.12.0</dd>
+                <dt class="text-on-surface-variant">Region</dt><dd class="font-semibold">US-East</dd>
+                <dt class="text-on-surface-variant">User tier</dt><dd class="font-semibold">Enterprise (23%)</dd>
+                <dt class="text-on-surface-variant">Gateway</dt><dd class="font-semibold">Stripe</dd>
+              </dl>
+            </div>
+          </section>
+
+          <!-- Activity -->
+          <section class="bg-white border border-outline-variant/30 rounded-xl p-6">
+            <h3 class="eyebrow mb-4">Activity</h3>
+            <div class="space-y-4 text-xs">
+              <div class="flex gap-3"><div class="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold shrink-0">RK</div><div class="flex-1"><div><b>R. Kim</b> assigned themselves · <span class="text-on-surface-variant">12m ago</span></div></div></div>
+              <div class="flex gap-3"><div class="w-7 h-7 rounded-full ai-chip flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[14px]">auto_awesome</span></div><div class="flex-1"><div><b>Triage Agent</b> upgraded severity <span class="pill ph-pill-severity-high pill-sm">High</span> → <span class="pill ph-pill-severity-critical pill-sm">Critical</span> · <span class="text-on-surface-variant">24m ago</span></div><div class="mt-1 p-3 bg-primary/5 border border-primary/20 rounded-lg">Revenue impact crossed $15k/day threshold. 3 new user reports in last hour. Recommend immediate rollback of PR#2841.</div></div></div>
+              <div class="flex gap-3"><div class="w-7 h-7 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center text-[10px] font-bold shrink-0">SM</div><div class="flex-1"><div><b>S. Morales</b> linked <span class="font-mono text-primary">PR#2841</span> as likely cause · <span class="text-on-surface-variant">41m ago</span></div></div></div>
+              <div class="flex gap-3"><div class="w-7 h-7 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center text-[10px] font-bold shrink-0">QA</div><div class="flex-1"><div><b>Jamie L.</b> confirmed reproduction 3/3 · <span class="text-on-surface-variant">1h ago</span></div></div></div>
+            </div>
+            <div class="mt-5 pt-4 border-t border-outline-variant/40">
+              <textarea rows="2" class="ph-input" placeholder="Add an update or @mention a teammate…"></textarea>
+              <div class="flex justify-end gap-2 mt-2"><button class="text-[11px] font-bold text-primary">Attach</button><button class="text-[11px] font-bold text-white bg-primary px-3 py-1.5 rounded-lg">Post</button></div>
+            </div>
+          </section>
+        </main>
+
+        <!-- Right: AI co-pilot -->
+        <aside class="w-[360px] border-l border-outline-variant/40 bg-white overflow-y-auto shrink-0">
+          <div class="p-5 border-b border-outline-variant/40">
+            <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg ai-chip flex items-center justify-center"><span class="material-symbols-outlined text-[18px] text-white">auto_awesome</span></div><div><div class="font-headline font-bold text-sm">Bug Co-pilot</div><div class="spec">Claude 3.5 Sonnet · grounded on repo + telemetry</div></div></div>
+          </div>
+
+          <div class="p-5 space-y-4">
+            <div>
+              <div class="eyebrow mb-2">Root cause hypothesis</div>
+              <div class="p-3 bg-surface-container-low border border-outline-variant/40 rounded-lg text-xs leading-relaxed">Null-coalesce regression in <b>CouponEngine.ts:128</b>. PR #2841 removed the default-value check for <code>promo.discount</code>. Loyalty coupons created before Oct&nbsp;18 have <code>null</code> in this field and fail the strict read.</div>
+              <div class="flex items-center gap-1.5 mt-2"><span class="pill ph-pill-approved pill-sm">92% confidence</span><span class="spec">3 traces corroborate</span></div>
+            </div>
+
+            <div>
+              <div class="eyebrow mb-2">Suggested fix</div>
+              <pre class="text-[11px] font-mono bg-[#0f172a] text-[#e2e8f0] rounded-lg p-3 overflow-x-auto"><span class="text-rose-400">- </span>const discount = promo.discount;
+<span class="text-emerald-400">+ </span>const discount = promo.discount ?? 0;</pre>
+              <div class="flex gap-2 mt-2"><button class="text-[11px] font-bold text-primary border border-primary/25 rounded-lg px-3 py-1.5">Open PR</button><button class="text-[11px] font-bold text-on-surface-variant">Reject</button></div>
+            </div>
+
+            <div>
+              <div class="eyebrow mb-2">Blast radius</div>
+              <ul class="text-xs space-y-1.5">
+                <li class="flex justify-between"><span>Users affected</span><b>~1,284</b></li>
+                <li class="flex justify-between"><span>Revenue / day</span><b>$18.2k</b></li>
+                <li class="flex justify-between"><span>Platforms</span><b>iOS only</b></li>
+                <li class="flex justify-between"><span>First seen</span><b>Release v4.12.0</b></li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="eyebrow mb-2">Related tickets</div>
+              <ul class="space-y-2 text-xs">
+                <li class="flex items-start gap-2"><span class="pill ph-pill-pending pill-sm shrink-0">PR</span><div><b>#2841</b> — CouponEngine refactor<div class="spec">Merged Oct 22 · likely cause</div></div></li>
+                <li class="flex items-start gap-2"><span class="pill ph-pill-approved pill-sm shrink-0">FIX</span><div><b>BUG-4389</b> — similar 500 pattern<div class="spec">Resolved last sprint</div></div></li>
+              </ul>
+            </div>
+
+            <div>
+              <div class="eyebrow mb-2">Ask Co-pilot</div>
+              <div class="relative"><input class="ph-input pr-9" placeholder="e.g. why didn't tests catch this?" /><button class="absolute right-2 top-1.5 w-7 h-7 rounded-lg bg-primary text-white flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">send</span></button></div>
+              <div class="flex flex-wrap gap-1.5 mt-2"><button class="pill ph-pill-pending pill-sm">Summarise for exec</button><button class="pill ph-pill-pending pill-sm">Draft release note</button><button class="pill ph-pill-pending pill-sm">Write regression test</button></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- F04  BUG ANALYTICS               -->
+<!-- =============================== -->
+<div class="screen-label"><div><span class="eyebrow">Bug Pipeline · 04</span><h2 class="font-headline font-extrabold text-2xl mt-1">F04 · Bug Analytics</h2></div><div class="spec">Net-new · Quality trends &amp; hot-spots</div></div>
+<div id="f04" class="screen" data-screen-label="F04 Bug Analytics">
+  <div class="flex h-[980px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Product Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Quality Ops</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Bugs</div>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">add_circle</span>Report</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">queue</span>Triage</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">bug_report</span>All bugs</a>
+        <a href="#" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">monitoring</span>Analytics</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><span>Bugs</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Analytics</span></div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 bg-surface-container-low rounded-lg px-3 py-1.5 text-xs"><span class="material-symbols-outlined text-[16px] text-on-surface-variant">calendar_today</span><select class="bg-transparent border-0 text-xs font-medium focus:ring-0 py-0"><option>Last 90 days</option><option>Last 30 days</option><option>This quarter</option></select></div>
+          <button class="px-3 py-1.5 text-xs font-bold text-primary border border-primary/25 rounded-lg">Share</button>
+          <button class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Export</button>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="mb-6"><h1 class="font-headline font-extrabold text-3xl tracking-tight">Bug analytics</h1><p class="text-sm text-on-surface-variant mt-1">Inflow, resolution speed and quality hot-spots across domains.</p></div>
+
+        <!-- KPI row -->
+        <section class="grid grid-cols-4 gap-4 mb-6">
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Bugs reported (90d)</div><div class="font-headline font-extrabold text-3xl mt-1">428</div><div class="flex items-center gap-1 text-[11px] text-emerald-700 mt-2"><span class="material-symbols-outlined text-[13px]">trending_down</span>−9% vs prev</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Avg MTTR</div><div class="font-headline font-extrabold text-3xl mt-1">21h</div><div class="flex items-center gap-1 text-[11px] text-emerald-700 mt-2"><span class="material-symbols-outlined text-[13px]">trending_down</span>−18%</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Escape rate</div><div class="font-headline font-extrabold text-3xl mt-1">3.4<span class="text-lg">%</span></div><div class="spec mt-2">Post-release defects / release</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Re-open rate</div><div class="font-headline font-extrabold text-3xl mt-1 text-amber-600">6.1<span class="text-lg">%</span></div><div class="spec mt-2">Target ≤ 5%</div></div>
+        </section>
+
+        <!-- Trend + severity -->
+        <section class="grid grid-cols-3 gap-6 mb-6">
+          <div class="col-span-2 bg-white border border-outline-variant/30 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-5"><h3 class="font-headline font-bold text-base">Inflow vs resolution · 90d</h3><div class="flex gap-4 text-[11px] font-medium text-on-surface-variant"><div class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-primary"></span>Reported</div><div class="flex items-center gap-1.5"><span class="w-3 h-0.5" style="background:#c3c0ff"></span>Resolved</div><div class="flex items-center gap-1.5"><span class="w-3 h-2 bg-error/20 rounded-sm"></span>Open Critical</div></div></div>
+            <div class="h-56 relative">
+              <svg viewBox="0 0 600 200" class="w-full h-full" preserveAspectRatio="none">
+                <g stroke="#e0e3e5"><line x1="0" y1="40" x2="600" y2="40"/><line x1="0" y1="80" x2="600" y2="80"/><line x1="0" y1="120" x2="600" y2="120"/><line x1="0" y1="160" x2="600" y2="160"/></g>
+                <polyline points="0,150 50,130 100,140 150,110 200,120 250,90 300,100 350,70 400,85 450,60 500,75 550,55 600,40" fill="none" stroke="#3525cd" stroke-width="2.5"/>
+                <polyline points="0,170 50,160 100,145 150,150 200,130 250,135 300,115 350,120 400,95 450,110 500,80 550,95 600,70" fill="none" stroke="#c3c0ff" stroke-width="2"/>
+                <g fill="rgba(186,26,26,.22)"><rect x="20" y="162" width="16" height="35"/><rect x="80" y="155" width="16" height="42"/><rect x="140" y="160" width="16" height="37"/><rect x="200" y="150" width="16" height="47"/><rect x="260" y="155" width="16" height="42"/><rect x="320" y="145" width="16" height="52"/><rect x="380" y="158" width="16" height="39"/><rect x="440" y="152" width="16" height="45"/><rect x="500" y="160" width="16" height="37"/><rect x="560" y="156" width="16" height="41"/></g>
+              </svg>
+            </div>
+            <div class="flex justify-between mt-3 text-[10px] font-bold tracking-widest text-on-surface-variant uppercase"><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span></div>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+            <h3 class="font-headline font-bold text-base mb-5">Severity mix</h3>
+            <!-- stacked bar -->
+            <div class="h-3 flex rounded-full overflow-hidden"><div style="width:6%;background:#ba1a1a"></div><div style="width:18%;background:#f59e0b"></div><div style="width:42%;background:#c3c0ff"></div><div style="width:34%;background:#e0e3e5"></div></div>
+            <div class="grid grid-cols-2 gap-3 mt-5 text-xs">
+              <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-sm bg-error"></span>Critical<span class="ml-auto font-bold">6%</span></div>
+              <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-sm bg-amber-500"></span>High<span class="ml-auto font-bold">18%</span></div>
+              <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-sm" style="background:#c3c0ff"></span>Medium<span class="ml-auto font-bold">42%</span></div>
+              <div class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-sm bg-outline-variant"></span>Low<span class="ml-auto font-bold">34%</span></div>
+            </div>
+            <div class="mt-6 pt-5 border-t border-outline-variant/40">
+              <div class="eyebrow mb-3">SLA compliance</div>
+              <div class="flex items-end gap-2 h-20">
+                <div class="flex-1 bg-emerald-200 rounded-t" style="height:88%"><div class="w-full h-full bg-emerald-500 rounded-t"></div></div>
+                <div class="flex-1 bg-emerald-200 rounded-t" style="height:92%"><div class="w-full h-full bg-emerald-500 rounded-t"></div></div>
+                <div class="flex-1 bg-amber-200 rounded-t" style="height:78%"><div class="w-full h-full bg-amber-500 rounded-t"></div></div>
+                <div class="flex-1 bg-emerald-200 rounded-t" style="height:94%"><div class="w-full h-full bg-emerald-500 rounded-t"></div></div>
+              </div>
+              <div class="flex justify-between mt-2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant"><span>Crit</span><span>High</span><span>Med</span><span>Low</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Hotspots + top bugs -->
+        <section class="grid grid-cols-2 gap-6">
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-5"><h3 class="font-headline font-bold text-base">Module hot-spots</h3><span class="spec">Bugs per 1k LOC · last 90d</span></div>
+            <div class="grid grid-cols-6 gap-1.5">
+              <!-- heatmap cells -->
+              <script>/* heat cells next */</script>
+              <div class="aspect-square rounded bg-primary/10"></div><div class="aspect-square rounded bg-primary/20"></div><div class="aspect-square rounded bg-primary/10"></div><div class="aspect-square rounded bg-primary/30"></div><div class="aspect-square rounded bg-primary/40"></div><div class="aspect-square rounded bg-primary/10"></div>
+              <div class="aspect-square rounded bg-primary/30"></div><div class="aspect-square rounded bg-primary/60"></div><div class="aspect-square rounded bg-primary/40"></div><div class="aspect-square rounded bg-primary/70"></div><div class="aspect-square rounded bg-primary/90 ring-2 ring-primary"></div><div class="aspect-square rounded bg-primary/40"></div>
+              <div class="aspect-square rounded bg-primary/20"></div><div class="aspect-square rounded bg-primary/50"></div><div class="aspect-square rounded bg-primary/30"></div><div class="aspect-square rounded bg-primary/80"></div><div class="aspect-square rounded bg-primary/60"></div><div class="aspect-square rounded bg-primary/20"></div>
+              <div class="aspect-square rounded bg-primary/10"></div><div class="aspect-square rounded bg-primary/20"></div><div class="aspect-square rounded bg-primary/40"></div><div class="aspect-square rounded bg-primary/50"></div><div class="aspect-square rounded bg-primary/30"></div><div class="aspect-square rounded bg-primary/10"></div>
+              <div class="aspect-square rounded bg-primary/5"></div><div class="aspect-square rounded bg-primary/10"></div><div class="aspect-square rounded bg-primary/20"></div><div class="aspect-square rounded bg-primary/30"></div><div class="aspect-square rounded bg-primary/10"></div><div class="aspect-square rounded bg-primary/5"></div>
+            </div>
+            <div class="flex items-center justify-between mt-4 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant"><span>Less</span><div class="flex gap-1"><span class="w-3 h-3 rounded bg-primary/10"></span><span class="w-3 h-3 rounded bg-primary/40"></span><span class="w-3 h-3 rounded bg-primary/70"></span><span class="w-3 h-3 rounded bg-primary"></span></div><span>More</span></div>
+            <div class="mt-5 pt-4 border-t border-outline-variant/40">
+              <div class="text-xs font-bold mb-2">Highest-incidence module</div>
+              <div class="flex items-center justify-between text-sm"><code class="font-mono">checkout/CouponEngine.ts</code><span class="pill ph-pill-severity-high">14 bugs</span></div>
+            </div>
+          </div>
+
+          <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-outline-variant/40"><h3 class="font-headline font-bold text-base">Most-reported this cycle</h3><button class="text-[11px] font-bold text-primary">View all →</button></div>
+            <table class="w-full text-sm">
+              <thead class="bg-surface-container text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
+                <tr><th class="px-5 py-3 text-left">Bug</th><th class="px-4 py-3 text-right">Reports</th><th class="px-4 py-3 text-right">Sessions</th><th class="px-4 py-3 text-left">Status</th></tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant/40">
+                <tr><td class="px-5 py-3"><div class="font-semibold">Coupon apply 500</div><div class="spec">BUG-4412 · Payments</div></td><td class="px-4 py-3 text-right font-bold">47</td><td class="px-4 py-3 text-right font-mono text-xs">1,284</td><td class="px-4 py-3"><span class="pill ph-pill-severity-critical pill-sm">Crit</span></td></tr>
+                <tr><td class="px-5 py-3"><div class="font-semibold">Dashboard chart fails &gt;10k rows</div><div class="spec">BUG-4408 · Insights</div></td><td class="px-4 py-3 text-right font-bold">12</td><td class="px-4 py-3 text-right font-mono text-xs">328</td><td class="px-4 py-3"><span class="pill ph-pill-severity-high pill-sm">High</span></td></tr>
+                <tr><td class="px-5 py-3"><div class="font-semibold">SSO redirect loop (Okta)</div><div class="spec">BUG-4402 · Identity</div></td><td class="px-4 py-3 text-right font-bold">8</td><td class="px-4 py-3 text-right font-mono text-xs">214</td><td class="px-4 py-3"><span class="pill ph-pill-severity-high pill-sm">High</span></td></tr>
+                <tr><td class="px-5 py-3"><div class="font-semibold">Double-notification on retry</div><div class="spec">BUG-4399 · Notifications</div></td><td class="px-4 py-3 text-right font-bold">5</td><td class="px-4 py-3 text-right font-mono text-xs">142</td><td class="px-4 py-3"><span class="pill ph-pill-severity-medium pill-sm">Med</span></td></tr>
+                <tr><td class="px-5 py-3"><div class="font-semibold">Typeahead drops diacritics</div><div class="spec">BUG-4394 · Search</div></td><td class="px-4 py-3 text-right font-bold">3</td><td class="px-4 py-3 text-right font-mono text-xs">89</td><td class="px-4 py-3"><span class="pill ph-pill-severity-medium pill-sm">Med</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- G01  USERS & ROLES               -->
+<!-- =============================== -->
+<div class="screen-label"><div><span class="eyebrow">Admin v2 · 01</span><h2 class="font-headline font-extrabold text-2xl mt-1">G01 · Users &amp; Roles</h2></div><div class="spec">Net-new · Org membership + RBAC</div></div>
+<div id="g01" class="screen" data-screen-label="G01 Users and Roles">
+  <div class="flex h-[940px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Product Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Administration</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Administration</div>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span>LLM Usage</a>
+        <a href="#" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">group</span>Users &amp; Roles</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">extension</span>Integrations</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">history</span>Audit Log</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><span>Admin</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Users &amp; Roles</span></div>
+        <div class="flex items-center gap-3">
+          <button class="px-3 py-1.5 text-xs font-bold text-primary border border-primary/25 rounded-lg">Bulk import CSV</button>
+          <button class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20 flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">person_add</span>Invite user</button>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="flex items-end justify-between mb-6">
+          <div><h1 class="font-headline font-extrabold text-3xl tracking-tight">Users &amp; roles</h1><p class="text-sm text-on-surface-variant mt-1">124 active members across 6 workspaces · 8 pending invites</p></div>
+          <div class="flex gap-2 text-[11px] font-semibold">
+            <button class="px-3 py-1.5 bg-white border border-outline-variant/40 rounded-lg">People <span class="ml-1 text-on-surface-variant">124</span></button>
+            <button class="px-3 py-1.5 bg-primary text-white rounded-lg">Roles <span class="ml-1 text-white/70">7</span></button>
+            <button class="px-3 py-1.5 bg-white border border-outline-variant/40 rounded-lg">Groups <span class="ml-1 text-on-surface-variant">14</span></button>
+            <button class="px-3 py-1.5 bg-white border border-outline-variant/40 rounded-lg">Invites <span class="ml-1 text-on-surface-variant">8</span></button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-6">
+          <!-- People list -->
+          <div class="col-span-8 bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+            <div class="px-5 py-3 border-b border-outline-variant/40 flex items-center gap-3">
+              <div class="relative flex-1 max-w-sm"><span class="material-symbols-outlined absolute left-2.5 top-1.5 text-[16px] text-on-surface-variant">search</span><input class="ph-input pl-8" placeholder="Search by name, email, role…" /></div>
+              <button class="pill ph-pill-primary">Role: any ▾</button>
+              <button class="pill ph-pill-pending">Status: active ▾</button>
+              <button class="pill ph-pill-pending">Workspace: any ▾</button>
+            </div>
+            <table class="w-full text-sm">
+              <thead class="bg-surface-container text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
+                <tr><th class="px-5 py-3 text-left">Member</th><th class="px-3 py-3 text-left">Role</th><th class="px-3 py-3 text-left">Workspaces</th><th class="px-3 py-3 text-left">MFA</th><th class="px-3 py-3 text-left">Last active</th><th class="px-3 py-3 w-8"></th></tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant/40 text-xs">
+                <tr class="hover:bg-surface-container-low"><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center text-[10px] font-bold">AO</div><div><div class="font-semibold">Amelia Okafor</div><div class="spec">amelia@enterprise.com</div></div></div></td><td class="px-3 py-3"><span class="pill ph-pill-primary pill-sm">Owner</span></td><td class="px-3 py-3">All (6)</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">TOTP</span></td><td class="px-3 py-3">2m ago</td><td class="px-3 py-3"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span></td></tr>
+                <tr class="hover:bg-surface-container-low"><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px] font-bold">RK</div><div><div class="font-semibold">Ravi Kim</div><div class="spec">ravi@enterprise.com</div></div></div></td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">Admin</span></td><td class="px-3 py-3">Fintech · Payments</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">TOTP</span></td><td class="px-3 py-3">18m ago</td><td class="px-3 py-3"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span></td></tr>
+                <tr class="hover:bg-surface-container-low"><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold">SM</div><div><div class="font-semibold">Sofia Morales</div><div class="spec">sofia@enterprise.com</div></div></div></td><td class="px-3 py-3"><span class="pill ph-pill-revised pill-sm">PM Lead</span></td><td class="px-3 py-3">Growth · Checkout</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">TOTP</span></td><td class="px-3 py-3">1h ago</td><td class="px-3 py-3"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span></td></tr>
+                <tr class="hover:bg-surface-container-low"><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-rose-500 text-white flex items-center justify-center text-[10px] font-bold">MJ</div><div><div class="font-semibold">Maya Jain</div><div class="spec">maya@enterprise.com</div></div></div></td><td class="px-3 py-3"><span class="pill ph-pill-revised pill-sm">PM</span></td><td class="px-3 py-3">Identity</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">TOTP</span></td><td class="px-3 py-3">Yesterday</td><td class="px-3 py-3"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span></td></tr>
+                <tr class="hover:bg-surface-container-low"><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-sky-500 text-white flex items-center justify-center text-[10px] font-bold">AP</div><div><div class="font-semibold">Arjun Park</div><div class="spec">arjun@enterprise.com</div></div></div></td><td class="px-3 py-3"><span class="pill ph-pill-pending pill-sm">Engineer</span></td><td class="px-3 py-3">Payments</td><td class="px-3 py-3"><span class="pill ph-pill-rejected pill-sm">None</span></td><td class="px-3 py-3">3d ago</td><td class="px-3 py-3"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span></td></tr>
+                <tr class="hover:bg-surface-container-low"><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-violet-500 text-white flex items-center justify-center text-[10px] font-bold">SH</div><div><div class="font-semibold">Sasha Huang</div><div class="spec">sasha@enterprise.com</div></div></div></td><td class="px-3 py-3"><span class="pill ph-pill-pending pill-sm">Engineer</span></td><td class="px-3 py-3">Insights</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">TOTP</span></td><td class="px-3 py-3">1w ago</td><td class="px-3 py-3"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span></td></tr>
+                <tr class="hover:bg-surface-container-low bg-amber-50/50"><td class="px-5 py-3"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">hourglass_top</span></div><div><div class="font-semibold">Jamie Lee</div><div class="spec">jamie@partner.co · Invited Oct 24</div></div></div></td><td class="px-3 py-3"><span class="pill ph-pill-pending pill-sm">Viewer</span></td><td class="px-3 py-3">Checkout</td><td class="px-3 py-3 text-on-surface-variant">—</td><td class="px-3 py-3 text-amber-700 font-semibold">Pending</td><td class="px-3 py-3"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span></td></tr>
+              </tbody>
+            </table>
+            <div class="px-5 py-3 border-t border-outline-variant/40 text-xs text-on-surface-variant flex justify-between"><span>7 of 124</span><div class="flex gap-1"><button class="px-2 py-1 rounded border border-outline-variant/50">Prev</button><button class="px-2 py-1 rounded bg-primary text-white">1</button><button class="px-2 py-1 rounded">2</button><button class="px-2 py-1 rounded">…</button><button class="px-2 py-1 rounded">18</button><button class="px-2 py-1 rounded border border-outline-variant/50">Next</button></div></div>
+          </div>
+
+          <!-- Role detail side panel -->
+          <aside class="col-span-4 bg-white border border-outline-variant/30 rounded-xl p-6 h-fit">
+            <div class="flex items-center justify-between mb-4">
+              <div class="flex items-center gap-2"><span class="pill ph-pill-revised">PM Lead</span><span class="spec">18 members</span></div>
+              <button class="text-[11px] font-bold text-primary">Duplicate</button>
+            </div>
+            <h3 class="font-headline font-bold text-lg">Product Manager Lead</h3>
+            <p class="text-xs text-on-surface-variant mt-1">Can approve PRDs, run RICE scoring, and assign bugs across their workspace(s).</p>
+
+            <div class="mt-5">
+              <div class="eyebrow mb-3">Permissions</div>
+              <div class="space-y-2 text-xs">
+                <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low"><div><div class="font-semibold">Product — PRD</div><div class="spec">Create · Edit · Approve</div></div><label class="relative inline-flex w-9 h-5 cursor-pointer"><input type="checkbox" checked class="sr-only peer"/><span class="w-9 h-5 bg-surface-container-high peer-checked:bg-primary rounded-full"></span><span class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full peer-checked:translate-x-4 transition"></span></label></div>
+                <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low"><div><div class="font-semibold">RICE Scoring</div><div class="spec">Run · Override · Export</div></div><label class="relative inline-flex w-9 h-5 cursor-pointer"><input type="checkbox" checked class="sr-only peer"/><span class="w-9 h-5 bg-surface-container-high peer-checked:bg-primary rounded-full"></span><span class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full peer-checked:translate-x-4 transition"></span></label></div>
+                <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low"><div><div class="font-semibold">Bugs — Triage</div><div class="spec">Assign · Set severity</div></div><label class="relative inline-flex w-9 h-5 cursor-pointer"><input type="checkbox" checked class="sr-only peer"/><span class="w-9 h-5 bg-surface-container-high peer-checked:bg-primary rounded-full"></span><span class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full peer-checked:translate-x-4 transition"></span></label></div>
+                <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low"><div><div class="font-semibold">Admin — Integrations</div><div class="spec">View only</div></div><label class="relative inline-flex w-9 h-5 cursor-pointer"><input type="checkbox" class="sr-only peer"/><span class="w-9 h-5 bg-surface-container-high peer-checked:bg-primary rounded-full"></span><span class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full peer-checked:translate-x-4 transition"></span></label></div>
+                <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low"><div><div class="font-semibold">Billing</div><div class="spec">Hidden</div></div><label class="relative inline-flex w-9 h-5 cursor-pointer"><input type="checkbox" class="sr-only peer"/><span class="w-9 h-5 bg-surface-container-high peer-checked:bg-primary rounded-full"></span><span class="absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full peer-checked:translate-x-4 transition"></span></label></div>
+              </div>
+            </div>
+
+            <div class="mt-5">
+              <div class="eyebrow mb-2">Assigned workspaces</div>
+              <div class="flex flex-wrap gap-1.5"><span class="pill ph-pill-pending pill-sm">Fintech</span><span class="pill ph-pill-pending pill-sm">Growth</span><span class="pill ph-pill-pending pill-sm">Checkout</span><span class="pill ph-pill-pending pill-sm">+3</span></div>
+            </div>
+
+            <button class="w-full mt-6 bg-primary text-white text-xs font-bold py-2.5 rounded-lg shadow-lg shadow-primary/25">Save role</button>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- G02  INTEGRATIONS                -->
+<!-- =============================== -->
+<div class="screen-label"><div><span class="eyebrow">Admin v2 · 02</span><h2 class="font-headline font-extrabold text-2xl mt-1">G02 · Integrations</h2></div><div class="spec">Net-new · Connect external tools</div></div>
+<div id="g02" class="screen" data-screen-label="G02 Integrations">
+  <div class="flex h-[920px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Product Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Administration</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Administration</div>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span>LLM Usage</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">group</span>Users &amp; Roles</a>
+        <a href="#" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">extension</span>Integrations</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">history</span>Audit Log</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><span>Admin</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Integrations</span></div>
+        <div class="flex items-center gap-3">
+          <div class="relative"><span class="material-symbols-outlined absolute left-2.5 top-1.5 text-[16px] text-on-surface-variant">search</span><input class="ph-input pl-8 w-64" placeholder="Search 48 integrations…" /></div>
+          <button class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Request integration</button>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="mb-6"><h1 class="font-headline font-extrabold text-3xl tracking-tight">Integrations</h1><p class="text-sm text-on-surface-variant mt-1">7 connected · 2 need attention · 39 in catalog</p></div>
+
+        <!-- Attention banner -->
+        <div class="rounded-xl p-4 mb-5 bg-amber-50 border border-amber-200 flex items-center gap-3">
+          <span class="material-symbols-outlined text-amber-600">warning</span>
+          <div class="flex-1"><div class="text-sm font-bold text-amber-900">Jira · OAuth token expires in 5 days</div><div class="text-xs text-amber-800">Reauthorise to keep bug sync flowing.</div></div>
+          <button class="px-3 py-1.5 text-xs font-bold bg-amber-600 text-white rounded-lg">Reauthorise</button>
+        </div>
+
+        <!-- Connected -->
+        <div class="eyebrow mb-3">Connected · 7</div>
+        <section class="grid grid-cols-3 gap-4 mb-8">
+          <!-- Slack -->
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="flex items-start justify-between mb-3">
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-lg" style="background:#611f69">#</div>
+              <span class="pill ph-pill-approved pill-sm">Connected</span>
+            </div>
+            <div class="font-bold text-sm">Slack</div>
+            <p class="spec mt-1">Deliver bug + PRD alerts to channels</p>
+            <div class="mt-4 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-[11px]"><span class="text-on-surface-variant">3 channels · 412 msgs/wk</span><button class="font-bold text-primary">Configure</button></div>
+          </div>
+          <!-- Jira (attention) -->
+          <div class="bg-white border border-amber-300 rounded-xl p-5 ring-1 ring-amber-200">
+            <div class="flex items-start justify-between mb-3">
+              <div class="w-11 h-11 rounded-xl bg-sky-600 flex items-center justify-center text-white font-bold">J</div>
+              <span class="pill ph-pill-review pill-sm">Needs attention</span>
+            </div>
+            <div class="font-bold text-sm">Jira Cloud</div>
+            <p class="spec mt-1">Two-way bug sync + epic linking</p>
+            <div class="mt-4 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-[11px]"><span class="text-amber-700 font-semibold">Token expires in 5d</span><button class="font-bold text-primary">Reauthorise</button></div>
+          </div>
+          <!-- GitHub -->
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="flex items-start justify-between mb-3">
+              <div class="w-11 h-11 rounded-xl bg-[#1a1f2e] flex items-center justify-center text-white"><span class="material-symbols-outlined">hub</span></div>
+              <span class="pill ph-pill-approved pill-sm">Connected</span>
+            </div>
+            <div class="font-bold text-sm">GitHub</div>
+            <p class="spec mt-1">PR &amp; commit linking, CI status</p>
+            <div class="mt-4 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-[11px]"><span class="text-on-surface-variant">4 repos</span><button class="font-bold text-primary">Configure</button></div>
+          </div>
+          <!-- Figma -->
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="flex items-start justify-between mb-3">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-rose-500 to-orange-500 flex items-center justify-center text-white font-bold">F</div>
+              <span class="pill ph-pill-approved pill-sm">Connected</span>
+            </div>
+            <div class="font-bold text-sm">Figma</div>
+            <p class="spec mt-1">Embed frames in PRDs, comment sync</p>
+            <div class="mt-4 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-[11px]"><span class="text-on-surface-variant">12 files</span><button class="font-bold text-primary">Configure</button></div>
+          </div>
+          <!-- Datadog -->
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="flex items-start justify-between mb-3">
+              <div class="w-11 h-11 rounded-xl bg-violet-700 flex items-center justify-center text-white font-bold">Dd</div>
+              <span class="pill ph-pill-approved pill-sm">Connected</span>
+            </div>
+            <div class="font-bold text-sm">Datadog</div>
+            <p class="spec mt-1">Pull traces + errors into bug details</p>
+            <div class="mt-4 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-[11px]"><span class="text-on-surface-variant">1 account</span><button class="font-bold text-primary">Configure</button></div>
+          </div>
+          <!-- Okta -->
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="flex items-start justify-between mb-3">
+              <div class="w-11 h-11 rounded-xl bg-sky-700 flex items-center justify-center text-white font-bold">O</div>
+              <span class="pill ph-pill-approved pill-sm">Connected</span>
+            </div>
+            <div class="font-bold text-sm">Okta SSO</div>
+            <p class="spec mt-1">SAML single sign-on + SCIM provisioning</p>
+            <div class="mt-4 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-[11px]"><span class="text-on-surface-variant">SAML · SCIM on</span><button class="font-bold text-primary">Configure</button></div>
+          </div>
+        </section>
+
+        <!-- Catalog -->
+        <div class="flex items-end justify-between mb-3"><div class="eyebrow">Catalog</div><div class="flex gap-1 text-[11px] font-semibold"><button class="px-3 py-1 bg-primary text-white rounded-full">All</button><button class="px-3 py-1 text-on-surface-variant">Comms</button><button class="px-3 py-1 text-on-surface-variant">Dev</button><button class="px-3 py-1 text-on-surface-variant">Observability</button><button class="px-3 py-1 text-on-surface-variant">Security</button></div></div>
+        <section class="grid grid-cols-4 gap-4">
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5 hover:border-primary/40 transition-colors">
+            <div class="w-10 h-10 rounded-lg bg-[#ea4335] text-white flex items-center justify-center font-bold mb-3">G</div>
+            <div class="font-bold text-sm">Google Workspace</div>
+            <p class="spec mt-1">Calendar, Drive, Meet</p>
+            <button class="mt-3 w-full py-1.5 rounded-lg border border-primary/25 text-primary text-[11px] font-bold">Connect</button>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="w-10 h-10 rounded-lg bg-[#00a1e0] text-white flex items-center justify-center font-bold mb-3">Sf</div>
+            <div class="font-bold text-sm">Salesforce</div>
+            <p class="spec mt-1">Customer feedback → ideas</p>
+            <button class="mt-3 w-full py-1.5 rounded-lg border border-primary/25 text-primary text-[11px] font-bold">Connect</button>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="w-10 h-10 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold mb-3">Lr</div>
+            <div class="font-bold text-sm">Linear</div>
+            <p class="spec mt-1">Alternative to Jira sync</p>
+            <button class="mt-3 w-full py-1.5 rounded-lg border border-primary/25 text-primary text-[11px] font-bold">Connect</button>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="w-10 h-10 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold mb-3">Sy</div>
+            <div class="font-bold text-sm">Sentry</div>
+            <p class="spec mt-1">Error → bug auto-filing</p>
+            <button class="mt-3 w-full py-1.5 rounded-lg border border-primary/25 text-primary text-[11px] font-bold">Connect</button>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="w-10 h-10 rounded-lg bg-rose-600 text-white flex items-center justify-center font-bold mb-3">Zd</div>
+            <div class="font-bold text-sm">Zendesk</div>
+            <p class="spec mt-1">Customer tickets → triage</p>
+            <button class="mt-3 w-full py-1.5 rounded-lg border border-primary/25 text-primary text-[11px] font-bold">Connect</button>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="w-10 h-10 rounded-lg bg-violet-600 text-white flex items-center justify-center font-bold mb-3">Mx</div>
+            <div class="font-bold text-sm">Mixpanel</div>
+            <p class="spec mt-1">Product analytics sync</p>
+            <button class="mt-3 w-full py-1.5 rounded-lg border border-primary/25 text-primary text-[11px] font-bold">Connect</button>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="w-10 h-10 rounded-lg bg-amber-600 text-white flex items-center justify-center font-bold mb-3">Am</div>
+            <div class="font-bold text-sm">Amplitude</div>
+            <p class="spec mt-1">Behavioural analytics</p>
+            <button class="mt-3 w-full py-1.5 rounded-lg border border-primary/25 text-primary text-[11px] font-bold">Connect</button>
+          </div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="w-10 h-10 rounded-lg bg-sky-700 text-white flex items-center justify-center font-bold mb-3">Az</div>
+            <div class="font-bold text-sm">Azure AD</div>
+            <p class="spec mt-1">SSO &amp; directory sync</p>
+            <button class="mt-3 w-full py-1.5 rounded-lg border border-primary/25 text-primary text-[11px] font-bold">Connect</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== -->
+<!-- G03  AUDIT LOG                   -->
+<!-- =============================== -->
+<div class="screen-label"><div><span class="eyebrow">Admin v2 · 03</span><h2 class="font-headline font-extrabold text-2xl mt-1">G03 · Audit Log</h2></div><div class="spec">Net-new · Security &amp; compliance trail</div></div>
+<div id="g03" class="screen" data-screen-label="G03 Audit Log">
+  <div class="flex h-[940px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Product Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Administration</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Administration</div>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">monitoring</span>LLM Usage</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">group</span>Users &amp; Roles</a>
+        <a href="#"><span class="material-symbols-outlined text-[18px]">extension</span>Integrations</a>
+        <a href="#" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">history</span>Audit Log</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><span>Admin</span><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Audit log</span></div>
+        <div class="flex items-center gap-3">
+          <button class="px-3 py-1.5 text-xs font-bold text-primary border border-primary/25 rounded-lg flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">bolt</span>Stream to SIEM</button>
+          <button class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Export range</button>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="mb-6"><h1 class="font-headline font-extrabold text-3xl tracking-tight">Audit log</h1><p class="text-sm text-on-surface-variant mt-1">Tamper-evident trail of every admin &amp; agent action. Retention: 18 months.</p></div>
+
+        <!-- Meta row -->
+        <div class="grid grid-cols-4 gap-4 mb-5">
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Events (24h)</div><div class="font-headline font-extrabold text-3xl mt-1">2,148</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Admin actions</div><div class="font-headline font-extrabold text-3xl mt-1">184</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Agent actions</div><div class="font-headline font-extrabold text-3xl mt-1">1,612</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Failed auths</div><div class="font-headline font-extrabold text-3xl mt-1 text-error">12</div></div>
+        </div>
+
+        <!-- Filter -->
+        <div class="bg-white border border-outline-variant/30 rounded-xl p-3 mb-4 flex items-center gap-2 flex-wrap">
+          <span class="eyebrow mr-2">Filter</span>
+          <button class="pill ph-pill-primary">Actor: any ▾</button>
+          <button class="pill ph-pill-pending">Category: any ▾</button>
+          <button class="pill ph-pill-pending">Severity: any ▾</button>
+          <button class="pill ph-pill-pending">Result: any ▾</button>
+          <div class="ml-auto flex gap-2 text-[11px] font-semibold">
+            <div class="flex items-center gap-2 bg-surface-container-low rounded-lg px-3 py-1.5"><span class="material-symbols-outlined text-[14px]">calendar_today</span>Oct 18 – Oct 24</div>
+            <div class="relative"><span class="material-symbols-outlined absolute left-2.5 top-1.5 text-[16px] text-on-surface-variant">search</span><input class="ph-input pl-8 w-64" placeholder="actor:… action:… resource:…" /></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-6">
+          <!-- List -->
+          <div class="col-span-8 bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+            <table class="w-full text-sm">
+              <thead class="bg-surface-container text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
+                <tr><th class="px-5 py-3 text-left">Time</th><th class="px-3 py-3 text-left">Actor</th><th class="px-3 py-3 text-left">Event</th><th class="px-3 py-3 text-left">Resource</th><th class="px-3 py-3 text-left">Result</th></tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant/40 text-xs">
+                <tr class="bg-primary/5"><td class="px-5 py-3 font-mono">14:22:04</td><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-secondary"></div>A. Okafor</div></td><td class="px-3 py-3"><span class="pill ph-pill-primary pill-sm">role.update</span> added perm <code class="font-mono text-[11px]">billing.read</code></td><td class="px-3 py-3 font-mono text-[11px]">roles/pm-lead</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">Success</span></td></tr>
+                <tr><td class="px-5 py-3 font-mono">14:18:41</td><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full ai-chip flex items-center justify-center"><span class="material-symbols-outlined text-[12px] text-white">auto_awesome</span></div>Triage Agent</div></td><td class="px-3 py-3"><span class="pill ph-pill-revised pill-sm">bug.severity</span> high → critical</td><td class="px-3 py-3 font-mono text-[11px]">bugs/BUG-4412</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">Success</span></td></tr>
+                <tr><td class="px-5 py-3 font-mono">14:12:17</td><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-amber-500"></div>R. Kim</div></td><td class="px-3 py-3"><span class="pill ph-pill-primary pill-sm">integration.reauth</span> reauthorised Jira</td><td class="px-3 py-3 font-mono text-[11px]">integrations/jira</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">Success</span></td></tr>
+                <tr class="bg-error/5"><td class="px-5 py-3 font-mono">13:58:02</td><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-rose-300"></div>unknown</div></td><td class="px-3 py-3"><span class="pill ph-pill-rejected pill-sm">auth.mfa.fail</span> 3 attempts from 51.8.12.5</td><td class="px-3 py-3 font-mono text-[11px]">users/sasha@…</td><td class="px-3 py-3"><span class="pill ph-pill-rejected pill-sm">Blocked</span></td></tr>
+                <tr><td class="px-5 py-3 font-mono">13:44:18</td><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-emerald-500"></div>S. Morales</div></td><td class="px-3 py-3"><span class="pill ph-pill-primary pill-sm">prd.approve</span> approved PRD</td><td class="px-3 py-3 font-mono text-[11px]">prds/SUB-8842</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">Success</span></td></tr>
+                <tr><td class="px-5 py-3 font-mono">13:31:55</td><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full ai-chip flex items-center justify-center"><span class="material-symbols-outlined text-[12px] text-white">auto_awesome</span></div>PM-BOT</div></td><td class="px-3 py-3"><span class="pill ph-pill-revised pill-sm">rice.override</span> manual override 31.5</td><td class="px-3 py-3 font-mono text-[11px]">rice/SUB-8842</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">Success</span></td></tr>
+                <tr><td class="px-5 py-3 font-mono">13:12:09</td><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-violet-500"></div>S. Huang</div></td><td class="px-3 py-3"><span class="pill ph-pill-primary pill-sm">user.invite</span> invited jamie@partner.co</td><td class="px-3 py-3 font-mono text-[11px]">users/invite/182</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">Success</span></td></tr>
+                <tr><td class="px-5 py-3 font-mono">12:44:29</td><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-secondary"></div>A. Okafor</div></td><td class="px-3 py-3"><span class="pill ph-pill-primary pill-sm">settings.update</span> raised LLM budget</td><td class="px-3 py-3 font-mono text-[11px]">settings/llm-budget</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">Success</span></td></tr>
+                <tr><td class="px-5 py-3 font-mono">12:31:18</td><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-sky-500"></div>A. Park</div></td><td class="px-3 py-3"><span class="pill ph-pill-primary pill-sm">auth.login</span> signed in via Okta</td><td class="px-3 py-3 font-mono text-[11px]">users/arjun@…</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">Success</span></td></tr>
+                <tr><td class="px-5 py-3 font-mono">12:08:43</td><td class="px-3 py-3"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-rose-500"></div>M. Jain</div></td><td class="px-3 py-3"><span class="pill ph-pill-primary pill-sm">bug.close</span> resolved as fixed</td><td class="px-3 py-3 font-mono text-[11px]">bugs/BUG-4389</td><td class="px-3 py-3"><span class="pill ph-pill-approved pill-sm">Success</span></td></tr>
+              </tbody>
+            </table>
+            <div class="px-5 py-3 border-t border-outline-variant/40 text-xs text-on-surface-variant flex justify-between items-center"><span>10 of 2,148 events · Showing most recent</span><button class="font-bold text-primary">Load more</button></div>
+          </div>
+
+          <!-- Event detail -->
+          <aside class="col-span-4 bg-white border border-outline-variant/30 rounded-xl p-6 h-fit">
+            <div class="flex items-center justify-between mb-4"><div class="eyebrow">Event detail</div><span class="pill ph-pill-approved pill-sm">Success</span></div>
+            <div class="text-[11px] font-mono text-on-surface-variant">evt_01JBK4M7ZP9A2QH3C5</div>
+            <h3 class="font-headline font-bold text-lg mt-1">role.update</h3>
+            <p class="text-xs text-on-surface-variant mt-1">Added <code class="font-mono text-[11px] px-1.5 py-0.5 bg-surface-container rounded">billing.read</code> to <code class="font-mono text-[11px] px-1.5 py-0.5 bg-surface-container rounded">pm-lead</code></p>
+
+            <dl class="mt-5 text-xs grid grid-cols-[100px_1fr] gap-y-2">
+              <dt class="text-on-surface-variant">Actor</dt><dd class="font-semibold">A. Okafor · Owner</dd>
+              <dt class="text-on-surface-variant">Timestamp</dt><dd class="font-mono">2023-10-24 14:22:04Z</dd>
+              <dt class="text-on-surface-variant">Source IP</dt><dd class="font-mono">10.2.48.12</dd>
+              <dt class="text-on-surface-variant">User agent</dt><dd>Chrome 120 · macOS</dd>
+              <dt class="text-on-surface-variant">Workspace</dt><dd>acme-corp · production</dd>
+              <dt class="text-on-surface-variant">MFA</dt><dd>TOTP verified</dd>
+            </dl>
+
+            <div class="mt-5">
+              <div class="eyebrow mb-2">Diff</div>
+              <pre class="text-[11px] font-mono bg-[#0f172a] text-[#e2e8f0] rounded-lg p-3 overflow-x-auto leading-relaxed">{
+  "role": "pm-lead",
+<span class="text-rose-400">-  "permissions": ["prd.*","rice.*","bug.triage"]</span>
+<span class="text-emerald-400">+  "permissions": ["prd.*","rice.*","bug.triage","billing.read"]</span>
+}</pre>
+            </div>
+
+            <div class="mt-5">
+              <div class="eyebrow mb-2">Verification</div>
+              <div class="text-[11px] font-mono break-all p-2 bg-surface-container-low border border-outline-variant/40 rounded-lg">sha256:a4c9…e2f1</div>
+              <div class="flex items-center gap-1 text-[11px] text-emerald-700 font-bold mt-2"><span class="material-symbols-outlined text-[14px]">verified</span>Signature valid · chain unbroken</div>
+            </div>
+
+            <button class="w-full mt-5 bg-primary text-white text-xs font-bold py-2.5 rounded-lg">Copy permalink</button>
+          </aside>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="screen p-10 text-center">
+  <div class="eyebrow">End of handoff</div>
+  <h3 class="font-headline font-extrabold text-2xl mt-2">10 screens · one system · ready to review.</h3>
+  <p class="text-on-surface-variant text-sm mt-2 max-w-xl mx-auto">Carbon has been fully retired from the C/E/Z series. F-series and G-series compose entirely from the canonical Product Hub library — no new tokens, no new icon families, no new primitives.</p>
+</div>
+
+<!-- Scrollspy for floating TOC -->
+<script>
+(function(){
+  const links = document.querySelectorAll('.toc a[href^="#"]');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href')));
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  sections.forEach(s => s && obs.observe(s));
+})();
+</script>
+
+</body>
+</html>

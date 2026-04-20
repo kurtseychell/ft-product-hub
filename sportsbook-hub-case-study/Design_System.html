@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product Hub — Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: { extend: {
+    colors: {
+      primary:'#3525cd','primary-container':'#4f46e5','primary-fixed':'#e2dfff','primary-fixed-dim':'#c3c0ff',
+      'on-primary':'#ffffff','on-primary-container':'#dad7ff',
+      secondary:'#5b598c','secondary-container':'#c7c3fe','on-secondary-container':'#514f81',
+      tertiary:'#7e3000','tertiary-container':'#a44100',
+      background:'#f7f9fb',surface:'#f7f9fb',
+      'surface-container-lowest':'#ffffff','surface-container-low':'#f2f4f6','surface-container':'#eceef0',
+      'surface-container-high':'#e6e8ea','surface-container-highest':'#e0e3e5',
+      'on-surface':'#191c1e','on-surface-variant':'#464555',
+      outline:'#777587','outline-variant':'#c7c4d8',
+      error:'#ba1a1a','error-container':'#ffdad6','on-error-container':'#93000a',
+      'sidebar':'#1E1B4B'
+    },
+    borderRadius: { DEFAULT:'0.25rem', lg:'0.5rem', xl:'0.75rem', full:'9999px' },
+    fontFamily: { body:['Inter'], headline:['Manrope'], label:['Inter'] }
+  }}
+};
+</script>
+<link rel="stylesheet" href="system.css" />
+<style>
+  /* doc sections */
+  .doc-section { scroll-margin-top: 72px; }
+  .doc-h { font-family:'Manrope'; font-weight:800; letter-spacing:-0.02em; }
+  .doc-eyebrow { font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.18em; color:#3525cd; }
+  .swatch { height:88px; border-radius:0.5rem; display:flex; align-items:flex-end; padding:10px 12px; color:white; font-size:11px; font-weight:600; font-family:'Inter'; }
+  .swatch.ink { color:#191c1e; text-shadow:none; }
+  .token-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+  @media (max-width:900px){ .token-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  .spec { font-family:'Inter'; font-size:11px; color:#464555; font-feature-settings:'tnum'; }
+  .kbd { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; font-size:10px; padding:1px 6px; border:1px solid #c7c4d8; border-radius:4px; background:#fff; }
+  .rule-card { background:#ffffff; border:1px solid rgba(199,196,216,0.45); border-radius:.75rem; padding:20px; }
+
+  /* sidebar sample */
+  .preview-sidebar-full { background:#1E1B4B; color:white; width:240px; min-height:380px; border-radius:.75rem; padding:16px 12px; font-family:'Manrope'; }
+  .preview-sidebar-icon { background:#1E1B4B; color:white; width:60px; min-height:380px; border-radius:.75rem; padding:16px 8px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+
+  /* pill sizing */
+  .pill { display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:9999px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; font-family:'Inter'; }
+
+  /* scroll nav */
+  .sub-nav a { color:#464555; font-size:12px; font-weight:600; padding:6px 10px; border-radius:6px; display:block; }
+  .sub-nav a:hover { background:#f2f4f6; color:#191c1e; }
+
+  /* input demo focus ring */
+  .ph-input { background:#f2f4f6; border:1px solid transparent; border-radius:.5rem; padding:10px 12px; font-size:13px; width:100%; transition:all .15s; }
+  .ph-input:focus { outline:none; background:#fff; border-color:#3525cd; box-shadow:0 0 0 4px rgba(53,37,205,.10); }
+</style>
+</head>
+
+<body class="bg-surface text-on-surface">
+
+<!-- Header -->
+<header class="sticky top-0 z-30 bg-white/85 backdrop-blur-xl border-b border-outline-variant/40">
+  <div class="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-sidebar text-white flex items-center justify-center">
+        <span class="material-symbols-outlined msym-fill">hexagon</span>
+      </div>
+      <div>
+        <div class="font-headline font-extrabold tracking-tight text-[15px] leading-none">Product Hub</div>
+        <div class="text-[10px] font-semibold text-primary tracking-widest uppercase mt-0.5">Design System · v1.0</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-6 text-[12px] font-semibold text-on-surface-variant">
+      <span>Canonical reference for all 27 screens</span>
+      <span class="pill ph-pill-primary">Living kit</span>
+    </div>
+  </div>
+</header>
+
+<div class="max-w-7xl mx-auto px-8 py-12 grid grid-cols-12 gap-10">
+
+  <!-- Sidebar nav -->
+  <aside class="col-span-3 hidden lg:block">
+    <nav class="sub-nav sticky top-24 space-y-0.5">
+      <div class="doc-eyebrow mb-2 px-2">Contents</div>
+      <a href="#foundations">Foundations</a>
+      <a href="#color">Color tokens</a>
+      <a href="#type">Typography</a>
+      <a href="#radius">Radii &amp; elevation</a>
+      <a href="#shell">App shell</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#inputs">Inputs &amp; selects</a>
+      <a href="#chips">Chips &amp; status pills</a>
+      <a href="#cards">Cards &amp; tiles</a>
+      <a href="#tables">Tables</a>
+      <a href="#ai">AI patterns</a>
+      <a href="#slideout">Slide-out panel</a>
+      <a href="#replacement">Replaces Carbon</a>
+    </nav>
+  </aside>
+
+  <main class="col-span-12 lg:col-span-9 space-y-16">
+
+    <!-- Intro -->
+    <section class="doc-section">
+      <div class="doc-eyebrow">Product Hub</div>
+      <h1 class="doc-h text-5xl mt-2">The canonical kit.</h1>
+      <p class="mt-4 text-on-surface-variant max-w-2xl leading-relaxed">
+        Every Product Hub screen — from Brief to Release — is built from the primitives on this page. It consolidates the patterns already present in 17 aligned screens (A01, A02, B01–B05, C01, C03, C04, D01–D04, E01–E03) into one reference, so three outliers (C02, E04, Z01) previously built against IBM Carbon can be re-skinned against a shared source of truth and three new workstreams (Bug pipeline, Admin v2) can be generated consistently.
+      </p>
+      <div class="flex flex-wrap gap-2 mt-6">
+        <span class="pill ph-pill-primary"><span class="material-symbols-outlined text-[14px]">auto_awesome</span> PM-BOT umbrella</span>
+        <span class="pill ph-pill-pending">Inter + Manrope</span>
+        <span class="pill ph-pill-pending">Material 3</span>
+        <span class="pill ph-pill-pending">Indigo 3525CD</span>
+      </div>
+    </section>
+
+    <!-- Foundations -->
+    <section id="foundations" class="doc-section">
+      <div class="doc-eyebrow">01 · Foundations</div>
+      <h2 class="doc-h text-2xl mt-1">Brand &amp; system origin</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        <div class="rule-card">
+          <div class="doc-eyebrow text-primary">Primary</div>
+          <div class="swatch mt-3" style="background:#3525cd">#3525CD</div>
+          <div class="spec mt-3">The single hero color. Used for: active nav rail, primary buttons, chart series 1, links, focus rings. Never for backgrounds larger than a hero card.</div>
+        </div>
+        <div class="rule-card">
+          <div class="doc-eyebrow">Surface family</div>
+          <div class="swatch ink mt-3" style="background:#f7f9fb">#F7F9FB</div>
+          <div class="spec mt-3">Page background is <b>surface</b>. All cards sit on <b>surface-container-lowest</b> (#FFFFFF) for elevation without shadow.</div>
+        </div>
+        <div class="rule-card">
+          <div class="doc-eyebrow">Sidebar navy</div>
+          <div class="swatch mt-3" style="background:#1E1B4B">#1E1B4B</div>
+          <div class="spec mt-3">Unique to the left rail. Text is white with tiered opacity: label 100%, inactive 50%, section header 30%.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Color tokens -->
+    <section id="color" class="doc-section">
+      <div class="doc-eyebrow">02 · Color</div>
+      <h2 class="doc-h text-2xl mt-1">Full token set</h2>
+      <p class="text-sm text-on-surface-variant mt-2 max-w-2xl">Names match the Material 3 roles used across all aligned screens' Tailwind configs, so migrating a screen only requires swapping the family name — the semantic contract is identical.</p>
+
+      <div class="mt-6">
+        <div class="doc-eyebrow mb-3">Primary family</div>
+        <div class="token-grid">
+          <div><div class="swatch" style="background:#3525cd">primary</div><div class="spec mt-1">#3525CD</div></div>
+          <div><div class="swatch" style="background:#4f46e5">primary-container</div><div class="spec mt-1">#4F46E5</div></div>
+          <div><div class="swatch ink" style="background:#e2dfff">primary-fixed</div><div class="spec mt-1">#E2DFFF</div></div>
+          <div><div class="swatch ink" style="background:#c3c0ff">primary-fixed-dim</div><div class="spec mt-1">#C3C0FF</div></div>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <div class="doc-eyebrow mb-3">Surface family (elevation by tone)</div>
+        <div class="token-grid">
+          <div><div class="swatch ink" style="background:#ffffff;border:1px solid #e0e3e5">lowest</div><div class="spec mt-1">#FFFFFF · cards</div></div>
+          <div><div class="swatch ink" style="background:#f2f4f6">low</div><div class="spec mt-1">#F2F4F6 · inputs</div></div>
+          <div><div class="swatch ink" style="background:#eceef0">container</div><div class="spec mt-1">#ECEEF0 · fills</div></div>
+          <div><div class="swatch ink" style="background:#e0e3e5">highest</div><div class="spec mt-1">#E0E3E5 · dividers</div></div>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <div class="doc-eyebrow mb-3">Status</div>
+        <div class="token-grid">
+          <div><div class="swatch" style="background:#059669">success</div><div class="spec mt-1">#059669 · Approved / +delta</div></div>
+          <div><div class="swatch" style="background:#b45309">warning</div><div class="spec mt-1">#B45309 · In Review</div></div>
+          <div><div class="swatch" style="background:#1d4ed8">info</div><div class="spec mt-1">#1D4ED8 · Revised</div></div>
+          <div><div class="swatch" style="background:#ba1a1a">error</div><div class="spec mt-1">#BA1A1A · Rejected / blocker</div></div>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <div class="doc-eyebrow mb-3">Ink &amp; line</div>
+        <div class="token-grid">
+          <div><div class="swatch" style="background:#191c1e">on-surface</div><div class="spec mt-1">#191C1E · body</div></div>
+          <div><div class="swatch" style="background:#464555">on-surface-variant</div><div class="spec mt-1">#464555 · labels</div></div>
+          <div><div class="swatch ink" style="background:#c7c4d8">outline-variant</div><div class="spec mt-1">#C7C4D8 · borders</div></div>
+          <div><div class="swatch" style="background:#777587">outline</div><div class="spec mt-1">#777587 · divider strong</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography -->
+    <section id="type" class="doc-section">
+      <div class="doc-eyebrow">03 · Typography</div>
+      <h2 class="doc-h text-2xl mt-1">Inter for product, Manrope for voice</h2>
+
+      <div class="rule-card mt-6 space-y-6">
+        <div class="flex items-baseline gap-6 flex-wrap">
+          <div class="font-headline font-extrabold text-5xl tracking-tight">Welcome back, Alex</div>
+          <span class="spec">Manrope 800 · 48/52 · −2% tracking · hero h1</span>
+        </div>
+        <div class="flex items-baseline gap-6 flex-wrap">
+          <div class="font-headline font-bold text-2xl">PRD Evaluation Queue</div>
+          <span class="spec">Manrope 700 · 24/28 · page title</span>
+        </div>
+        <div class="flex items-baseline gap-6 flex-wrap">
+          <div class="font-headline font-bold text-lg">Problem Statement</div>
+          <span class="spec">Manrope 700 · 18/24 · section title</span>
+        </div>
+        <div class="flex items-baseline gap-6 flex-wrap">
+          <div class="font-body font-semibold text-sm">Payment Retry Logic</div>
+          <span class="spec">Inter 600 · 14/20 · row primary</span>
+        </div>
+        <div class="flex items-baseline gap-6 flex-wrap">
+          <div class="font-body text-sm text-on-surface-variant">Friction in the recovery process for failed subscription payments is responsible for 14% of voluntary churn.</div>
+          <span class="spec">Inter 400 · 14/20 · prose</span>
+        </div>
+        <div class="flex items-baseline gap-6 flex-wrap">
+          <div class="font-body text-[10px] font-bold uppercase tracking-[0.18em] text-on-surface-variant">Source of Truth</div>
+          <span class="spec">Inter 700 · 10/12 · 18% tracking · eyebrow</span>
+        </div>
+        <div class="flex items-baseline gap-6 flex-wrap">
+          <div class="font-body text-xs font-mono text-on-surface-variant">SUB-8842</div>
+          <span class="spec">Inter Mono fallback · 12px · IDs</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Radii -->
+    <section id="radius" class="doc-section">
+      <div class="doc-eyebrow">04 · Radii &amp; elevation</div>
+      <h2 class="doc-h text-2xl mt-1">Soft, consistent, never flat</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <div class="rule-card text-center">
+          <div class="h-16 bg-primary mx-auto mb-3" style="border-radius:.25rem;width:64px"></div>
+          <div class="font-semibold text-sm">DEFAULT · 4px</div>
+          <div class="spec">inputs, pills on data rows</div>
+        </div>
+        <div class="rule-card text-center">
+          <div class="h-16 bg-primary mx-auto mb-3" style="border-radius:.5rem;width:64px"></div>
+          <div class="font-semibold text-sm">lg · 8px</div>
+          <div class="spec">buttons, cards, tiles</div>
+        </div>
+        <div class="rule-card text-center">
+          <div class="h-16 bg-primary mx-auto mb-3" style="border-radius:.75rem;width:64px"></div>
+          <div class="font-semibold text-sm">xl · 12px</div>
+          <div class="spec">feature panels, hero</div>
+        </div>
+        <div class="rule-card text-center">
+          <div class="h-16 bg-primary mx-auto mb-3" style="border-radius:9999px;width:64px"></div>
+          <div class="font-semibold text-sm">full</div>
+          <div class="spec">status pills, avatars, progress</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        <div class="rule-card">
+          <div class="h-20 rounded-lg bg-white border border-outline-variant/40" style="box-shadow:0 1px 2px rgba(25,28,30,.04)"></div>
+          <div class="font-semibold text-sm mt-3">Elevation 1</div>
+          <div class="spec">Default card, rest state</div>
+        </div>
+        <div class="rule-card">
+          <div class="h-20 rounded-lg bg-white border border-outline-variant/40" style="box-shadow:0 4px 12px rgba(25,28,30,.06)"></div>
+          <div class="font-semibold text-sm mt-3">Elevation 2</div>
+          <div class="spec">Popover, dropdown menu</div>
+        </div>
+        <div class="rule-card">
+          <div class="h-20 rounded-lg bg-white border border-outline-variant/40" style="box-shadow:0 12px 32px rgba(25,28,30,.08)"></div>
+          <div class="font-semibold text-sm mt-3">Elevation 3</div>
+          <div class="spec">Modal, slide-out panel</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- App shell -->
+    <section id="shell" class="doc-section">
+      <div class="doc-eyebrow">05 · App shell</div>
+      <h2 class="doc-h text-2xl mt-1">Two sidebar widths, one top bar</h2>
+
+      <div class="rule-card mt-6">
+        <div class="grid grid-cols-12 gap-5">
+          <!-- Full sidebar -->
+          <div class="col-span-12 md:col-span-5">
+            <div class="doc-eyebrow mb-2">Full sidebar · 240px</div>
+            <div class="preview-sidebar-full">
+              <div class="flex items-center gap-2 px-2 mb-5">
+                <div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center">
+                  <span class="material-symbols-outlined msym-fill text-white text-[20px]">hexagon</span>
+                </div>
+                <div>
+                  <div class="font-bold text-[14px] tracking-tight">Product Hub</div>
+                  <div class="text-[9px] tracking-widest uppercase text-white/40">Management Suite</div>
+                </div>
+              </div>
+              <div class="space-y-0.5 text-sm">
+                <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white/10 font-semibold">
+                  <span class="material-symbols-outlined msym-fill text-[18px]">dashboard</span>Main
+                </div>
+                <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">inventory_2</span>Product
+                </div>
+                <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>Backlog
+                </div>
+                <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">local_shipping</span>Delivery
+                </div>
+                <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">insights</span>Insights
+                </div>
+              </div>
+            </div>
+            <div class="spec mt-3">Label, icon-left, sections by <span class="kbd">div.text-white/30 uppercase</span> header. Used by: A01, A02, B01, B05, D01–D04, E01–E03.</div>
+          </div>
+
+          <!-- Icon rail -->
+          <div class="col-span-12 md:col-span-2">
+            <div class="doc-eyebrow mb-2">Icon rail · 64px</div>
+            <div class="preview-sidebar-icon">
+              <div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center">
+                <span class="material-symbols-outlined msym-fill text-white text-[18px]">hexagon</span>
+              </div>
+              <span class="material-symbols-outlined text-white/50 text-[20px]">dashboard</span>
+              <span class="material-symbols-outlined text-white text-[20px] relative">inventory_2<span class="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-6 bg-white rounded-l-full"></span></span>
+              <span class="material-symbols-outlined text-white/50 text-[20px]">insights</span>
+              <span class="material-symbols-outlined text-white/50 text-[20px]">account_tree</span>
+            </div>
+            <div class="spec mt-3">Workspace screens: B02, B03, B04, C01, C03.</div>
+          </div>
+
+          <!-- Top bar -->
+          <div class="col-span-12 md:col-span-5">
+            <div class="doc-eyebrow mb-2">Top app bar · 56–64px</div>
+            <div class="rounded-xl border border-outline-variant/40 overflow-hidden">
+              <div class="h-14 flex items-center justify-between px-5 bg-white/85 backdrop-blur-xl border-b border-outline-variant/40">
+                <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant">
+                  <span>Submissions</span>
+                  <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+                  <span>SUB-0091</span>
+                  <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+                  <span class="text-primary">PRD Builder</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button class="px-3 py-1 text-[11px] font-bold text-primary border border-primary/20 rounded-lg">Save</button>
+                  <button class="px-3 py-1 text-[11px] font-bold text-white bg-primary rounded-lg">Mark Final</button>
+                </div>
+              </div>
+              <div class="p-5 bg-surface">
+                <div class="spec">Glass bg (white/85 + backdrop-blur), 1px outline-variant bottom border, breadcrumb left, action cluster right.</div>
+              </div>
+            </div>
+            <div class="spec mt-3">Breadcrumb final segment always <span class="kbd">text-primary</span>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Buttons -->
+    <section id="buttons" class="doc-section">
+      <div class="doc-eyebrow">06 · Buttons</div>
+      <h2 class="doc-h text-2xl mt-1">Four strengths, one voice</h2>
+
+      <div class="rule-card mt-6">
+        <div class="flex flex-wrap items-center gap-4">
+          <button class="px-4 py-2 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/25 hover:bg-primary-container transition-all">Primary · Filled</button>
+          <button class="px-4 py-2 text-xs font-bold text-primary border border-primary/25 rounded-lg hover:bg-primary/5 transition-all">Secondary · Outline</button>
+          <button class="px-4 py-2 text-xs font-bold text-on-surface-variant hover:text-primary hover:bg-primary/5 transition-all rounded-lg">Tertiary · Text</button>
+          <button class="px-4 py-2 text-xs font-bold text-white bg-primary rounded-lg opacity-60 cursor-not-allowed">Primary · Disabled</button>
+          <div class="flex items-center gap-2 ml-auto spec">h = 32–40px · px 16 · rounded-lg · Inter 700 12px</div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4 mt-6 pt-6 border-t border-outline-variant/40">
+          <button class="px-4 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg">Approve</button>
+          <button class="px-4 py-2 text-xs font-bold text-white bg-amber-500 hover:bg-amber-600 rounded-lg">Request Revisions</button>
+          <button class="px-4 py-2 text-xs font-bold text-white bg-red-600 hover:bg-red-700 rounded-lg">Reject</button>
+          <button class="px-4 py-2 text-xs font-bold text-white rounded-lg ph-ai-chip flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px]">auto_awesome</span>Generate with PM-BOT
+          </button>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3 mt-6 pt-6 border-t border-outline-variant/40">
+          <button class="w-9 h-9 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined">more_vert</span></button>
+          <button class="w-9 h-9 rounded-full hover:bg-surface-container flex items-center justify-center text-on-surface-variant relative"><span class="material-symbols-outlined">notifications</span><span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span></button>
+          <button class="px-3 py-1.5 text-[11px] font-bold rounded-full bg-surface-container-low text-on-surface-variant border border-outline-variant/30">Regenerate Section</button>
+          <button class="px-3 py-1.5 text-[11px] font-bold rounded-full bg-primary/10 text-primary border border-primary/20">Filter · Active</button>
+          <div class="ml-auto spec">Icon · round 36 · filter · pill 28 · rounded-full</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inputs -->
+    <section id="inputs" class="doc-section">
+      <div class="doc-eyebrow">07 · Inputs &amp; selects</div>
+      <h2 class="doc-h text-2xl mt-1">Filled, not bordered</h2>
+
+      <div class="rule-card mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant block mb-2">Search</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+            <input class="ph-input pl-10" placeholder="Search product data…" />
+          </div>
+        </div>
+        <div>
+          <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant block mb-2">Title</label>
+          <input class="ph-input" value="Payment Retry Notifications" />
+        </div>
+        <div>
+          <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant block mb-2">Domain</label>
+          <select class="ph-input">
+            <option>Payments</option><option>Identity</option><option>Infrastructure</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant block mb-2">Effort (m/h)</label>
+          <input type="number" class="ph-input" value="2.5" step="0.1" />
+        </div>
+        <div class="md:col-span-2">
+          <label class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant block mb-2">Overall assessment</label>
+          <textarea rows="3" class="ph-input" placeholder="Provide a summary of your review…"></textarea>
+        </div>
+      </div>
+      <div class="spec mt-3">Rest bg <span class="kbd">surface-container-low</span>, no border. Focus swaps to white bg + 1px primary border + 4px primary/10 halo.</div>
+    </section>
+
+    <!-- Chips / status pills -->
+    <section id="chips" class="doc-section">
+      <div class="doc-eyebrow">08 · Chips &amp; status pills</div>
+      <h2 class="doc-h text-2xl mt-1">Six canonical states</h2>
+
+      <div class="rule-card mt-6 flex flex-wrap items-center gap-3">
+        <span class="pill ph-pill-approved"><span class="material-symbols-outlined text-[13px]">check</span>Approved</span>
+        <span class="pill ph-pill-review">In Review</span>
+        <span class="pill ph-pill-revised">Revised</span>
+        <span class="pill ph-pill-pending">Pending</span>
+        <span class="pill ph-pill-rejected">Rejected</span>
+        <span class="pill ph-pill-primary">Payments</span>
+        <span class="pill" style="background:#f1f5f9;color:#334155;font-family:ui-monospace">SUB-8842</span>
+        <span class="pill" style="background:#1E1B4B;color:white">v3</span>
+      </div>
+      <div class="spec mt-3">Never hand-pick colors outside this set. Domain chip reuses <span class="kbd">ph-pill-primary</span> for Payments; Identity gets tertiary/10; Infrastructure uses surface-highest for neutrality. Severity (bugs) reuses error / warning / info.</div>
+    </section>
+
+    <!-- Cards -->
+    <section id="cards" class="doc-section">
+      <div class="doc-eyebrow">09 · Cards &amp; tiles</div>
+      <h2 class="doc-h text-2xl mt-1">Three densities</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+        <!-- Metric tile -->
+        <div class="bg-surface-container-lowest p-6 rounded-lg border border-outline-variant/25 hover:bg-surface-container-low transition-colors">
+          <div class="flex justify-between items-start mb-5">
+            <div class="p-2.5 rounded-lg bg-primary/5 text-primary"><span class="material-symbols-outlined">fact_check</span></div>
+            <span class="flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+              <span class="material-symbols-outlined text-[13px]">trending_up</span>1.2%
+            </span>
+          </div>
+          <p class="text-on-surface-variant font-bold text-[10px] uppercase tracking-[0.14em]">Ready for UAT</p>
+          <h2 class="font-headline font-extrabold text-4xl mt-1 tracking-tight">14</h2>
+          <div class="spec mt-3">Metric tile · A02, Z01, E04. Hover lifts bg to <span class="kbd">low</span>.</div>
+        </div>
+
+        <!-- Feature panel -->
+        <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/25">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="pill ph-pill-primary">Payments</span>
+            <span class="text-[10px] font-mono text-on-surface-variant">SUB-8842</span>
+          </div>
+          <h3 class="font-headline font-bold text-lg leading-tight">Payment Retry Logic</h3>
+          <p class="text-xs text-on-surface-variant mt-2 leading-relaxed">Intelligent exponential backoff for failed subscription payments across all gateway types.</p>
+          <div class="flex items-center gap-2 mt-4">
+            <div class="flex-1 h-1.5 rounded-full bg-surface-container-high overflow-hidden"><div class="h-full bg-primary" style="width:82%"></div></div>
+            <span class="text-xs font-bold">82</span>
+          </div>
+          <div class="spec mt-3">Feature card · B05 queue row detail.</div>
+        </div>
+
+        <!-- Hero banner -->
+        <div class="p-6 rounded-xl text-white relative overflow-hidden" style="background:#4f46e5">
+          <p class="text-white/70 text-[10px] uppercase tracking-[0.18em] mb-1">Workspace Overview</p>
+          <h3 class="font-headline font-extrabold text-xl tracking-tight">Welcome back, Alex</h3>
+          <p class="text-xs text-white/80 mt-2 leading-relaxed max-w-sm">Your pipeline is healthy with 14 items ready for UAT.</p>
+          <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+          <div class="absolute right-8 -bottom-8 w-24 h-24 bg-indigo-400/30 rounded-full blur-xl"></div>
+          <div class="spec text-white/70 mt-4 relative">Hero banner · A01, A02, Admin homes.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tables -->
+    <section id="tables" class="doc-section">
+      <div class="doc-eyebrow">10 · Tables</div>
+      <h2 class="doc-h text-2xl mt-1">The universal list view</h2>
+
+      <div class="rule-card mt-6 p-0 overflow-hidden">
+        <table class="w-full text-left">
+          <thead class="bg-surface-container text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">
+            <tr>
+              <th class="px-5 py-3 w-10"><input type="checkbox" class="rounded text-primary focus:ring-primary" /></th>
+              <th class="px-4 py-3">Item</th>
+              <th class="px-4 py-3">ID</th>
+              <th class="px-4 py-3">Domain</th>
+              <th class="px-4 py-3">Score</th>
+              <th class="px-4 py-3">Status</th>
+              <th class="px-4 py-3 w-10"></th>
+            </tr>
+          </thead>
+          <tbody class="text-sm divide-y divide-outline-variant/40">
+            <tr class="bg-primary-fixed/40 hover:bg-primary-fixed/60 transition-colors">
+              <td class="px-5 py-3.5"><input type="checkbox" class="rounded text-primary focus:ring-primary" /></td>
+              <td class="px-4 py-3.5 font-semibold text-primary cursor-pointer">Payment Retry Logic</td>
+              <td class="px-4 py-3.5 text-[11px] font-mono text-on-surface-variant">SUB-8842</td>
+              <td class="px-4 py-3.5"><span class="pill ph-pill-primary">Payments</span></td>
+              <td class="px-4 py-3.5">
+                <div class="flex items-center gap-2">
+                  <div class="w-12 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="w-[82%] h-full bg-primary"></div></div>
+                  <span class="text-xs font-bold">82</span>
+                </div>
+              </td>
+              <td class="px-4 py-3.5"><span class="pill ph-pill-review">In Review</span></td>
+              <td class="px-4 py-3.5 text-center"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span></td>
+            </tr>
+            <tr class="hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3.5"><input type="checkbox" class="rounded text-primary focus:ring-primary" /></td>
+              <td class="px-4 py-3.5 font-semibold text-primary cursor-pointer">Auth Service Migration</td>
+              <td class="px-4 py-3.5 text-[11px] font-mono text-on-surface-variant">SUB-8721</td>
+              <td class="px-4 py-3.5"><span class="pill" style="background:rgba(126,48,0,.10);color:#7e3000">Identity</span></td>
+              <td class="px-4 py-3.5">
+                <div class="flex items-center gap-2">
+                  <div class="w-12 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="w-[64%] h-full bg-primary"></div></div>
+                  <span class="text-xs font-bold">64</span>
+                </div>
+              </td>
+              <td class="px-4 py-3.5"><span class="pill ph-pill-revised">Revised</span></td>
+              <td class="px-4 py-3.5 text-center"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span></td>
+            </tr>
+            <tr class="hover:bg-surface-container-low transition-colors">
+              <td class="px-5 py-3.5"><input type="checkbox" class="rounded text-primary focus:ring-primary" /></td>
+              <td class="px-4 py-3.5 font-semibold text-primary cursor-pointer">Multi-cloud Deployment</td>
+              <td class="px-4 py-3.5 text-[11px] font-mono text-on-surface-variant">SUB-8611</td>
+              <td class="px-4 py-3.5"><span class="pill" style="background:#e0e3e5;color:#464555">Infrastructure</span></td>
+              <td class="px-4 py-3.5">
+                <div class="flex items-center gap-2">
+                  <div class="w-12 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="w-[91%] h-full bg-primary"></div></div>
+                  <span class="text-xs font-bold">91</span>
+                </div>
+              </td>
+              <td class="px-4 py-3.5"><span class="pill ph-pill-pending">Pending</span></td>
+              <td class="px-4 py-3.5 text-center"><span class="material-symbols-outlined text-on-surface-variant cursor-pointer">more_vert</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="px-5 py-3 flex items-center justify-between border-t border-outline-variant/40 text-xs">
+          <span class="text-on-surface-variant">Showing 3 of 142</span>
+          <div class="flex items-center gap-1">
+            <button class="p-1 rounded hover:bg-surface-container text-on-surface-variant"><span class="material-symbols-outlined">chevron_left</span></button>
+            <span class="px-2 font-bold text-primary">1</span>
+            <span class="px-2 cursor-pointer hover:text-primary">2</span>
+            <span class="px-2 cursor-pointer hover:text-primary">3</span>
+            <button class="p-1 rounded hover:bg-surface-container text-on-surface-variant"><span class="material-symbols-outlined">chevron_right</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="spec mt-3">Zebra: subtle, via selected/hover only. Selected row uses <span class="kbd">primary-fixed/40</span>. All IDs monospace. Pagination sits inside the card border.</div>
+    </section>
+
+    <!-- AI patterns -->
+    <section id="ai" class="doc-section">
+      <div class="doc-eyebrow">11 · AI patterns (PM-BOT umbrella)</div>
+      <h2 class="doc-h text-2xl mt-1">Luminary, SpecKit, RICE agents — same skin</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-6">
+        <div class="rule-card">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg ph-ai-chip flex items-center justify-center">
+              <span class="material-symbols-outlined text-white">auto_awesome</span>
+            </div>
+            <div>
+              <div class="font-bold text-sm">Luminary AI</div>
+              <div class="text-[10px] font-bold text-primary uppercase tracking-[0.14em]">SpecKit PRD Agent</div>
+            </div>
+          </div>
+          <div class="flex gap-3">
+            <div class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined msym-fill text-[14px] text-primary">auto_awesome</span>
+            </div>
+            <div class="text-sm leading-relaxed">I've analyzed the docs. Using <b>SpecKit methodology</b>, I recommend three core modules.</div>
+          </div>
+          <div class="flex items-center gap-2 mt-4 text-[11px] font-bold text-primary tracking-wide">
+            <span class="material-symbols-outlined text-[15px] animate-pulse">sync</span>Luminary is generating…
+          </div>
+        </div>
+
+        <div class="rule-card">
+          <div class="doc-eyebrow mb-3">Agent card</div>
+          <div class="bg-surface-container p-4 rounded-lg">
+            <div class="flex items-start gap-3">
+              <div class="w-9 h-9 rounded-lg bg-primary text-white flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[20px]">query_stats</span></div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between">
+                  <div class="font-bold text-sm">Market Analyst Agent</div>
+                  <div class="flex gap-1">
+                    <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white border border-outline-variant/40">R·8.2k</span>
+                    <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white border border-outline-variant/40">I·2.5</span>
+                    <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white border border-outline-variant/40">C·90%</span>
+                  </div>
+                </div>
+                <p class="text-[11px] text-on-surface-variant mt-1 leading-relaxed">High reach predicted due to global payments footprint; competitor lift 12% in similar moves.</p>
+              </div>
+            </div>
+          </div>
+          <div class="spec mt-3">Every AI agent uses a colored square (primary / tertiary / emerald / amber) with outlined icon, chip cluster for scalar outputs, and expand-for-analysis affordance.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide-out -->
+    <section id="slideout" class="doc-section">
+      <div class="doc-eyebrow">12 · Slide-out panel</div>
+      <h2 class="doc-h text-2xl mt-1">500px, right-anchored, fixed header + footer</h2>
+
+      <div class="rule-card mt-6 p-0 overflow-hidden">
+        <div class="grid grid-cols-12">
+          <div class="col-span-12 md:col-span-7 bg-surface-container-low p-8 text-sm text-on-surface-variant">
+            <div class="doc-eyebrow mb-2">Source page</div>
+            <p>Table or detail view underneath, dimmed by its own scroll. The slide-out itself is a fixed <span class="kbd">500px</span> right panel with a subtle left shadow.</p>
+            <div class="spec mt-3">See B05, D03. Scoped content areas inside: meta header, scrollable body, footer CTA.</div>
+          </div>
+          <div class="col-span-12 md:col-span-5 border-l border-outline-variant/40 bg-white min-h-[360px] flex flex-col">
+            <div class="p-5 border-b border-outline-variant/40">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="pill ph-pill-primary">Payments</span>
+                <span class="text-[10px] font-mono text-on-surface-variant">SUB-8842</span>
+              </div>
+              <h3 class="font-headline font-bold text-lg">Payment Retry Logic</h3>
+            </div>
+            <div class="flex-1 p-5 space-y-3 text-xs text-on-surface-variant">
+              <div class="flex justify-between"><span class="font-bold text-on-surface">Completeness</span><span>★★★☆☆</span></div>
+              <div class="flex justify-between"><span class="font-bold text-on-surface">Feasibility</span><span>★★★★☆</span></div>
+              <div class="flex justify-between"><span class="font-bold text-on-surface">Clarity</span><span>★★★☆☆</span></div>
+            </div>
+            <div class="p-5 bg-surface-container-low border-t border-outline-variant/40">
+              <button class="w-full py-2.5 bg-primary text-white font-bold text-xs rounded-lg shadow-lg shadow-primary/25">Submit Evaluation</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Replacement notes -->
+    <section id="replacement" class="doc-section">
+      <div class="doc-eyebrow">13 · Migration from IBM Carbon</div>
+      <h2 class="doc-h text-2xl mt-1">What to swap when re-skinning C02, E04, Z01</h2>
+
+      <div class="rule-card mt-6 overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant">
+            <tr>
+              <th class="text-left px-3 py-2">Area</th>
+              <th class="text-left px-3 py-2">Carbon (was)</th>
+              <th class="text-left px-3 py-2">Product Hub (to)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-outline-variant/40">
+            <tr><td class="px-3 py-2.5 font-semibold">Font</td><td class="px-3 py-2.5 text-on-surface-variant">IBM Plex Sans</td><td class="px-3 py-2.5">Inter body · Manrope headlines</td></tr>
+            <tr><td class="px-3 py-2.5 font-semibold">Primary</td><td class="px-3 py-2.5 text-on-surface-variant">#0F62FE Blue 60</td><td class="px-3 py-2.5">#3525CD indigo</td></tr>
+            <tr><td class="px-3 py-2.5 font-semibold">Corners</td><td class="px-3 py-2.5 text-on-surface-variant">0 radius (hard)</td><td class="px-3 py-2.5">8/12px rounded</td></tr>
+            <tr><td class="px-3 py-2.5 font-semibold">Surface</td><td class="px-3 py-2.5 text-on-surface-variant">#F4F4F4 Gray 10</td><td class="px-3 py-2.5">#F7F9FB surface</td></tr>
+            <tr><td class="px-3 py-2.5 font-semibold">Sidebar</td><td class="px-3 py-2.5 text-on-surface-variant">White w/ gray border</td><td class="px-3 py-2.5">#1E1B4B dark navy</td></tr>
+            <tr><td class="px-3 py-2.5 font-semibold">Buttons</td><td class="px-3 py-2.5 text-on-surface-variant">Rectangular, full-width</td><td class="px-3 py-2.5">rounded-lg, padded, shadow on primary</td></tr>
+            <tr><td class="px-3 py-2.5 font-semibold">Chips</td><td class="px-3 py-2.5 text-on-surface-variant">Square, bordered</td><td class="px-3 py-2.5">rounded-full, tonal fill</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Index of screens -->
+    <section class="doc-section">
+      <div class="doc-eyebrow">14 · Screen index</div>
+      <h2 class="doc-h text-2xl mt-1">27 screens, one kit</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6 text-xs">
+        <div class="rule-card">
+          <div class="doc-eyebrow mb-2">A · Home</div>
+          <div class="space-y-1"><a class="block text-primary font-semibold" href="reference/A01.html">A01 Launcher</a><a class="block text-primary font-semibold" href="reference/A02.html">A02 Dashboard</a></div>
+        </div>
+        <div class="rule-card">
+          <div class="doc-eyebrow mb-2">B · PRD</div>
+          <div class="space-y-1">
+            <a class="block text-primary font-semibold" href="reference/B01.html">B01</a>
+            <a class="block text-primary font-semibold" href="reference/B02.html">B02</a>
+            <a class="block text-primary font-semibold" href="reference/B03.html">B03</a>
+            <a class="block text-primary font-semibold" href="reference/B04.html">B04</a>
+            <a class="block text-primary font-semibold" href="reference/B05.html">B05</a>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="doc-eyebrow mb-2">C · Scoring</div>
+          <div class="space-y-1">
+            <a class="block text-primary font-semibold" href="reference/C01.html">C01</a>
+            <a class="block text-primary font-semibold" href="C02.html">C02 · re-skin ✦</a>
+            <a class="block text-primary font-semibold" href="reference/C03.html">C03</a>
+            <a class="block text-primary font-semibold" href="reference/C04.html">C04</a>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="doc-eyebrow mb-2">D · Delivery</div>
+          <div class="space-y-1">
+            <a class="block text-primary font-semibold" href="reference/D01.html">D01</a>
+            <a class="block text-primary font-semibold" href="reference/D02.html">D02</a>
+            <a class="block text-primary font-semibold" href="reference/D03.html">D03</a>
+            <a class="block text-primary font-semibold" href="reference/D04.html">D04</a>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="doc-eyebrow mb-2">E · Outcomes</div>
+          <div class="space-y-1">
+            <a class="block text-primary font-semibold" href="reference/E01.html">E01</a>
+            <a class="block text-primary font-semibold" href="reference/E02.html">E02</a>
+            <a class="block text-primary font-semibold" href="reference/E03.html">E03</a>
+            <a class="block text-primary font-semibold" href="E04.html">E04 · re-skin ✦</a>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="doc-eyebrow mb-2">F · Bugs (new)</div>
+          <div class="space-y-1">
+            <a class="block text-primary font-semibold" href="F01.html">F01 Intake</a>
+            <a class="block text-primary font-semibold" href="F02.html">F02 Triage</a>
+            <a class="block text-primary font-semibold" href="F03.html">F03 Workspace</a>
+            <a class="block text-primary font-semibold" href="F04.html">F04 Analytics</a>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="doc-eyebrow mb-2">G · Admin v2 (new)</div>
+          <div class="space-y-1">
+            <a class="block text-primary font-semibold" href="G01.html">G01 Users &amp; Roles</a>
+            <a class="block text-primary font-semibold" href="G02.html">G02 Integrations</a>
+            <a class="block text-primary font-semibold" href="G03.html">G03 Audit Log</a>
+          </div>
+        </div>
+        <div class="rule-card">
+          <div class="doc-eyebrow mb-2">Z · Admin (re-skin)</div>
+          <div class="space-y-1">
+            <a class="block text-primary font-semibold" href="Z01.html">Z01 LLM Usage ✦</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="pt-10 border-t border-outline-variant/40 text-xs text-on-surface-variant flex justify-between">
+      <span>Product Hub · Design System · v1.0</span>
+      <span>✦ indicates screens re-skinned in this handoff.</span>
+    </footer>
+
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sportsbook Hub — Cash Out Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+tailwind.config = {
+  darkMode:'class',
+  theme: { extend: {
+    colors: {
+      primary:'#3525cd','primary-container':'#4f46e5','primary-fixed':'#e2dfff','primary-fixed-dim':'#c3c0ff',
+      'on-primary':'#ffffff','on-primary-container':'#dad7ff',
+      secondary:'#5b598c','secondary-container':'#c7c3fe','on-secondary-container':'#514f81',
+      tertiary:'#7e3000','tertiary-container':'#a44100',
+      background:'#f7f9fb',surface:'#f7f9fb',
+      'surface-container-lowest':'#ffffff','surface-container-low':'#f2f4f6','surface-container':'#eceef0',
+      'surface-container-high':'#e6e8ea','surface-container-highest':'#e0e3e5',
+      'on-surface':'#191c1e','on-surface-variant':'#464555',
+      outline:'#777587','outline-variant':'#c7c4d8',
+      error:'#ba1a1a','error-container':'#ffdad6','on-error-container':'#93000a',
+      sidebar:'#1E1B4B',
+      'odds-up':'#047857','odds-down':'#b91c1c'
+    },
+    borderRadius:{ DEFAULT:'0.25rem', lg:'0.5rem', xl:'0.75rem', full:'9999px' },
+    fontFamily:{ body:['Inter'], headline:['Manrope'], label:['Inter'], mono:['JetBrains Mono'] }
+  }}
+};
+</script>
+<style>
+/* ===========================================================
+   Sportsbook Hub · Canonical Design System
+   Applies to every A/B/C/D/E/Z screen. Do not fork locally.
+   =========================================================== */
+:root {
+  /* Primary — indigo (Product Hub) */
+  --primary:#3525cd; --primary-container:#4f46e5;
+  --primary-fixed:#e2dfff; --primary-fixed-dim:#c3c0ff;
+  --on-primary:#ffffff; --on-primary-container:#dad7ff;
+
+  /* Secondary / Tertiary */
+  --secondary:#5b598c; --secondary-container:#c7c3fe; --on-secondary-container:#514f81;
+  --tertiary:#7e3000; --tertiary-container:#a44100;
+
+  /* Surfaces */
+  --background:#f7f9fb; --surface:#f7f9fb;
+  --surface-container-lowest:#ffffff; --surface-container-low:#f2f4f6;
+  --surface-container:#eceef0; --surface-container-high:#e6e8ea; --surface-container-highest:#e0e3e5;
+
+  /* Text + outlines */
+  --on-surface:#191c1e; --on-surface-variant:#464555;
+  --outline:#777587; --outline-variant:#c7c4d8;
+
+  /* Semantic */
+  --error:#ba1a1a; --error-container:#ffdad6; --on-error-container:#93000a;
+  --success:#047857; --warning:#b45309;
+
+  /* Sportsbook odds colours (semantic – do not reuse for UI state) */
+  --odds-up:#047857; --odds-down:#b91c1c; --odds-hold:#475569;
+
+  /* Navigation */
+  --sidebar:#1E1B4B; /* deep indigo — official shell */
+}
+
+html, body { background:#eceef0; color:var(--on-surface); }
+body { font-family:'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+/* Type — Inter body / Manrope display, as per Product Hub system */
+.font-body{font-family:'Inter',sans-serif}
+.font-headline{font-family:'Manrope',sans-serif;letter-spacing:-.01em}
+.font-mono-alt{font-family:'JetBrains Mono','SFMono-Regular',monospace}
+.eyebrow{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:var(--primary)}
+.spec{font-family:'Inter';font-size:11px;color:var(--on-surface-variant)}
+
+/* Material Symbols – fill variant */
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.msym-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+/* Sidebar shell — shared across every hub screen */
+.sidebar-nav a{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:.5rem;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);transition:all .15s;font-family:'Inter'}
+.sidebar-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+.sidebar-nav a.active{color:white;background:rgba(255,255,255,.12);font-weight:600}
+.sidebar-nav .section{font-size:10px;font-weight:800;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.16em;padding:14px 14px 6px}
+
+/* Topnav */
+.topnav{background:rgba(255,255,255,.90);backdrop-filter:blur(12px)}
+
+/* Inputs (canonical) */
+.ph-input{background:var(--surface-container-low);border:1px solid transparent;border-radius:.5rem;padding:9px 12px;font-size:13px;width:100%;transition:all .15s;color:var(--on-surface)}
+.ph-input:focus{outline:none;background:#fff;border-color:var(--primary);box-shadow:0 0 0 4px rgba(53,37,205,.10)}
+.ph-input::placeholder{color:var(--on-surface-variant);opacity:.7}
+
+/* Pills / chips */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:9999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pill-sm{padding:1px 8px;font-size:10px}
+.ph-pill-approved{background:#d1fae5;color:#065f46}
+.ph-pill-review{background:#fef3c7;color:#92400e}
+.ph-pill-revised{background:#dbeafe;color:#1d4ed8}
+.ph-pill-pending{background:#f1f5f9;color:#334155}
+.ph-pill-rejected{background:#fee2e2;color:#991b1b}
+.ph-pill-primary{background:rgba(53,37,205,.10);color:var(--primary)}
+.ph-pill-live{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-trading{background:rgba(126,48,0,.10);color:#7e3000}
+.ph-pill-domain-risk{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-frontend{background:#c7c3fe;color:#514f81}
+.ph-pill-domain-payments{background:#d1fae5;color:#065f46}
+.ph-pill-severity-critical{background:#fee2e2;color:#991b1b}
+.ph-pill-severity-high{background:#ffedd5;color:#9a3412}
+.ph-pill-severity-medium{background:#fef3c7;color:#92400e}
+.ph-pill-severity-low{background:#dbeafe;color:#1d4ed8}
+
+/* AI chip gradient — same across screens */
+.ai-chip{background:linear-gradient(135deg,#3525cd 0%,#7c3aed 100%);color:white}
+
+/* Shared screen shell */
+.screen{max-width:1440px;margin:40px auto;background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(25,28,30,.08),0 2px 6px rgba(25,28,30,.04);scroll-margin-top:80px}
+.screen-label{max-width:1440px;margin:60px auto 0;padding:0 4px;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+
+/* Floating TOC */
+.toc{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:40;background:white;border:1px solid rgba(199,196,216,.5);border-radius:12px;padding:12px 10px;box-shadow:0 12px 32px rgba(25,28,30,.08);font-family:'Inter';font-size:11px;max-height:82vh;overflow-y:auto}
+.toc a{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:6px;color:var(--on-surface-variant);font-weight:600;text-decoration:none}
+.toc a:hover{background:var(--surface-container-low);color:var(--on-surface)}
+.toc a.active{background:rgba(53,37,205,.08);color:var(--primary)}
+.toc .toc-group{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--outline);padding:8px 8px 4px}
+@media (max-width:1320px){.toc{display:none}}
+
+/* Odds display tokens (reusable across sportsbook listings) */
+.odds{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--on-surface);padding:4px 8px;border-radius:6px;background:var(--surface-container-low);border:1px solid var(--outline-variant);font-size:12px;display:inline-block;min-width:48px;text-align:center}
+.odds.up{color:var(--odds-up);border-color:rgba(4,120,87,.4);background:rgba(4,120,87,.06)}
+.odds.down{color:var(--odds-down);border-color:rgba(185,28,28,.4);background:rgba(185,28,28,.06)}
+.odds.live{color:white;background:var(--odds-down);border-color:var(--odds-down);animation:pulse-live 2s ease-in-out infinite}
+@keyframes pulse-live{0%,100%{box-shadow:0 0 0 0 rgba(185,28,28,.5)}50%{box-shadow:0 0 0 6px rgba(185,28,28,0)}}
+
+/* Bet slip + cashout pill */
+.cashout-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:800;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#7c2d12;text-transform:uppercase;letter-spacing:.04em}
+
+/* Chart grid helper */
+.chart-grid{background-image:linear-gradient(var(--surface-container-highest) 1px,transparent 1px),linear-gradient(90deg,var(--surface-container-highest) 1px,transparent 1px);background-size:100% 25%,16.66% 100%}
+
+/* Scrollbar hide */
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{scrollbar-width:none}
+
+</style>
+</head>
+<body>
+<nav class="toc">
+<div class="toc-group">Overview</div>
+<a href="cover.html"><span class="w-8 text-[10px] font-mono text-primary">•</span>Cover</a>
+<div class="toc-group">Auth · Shell</div>
+<a href="a-auth.html#a01"><span class="w-8 text-[10px] font-mono text-primary">A01</span>Login</a>
+<a href="a-auth.html#a02"><span class="w-8 text-[10px] font-mono text-primary">A02</span>Dashboard</a>
+<div class="toc-group">Idea → PRD</div>
+<a href="b-prd.html#b01"><span class="w-8 text-[10px] font-mono text-primary">B01</span>Submit idea</a>
+<a href="b-prd.html#b02"><span class="w-8 text-[10px] font-mono text-primary">B02</span>PRD Builder</a>
+<a href="b-prd.html#b03"><span class="w-8 text-[10px] font-mono text-primary">B03</span>Request track</a>
+<a href="b-prd.html#b04"><span class="w-8 text-[10px] font-mono text-primary">B04</span>PRD Document</a>
+<a href="b-prd.html#b05"><span class="w-8 text-[10px] font-mono text-primary">B05</span>PRD Eval</a>
+<div class="toc-group">Discovery → Spec</div>
+<a href="c-spec.html#c01"><span class="w-8 text-[10px] font-mono text-primary">C01</span>Research</a>
+<a href="c-spec.html#c02"><span class="w-8 text-[10px] font-mono text-primary">C02</span>RICE</a>
+<a href="c-spec.html#c03"><span class="w-8 text-[10px] font-mono text-primary">C03</span>Stories</a>
+<a href="c-spec.html#c04"><span class="w-8 text-[10px] font-mono text-primary">C04</span>Design</a>
+<div class="toc-group">Planning</div>
+<a href="d-plan.html#d01"><span class="w-8 text-[10px] font-mono text-primary">D01</span>Backlog</a>
+<a href="d-plan.html#d02"><span class="w-8 text-[10px] font-mono text-primary">D02</span>Domains</a>
+<a href="d-plan.html#d03"><span class="w-8 text-[10px] font-mono text-primary">D03</span>Roadmap</a>
+<a href="d-plan.html#d04"><span class="w-8 text-[10px] font-mono text-primary">D04</span>Handover</a>
+<div class="toc-group">Delivery</div>
+<a href="e-ship.html#e01"><span class="w-8 text-[10px] font-mono text-primary">E01</span>Delivery</a>
+<a href="e-ship.html#e02"><span class="w-8 text-[10px] font-mono text-primary">E02</span>UAT</a>
+<a href="e-ship.html#e03"><span class="w-8 text-[10px] font-mono text-primary">E03</span>Release</a>
+<a href="e-ship.html#e04"><span class="w-8 text-[10px] font-mono text-primary">E04</span>Metrics</a>
+<div class="toc-group">Meta</div>
+<a href="z-meta.html#z01"><span class="w-8 text-[10px] font-mono text-primary">Z01</span>LLM usage</a>
+</nav>
+<div class="screen-label"><div><span class="eyebrow">Discovery · 01</span><h2 class="font-headline font-extrabold text-2xl mt-1">C01 · Research &amp; Analysis</h2></div><div class="spec">Punter &amp; competitor evidence for Cash Out</div></div>
+<div id="c01" class="screen" data-screen-label="C01 Research">
+  <div class="flex h-[980px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Discovery</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <a href="b-prd.html#b03"><span class="material-symbols-outlined text-[18px]">assignment</span>Requests</a>
+        <div class="section">Discovery</div>
+        <a href="c-spec.html#c01" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">science</span>Research</a>
+        <a href="c-spec.html#c02"><span class="material-symbols-outlined text-[18px]">scoreboard</span>RICE</a>
+        <a href="c-spec.html#c03"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>User stories</a>
+        <a href="c-spec.html#c04"><span class="material-symbols-outlined text-[18px]">palette</span>Design gen</a>
+        <div class="section">Delivery</div>
+        <a href="d-plan.html#d01"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Backlog</a>
+        <a href="e-ship.html#e01"><span class="material-symbols-outlined text-[18px]">rocket_launch</span>Delivery</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="b-prd.html#b05" class="hover:text-primary">Evaluation</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Research · PRD-087</span></div>
+        <div class="flex items-center gap-2"><a href="c-spec.html#c02" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Run RICE scoring →</a></div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="max-w-6xl mx-auto">
+          <div class="flex items-end justify-between mb-6">
+            <div><div class="eyebrow mb-1">PRD-087 · Cash Out v1</div><h1 class="font-headline font-extrabold text-3xl tracking-tight">Research &amp; Analysis</h1><p class="text-sm text-on-surface-variant mt-1">4 primary sources · 42 punter interviews · 5 competitor books · refreshed 2h ago</p></div>
+            <div class="flex gap-2"><button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant border border-outline-variant/50 rounded-lg flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">refresh</span>Re-sync sources</button></div>
+          </div>
+
+          <!-- Evidence grid -->
+          <div class="grid grid-cols-12 gap-5">
+            <!-- Churn cohort -->
+            <section class="col-span-8 bg-white border border-outline-variant/30 rounded-xl p-6">
+              <div class="flex items-center justify-between mb-4"><div><div class="eyebrow">Source 1 · Internal CRM</div><h3 class="font-headline font-bold text-lg mt-1">Q1 2026 churn cohort · single-bet punters</h3></div><span class="pill ph-pill-approved pill-sm">High confidence</span></div>
+
+              <!-- Reasons chart -->
+              <div class="space-y-2 text-sm">
+                <div><div class="flex items-center justify-between text-xs mb-1"><span class="font-semibold">Lack of cash out</span><span class="font-mono font-bold">18.2%</span></div><div class="h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:72%"></div></div></div>
+                <div><div class="flex items-center justify-between text-xs mb-1"><span>Better odds elsewhere</span><span class="font-mono">14.7%</span></div><div class="h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary/50" style="width:58%"></div></div></div>
+                <div><div class="flex items-center justify-between text-xs mb-1"><span>App stability</span><span class="font-mono">9.4%</span></div><div class="h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary/40" style="width:38%"></div></div></div>
+                <div><div class="flex items-center justify-between text-xs mb-1"><span>Withdrawal friction</span><span class="font-mono">8.1%</span></div><div class="h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary/40" style="width:32%"></div></div></div>
+                <div><div class="flex items-center justify-between text-xs mb-1"><span>Limited market depth</span><span class="font-mono">6.8%</span></div><div class="h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary/30" style="width:27%"></div></div></div>
+                <div><div class="flex items-center justify-between text-xs mb-1"><span>Bonus dissatisfaction</span><span class="font-mono">5.2%</span></div><div class="h-2 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary/30" style="width:21%"></div></div></div>
+              </div>
+
+              <div class="grid grid-cols-4 gap-4 mt-6 pt-5 border-t border-outline-variant/40 text-xs">
+                <div><div class="eyebrow">Cohort size</div><div class="font-headline font-extrabold text-lg mt-0.5">41,284</div></div>
+                <div><div class="eyebrow">Churned 90d</div><div class="font-headline font-extrabold text-lg mt-0.5">7,622</div></div>
+                <div><div class="eyebrow">NGR at risk</div><div class="font-headline font-extrabold text-lg mt-0.5 text-rose-700">€12.1M</div></div>
+                <div><div class="eyebrow">Recoverable</div><div class="font-headline font-extrabold text-lg mt-0.5 text-emerald-700">€4.2M</div></div>
+              </div>
+            </section>
+
+            <!-- Competitor scan -->
+            <section class="col-span-4 bg-white border border-outline-variant/30 rounded-xl p-6">
+              <div class="eyebrow mb-1">Source 2 · Competitor scan</div><h3 class="font-headline font-bold text-lg">Who has cash out?</h3>
+              <ul class="mt-4 space-y-3 text-sm">
+                <li class="flex items-center justify-between"><span class="font-semibold">Bet365</span><div class="flex items-center gap-2"><span class="pill ph-pill-approved pill-sm">Single + Accum</span></div></li>
+                <li class="flex items-center justify-between"><span class="font-semibold">William Hill</span><div class="flex items-center gap-2"><span class="pill ph-pill-approved pill-sm">Single + Accum</span></div></li>
+                <li class="flex items-center justify-between"><span class="font-semibold">Betfair Exchange</span><div class="flex items-center gap-2"><span class="pill ph-pill-approved pill-sm">Partial enabled</span></div></li>
+                <li class="flex items-center justify-between"><span class="font-semibold">DraftKings</span><div class="flex items-center gap-2"><span class="pill ph-pill-revised pill-sm">Single only</span></div></li>
+                <li class="flex items-center justify-between"><span class="font-semibold">Flutter / Pokerstars</span><div class="flex items-center gap-2"><span class="pill ph-pill-approved pill-sm">Single + Auto</span></div></li>
+                <li class="flex items-center justify-between bg-rose-50 -mx-2 px-2 py-1 rounded"><span class="font-bold">Our book</span><div class="flex items-center gap-2"><span class="pill ph-pill-rejected pill-sm">None</span></div></li>
+                <li class="flex items-center justify-between"><span class="font-semibold">Unibet</span><div class="flex items-center gap-2"><span class="pill ph-pill-approved pill-sm">Single + Accum</span></div></li>
+              </ul>
+              <p class="spec mt-4">Scraped 16 Apr · public product pages only.</p>
+            </section>
+
+            <!-- Interview quotes -->
+            <section class="col-span-8 bg-white border border-outline-variant/30 rounded-xl p-6">
+              <div class="flex items-center justify-between mb-4"><div><div class="eyebrow">Source 3 · Punter interviews</div><h3 class="font-headline font-bold text-lg mt-1">What punters actually say</h3></div><span class="spec">42 interviews · synthesised by research agent</span></div>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="bg-surface-container-low rounded-lg p-4 border-l-4 border-primary">
+                  <p class="text-sm italic leading-relaxed">“I had Arsenal 2–0 up at half-time and a five-leg accumulator still alive. Watching the second half is torture because I know I'll lose it all if one leg flips.”</p>
+                  <div class="mt-3 flex items-center gap-2 text-xs"><div class="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-[9px] font-bold">M</div><div><b>Mateusz, 34</b> · Warsaw · VIP tier 2</div></div>
+                </div>
+                <div class="bg-surface-container-low rounded-lg p-4 border-l-4 border-primary">
+                  <p class="text-sm italic leading-relaxed">“Every other book lets me lock in a profit. I came back here for the Serie A prices but moved my accas to Bet365 because of cash out.”</p>
+                  <div class="mt-3 flex items-center gap-2 text-xs"><div class="w-6 h-6 rounded-full bg-rose-500 text-white flex items-center justify-center text-[9px] font-bold">G</div><div><b>Giulia, 28</b> · Milan · recreational</div></div>
+                </div>
+                <div class="bg-surface-container-low rounded-lg p-4 border-l-4 border-primary">
+                  <p class="text-sm italic leading-relaxed">“I don't trust the price they'd offer. It needs to feel fair — show me the math.”</p>
+                  <div class="mt-3 flex items-center gap-2 text-xs"><div class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[9px] font-bold">R</div><div><b>Rafael, 41</b> · São Paulo · high-stakes</div></div>
+                </div>
+                <div class="bg-surface-container-low rounded-lg p-4 border-l-4 border-primary">
+                  <p class="text-sm italic leading-relaxed">“If I'm losing at 60' I want a way out. Even 40 cents on the euro beats zero.”</p>
+                  <div class="mt-3 flex items-center gap-2 text-xs"><div class="w-6 h-6 rounded-full bg-sky-500 text-white flex items-center justify-center text-[9px] font-bold">L</div><div><b>Linnea, 26</b> · Stockholm · casual</div></div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Agent synthesis -->
+            <section class="col-span-4 rounded-xl p-5 text-white relative overflow-hidden" style="background:linear-gradient(135deg,#3525cd 0%,#7c3aed 100%)">
+              <div class="flex items-center gap-2 mb-3"><span class="material-symbols-outlined">auto_awesome</span><span class="eyebrow text-white">Research agent · Key insights</span></div>
+              <ol class="space-y-3 text-sm">
+                <li class="flex gap-2"><span class="font-headline font-extrabold">1</span><div>Cash Out is <b>table-stakes</b> in every comparable book — not a differentiator, a debt.</div></li>
+                <li class="flex gap-2"><span class="font-headline font-extrabold">2</span><div><b>Trust</b> is the blocker, not demand. Punters want transparency on the offer calculation.</div></li>
+                <li class="flex gap-2"><span class="font-headline font-extrabold">3</span><div>The retention upside is concentrated in <b>recreational + VIP-2</b> — high-stakes already use exchanges.</div></li>
+                <li class="flex gap-2"><span class="font-headline font-extrabold">4</span><div>Partial cash-out is the <b>#2 asked-for</b> feature after full cash-out — design with it in mind.</div></li>
+              </ol>
+              <a href="c-spec.html#c02" class="block text-center w-full mt-4 bg-white text-primary text-xs font-bold py-2 rounded-lg">Carry forward into RICE →</a>
+              <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+            </section>
+          </div>
+
+          <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+            <a href="b-prd.html#b05" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>B05 · PRD Evaluation</a>
+            <span class="text-outline">C01 · Research</span>
+            <a href="c-spec.html#c02" class="text-primary flex items-center gap-1">C02 · RICE<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  C02  RICE SCORING                                           -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Discovery · 02</span><h2 class="font-headline font-extrabold text-2xl mt-1">C02 · RICE Scoring</h2></div><div class="spec">How Cash Out stacks against the rest of the pipeline</div></div>
+<div id="c02" class="screen" data-screen-label="C02 RICE">
+  <div class="flex h-[960px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Discovery</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <a href="b-prd.html#b03"><span class="material-symbols-outlined text-[18px]">assignment</span>Requests</a>
+        <div class="section">Discovery</div>
+        <a href="c-spec.html#c01"><span class="material-symbols-outlined text-[18px]">science</span>Research</a>
+        <a href="c-spec.html#c02" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">scoreboard</span>RICE</a>
+        <a href="c-spec.html#c03"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>User stories</a>
+        <a href="c-spec.html#c04"><span class="material-symbols-outlined text-[18px]">palette</span>Design gen</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="c-spec.html#c01" class="hover:text-primary">Research</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">RICE Scoring</span></div>
+        <div class="flex items-center gap-2"><a href="c-spec.html#c03" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Draft user stories →</a></div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="flex items-end justify-between mb-6">
+          <div><h1 class="font-headline font-extrabold text-3xl tracking-tight">RICE Scoring</h1><p class="text-sm text-on-surface-variant mt-1">12 candidates ranked · Cash Out lands #1 for Q3</p></div>
+          <div class="flex gap-2"><span class="pill ph-pill-primary">Quarter: Q3 2026</span><button class="text-[11px] font-bold text-primary">Change ▾</button></div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-5">
+          <!-- Cash Out focus card -->
+          <section class="col-span-5 bg-white border-2 border-primary/30 rounded-xl p-6 ring-4 ring-primary/5">
+            <div class="flex items-center gap-2 mb-3"><span class="pill ph-pill-primary">PRD-087</span><span class="pill ph-pill-domain-trading pill-sm">Trading</span></div>
+            <h3 class="font-headline font-extrabold text-2xl tracking-tight">Cash Out v1</h3>
+            <p class="text-sm text-on-surface-variant mt-1">Based on C01 research + 5 reviewer estimates</p>
+
+            <div class="grid grid-cols-4 gap-3 mt-5 text-center">
+              <div class="p-3 rounded-lg bg-surface-container-low"><div class="eyebrow">Reach</div><div class="font-headline font-extrabold text-xl mt-1">312k</div><div class="spec">punters / Q</div></div>
+              <div class="p-3 rounded-lg bg-surface-container-low"><div class="eyebrow">Impact</div><div class="font-headline font-extrabold text-xl mt-1">2.5</div><div class="spec">massive</div></div>
+              <div class="p-3 rounded-lg bg-surface-container-low"><div class="eyebrow">Confidence</div><div class="font-headline font-extrabold text-xl mt-1">80%</div><div class="spec">data-backed</div></div>
+              <div class="p-3 rounded-lg bg-surface-container-low"><div class="eyebrow">Effort</div><div class="font-headline font-extrabold text-xl mt-1">20</div><div class="spec">person-wk</div></div>
+            </div>
+
+            <div class="mt-6 p-5 rounded-xl bg-gradient-to-br from-primary to-[#7c3aed] text-white">
+              <div class="flex items-center justify-between">
+                <div><div class="eyebrow text-white/80">RICE score</div><div class="font-headline font-extrabold text-5xl leading-none mt-1">31.4</div><div class="text-[11px] text-white/70 mt-1">= (312 × 2.5 × 0.8) / 20</div></div>
+                <div class="text-right"><div class="eyebrow text-white/80">Rank</div><div class="font-headline font-extrabold text-4xl mt-1">#1</div></div>
+              </div>
+            </div>
+
+            <div class="mt-4 text-[11px] bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-emerald-900"><b>+7.6 vs last Q</b> · Reach up after interview data landed.</div>
+          </section>
+
+          <!-- Leaderboard -->
+          <section class="col-span-7 bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+            <div class="px-5 py-4 border-b border-outline-variant/40 flex items-center justify-between"><h3 class="font-headline font-bold text-sm">Q3 candidate leaderboard</h3><span class="spec">12 candidates · sort: score ▾</span></div>
+            <table class="w-full text-sm">
+              <thead class="bg-surface-container-low text-[10px] uppercase tracking-wider text-on-surface-variant font-bold">
+                <tr><th class="px-4 py-2.5 text-left w-8">#</th><th class="px-4 py-2.5 text-left">Feature</th><th class="px-2 py-2.5 text-right">R</th><th class="px-2 py-2.5 text-right">I</th><th class="px-2 py-2.5 text-right">C</th><th class="px-2 py-2.5 text-right">E</th><th class="px-4 py-2.5 text-right">Score</th></tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant/40">
+                <tr class="bg-primary/5">
+                  <td class="px-4 py-3 font-bold text-primary">1</td>
+                  <td class="px-4 py-3"><a href="b-prd.html#b04" class="font-bold hover:text-primary">Cash Out v1</a><div class="spec">PRD-087 · Trading</div></td>
+                  <td class="px-2 py-3 text-right font-mono">312k</td><td class="px-2 py-3 text-right font-mono">2.5</td><td class="px-2 py-3 text-right font-mono">80%</td><td class="px-2 py-3 text-right font-mono">20</td>
+                  <td class="px-4 py-3 text-right font-headline font-extrabold text-primary text-base">31.4</td>
+                </tr>
+                <tr><td class="px-4 py-3 font-bold text-on-surface-variant">2</td><td class="px-4 py-3"><a href="#" class="font-bold">Same-game parlays</a><div class="spec">PRD-086 · Front-end</div></td><td class="px-2 py-3 text-right font-mono">180k</td><td class="px-2 py-3 text-right font-mono">2.0</td><td class="px-2 py-3 text-right font-mono">70%</td><td class="px-2 py-3 text-right font-mono">11</td><td class="px-4 py-3 text-right font-headline font-bold">22.8</td></tr>
+                <tr><td class="px-4 py-3 font-bold text-on-surface-variant">3</td><td class="px-4 py-3"><a href="#" class="font-bold">Live stream overlay odds</a><div class="spec">IDEA-142 · Front-end</div></td><td class="px-2 py-3 text-right font-mono">240k</td><td class="px-2 py-3 text-right font-mono">1.5</td><td class="px-2 py-3 text-right font-mono">60%</td><td class="px-2 py-3 text-right font-mono">14</td><td class="px-4 py-3 text-right font-headline font-bold">15.4</td></tr>
+                <tr><td class="px-4 py-3 font-bold text-on-surface-variant">4</td><td class="px-4 py-3"><a href="#" class="font-bold">Responsible play limits v2</a><div class="spec">PRD-084 · Compliance</div></td><td class="px-2 py-3 text-right font-mono">412k</td><td class="px-2 py-3 text-right font-mono">1.0</td><td class="px-2 py-3 text-right font-mono">90%</td><td class="px-2 py-3 text-right font-mono">26</td><td class="px-4 py-3 text-right font-headline font-bold">14.2</td></tr>
+                <tr><td class="px-4 py-3 font-bold text-on-surface-variant">5</td><td class="px-4 py-3"><a href="#" class="font-bold">Bet Builder 2.0 suggestions</a><div class="spec">PRD-082 · Front-end</div></td><td class="px-2 py-3 text-right font-mono">150k</td><td class="px-2 py-3 text-right font-mono">1.5</td><td class="px-2 py-3 text-right font-mono">70%</td><td class="px-2 py-3 text-right font-mono">12</td><td class="px-4 py-3 text-right font-headline font-bold">13.1</td></tr>
+                <tr><td class="px-4 py-3 font-bold text-on-surface-variant">6</td><td class="px-4 py-3"><a href="#" class="font-bold">Crypto deposits (USDT)</a><div class="spec">PRD-080 · Payments</div></td><td class="px-2 py-3 text-right font-mono">62k</td><td class="px-2 py-3 text-right font-mono">2.0</td><td class="px-2 py-3 text-right font-mono">50%</td><td class="px-2 py-3 text-right font-mono">14</td><td class="px-4 py-3 text-right font-headline font-bold">4.4</td></tr>
+                <tr><td class="px-4 py-3 font-bold text-on-surface-variant">7</td><td class="px-4 py-3"><a href="#" class="font-bold">Esports market expansion</a><div class="spec">IDEA-137 · Trading</div></td><td class="px-2 py-3 text-right font-mono">84k</td><td class="px-2 py-3 text-right font-mono">1.0</td><td class="px-2 py-3 text-right font-mono">40%</td><td class="px-2 py-3 text-right font-mono">18</td><td class="px-4 py-3 text-right font-headline font-bold">1.9</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- 2x2 plot -->
+          <section class="col-span-7 bg-white border border-outline-variant/30 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-3"><h3 class="font-headline font-bold text-sm">Impact vs Effort</h3><div class="flex gap-3 text-[10px] text-on-surface-variant"><div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span>Cash Out</div><div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span>Other</div></div></div>
+            <div class="relative h-72 border border-outline-variant/40 rounded-lg bg-[linear-gradient(to_right,transparent_49.5%,#e0e3e5_49.5%,#e0e3e5_50.5%,transparent_50.5%),linear-gradient(to_bottom,transparent_49.5%,#e0e3e5_49.5%,#e0e3e5_50.5%,transparent_50.5%)]">
+              <div class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-widest text-emerald-700">Quick wins</div>
+              <div class="absolute top-2 right-2 text-[10px] font-bold uppercase tracking-widest text-primary">Big bets</div>
+              <div class="absolute bottom-2 left-2 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Fill-ins</div>
+              <div class="absolute bottom-2 right-2 text-[10px] font-bold uppercase tracking-widest text-rose-700">Money pits</div>
+              <!-- dots -->
+              <div class="absolute" style="left:70%;top:15%"><div class="w-5 h-5 rounded-full bg-primary ring-4 ring-primary/20"></div><div class="text-[10px] font-bold mt-1 -ml-4">Cash Out</div></div>
+              <div class="absolute" style="left:30%;top:35%"><div class="w-4 h-4 rounded-full bg-secondary"></div><div class="text-[10px] mt-1 -ml-6">Parlays</div></div>
+              <div class="absolute" style="left:55%;top:52%"><div class="w-4 h-4 rounded-full bg-secondary"></div><div class="text-[10px] mt-1 -ml-3">Overlay</div></div>
+              <div class="absolute" style="left:82%;top:60%"><div class="w-4 h-4 rounded-full bg-secondary"></div><div class="text-[10px] mt-1 -ml-6">Resp play</div></div>
+              <div class="absolute" style="left:25%;top:70%"><div class="w-4 h-4 rounded-full bg-secondary"></div><div class="text-[10px] mt-1 -ml-2">Builder</div></div>
+              <div class="absolute" style="left:60%;top:85%"><div class="w-4 h-4 rounded-full bg-secondary"></div><div class="text-[10px] mt-1 -ml-3">Crypto</div></div>
+            </div>
+            <div class="flex justify-between mt-3 text-[10px] font-bold uppercase tracking-widest text-on-surface-variant"><span>← Low effort</span><span>High effort →</span></div>
+          </section>
+
+          <!-- Sensitivity -->
+          <section class="col-span-5 bg-white border border-outline-variant/30 rounded-xl p-6">
+            <div class="eyebrow mb-3">Sensitivity · Cash Out</div>
+            <div class="space-y-4">
+              <div>
+                <div class="flex items-center justify-between text-xs mb-1"><span><b>Reach</b> · punters exposed / Q</span><span class="font-mono font-bold">312k</span></div>
+                <input type="range" min="100" max="500" value="312" class="w-full accent-primary" />
+                <div class="flex justify-between text-[10px] text-on-surface-variant mt-0.5"><span>100k</span><span>500k</span></div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between text-xs mb-1"><span><b>Impact</b> · per-user effect</span><span class="font-mono font-bold">2.5 · massive</span></div>
+                <input type="range" min="1" max="30" value="25" class="w-full accent-primary" step="1" />
+                <div class="flex justify-between text-[10px] text-on-surface-variant mt-0.5"><span>minimal</span><span>massive</span></div>
+              </div>
+              <div>
+                <div class="flex items-center justify-between text-xs mb-1"><span><b>Confidence</b></span><span class="font-mono font-bold">80%</span></div>
+                <input type="range" min="20" max="100" value="80" class="w-full accent-primary" />
+              </div>
+              <div>
+                <div class="flex items-center justify-between text-xs mb-1"><span><b>Effort</b> · person-weeks</span><span class="font-mono font-bold">20</span></div>
+                <input type="range" min="4" max="60" value="20" class="w-full accent-primary" />
+              </div>
+            </div>
+
+            <div class="mt-5 p-3 rounded-lg bg-surface-container-low border border-outline-variant/40 text-xs"><b>Break-even</b> — RICE stays &gt; 20 unless effort doubles <b>or</b> confidence drops below 50%.</div>
+            <a href="c-spec.html#c03" class="mt-5 block text-center bg-primary text-white text-xs font-bold py-2.5 rounded-lg shadow-lg shadow-primary/25">Commit score · draft stories →</a>
+          </section>
+        </div>
+
+        <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+          <a href="c-spec.html#c01" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>C01 · Research</a>
+          <span class="text-outline">C02 · RICE Scoring</span>
+          <a href="c-spec.html#c03" class="text-primary flex items-center gap-1">C03 · User Stories<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  C03  USER STORIES                                           -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Discovery · 03</span><h2 class="font-headline font-extrabold text-2xl mt-1">C03 · User Stories</h2></div><div class="spec">From PRD to Gherkin — drafted, refined, signed-off</div></div>
+<div id="c03" class="screen" data-screen-label="C03 User Stories">
+  <div class="flex h-[1000px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Discovery</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <a href="b-prd.html#b03"><span class="material-symbols-outlined text-[18px]">assignment</span>Requests</a>
+        <div class="section">Discovery</div>
+        <a href="c-spec.html#c01"><span class="material-symbols-outlined text-[18px]">science</span>Research</a>
+        <a href="c-spec.html#c02"><span class="material-symbols-outlined text-[18px]">scoreboard</span>RICE</a>
+        <a href="c-spec.html#c03" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">format_list_bulleted</span>User stories</a>
+        <a href="c-spec.html#c04"><span class="material-symbols-outlined text-[18px]">palette</span>Design gen</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="c-spec.html#c02" class="hover:text-primary">RICE</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">User Stories · PRD-087</span></div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center bg-white border border-outline-variant/40 rounded-lg text-xs font-semibold overflow-hidden"><button class="px-3 py-1.5 bg-primary text-white">List</button><button class="px-3 py-1.5 text-on-surface-variant">Gherkin</button><button class="px-3 py-1.5 text-on-surface-variant">Map</button></div>
+          <a href="c-spec.html#c04" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Generate designs →</a>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="max-w-6xl mx-auto">
+          <div class="mb-6">
+            <div class="flex items-center gap-2 mb-2"><div class="h-px w-10 bg-primary/40"></div><span class="eyebrow">PRD-087 Cash Out · v3</span><div class="h-px flex-1 bg-primary/20"></div></div>
+            <h1 class="font-headline font-extrabold text-4xl tracking-tight">Drafting user stories</h1>
+            <p class="text-sm text-on-surface-variant mt-2">14 stories · 3 epics · all generated from the PRD, revised with the trading squad</p>
+          </div>
+
+          <!-- Epic: Offer engine -->
+          <section class="bg-white border border-outline-variant/30 rounded-xl mb-5 overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 bg-surface-container-low border-b border-outline-variant/40">
+              <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-tertiary/10 text-tertiary flex items-center justify-center"><span class="material-symbols-outlined">calculate</span></div><div><div class="eyebrow">Epic 1 of 3</div><h3 class="font-headline font-bold text-lg">Offer engine</h3></div></div>
+              <div class="flex items-center gap-4 text-xs"><span class="font-mono text-on-surface-variant">5 stories · 21 SP</span><span class="pill ph-pill-approved pill-sm">Signed off</span></div>
+            </div>
+            <ul class="divide-y divide-outline-variant/40">
+              <li class="px-6 py-4">
+                <div class="flex items-start gap-3">
+                  <span class="w-6 h-6 rounded bg-primary text-white font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">CO-1</span>
+                  <div class="flex-1">
+                    <p class="text-[15px]"><b>As a punter</b> with an active single bet, <b>I want</b> to see a live cash-out amount next to my bet <b>so that</b> I can decide whether to settle early.</p>
+                    <div class="flex items-center gap-4 text-[11px] text-on-surface-variant mt-2"><span class="pill ph-pill-primary pill-sm">5 SP</span><span>Acceptance · 4 criteria</span><span>Trading + FE</span></div>
+                  </div>
+                </div>
+              </li>
+              <li class="px-6 py-4">
+                <div class="flex items-start gap-3">
+                  <span class="w-6 h-6 rounded bg-primary text-white font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">CO-2</span>
+                  <div class="flex-1">
+                    <p class="text-[15px]"><b>As the offer engine</b>, <b>I want</b> to refresh every bet's cash-out offer at least every 3 seconds <b>so that</b> punters see a current market price.</p>
+                    <div class="flex items-center gap-4 text-[11px] text-on-surface-variant mt-2"><span class="pill ph-pill-primary pill-sm">8 SP</span><span>Acceptance · 6 criteria</span><span>Trading</span></div>
+                  </div>
+                </div>
+              </li>
+              <li class="px-6 py-4">
+                <div class="flex items-start gap-3">
+                  <span class="w-6 h-6 rounded bg-primary text-white font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">CO-3</span>
+                  <div class="flex-1">
+                    <p class="text-[15px]"><b>As a trader</b>, <b>I want</b> an approval queue for cash-out offers that would move liability by &gt; €5k on a thin market <b>so that</b> I keep control of book risk.</p>
+                    <div class="flex items-center gap-4 text-[11px] text-on-surface-variant mt-2"><span class="pill ph-pill-primary pill-sm">5 SP</span><span>Acceptance · 5 criteria</span><span>Trading · Risk</span></div>
+                  </div>
+                </div>
+              </li>
+              <li class="px-6 py-4 bg-primary/5">
+                <div class="flex items-start gap-3">
+                  <span class="w-6 h-6 rounded bg-primary text-white font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">CO-4</span>
+                  <div class="flex-1">
+                    <div class="flex items-center gap-2 mb-2"><div class="w-5 h-5 rounded-md ai-chip flex items-center justify-center"><span class="material-symbols-outlined text-[12px] text-white">auto_awesome</span></div><span class="text-[11px] font-bold text-primary">Agent-drafted acceptance criteria</span></div>
+                    <p class="text-[15px]"><b>As the offer engine</b>, <b>I want</b> to suspend any cash-out when the feed latency for that event exceeds 1.5s p95 <b>so that</b> offers never lag real-world state.</p>
+                    <div class="mt-3 p-3 rounded-lg bg-white border border-outline-variant/40 font-mono text-[11px]">
+                      <div class="text-primary font-bold">Scenario:</div>
+                      <div class="mt-1"><span class="text-violet-600">Given</span> a cash-out offer for bet ID X is active</div>
+                      <div><span class="text-violet-600">And</span> Sportradar feed latency p95 exceeds 1500ms</div>
+                      <div><span class="text-violet-600">When</span> the monitor ticks</div>
+                      <div><span class="text-violet-600">Then</span> the offer is locked and UI shows "Recalculating…"</div>
+                      <div><span class="text-violet-600">And</span> an internal alert is raised on #risk-alerts</div>
+                    </div>
+                    <div class="flex items-center gap-4 text-[11px] text-on-surface-variant mt-2"><span class="pill ph-pill-primary pill-sm">3 SP</span><span class="pill ph-pill-approved pill-sm">6/6 criteria</span><span>Risk · Platform</span></div>
+                  </div>
+                </div>
+              </li>
+              <li class="px-6 py-4">
+                <div class="flex items-start gap-3">
+                  <span class="w-6 h-6 rounded bg-primary text-white font-mono text-[10px] flex items-center justify-center shrink-0 mt-0.5">CO-5</span>
+                  <div class="flex-1"><p class="text-[15px]"><b>As compliance</b>, <b>I want</b> every offer and acceptance logged with a signed hash <b>so that</b> we can satisfy MGA §3.5 audit requests.</p><div class="flex items-center gap-4 text-[11px] text-on-surface-variant mt-2"><span class="pill ph-pill-primary pill-sm">2 SP</span><span>Acceptance · 3 criteria</span><span>Compliance</span></div></div>
+                </div>
+              </li>
+            </ul>
+          </section>
+
+          <!-- Epic: Punter UX + Epic: Compliance (compact) -->
+          <div class="grid grid-cols-2 gap-5">
+            <section class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+              <div class="flex items-center justify-between px-5 py-3 bg-surface-container-low border-b border-outline-variant/40">
+                <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">smartphone</span></div><div><div class="eyebrow">Epic 2</div><div class="font-headline font-bold text-sm">Punter UX</div></div></div>
+                <span class="font-mono text-[11px] text-on-surface-variant">5 · 18 SP</span>
+              </div>
+              <ul class="divide-y divide-outline-variant/40 text-sm">
+                <li class="px-5 py-3"><span class="text-[10px] font-mono text-on-surface-variant">CO-6</span> Persistent Cash Out button under every active bet in the drawer</li>
+                <li class="px-5 py-3"><span class="text-[10px] font-mono text-on-surface-variant">CO-7</span> Amount pulses green on rise / red on fall (with reduced-motion fallback)</li>
+                <li class="px-5 py-3"><span class="text-[10px] font-mono text-on-surface-variant">CO-8</span> One-tap confirm + 3-second undo toast</li>
+                <li class="px-5 py-3"><span class="text-[10px] font-mono text-on-surface-variant">CO-9</span> "How is this calculated?" drawer with plain-English explainer</li>
+                <li class="px-5 py-3"><span class="text-[10px] font-mono text-on-surface-variant">CO-10</span> Post-acceptance confirmation + wallet balance refresh</li>
+              </ul>
+            </section>
+            <section class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+              <div class="flex items-center justify-between px-5 py-3 bg-surface-container-low border-b border-outline-variant/40">
+                <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">shield</span></div><div><div class="eyebrow">Epic 3</div><div class="font-headline font-bold text-sm">Risk &amp; compliance</div></div></div>
+                <span class="font-mono text-[11px] text-on-surface-variant">4 · 11 SP</span>
+              </div>
+              <ul class="divide-y divide-outline-variant/40 text-sm">
+                <li class="px-5 py-3"><span class="text-[10px] font-mono text-on-surface-variant">CO-11</span> Self-excluded punters cannot initiate cash-out</li>
+                <li class="px-5 py-3"><span class="text-[10px] font-mono text-on-surface-variant">CO-12</span> 15-min responsible-play cool-down blocks new offers</li>
+                <li class="px-5 py-3"><span class="text-[10px] font-mono text-on-surface-variant">CO-13</span> Margin kill-switch for peak events</li>
+                <li class="px-5 py-3"><span class="text-[10px] font-mono text-on-surface-variant">CO-14</span> Trading-desk dashboard shows live cash-out P&amp;L impact</li>
+              </ul>
+            </section>
+          </div>
+
+          <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+            <a href="c-spec.html#c02" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>C02 · RICE</a>
+            <span class="text-outline">C03 · User Stories</span>
+            <a href="c-spec.html#c04" class="text-primary flex items-center gap-1">C04 · Design Gen<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  C04  DESIGN GENERATION                                      -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Discovery · 04</span><h2 class="font-headline font-extrabold text-2xl mt-1">C04 · Design Generation</h2></div><div class="spec">Mobile Cash Out UI · 3 variants generated &amp; reviewed</div></div>
+<div id="c04" class="screen" data-screen-label="C04 Design Gen">
+  <div class="flex h-[1020px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Discovery</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <a href="b-prd.html#b03"><span class="material-symbols-outlined text-[18px]">assignment</span>Requests</a>
+        <div class="section">Discovery</div>
+        <a href="c-spec.html#c01"><span class="material-symbols-outlined text-[18px]">science</span>Research</a>
+        <a href="c-spec.html#c02"><span class="material-symbols-outlined text-[18px]">scoreboard</span>RICE</a>
+        <a href="c-spec.html#c03"><span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>User stories</a>
+        <a href="c-spec.html#c04" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">palette</span>Design gen</a>
+        <div class="section">Delivery</div>
+        <a href="d-plan.html#d01"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Backlog</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="c-spec.html#c03" class="hover:text-primary">Stories</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Design · Cash Out mobile</span></div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant border border-outline-variant/50 rounded-lg flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">refresh</span>Re-generate</button>
+          <a href="d-plan.html#d01" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Lock design · send to backlog →</a>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="max-w-7xl mx-auto">
+          <div class="flex items-end justify-between mb-6">
+            <div><div class="eyebrow mb-1">Cash Out · punter-facing UI</div><h1 class="font-headline font-extrabold text-3xl tracking-tight">3 design variants generated</h1><p class="text-sm text-on-surface-variant mt-1">From CO-6 through CO-10 · trained on our mobile component library</p></div>
+            <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><span class="material-symbols-outlined text-primary text-[16px]">auto_awesome</span>Generated in 18s · 2,412 tokens</div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-5">
+            <!-- Variant A: persistent -->
+            <article class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+              <div class="px-5 py-3 flex items-center justify-between border-b border-outline-variant/40"><div class="flex items-center gap-2"><span class="pill ph-pill-primary pill-sm">A</span><h3 class="font-headline font-bold text-sm">Persistent inline</h3></div><span class="pill ph-pill-approved pill-sm">Picked ✓</span></div>
+              <!-- Phone mock -->
+              <div class="bg-slate-900 p-6 flex justify-center">
+                <div class="w-[220px] rounded-[28px] border-4 border-slate-800 overflow-hidden bg-white shadow-2xl">
+                  <div class="bg-slate-900 px-4 pt-2 pb-1 flex items-center justify-between text-[9px] text-white font-semibold"><span>19:42</span><span class="flex gap-1">• • •</span></div>
+                  <div class="bg-white px-3 py-2">
+                    <div class="flex items-center justify-between"><div class="text-[9px] font-bold text-rose-600">LIVE · 67'</div><div class="text-[9px] text-slate-400">SINGLE</div></div>
+                    <div class="font-bold text-[11px] mt-1">Arsenal vs Chelsea</div>
+                    <div class="text-[9px] text-slate-500">Match winner · Arsenal</div>
+                    <div class="flex items-center justify-between mt-2 text-[10px]"><span class="text-slate-500">Stake</span><span class="font-bold font-mono">€20.00</span></div>
+                    <div class="flex items-center justify-between text-[10px]"><span class="text-slate-500">Original odds</span><span class="font-mono">2.10</span></div>
+                    <div class="flex items-center justify-between text-[10px]"><span class="text-slate-500">To return</span><span class="font-mono">€42.00</span></div>
+                    <div class="mt-3 rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 p-2.5 text-amber-950">
+                      <div class="flex items-center justify-between text-[9px] font-bold uppercase tracking-wider"><span>Cash Out</span><span class="animate-pulse">↑</span></div>
+                      <div class="font-headline font-extrabold text-xl leading-none mt-0.5">€28.40</div>
+                      <button class="w-full mt-1.5 bg-amber-950 text-amber-100 text-[9px] font-bold py-1 rounded">TAP TO CASH OUT</button>
+                    </div>
+                    <div class="text-[8px] text-slate-400 text-center mt-1.5">How is this calculated?</div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-4 text-xs text-on-surface-variant">Default, always-visible variant. Amber CTA keeps the button findable without dominating the bet card.</div>
+            </article>
+
+            <!-- Variant B: drawer -->
+            <article class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+              <div class="px-5 py-3 flex items-center justify-between border-b border-outline-variant/40"><div class="flex items-center gap-2"><span class="pill ph-pill-primary pill-sm">B</span><h3 class="font-headline font-bold text-sm">Expanding drawer</h3></div><span class="pill ph-pill-review pill-sm">Considered</span></div>
+              <div class="bg-slate-900 p-6 flex justify-center">
+                <div class="w-[220px] rounded-[28px] border-4 border-slate-800 overflow-hidden bg-white shadow-2xl">
+                  <div class="bg-slate-900 px-4 pt-2 pb-1 flex items-center justify-between text-[9px] text-white font-semibold"><span>19:42</span><span>• • •</span></div>
+                  <div class="bg-white px-3 py-2">
+                    <div class="text-[9px] font-bold text-rose-600">LIVE · 67'</div>
+                    <div class="font-bold text-[11px] mt-1">Arsenal vs Chelsea</div>
+                    <div class="text-[9px] text-slate-500">Match winner · Arsenal</div>
+                    <div class="mt-2 flex gap-1 text-[9px]"><div class="flex-1 bg-slate-100 rounded py-1 text-center"><div class="text-slate-400">Stake</div><div class="font-bold">€20</div></div><div class="flex-1 bg-slate-100 rounded py-1 text-center"><div class="text-slate-400">Return</div><div class="font-bold">€42</div></div></div>
+                    <button class="w-full mt-2 bg-primary text-white text-[9px] font-bold py-2 rounded flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[12px]">expand_less</span>SETTLE EARLY · €28.40</button>
+                    <div class="mt-2 p-2 rounded bg-slate-50 border border-slate-200 text-[9px]">
+                      <div class="flex items-center justify-between"><span class="text-slate-500">Offer</span><span class="font-bold">€28.40</span></div>
+                      <div class="flex items-center justify-between"><span class="text-slate-500">vs stake</span><span class="font-bold text-emerald-600">+€8.40</span></div>
+                      <div class="mt-1 h-1 bg-slate-200 rounded overflow-hidden"><div class="h-full bg-emerald-500" style="width:68%"></div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-4 text-xs text-on-surface-variant">Space-efficient, but hides transparency — low scoring on punter trust in usability research.</div>
+            </article>
+
+            <!-- Variant C: sheet -->
+            <article class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+              <div class="px-5 py-3 flex items-center justify-between border-b border-outline-variant/40"><div class="flex items-center gap-2"><span class="pill ph-pill-primary pill-sm">C</span><h3 class="font-headline font-bold text-sm">Full-screen sheet</h3></div><span class="pill ph-pill-rejected pill-sm">Rejected</span></div>
+              <div class="bg-slate-900 p-6 flex justify-center">
+                <div class="w-[220px] rounded-[28px] border-4 border-slate-800 overflow-hidden bg-white shadow-2xl">
+                  <div class="bg-slate-900 px-4 pt-2 pb-1 flex items-center justify-between text-[9px] text-white font-semibold"><span>19:42</span><span>• • •</span></div>
+                  <div class="bg-gradient-to-b from-primary to-[#4f46e5] text-white px-3 py-4">
+                    <div class="flex items-center justify-between text-[10px]"><span>✕ Close</span><span class="font-bold">Cash Out</span><span></span></div>
+                    <div class="text-center mt-4">
+                      <div class="text-[10px] opacity-80">Offer now</div>
+                      <div class="font-headline font-extrabold text-3xl mt-1">€28.40</div>
+                      <div class="text-[9px] mt-1 opacity-80">You'd be up €8.40 on your stake</div>
+                    </div>
+                    <div class="mt-4 space-y-1 text-[9px] bg-white/10 rounded p-2">
+                      <div class="flex justify-between"><span>Arsenal to win @ 2.10</span><span>€20</span></div>
+                      <div class="flex justify-between opacity-80"><span>Live odds</span><span>1.52</span></div>
+                      <div class="flex justify-between opacity-80"><span>Margin</span><span>5.0%</span></div>
+                    </div>
+                    <button class="w-full mt-3 bg-amber-400 text-amber-950 text-[10px] font-bold py-2 rounded">CASH OUT €28.40</button>
+                  </div>
+                </div>
+              </div>
+              <div class="p-4 text-xs text-on-surface-variant">Too heavy for in-play — breaks the match-watching flow. Conflicts with story CO-6 (persistent access).</div>
+            </article>
+          </div>
+
+          <!-- Rationale -->
+          <section class="bg-white border border-outline-variant/30 rounded-xl p-6 mt-6 grid grid-cols-3 gap-6">
+            <div class="col-span-2">
+              <div class="eyebrow mb-2">Why Variant A</div>
+              <p class="text-sm leading-relaxed">Punter interviews (C01) and story <b>CO-6</b> both mandate persistent access to the cash-out amount. Variant A keeps the price in-context, uses amber to stand out from the book's indigo primary (no confusion with a bet-slip CTA), and reserves the explainer drawer (CO-9) for the "How is this calculated?" link.</p>
+              <div class="mt-4 grid grid-cols-4 gap-3 text-xs">
+                <div><div class="eyebrow">Stories covered</div><div class="font-headline font-extrabold text-lg mt-0.5">CO-6 → 10</div></div>
+                <div><div class="eyebrow">Components reused</div><div class="font-headline font-extrabold text-lg mt-0.5">7 / 9</div></div>
+                <div><div class="eyebrow">A11y score</div><div class="font-headline font-extrabold text-lg mt-0.5">AA ✓</div></div>
+                <div><div class="eyebrow">Dark mode</div><div class="font-headline font-extrabold text-lg mt-0.5">Ready</div></div>
+              </div>
+            </div>
+            <div class="bg-surface-container-low rounded-lg p-4">
+              <div class="eyebrow mb-2">Handoff artefacts</div>
+              <ul class="text-xs space-y-2">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[16px]">design_services</span>Figma · Cash Out / Variant A</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[16px]">code</span>React specs · 11 components</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[16px]">description</span>Redlines · amber motion tokens</li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[16px]">accessibility</span>A11y audit · 0 issues</li>
+              </ul>
+            </div>
+          </section>
+
+          <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+            <a href="c-spec.html#c03" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>C03 · User Stories</a>
+            <span class="text-outline">C04 · Design Gen</span>
+            <a href="d-plan.html#d01" class="text-primary flex items-center gap-1">D01 · Backlog<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  D01  BACKLOG                                                -->
+<!-- ============================================================ -->
+
+<script>
+// Scrollspy for the floating TOC
+(function(){
+  const links = document.querySelectorAll('nav.toc a');
+  const map = new Map();
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) map.set(el, a);
+  });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a = map.get(e.target);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  map.forEach((_,el)=>io.observe(el));
+})();
+</script>
+</body>
+</html>

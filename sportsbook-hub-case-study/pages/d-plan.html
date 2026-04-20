@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sportsbook Hub — Cash Out Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+tailwind.config = {
+  darkMode:'class',
+  theme: { extend: {
+    colors: {
+      primary:'#3525cd','primary-container':'#4f46e5','primary-fixed':'#e2dfff','primary-fixed-dim':'#c3c0ff',
+      'on-primary':'#ffffff','on-primary-container':'#dad7ff',
+      secondary:'#5b598c','secondary-container':'#c7c3fe','on-secondary-container':'#514f81',
+      tertiary:'#7e3000','tertiary-container':'#a44100',
+      background:'#f7f9fb',surface:'#f7f9fb',
+      'surface-container-lowest':'#ffffff','surface-container-low':'#f2f4f6','surface-container':'#eceef0',
+      'surface-container-high':'#e6e8ea','surface-container-highest':'#e0e3e5',
+      'on-surface':'#191c1e','on-surface-variant':'#464555',
+      outline:'#777587','outline-variant':'#c7c4d8',
+      error:'#ba1a1a','error-container':'#ffdad6','on-error-container':'#93000a',
+      sidebar:'#1E1B4B',
+      'odds-up':'#047857','odds-down':'#b91c1c'
+    },
+    borderRadius:{ DEFAULT:'0.25rem', lg:'0.5rem', xl:'0.75rem', full:'9999px' },
+    fontFamily:{ body:['Inter'], headline:['Manrope'], label:['Inter'], mono:['JetBrains Mono'] }
+  }}
+};
+</script>
+<style>
+/* ===========================================================
+   Sportsbook Hub · Canonical Design System
+   Applies to every A/B/C/D/E/Z screen. Do not fork locally.
+   =========================================================== */
+:root {
+  /* Primary — indigo (Product Hub) */
+  --primary:#3525cd; --primary-container:#4f46e5;
+  --primary-fixed:#e2dfff; --primary-fixed-dim:#c3c0ff;
+  --on-primary:#ffffff; --on-primary-container:#dad7ff;
+
+  /* Secondary / Tertiary */
+  --secondary:#5b598c; --secondary-container:#c7c3fe; --on-secondary-container:#514f81;
+  --tertiary:#7e3000; --tertiary-container:#a44100;
+
+  /* Surfaces */
+  --background:#f7f9fb; --surface:#f7f9fb;
+  --surface-container-lowest:#ffffff; --surface-container-low:#f2f4f6;
+  --surface-container:#eceef0; --surface-container-high:#e6e8ea; --surface-container-highest:#e0e3e5;
+
+  /* Text + outlines */
+  --on-surface:#191c1e; --on-surface-variant:#464555;
+  --outline:#777587; --outline-variant:#c7c4d8;
+
+  /* Semantic */
+  --error:#ba1a1a; --error-container:#ffdad6; --on-error-container:#93000a;
+  --success:#047857; --warning:#b45309;
+
+  /* Sportsbook odds colours (semantic – do not reuse for UI state) */
+  --odds-up:#047857; --odds-down:#b91c1c; --odds-hold:#475569;
+
+  /* Navigation */
+  --sidebar:#1E1B4B; /* deep indigo — official shell */
+}
+
+html, body { background:#eceef0; color:var(--on-surface); }
+body { font-family:'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+/* Type — Inter body / Manrope display, as per Product Hub system */
+.font-body{font-family:'Inter',sans-serif}
+.font-headline{font-family:'Manrope',sans-serif;letter-spacing:-.01em}
+.font-mono-alt{font-family:'JetBrains Mono','SFMono-Regular',monospace}
+.eyebrow{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:var(--primary)}
+.spec{font-family:'Inter';font-size:11px;color:var(--on-surface-variant)}
+
+/* Material Symbols – fill variant */
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.msym-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+/* Sidebar shell — shared across every hub screen */
+.sidebar-nav a{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:.5rem;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);transition:all .15s;font-family:'Inter'}
+.sidebar-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+.sidebar-nav a.active{color:white;background:rgba(255,255,255,.12);font-weight:600}
+.sidebar-nav .section{font-size:10px;font-weight:800;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.16em;padding:14px 14px 6px}
+
+/* Topnav */
+.topnav{background:rgba(255,255,255,.90);backdrop-filter:blur(12px)}
+
+/* Inputs (canonical) */
+.ph-input{background:var(--surface-container-low);border:1px solid transparent;border-radius:.5rem;padding:9px 12px;font-size:13px;width:100%;transition:all .15s;color:var(--on-surface)}
+.ph-input:focus{outline:none;background:#fff;border-color:var(--primary);box-shadow:0 0 0 4px rgba(53,37,205,.10)}
+.ph-input::placeholder{color:var(--on-surface-variant);opacity:.7}
+
+/* Pills / chips */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:9999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pill-sm{padding:1px 8px;font-size:10px}
+.ph-pill-approved{background:#d1fae5;color:#065f46}
+.ph-pill-review{background:#fef3c7;color:#92400e}
+.ph-pill-revised{background:#dbeafe;color:#1d4ed8}
+.ph-pill-pending{background:#f1f5f9;color:#334155}
+.ph-pill-rejected{background:#fee2e2;color:#991b1b}
+.ph-pill-primary{background:rgba(53,37,205,.10);color:var(--primary)}
+.ph-pill-live{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-trading{background:rgba(126,48,0,.10);color:#7e3000}
+.ph-pill-domain-risk{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-frontend{background:#c7c3fe;color:#514f81}
+.ph-pill-domain-payments{background:#d1fae5;color:#065f46}
+.ph-pill-severity-critical{background:#fee2e2;color:#991b1b}
+.ph-pill-severity-high{background:#ffedd5;color:#9a3412}
+.ph-pill-severity-medium{background:#fef3c7;color:#92400e}
+.ph-pill-severity-low{background:#dbeafe;color:#1d4ed8}
+
+/* AI chip gradient — same across screens */
+.ai-chip{background:linear-gradient(135deg,#3525cd 0%,#7c3aed 100%);color:white}
+
+/* Shared screen shell */
+.screen{max-width:1440px;margin:40px auto;background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(25,28,30,.08),0 2px 6px rgba(25,28,30,.04);scroll-margin-top:80px}
+.screen-label{max-width:1440px;margin:60px auto 0;padding:0 4px;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+
+/* Floating TOC */
+.toc{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:40;background:white;border:1px solid rgba(199,196,216,.5);border-radius:12px;padding:12px 10px;box-shadow:0 12px 32px rgba(25,28,30,.08);font-family:'Inter';font-size:11px;max-height:82vh;overflow-y:auto}
+.toc a{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:6px;color:var(--on-surface-variant);font-weight:600;text-decoration:none}
+.toc a:hover{background:var(--surface-container-low);color:var(--on-surface)}
+.toc a.active{background:rgba(53,37,205,.08);color:var(--primary)}
+.toc .toc-group{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--outline);padding:8px 8px 4px}
+@media (max-width:1320px){.toc{display:none}}
+
+/* Odds display tokens (reusable across sportsbook listings) */
+.odds{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--on-surface);padding:4px 8px;border-radius:6px;background:var(--surface-container-low);border:1px solid var(--outline-variant);font-size:12px;display:inline-block;min-width:48px;text-align:center}
+.odds.up{color:var(--odds-up);border-color:rgba(4,120,87,.4);background:rgba(4,120,87,.06)}
+.odds.down{color:var(--odds-down);border-color:rgba(185,28,28,.4);background:rgba(185,28,28,.06)}
+.odds.live{color:white;background:var(--odds-down);border-color:var(--odds-down);animation:pulse-live 2s ease-in-out infinite}
+@keyframes pulse-live{0%,100%{box-shadow:0 0 0 0 rgba(185,28,28,.5)}50%{box-shadow:0 0 0 6px rgba(185,28,28,0)}}
+
+/* Bet slip + cashout pill */
+.cashout-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:800;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#7c2d12;text-transform:uppercase;letter-spacing:.04em}
+
+/* Chart grid helper */
+.chart-grid{background-image:linear-gradient(var(--surface-container-highest) 1px,transparent 1px),linear-gradient(90deg,var(--surface-container-highest) 1px,transparent 1px);background-size:100% 25%,16.66% 100%}
+
+/* Scrollbar hide */
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{scrollbar-width:none}
+
+</style>
+</head>
+<body>
+<nav class="toc">
+<div class="toc-group">Overview</div>
+<a href="cover.html"><span class="w-8 text-[10px] font-mono text-primary">•</span>Cover</a>
+<div class="toc-group">Auth · Shell</div>
+<a href="a-auth.html#a01"><span class="w-8 text-[10px] font-mono text-primary">A01</span>Login</a>
+<a href="a-auth.html#a02"><span class="w-8 text-[10px] font-mono text-primary">A02</span>Dashboard</a>
+<div class="toc-group">Idea → PRD</div>
+<a href="b-prd.html#b01"><span class="w-8 text-[10px] font-mono text-primary">B01</span>Submit idea</a>
+<a href="b-prd.html#b02"><span class="w-8 text-[10px] font-mono text-primary">B02</span>PRD Builder</a>
+<a href="b-prd.html#b03"><span class="w-8 text-[10px] font-mono text-primary">B03</span>Request track</a>
+<a href="b-prd.html#b04"><span class="w-8 text-[10px] font-mono text-primary">B04</span>PRD Document</a>
+<a href="b-prd.html#b05"><span class="w-8 text-[10px] font-mono text-primary">B05</span>PRD Eval</a>
+<div class="toc-group">Discovery → Spec</div>
+<a href="c-spec.html#c01"><span class="w-8 text-[10px] font-mono text-primary">C01</span>Research</a>
+<a href="c-spec.html#c02"><span class="w-8 text-[10px] font-mono text-primary">C02</span>RICE</a>
+<a href="c-spec.html#c03"><span class="w-8 text-[10px] font-mono text-primary">C03</span>Stories</a>
+<a href="c-spec.html#c04"><span class="w-8 text-[10px] font-mono text-primary">C04</span>Design</a>
+<div class="toc-group">Planning</div>
+<a href="d-plan.html#d01"><span class="w-8 text-[10px] font-mono text-primary">D01</span>Backlog</a>
+<a href="d-plan.html#d02"><span class="w-8 text-[10px] font-mono text-primary">D02</span>Domains</a>
+<a href="d-plan.html#d03"><span class="w-8 text-[10px] font-mono text-primary">D03</span>Roadmap</a>
+<a href="d-plan.html#d04"><span class="w-8 text-[10px] font-mono text-primary">D04</span>Handover</a>
+<div class="toc-group">Delivery</div>
+<a href="e-ship.html#e01"><span class="w-8 text-[10px] font-mono text-primary">E01</span>Delivery</a>
+<a href="e-ship.html#e02"><span class="w-8 text-[10px] font-mono text-primary">E02</span>UAT</a>
+<a href="e-ship.html#e03"><span class="w-8 text-[10px] font-mono text-primary">E03</span>Release</a>
+<a href="e-ship.html#e04"><span class="w-8 text-[10px] font-mono text-primary">E04</span>Metrics</a>
+<div class="toc-group">Meta</div>
+<a href="z-meta.html#z01"><span class="w-8 text-[10px] font-mono text-primary">Z01</span>LLM usage</a>
+</nav>
+<div class="screen-label"><div><span class="eyebrow">Planning · 01</span><h2 class="font-headline font-extrabold text-2xl mt-1">D01 · Master Backlog</h2></div><div class="spec">Cash Out stories join the unified backlog</div></div>
+<div id="d01" class="screen" data-screen-label="D01 Backlog">
+  <div class="flex h-[960px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Planning</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <a href="b-prd.html#b03"><span class="material-symbols-outlined text-[18px]">assignment</span>Requests</a>
+        <div class="section">Planning</div>
+        <a href="d-plan.html#d01" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">inventory_2</span>Backlog</a>
+        <a href="d-plan.html#d02"><span class="material-symbols-outlined text-[18px]">category</span>Domains</a>
+        <a href="d-plan.html#d03"><span class="material-symbols-outlined text-[18px]">calendar_month</span>Roadmap</a>
+        <a href="d-plan.html#d04"><span class="material-symbols-outlined text-[18px]">handshake</span>Tech handover</a>
+        <div class="section">Delivery</div>
+        <a href="e-ship.html#e01"><span class="material-symbols-outlined text-[18px]">rocket_launch</span>Delivery</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="c-spec.html#c04" class="hover:text-primary">Design</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Master backlog</span></div>
+        <div class="flex items-center gap-3">
+          <div class="relative"><span class="material-symbols-outlined absolute left-2.5 top-1.5 text-[16px] text-on-surface-variant">search</span><input class="ph-input pl-8 w-72" placeholder="Search stories, bugs, epics…" /></div>
+          <a href="d-plan.html#d02" class="px-3 py-1.5 text-xs font-bold text-primary border border-primary/25 rounded-lg">Split to domains →</a>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="flex items-end justify-between mb-6">
+          <div><h1 class="font-headline font-extrabold text-3xl tracking-tight">Master backlog</h1><p class="text-sm text-on-surface-variant mt-1">248 items · 14 fresh Cash Out stories added · Q3 scope locked Friday</p></div>
+          <div class="flex items-center bg-white border border-outline-variant/40 rounded-lg text-xs font-semibold overflow-hidden"><button class="px-3 py-1.5 bg-primary text-white">Groomed</button><button class="px-3 py-1.5 text-on-surface-variant">All</button><button class="px-3 py-1.5 text-on-surface-variant">Blocked</button></div>
+        </div>
+
+        <!-- Filter pills -->
+        <div class="flex flex-wrap items-center gap-2 mb-5">
+          <span class="eyebrow mr-2">Filter</span>
+          <button class="pill ph-pill-primary">Epic: Cash Out ▾</button>
+          <button class="pill ph-pill-pending">Domain: any</button>
+          <button class="pill ph-pill-pending">Priority: any</button>
+          <button class="pill ph-pill-pending">Quarter: Q3</button>
+          <span class="ml-auto text-[11px] text-on-surface-variant">Showing <b>14</b> of 248 · sorted by rank</span>
+        </div>
+
+        <!-- Backlog table -->
+        <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+          <table class="w-full text-sm">
+            <thead class="bg-surface-container-low text-[10px] uppercase tracking-wider text-on-surface-variant font-bold">
+              <tr>
+                <th class="pl-4 py-3 w-8"></th>
+                <th class="py-3 text-left w-16">ID</th>
+                <th class="py-3 text-left">Story</th>
+                <th class="py-3 text-left w-28">Epic</th>
+                <th class="py-3 text-left w-32">Domain</th>
+                <th class="py-3 text-right w-14">SP</th>
+                <th class="py-3 text-left w-28">Priority</th>
+                <th class="py-3 text-left w-20">Sprint</th>
+                <th class="py-3 text-right w-24">Owner</th>
+                <th class="py-3 w-8"></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/40">
+              <tr class="hover:bg-surface-container-low"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-1</td><td><a href="c-spec.html#c03" class="font-semibold hover:text-primary">See live cash-out amount next to active bet</a></td><td><span class="pill ph-pill-primary pill-sm">Offer engine</span></td><td><span class="pill ph-pill-domain-trading pill-sm">Trading</span></td><td class="text-right font-mono">5</td><td><span class="pill ph-pill-severity-high pill-sm">P1</span></td><td class="font-mono text-xs">S25</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">RK</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-2</td><td><a href="c-spec.html#c03" class="font-semibold hover:text-primary">Offer-refresh cadence ≤ 3s</a></td><td><span class="pill ph-pill-primary pill-sm">Offer engine</span></td><td><span class="pill ph-pill-domain-trading pill-sm">Trading</span></td><td class="text-right font-mono">8</td><td><span class="pill ph-pill-severity-high pill-sm">P1</span></td><td class="font-mono text-xs">S25</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-sky-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">AP</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+              <tr class="hover:bg-surface-container-low bg-amber-50/40"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-3</td><td><a href="c-spec.html#c03" class="font-semibold hover:text-primary">Trader approval queue for &gt; €5k cash-out offers</a><div class="flex gap-1 mt-1"><span class="text-[10px] text-amber-700 font-bold">⚠ Blocked by CO-14 dashboard</span></div></td><td><span class="pill ph-pill-primary pill-sm">Offer engine</span></td><td><span class="pill ph-pill-domain-trading pill-sm">Trading</span></td><td class="text-right font-mono">5</td><td><span class="pill ph-pill-severity-high pill-sm">P1</span></td><td class="font-mono text-xs">S26</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">RK</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-4</td><td><a href="c-spec.html#c03" class="font-semibold hover:text-primary">Suspend cash-out on feed latency &gt; 1.5s</a></td><td><span class="pill ph-pill-primary pill-sm">Offer engine</span></td><td><span class="pill ph-pill-domain-risk pill-sm">Risk</span></td><td class="text-right font-mono">3</td><td><span class="pill ph-pill-severity-high pill-sm">P1</span></td><td class="font-mono text-xs">S25</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">MJ</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-5</td><td><a href="c-spec.html#c03" class="font-semibold hover:text-primary">Audit hash for every offer + acceptance</a></td><td><span class="pill ph-pill-primary pill-sm">Offer engine</span></td><td><span class="pill ph-pill-domain-risk pill-sm">Compliance</span></td><td class="text-right font-mono">2</td><td><span class="pill ph-pill-severity-medium pill-sm">P2</span></td><td class="font-mono text-xs">S26</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">MJ</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-6</td><td><a href="c-spec.html#c04" class="font-semibold hover:text-primary">Persistent Cash Out button in bet drawer</a></td><td><span class="pill ph-pill-primary pill-sm">Punter UX</span></td><td><span class="pill ph-pill-domain-frontend pill-sm">Front-end</span></td><td class="text-right font-mono">5</td><td><span class="pill ph-pill-severity-high pill-sm">P1</span></td><td class="font-mono text-xs">S25</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-emerald-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">SM</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-7</td><td><a href="c-spec.html#c04" class="font-semibold hover:text-primary">Amount pulses green-up / red-down</a></td><td><span class="pill ph-pill-primary pill-sm">Punter UX</span></td><td><span class="pill ph-pill-domain-frontend pill-sm">Front-end</span></td><td class="text-right font-mono">3</td><td><span class="pill ph-pill-severity-medium pill-sm">P2</span></td><td class="font-mono text-xs">S26</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-emerald-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">SM</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-8</td><td><a href="c-spec.html#c04" class="font-semibold hover:text-primary">One-tap confirm with 3s undo</a></td><td><span class="pill ph-pill-primary pill-sm">Punter UX</span></td><td><span class="pill ph-pill-domain-frontend pill-sm">Front-end</span></td><td class="text-right font-mono">3</td><td><span class="pill ph-pill-severity-high pill-sm">P1</span></td><td class="font-mono text-xs">S26</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-emerald-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">SM</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-11</td><td><a href="c-spec.html#c03" class="font-semibold hover:text-primary">Block cash-out for self-excluded punters</a></td><td><span class="pill ph-pill-primary pill-sm">Compliance</span></td><td><span class="pill ph-pill-domain-risk pill-sm">Compliance</span></td><td class="text-right font-mono">2</td><td><span class="pill ph-pill-severity-critical pill-sm">P0</span></td><td class="font-mono text-xs">S25</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">MJ</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-13</td><td><a href="c-spec.html#c03" class="font-semibold hover:text-primary">Margin kill-switch for peak events</a></td><td><span class="pill ph-pill-primary pill-sm">Compliance</span></td><td><span class="pill ph-pill-domain-risk pill-sm">Risk</span></td><td class="text-right font-mono">3</td><td><span class="pill ph-pill-severity-high pill-sm">P1</span></td><td class="font-mono text-xs">S27</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">RK</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+              <tr class="hover:bg-surface-container-low"><td class="pl-4"><span class="material-symbols-outlined text-on-surface-variant cursor-grab text-[16px]">drag_indicator</span></td><td class="font-mono text-[11px] text-primary">CO-14</td><td><a href="c-spec.html#c03" class="font-semibold hover:text-primary">Trading desk dashboard · live cash-out P&amp;L</a></td><td><span class="pill ph-pill-primary pill-sm">Compliance</span></td><td><span class="pill ph-pill-domain-trading pill-sm">Trading</span></td><td class="text-right font-mono">3</td><td><span class="pill ph-pill-severity-high pill-sm">P1</span></td><td class="font-mono text-xs">S25</td><td class="text-right"><div class="w-6 h-6 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center ml-auto">RK</div></td><td><span class="material-symbols-outlined text-on-surface-variant text-[16px]">more_vert</span></td></tr>
+            </tbody>
+          </table>
+          <div class="px-4 py-3 bg-surface-container-low border-t border-outline-variant/40 flex items-center justify-between text-[11px] text-on-surface-variant"><span>14 stories · 50 SP · est. 3 sprints</span><div class="flex gap-2"><button class="px-2 py-1 hover:bg-white rounded">+ Story</button><a href="d-plan.html#d03" class="font-bold text-primary">Plan across sprints →</a></div></div>
+        </div>
+
+        <!-- Summary tiles -->
+        <div class="grid grid-cols-4 gap-4 mt-6">
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-4"><div class="eyebrow">Cash Out scope</div><div class="font-headline font-extrabold text-2xl mt-1">50 SP</div><div class="spec mt-1">Across 3 sprints</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-4"><div class="eyebrow">Blocked</div><div class="font-headline font-extrabold text-2xl mt-1 text-amber-700">1</div><div class="spec mt-1">CO-3 on CO-14</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-4"><div class="eyebrow">P0 / critical</div><div class="font-headline font-extrabold text-2xl mt-1">1</div><div class="spec mt-1">CO-11 self-exclusion</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-4"><div class="eyebrow">Domains touched</div><div class="font-headline font-extrabold text-2xl mt-1">4</div><div class="spec mt-1">Trading, Risk, FE, Compl.</div></div>
+        </div>
+
+        <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+          <a href="c-spec.html#c04" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>C04 · Design Gen</a>
+          <span class="text-outline">D01 · Backlog</span>
+          <a href="d-plan.html#d02" class="text-primary flex items-center gap-1">D02 · Domain Backlogs<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  D02  DOMAIN BACKLOGS                                        -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Planning · 02</span><h2 class="font-headline font-extrabold text-2xl mt-1">D02 · Domain Backlogs</h2></div><div class="spec">Same stories, sliced by squad</div></div>
+<div id="d02" class="screen" data-screen-label="D02 Domain Backlogs">
+  <div class="flex h-[920px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Planning</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <a href="b-prd.html#b03"><span class="material-symbols-outlined text-[18px]">assignment</span>Requests</a>
+        <div class="section">Planning</div>
+        <a href="d-plan.html#d01"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Backlog</a>
+        <a href="d-plan.html#d02" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">category</span>Domains</a>
+        <a href="d-plan.html#d03"><span class="material-symbols-outlined text-[18px]">calendar_month</span>Roadmap</a>
+        <a href="d-plan.html#d04"><span class="material-symbols-outlined text-[18px]">handshake</span>Tech handover</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="d-plan.html#d01" class="hover:text-primary">Backlog</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">By domain</span></div>
+        <div class="flex items-center gap-3"><a href="d-plan.html#d03" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">View on roadmap →</a></div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="max-w-7xl mx-auto">
+          <div class="mb-6"><h1 class="font-headline font-extrabold text-3xl tracking-tight">Domain backlogs</h1><p class="text-sm text-on-surface-variant mt-1">Four squads own Cash Out delivery. Each sees only their slice.</p></div>
+
+          <div class="grid grid-cols-4 gap-4">
+            <!-- Trading -->
+            <section class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+              <div class="px-4 py-3 border-b border-outline-variant/40 bg-gradient-to-r from-tertiary/10 to-transparent">
+                <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-lg bg-tertiary/10 text-tertiary flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">trending_up</span></div><h3 class="font-headline font-bold text-sm">Trading</h3></div><span class="text-[11px] font-mono text-on-surface-variant">5 · 24 SP</span></div>
+                <div class="flex items-center gap-1 text-[10px] mt-2 text-on-surface-variant"><div class="flex -space-x-1"><div class="w-5 h-5 rounded-full bg-amber-500 ring-2 ring-white"></div><div class="w-5 h-5 rounded-full bg-orange-500 ring-2 ring-white"></div></div><span>R. Kim · Sprints 25-27</span></div>
+              </div>
+              <ul class="divide-y divide-outline-variant/40 text-xs">
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-tertiary">CO-1</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="font-semibold mt-1">Cash-out offer calculation service</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-tertiary">CO-2</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="font-semibold mt-1">Offer-refresh cadence ≤ 3s</div></li>
+                <li class="px-4 py-3 bg-amber-50/40"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-tertiary">CO-3</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="font-semibold mt-1">Trader approval queue</div><div class="text-[10px] text-amber-700 mt-1">⚠ Blocked by CO-14</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-tertiary">CO-13</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="font-semibold mt-1">Margin kill-switch</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-tertiary">CO-14</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="font-semibold mt-1">Trading desk P&amp;L dashboard</div></li>
+              </ul>
+            </section>
+
+            <!-- Risk / Compliance -->
+            <section class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+              <div class="px-4 py-3 border-b border-outline-variant/40 bg-gradient-to-r from-rose-100 to-transparent">
+                <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">shield</span></div><h3 class="font-headline font-bold text-sm">Risk &amp; Compliance</h3></div><span class="text-[11px] font-mono text-on-surface-variant">4 · 10 SP</span></div>
+                <div class="flex items-center gap-1 text-[10px] mt-2 text-on-surface-variant"><div class="flex -space-x-1"><div class="w-5 h-5 rounded-full bg-rose-500 ring-2 ring-white"></div></div><span>M. Jain · Sprint 25</span></div>
+              </div>
+              <ul class="divide-y divide-outline-variant/40 text-xs">
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-rose-700">CO-4</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="font-semibold mt-1">Feed-latency suspend logic</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-rose-700">CO-5</span><span class="pill ph-pill-severity-medium pill-sm">P2</span></div><div class="font-semibold mt-1">Audit hash logging</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-rose-700">CO-11</span><span class="pill ph-pill-severity-critical pill-sm">P0</span></div><div class="font-semibold mt-1">Self-exclusion block</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-rose-700">CO-12</span><span class="pill ph-pill-severity-medium pill-sm">P2</span></div><div class="font-semibold mt-1">Cool-down enforcement</div></li>
+              </ul>
+            </section>
+
+            <!-- Front-end -->
+            <section class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+              <div class="px-4 py-3 border-b border-outline-variant/40 bg-gradient-to-r from-secondary/10 to-transparent">
+                <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-lg bg-secondary/15 text-secondary flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">smartphone</span></div><h3 class="font-headline font-bold text-sm">Front-end</h3></div><span class="text-[11px] font-mono text-on-surface-variant">5 · 18 SP</span></div>
+                <div class="flex items-center gap-1 text-[10px] mt-2 text-on-surface-variant"><div class="flex -space-x-1"><div class="w-5 h-5 rounded-full bg-emerald-500 ring-2 ring-white"></div><div class="w-5 h-5 rounded-full bg-indigo-500 ring-2 ring-white"></div></div><span>S. Morales · Sprints 25-26</span></div>
+              </div>
+              <ul class="divide-y divide-outline-variant/40 text-xs">
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-secondary">CO-6</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="font-semibold mt-1">Persistent Cash Out button</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-secondary">CO-7</span><span class="pill ph-pill-severity-medium pill-sm">P2</span></div><div class="font-semibold mt-1">Up/down pulse animation</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-secondary">CO-8</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="font-semibold mt-1">1-tap confirm + undo toast</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-secondary">CO-9</span><span class="pill ph-pill-severity-medium pill-sm">P2</span></div><div class="font-semibold mt-1">"How is this calculated?" drawer</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-secondary">CO-10</span><span class="pill ph-pill-severity-medium pill-sm">P2</span></div><div class="font-semibold mt-1">Wallet refresh on accept</div></li>
+              </ul>
+            </section>
+
+            <!-- Payments -->
+            <section class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+              <div class="px-4 py-3 border-b border-outline-variant/40 bg-gradient-to-r from-emerald-100 to-transparent">
+                <div class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">payments</span></div><h3 class="font-headline font-bold text-sm">Payments</h3></div><span class="text-[11px] font-mono text-on-surface-variant">2 · 5 SP</span></div>
+                <div class="flex items-center gap-1 text-[10px] mt-2 text-on-surface-variant"><div class="flex -space-x-1"><div class="w-5 h-5 rounded-full bg-sky-500 ring-2 ring-white"></div></div><span>A. Park · Sprint 26</span></div>
+              </div>
+              <ul class="divide-y divide-outline-variant/40 text-xs">
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-emerald-700">PAY-201</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="font-semibold mt-1">Atomic wallet credit for cash-out acceptance</div></li>
+                <li class="px-4 py-3"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-emerald-700">PAY-202</span><span class="pill ph-pill-severity-medium pill-sm">P2</span></div><div class="font-semibold mt-1">Per-currency rounding rules for offers</div></li>
+              </ul>
+            </section>
+          </div>
+
+          <!-- Dependency map -->
+          <section class="bg-white border border-outline-variant/30 rounded-xl p-6 mt-6">
+            <div class="flex items-center justify-between mb-4"><h3 class="font-headline font-bold text-sm">Cross-domain dependencies</h3><span class="spec">Generated from story links · 3 critical paths</span></div>
+            <div class="relative h-40">
+              <!-- nodes -->
+              <div class="absolute left-[5%] top-1/2 -translate-y-1/2 bg-tertiary/10 text-tertiary border border-tertiary/30 rounded-lg px-3 py-1.5 text-[11px] font-bold">Trading<br/><span class="font-mono text-[9px]">CO-1,2,3,13,14</span></div>
+              <div class="absolute left-[32%] top-[15%] bg-rose-100 text-rose-700 border border-rose-300 rounded-lg px-3 py-1.5 text-[11px] font-bold">Risk &amp; Compl.<br/><span class="font-mono text-[9px]">CO-4,5,11,12</span></div>
+              <div class="absolute left-[58%] top-1/2 -translate-y-1/2 bg-secondary/15 text-secondary border border-secondary/30 rounded-lg px-3 py-1.5 text-[11px] font-bold">Front-end<br/><span class="font-mono text-[9px]">CO-6→10</span></div>
+              <div class="absolute right-[5%] top-[60%] bg-emerald-100 text-emerald-700 border border-emerald-300 rounded-lg px-3 py-1.5 text-[11px] font-bold">Payments<br/><span class="font-mono text-[9px]">PAY-201,202</span></div>
+              <svg class="absolute inset-0 w-full h-full" style="z-index:0"><defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#777587"/></marker></defs>
+                <path d="M 110 80 C 200 40, 240 30, 340 50" stroke="#777587" stroke-width="1.5" fill="none" marker-end="url(#arr)" />
+                <path d="M 110 80 C 280 100, 420 90, 540 80" stroke="#3525cd" stroke-width="2" fill="none" marker-end="url(#arr)" />
+                <path d="M 440 60 C 500 80, 540 85, 620 100" stroke="#777587" stroke-width="1.5" fill="none" marker-end="url(#arr)" />
+                <path d="M 650 90 C 750 100, 840 110, 900 115" stroke="#047857" stroke-width="1.5" fill="none" marker-end="url(#arr)" />
+              </svg>
+            </div>
+          </section>
+
+          <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+            <a href="d-plan.html#d01" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>D01 · Backlog</a>
+            <span class="text-outline">D02 · Domain Backlogs</span>
+            <a href="d-plan.html#d03" class="text-primary flex items-center gap-1">D03 · Roadmap<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  D03  ROADMAP                                                -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Planning · 03</span><h2 class="font-headline font-extrabold text-2xl mt-1">D03 · Quarterly Roadmap</h2></div><div class="spec">Cash Out lands in Q3 · dependencies charted</div></div>
+<div id="d03" class="screen" data-screen-label="D03 Roadmap">
+  <div class="flex h-[960px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Planning</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Planning</div>
+        <a href="d-plan.html#d01"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Backlog</a>
+        <a href="d-plan.html#d02"><span class="material-symbols-outlined text-[18px]">category</span>Domains</a>
+        <a href="d-plan.html#d03" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">calendar_month</span>Roadmap</a>
+        <a href="d-plan.html#d04"><span class="material-symbols-outlined text-[18px]">handshake</span>Tech handover</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="d-plan.html#d02" class="hover:text-primary">Domains</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Roadmap 2026</span></div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center bg-white border border-outline-variant/40 rounded-lg text-xs font-semibold overflow-hidden"><button class="px-3 py-1.5 bg-primary text-white">Quarter</button><button class="px-3 py-1.5 text-on-surface-variant">Month</button><button class="px-3 py-1.5 text-on-surface-variant">Now/Next/Later</button></div>
+          <a href="d-plan.html#d04" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Tech handover →</a>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="flex items-end justify-between mb-6">
+          <div><h1 class="font-headline font-extrabold text-3xl tracking-tight">2026 roadmap</h1><p class="text-sm text-on-surface-variant mt-1">Locked Q3 scope · rolling window · last re-plan 16 Apr</p></div>
+          <div class="flex gap-2 text-[11px] text-on-surface-variant"><div class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-tertiary"></span>Trading</div><div class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-rose-500"></span>Risk</div><div class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-secondary"></span>Front-end</div><div class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-500"></span>Payments</div></div>
+        </div>
+
+        <!-- Gantt-ish -->
+        <div class="bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+          <!-- Month header -->
+          <div class="grid grid-cols-[180px_repeat(12,1fr)] border-b border-outline-variant/40 bg-surface-container-low text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">
+            <div class="p-3">Initiative</div>
+            <div class="p-3 text-center border-l border-outline-variant/30">Jan</div><div class="p-3 text-center">Feb</div><div class="p-3 text-center border-r-2 border-primary/20">Mar</div>
+            <div class="p-3 text-center">Apr</div><div class="p-3 text-center">May</div><div class="p-3 text-center border-r-2 border-primary/20">Jun</div>
+            <div class="p-3 text-center text-primary bg-primary/5">Jul</div><div class="p-3 text-center text-primary bg-primary/5">Aug</div><div class="p-3 text-center text-primary bg-primary/5 border-r-2 border-primary/20">Sep</div>
+            <div class="p-3 text-center">Oct</div><div class="p-3 text-center">Nov</div><div class="p-3 text-center">Dec</div>
+          </div>
+
+          <!-- Rows -->
+          <div class="divide-y divide-outline-variant/40 text-xs">
+            <!-- Cash Out -->
+            <div class="grid grid-cols-[180px_repeat(12,1fr)] relative items-center h-14 bg-primary/5">
+              <div class="p-3 font-bold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span>Cash Out v1</div>
+              <div class="absolute top-3 bottom-3 left-[calc(180px+50%*1/12)] right-[calc(25%)] rounded-md bg-gradient-to-r from-primary to-[#4f46e5] text-white px-3 flex items-center justify-between text-[11px] font-bold shadow-lg shadow-primary/25">
+                <span>Cash Out v1 · Offer engine + mobile UI</span>
+                <span class="text-white/80 font-mono text-[10px]">PRD-087 · 50 SP</span>
+              </div>
+            </div>
+            <!-- Multi-currency -->
+            <div class="grid grid-cols-[180px_repeat(12,1fr)] relative items-center h-12">
+              <div class="p-3 font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Multi-currency wallet</div>
+              <div class="absolute top-3 bottom-3 left-[calc(180px+27%)] right-[calc(100%-180px-42%)] rounded-md bg-emerald-500/80 text-white px-3 flex items-center text-[11px] font-semibold">
+                In UAT → launch May
+              </div>
+            </div>
+            <!-- Bet builder -->
+            <div class="grid grid-cols-[180px_repeat(12,1fr)] relative items-center h-12">
+              <div class="p-3 font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary"></span>Bet Builder 2.0</div>
+              <div class="absolute top-3 bottom-3 left-[calc(180px+63%)] right-[calc(100%-180px-85%)] rounded-md bg-secondary/80 text-white px-3 flex items-center text-[11px] font-semibold">
+                After Cash Out · Q4
+              </div>
+            </div>
+            <!-- Live overlay -->
+            <div class="grid grid-cols-[180px_repeat(12,1fr)] relative items-center h-12">
+              <div class="p-3 font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary"></span>Live stream overlay odds</div>
+              <div class="absolute top-3 bottom-3 left-[calc(180px+63%)] right-[calc(100%-180px-80%)] rounded-md bg-secondary/60 text-white px-3 flex items-center text-[11px] font-semibold">Scoping</div>
+            </div>
+            <!-- Responsible play -->
+            <div class="grid grid-cols-[180px_repeat(12,1fr)] relative items-center h-12">
+              <div class="p-3 font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span>Responsible play v2</div>
+              <div class="absolute top-3 bottom-3 left-[calc(180px+42%)] right-[calc(100%-180px-70%)] rounded-md bg-rose-500/80 text-white px-3 flex items-center text-[11px] font-semibold">Regulatory driven</div>
+            </div>
+            <!-- KYC -->
+            <div class="grid grid-cols-[180px_repeat(12,1fr)] relative items-center h-12">
+              <div class="p-3 font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span>KYC Tier-2</div>
+              <div class="absolute top-3 bottom-3 left-[calc(180px+8%)] right-[calc(100%-180px-22%)] rounded-md bg-rose-500/60 text-white px-3 flex items-center text-[11px] font-semibold">Launched · Mar</div>
+            </div>
+            <!-- Esports -->
+            <div class="grid grid-cols-[180px_repeat(12,1fr)] relative items-center h-12">
+              <div class="p-3 font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-tertiary"></span>Esports market expansion</div>
+              <div class="absolute top-3 bottom-3 left-[calc(180px+80%)] right-[calc(100%-180px-97%)] rounded-md bg-tertiary/60 text-white px-3 flex items-center text-[11px] font-semibold">Q4 kickoff</div>
+            </div>
+          </div>
+
+          <!-- Now markers -->
+          <div class="grid grid-cols-[180px_repeat(12,1fr)] border-t border-outline-variant/40 relative">
+            <div class="col-span-1"></div>
+            <div class="col-start-5 col-end-6 relative h-8">
+              <div class="absolute inset-y-0 left-[30%] w-px bg-rose-500"></div>
+              <div class="absolute -top-1 left-[30%] -translate-x-1/2 bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">TODAY</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Objectives row -->
+        <div class="grid grid-cols-3 gap-4 mt-6">
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Q3 objective</div><div class="font-headline font-extrabold text-lg mt-1">Close the Cash Out gap</div><div class="spec mt-1">Parity with Bet365/WilliamHill on single-bet cash out</div><div class="mt-3 h-1.5 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-primary" style="width:18%"></div></div><div class="spec mt-1">18% · on track</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Q3 objective</div><div class="font-headline font-extrabold text-lg mt-1">+12% retention · single-bet segment</div><div class="spec mt-1">Primary north-star for Cash Out success</div><div class="mt-3 h-1.5 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-primary" style="width:8%"></div></div><div class="spec mt-1">Baseline phase</div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Q3 guardrail</div><div class="font-headline font-extrabold text-lg mt-1">Margin 6.8–8.5%</div><div class="spec mt-1">Cash-out cannot push book margin outside band</div><div class="mt-3 h-1.5 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-emerald-500" style="width:72%"></div></div><div class="spec mt-1">YTD · 7.2%</div></div>
+        </div>
+
+        <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+          <a href="d-plan.html#d02" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>D02 · Domains</a>
+          <span class="text-outline">D03 · Roadmap</span>
+          <a href="d-plan.html#d04" class="text-primary flex items-center gap-1">D04 · Tech Handover<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  D04  TECH HANDOVER                                          -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Planning · 04</span><h2 class="font-headline font-extrabold text-2xl mt-1">D04 · Tech Handover Package</h2></div><div class="spec">Everything Eng needs to start Sprint 25</div></div>
+<div id="d04" class="screen" data-screen-label="D04 Tech Handover">
+  <div class="flex h-[1020px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Planning</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Planning</div>
+        <a href="d-plan.html#d01"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Backlog</a>
+        <a href="d-plan.html#d02"><span class="material-symbols-outlined text-[18px]">category</span>Domains</a>
+        <a href="d-plan.html#d03"><span class="material-symbols-outlined text-[18px]">calendar_month</span>Roadmap</a>
+        <a href="d-plan.html#d04" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">handshake</span>Tech handover</a>
+        <div class="section">Delivery</div>
+        <a href="e-ship.html#e01"><span class="material-symbols-outlined text-[18px]">rocket_launch</span>Delivery</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="d-plan.html#d03" class="hover:text-primary">Roadmap</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Tech handover · Cash Out</span></div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant border border-outline-variant/50 rounded-lg flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">download</span>Export ZIP</button>
+          <a href="e-ship.html#e01" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Hand to Delivery →</a>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="max-w-6xl mx-auto">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <div class="flex items-center gap-2 mb-2"><span class="pill ph-pill-primary">PRD-087</span><span class="pill ph-pill-approved">Sealed for dev</span><span class="pill ph-pill-domain-trading pill-sm">Trading</span><span class="pill ph-pill-domain-risk pill-sm">Risk</span><span class="pill ph-pill-domain-frontend pill-sm">FE</span></div>
+              <h1 class="font-headline font-extrabold text-3xl tracking-tight">Cash Out v1 · Tech handover</h1>
+              <p class="text-sm text-on-surface-variant mt-1">Sealed 16 Apr by Kurt Carabott · <b>11 artefacts</b> bundled · starts Sprint 25 on 21 Apr</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="pill ph-pill-approved flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Ready</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-5">
+            <!-- Systems diagram -->
+            <section class="col-span-2 bg-white border border-outline-variant/30 rounded-xl p-6">
+              <div class="eyebrow mb-1">Architecture overview</div>
+              <h3 class="font-headline font-bold text-lg">Cash-out data path</h3>
+
+              <!-- pipeline -->
+              <div class="mt-5 grid grid-cols-5 items-center gap-2 text-[11px]">
+                <div class="p-3 rounded-lg border-2 border-dashed border-outline-variant/60 bg-surface-container-low text-center"><div class="font-bold">Feed</div><div class="spec">Sportradar · Betradar</div></div>
+                <div class="text-center text-on-surface-variant"><span class="material-symbols-outlined">arrow_forward</span></div>
+                <div class="p-3 rounded-lg bg-tertiary/10 border border-tertiary/30 text-center"><div class="font-bold text-tertiary">Odds engine</div><div class="spec">Rust · 12 nodes</div></div>
+                <div class="text-center text-on-surface-variant"><span class="material-symbols-outlined">arrow_forward</span></div>
+                <div class="p-3 rounded-lg bg-primary/10 border-2 border-primary/50 text-center"><div class="font-bold text-primary">Cash-out svc</div><div class="spec">NEW · Kafka consumer</div></div>
+              </div>
+              <div class="mt-2 grid grid-cols-5 items-center gap-2 text-[11px]">
+                <div></div><div></div>
+                <div class="p-3 rounded-lg bg-rose-100 border border-rose-300 text-center"><div class="font-bold text-rose-700">Risk guard</div><div class="spec">€5k approval queue</div></div>
+                <div class="text-center text-on-surface-variant"><span class="material-symbols-outlined">arrow_forward</span></div>
+                <div class="p-3 rounded-lg bg-secondary/15 border border-secondary/30 text-center"><div class="font-bold text-secondary">Mobile + web</div><div class="spec">React · Kotlin · Swift</div></div>
+              </div>
+              <div class="mt-2 grid grid-cols-5 items-center gap-2 text-[11px]">
+                <div></div><div></div><div></div><div></div>
+                <div class="p-3 rounded-lg bg-emerald-100 border border-emerald-300 text-center"><div class="font-bold text-emerald-700">Wallet svc</div><div class="spec">Atomic credit</div></div>
+              </div>
+
+              <div class="mt-6 grid grid-cols-3 gap-3 text-xs">
+                <div class="p-3 rounded-lg bg-surface-container-low"><div class="eyebrow">Throughput target</div><div class="font-headline font-extrabold text-lg mt-0.5">8k offers/s</div></div>
+                <div class="p-3 rounded-lg bg-surface-container-low"><div class="eyebrow">Latency p99</div><div class="font-headline font-extrabold text-lg mt-0.5">280ms</div></div>
+                <div class="p-3 rounded-lg bg-surface-container-low"><div class="eyebrow">Data stores</div><div class="font-headline font-extrabold text-lg mt-0.5">Redis + Postgres</div></div>
+              </div>
+            </section>
+
+            <!-- Artefact checklist -->
+            <aside class="bg-white border border-outline-variant/30 rounded-xl p-5">
+              <div class="eyebrow mb-3">Artefacts (11)</div>
+              <ul class="text-xs space-y-2.5">
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span><div><b>PRD-087</b> · <a href="b-prd.html#b04" class="text-primary">sealed v3</a></div></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span><div><b>14 user stories</b> · <a href="c-spec.html#c03" class="text-primary">CO-1 → CO-14</a></div></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span><div>Mobile design · <a href="c-spec.html#c04" class="text-primary">Variant A locked</a></div></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span><div>API contract · <code class="text-primary font-mono text-[11px]">/v1/cashout/offer</code></div></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span><div>Kafka topic schema · <code class="font-mono text-[11px]">cashout.offers.v1</code></div></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span><div>Threat model · MGA audit checklist</div></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span><div>Perf test plan · 8k rps for 2h</div></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span><div>Feature flag plan · <code class="font-mono text-[11px]">ff.cashout.v1</code></div></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-600 text-[18px]">check_circle</span><div>Rollout plan · shadow → 1% → 10% → GA</div></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-amber-600 text-[18px]">pending</span><div>Load test harness · due Sprint 25 day 1</div></li>
+                <li class="flex items-center gap-2"><span class="material-symbols-outlined text-amber-600 text-[18px]">pending</span><div>Chaos-monkey plan · due Sprint 25 day 3</div></li>
+              </ul>
+            </aside>
+
+            <!-- API contract -->
+            <section class="col-span-2 bg-[#0f172a] text-[#e2e8f0] rounded-xl p-6">
+              <div class="flex items-center justify-between mb-3"><div class="eyebrow text-white">API contract · POST /v1/cashout/offer</div><span class="text-[10px] font-mono text-white/60">JSON · internal</span></div>
+              <pre class="font-mono text-[12px] leading-relaxed overflow-x-auto"><code>// Request
+{
+  <span class="text-violet-300">"betId"</span>: <span class="text-emerald-300">"BET-9214-AL"</span>,
+  <span class="text-violet-300">"punterId"</span>: <span class="text-emerald-300">"P-482910"</span>
+}
+
+// Response · 200 OK
+{
+  <span class="text-violet-300">"offerId"</span>: <span class="text-emerald-300">"OFF-44a1-9e"</span>,
+  <span class="text-violet-300">"amount"</span>: <span class="text-amber-300">28.40</span>,
+  <span class="text-violet-300">"currency"</span>: <span class="text-emerald-300">"EUR"</span>,
+  <span class="text-violet-300">"direction"</span>: <span class="text-emerald-300">"up"</span>,    <span class="text-slate-500">// up | down | hold</span>
+  <span class="text-violet-300">"expiresAt"</span>: <span class="text-emerald-300">"2026-04-18T19:42:08Z"</span>,
+  <span class="text-violet-300">"breakdown"</span>: {
+    <span class="text-violet-300">"stake"</span>: <span class="text-amber-300">20.00</span>,
+    <span class="text-violet-300">"currentOdds"</span>: <span class="text-amber-300">1.52</span>,
+    <span class="text-violet-300">"originalOdds"</span>: <span class="text-amber-300">2.10</span>,
+    <span class="text-violet-300">"marginPct"</span>: <span class="text-amber-300">5.0</span>
+  },
+  <span class="text-violet-300">"auditHash"</span>: <span class="text-emerald-300">"0x4a9f…c21e"</span>
+}
+
+// Errors · 409 suspended · 423 feed-latency · 403 self-excluded</code></pre>
+            </section>
+
+            <!-- Team -->
+            <aside class="bg-white border border-outline-variant/30 rounded-xl p-5">
+              <div class="eyebrow mb-3">Delivery squad</div>
+              <ul class="text-xs space-y-3">
+                <li class="flex gap-2 items-center"><div class="w-8 h-8 rounded-full bg-amber-500 text-white text-[10px] font-bold flex items-center justify-center">RK</div><div><div class="font-bold">R. Kim</div><div class="spec">Trading PM (lead)</div></div></li>
+                <li class="flex gap-2 items-center"><div class="w-8 h-8 rounded-full bg-sky-500 text-white text-[10px] font-bold flex items-center justify-center">AP</div><div><div class="font-bold">A. Park</div><div class="spec">Backend · offer engine</div></div></li>
+                <li class="flex gap-2 items-center"><div class="w-8 h-8 rounded-full bg-emerald-500 text-white text-[10px] font-bold flex items-center justify-center">SM</div><div><div class="font-bold">S. Morales</div><div class="spec">Front-end lead</div></div></li>
+                <li class="flex gap-2 items-center"><div class="w-8 h-8 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center">MJ</div><div><div class="font-bold">M. Jain</div><div class="spec">Risk &amp; Compliance</div></div></li>
+                <li class="flex gap-2 items-center"><div class="w-8 h-8 rounded-full bg-indigo-500 text-white text-[10px] font-bold flex items-center justify-center">TY</div><div><div class="font-bold">T. Yamada</div><div class="spec">SRE · load + rollout</div></div></li>
+              </ul>
+              <a href="e-ship.html#e01" class="block text-center mt-5 w-full bg-primary text-white text-xs font-bold py-2 rounded-lg">Open delivery board →</a>
+            </aside>
+          </div>
+
+          <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+            <a href="d-plan.html#d03" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>D03 · Roadmap</a>
+            <span class="text-outline">D04 · Tech Handover</span>
+            <a href="e-ship.html#e01" class="text-primary flex items-center gap-1">E01 · Delivery<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  E01  DELIVERY BOARD                                         -->
+<!-- ============================================================ -->
+
+<script>
+// Scrollspy for the floating TOC
+(function(){
+  const links = document.querySelectorAll('nav.toc a');
+  const map = new Map();
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) map.set(el, a);
+  });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a = map.get(e.target);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  map.forEach((_,el)=>io.observe(el));
+})();
+</script>
+</body>
+</html>

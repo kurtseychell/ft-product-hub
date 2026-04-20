@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sportsbook Hub — Cash Out Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+tailwind.config = {
+  darkMode:'class',
+  theme: { extend: {
+    colors: {
+      primary:'#3525cd','primary-container':'#4f46e5','primary-fixed':'#e2dfff','primary-fixed-dim':'#c3c0ff',
+      'on-primary':'#ffffff','on-primary-container':'#dad7ff',
+      secondary:'#5b598c','secondary-container':'#c7c3fe','on-secondary-container':'#514f81',
+      tertiary:'#7e3000','tertiary-container':'#a44100',
+      background:'#f7f9fb',surface:'#f7f9fb',
+      'surface-container-lowest':'#ffffff','surface-container-low':'#f2f4f6','surface-container':'#eceef0',
+      'surface-container-high':'#e6e8ea','surface-container-highest':'#e0e3e5',
+      'on-surface':'#191c1e','on-surface-variant':'#464555',
+      outline:'#777587','outline-variant':'#c7c4d8',
+      error:'#ba1a1a','error-container':'#ffdad6','on-error-container':'#93000a',
+      sidebar:'#1E1B4B',
+      'odds-up':'#047857','odds-down':'#b91c1c'
+    },
+    borderRadius:{ DEFAULT:'0.25rem', lg:'0.5rem', xl:'0.75rem', full:'9999px' },
+    fontFamily:{ body:['Inter'], headline:['Manrope'], label:['Inter'], mono:['JetBrains Mono'] }
+  }}
+};
+</script>
+<style>
+/* ===========================================================
+   Sportsbook Hub · Canonical Design System
+   Applies to every A/B/C/D/E/Z screen. Do not fork locally.
+   =========================================================== */
+:root {
+  /* Primary — indigo (Product Hub) */
+  --primary:#3525cd; --primary-container:#4f46e5;
+  --primary-fixed:#e2dfff; --primary-fixed-dim:#c3c0ff;
+  --on-primary:#ffffff; --on-primary-container:#dad7ff;
+
+  /* Secondary / Tertiary */
+  --secondary:#5b598c; --secondary-container:#c7c3fe; --on-secondary-container:#514f81;
+  --tertiary:#7e3000; --tertiary-container:#a44100;
+
+  /* Surfaces */
+  --background:#f7f9fb; --surface:#f7f9fb;
+  --surface-container-lowest:#ffffff; --surface-container-low:#f2f4f6;
+  --surface-container:#eceef0; --surface-container-high:#e6e8ea; --surface-container-highest:#e0e3e5;
+
+  /* Text + outlines */
+  --on-surface:#191c1e; --on-surface-variant:#464555;
+  --outline:#777587; --outline-variant:#c7c4d8;
+
+  /* Semantic */
+  --error:#ba1a1a; --error-container:#ffdad6; --on-error-container:#93000a;
+  --success:#047857; --warning:#b45309;
+
+  /* Sportsbook odds colours (semantic – do not reuse for UI state) */
+  --odds-up:#047857; --odds-down:#b91c1c; --odds-hold:#475569;
+
+  /* Navigation */
+  --sidebar:#1E1B4B; /* deep indigo — official shell */
+}
+
+html, body { background:#eceef0; color:var(--on-surface); }
+body { font-family:'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+/* Type — Inter body / Manrope display, as per Product Hub system */
+.font-body{font-family:'Inter',sans-serif}
+.font-headline{font-family:'Manrope',sans-serif;letter-spacing:-.01em}
+.font-mono-alt{font-family:'JetBrains Mono','SFMono-Regular',monospace}
+.eyebrow{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:var(--primary)}
+.spec{font-family:'Inter';font-size:11px;color:var(--on-surface-variant)}
+
+/* Material Symbols – fill variant */
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.msym-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+/* Sidebar shell — shared across every hub screen */
+.sidebar-nav a{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:.5rem;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);transition:all .15s;font-family:'Inter'}
+.sidebar-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+.sidebar-nav a.active{color:white;background:rgba(255,255,255,.12);font-weight:600}
+.sidebar-nav .section{font-size:10px;font-weight:800;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.16em;padding:14px 14px 6px}
+
+/* Topnav */
+.topnav{background:rgba(255,255,255,.90);backdrop-filter:blur(12px)}
+
+/* Inputs (canonical) */
+.ph-input{background:var(--surface-container-low);border:1px solid transparent;border-radius:.5rem;padding:9px 12px;font-size:13px;width:100%;transition:all .15s;color:var(--on-surface)}
+.ph-input:focus{outline:none;background:#fff;border-color:var(--primary);box-shadow:0 0 0 4px rgba(53,37,205,.10)}
+.ph-input::placeholder{color:var(--on-surface-variant);opacity:.7}
+
+/* Pills / chips */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:9999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pill-sm{padding:1px 8px;font-size:10px}
+.ph-pill-approved{background:#d1fae5;color:#065f46}
+.ph-pill-review{background:#fef3c7;color:#92400e}
+.ph-pill-revised{background:#dbeafe;color:#1d4ed8}
+.ph-pill-pending{background:#f1f5f9;color:#334155}
+.ph-pill-rejected{background:#fee2e2;color:#991b1b}
+.ph-pill-primary{background:rgba(53,37,205,.10);color:var(--primary)}
+.ph-pill-live{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-trading{background:rgba(126,48,0,.10);color:#7e3000}
+.ph-pill-domain-risk{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-frontend{background:#c7c3fe;color:#514f81}
+.ph-pill-domain-payments{background:#d1fae5;color:#065f46}
+.ph-pill-severity-critical{background:#fee2e2;color:#991b1b}
+.ph-pill-severity-high{background:#ffedd5;color:#9a3412}
+.ph-pill-severity-medium{background:#fef3c7;color:#92400e}
+.ph-pill-severity-low{background:#dbeafe;color:#1d4ed8}
+
+/* AI chip gradient — same across screens */
+.ai-chip{background:linear-gradient(135deg,#3525cd 0%,#7c3aed 100%);color:white}
+
+/* Shared screen shell */
+.screen{max-width:1440px;margin:40px auto;background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(25,28,30,.08),0 2px 6px rgba(25,28,30,.04);scroll-margin-top:80px}
+.screen-label{max-width:1440px;margin:60px auto 0;padding:0 4px;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+
+/* Floating TOC */
+.toc{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:40;background:white;border:1px solid rgba(199,196,216,.5);border-radius:12px;padding:12px 10px;box-shadow:0 12px 32px rgba(25,28,30,.08);font-family:'Inter';font-size:11px;max-height:82vh;overflow-y:auto}
+.toc a{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:6px;color:var(--on-surface-variant);font-weight:600;text-decoration:none}
+.toc a:hover{background:var(--surface-container-low);color:var(--on-surface)}
+.toc a.active{background:rgba(53,37,205,.08);color:var(--primary)}
+.toc .toc-group{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--outline);padding:8px 8px 4px}
+@media (max-width:1320px){.toc{display:none}}
+
+/* Odds display tokens (reusable across sportsbook listings) */
+.odds{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--on-surface);padding:4px 8px;border-radius:6px;background:var(--surface-container-low);border:1px solid var(--outline-variant);font-size:12px;display:inline-block;min-width:48px;text-align:center}
+.odds.up{color:var(--odds-up);border-color:rgba(4,120,87,.4);background:rgba(4,120,87,.06)}
+.odds.down{color:var(--odds-down);border-color:rgba(185,28,28,.4);background:rgba(185,28,28,.06)}
+.odds.live{color:white;background:var(--odds-down);border-color:var(--odds-down);animation:pulse-live 2s ease-in-out infinite}
+@keyframes pulse-live{0%,100%{box-shadow:0 0 0 0 rgba(185,28,28,.5)}50%{box-shadow:0 0 0 6px rgba(185,28,28,0)}}
+
+/* Bet slip + cashout pill */
+.cashout-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:800;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#7c2d12;text-transform:uppercase;letter-spacing:.04em}
+
+/* Chart grid helper */
+.chart-grid{background-image:linear-gradient(var(--surface-container-highest) 1px,transparent 1px),linear-gradient(90deg,var(--surface-container-highest) 1px,transparent 1px);background-size:100% 25%,16.66% 100%}
+
+/* Scrollbar hide */
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{scrollbar-width:none}
+
+</style>
+</head>
+<body>
+<nav class="toc">
+<div class="toc-group">Overview</div>
+<a href="cover.html"><span class="w-8 text-[10px] font-mono text-primary">•</span>Cover</a>
+<div class="toc-group">Auth · Shell</div>
+<a href="a-auth.html#a01"><span class="w-8 text-[10px] font-mono text-primary">A01</span>Login</a>
+<a href="a-auth.html#a02"><span class="w-8 text-[10px] font-mono text-primary">A02</span>Dashboard</a>
+<div class="toc-group">Idea → PRD</div>
+<a href="b-prd.html#b01"><span class="w-8 text-[10px] font-mono text-primary">B01</span>Submit idea</a>
+<a href="b-prd.html#b02"><span class="w-8 text-[10px] font-mono text-primary">B02</span>PRD Builder</a>
+<a href="b-prd.html#b03"><span class="w-8 text-[10px] font-mono text-primary">B03</span>Request track</a>
+<a href="b-prd.html#b04"><span class="w-8 text-[10px] font-mono text-primary">B04</span>PRD Document</a>
+<a href="b-prd.html#b05"><span class="w-8 text-[10px] font-mono text-primary">B05</span>PRD Eval</a>
+<div class="toc-group">Discovery → Spec</div>
+<a href="c-spec.html#c01"><span class="w-8 text-[10px] font-mono text-primary">C01</span>Research</a>
+<a href="c-spec.html#c02"><span class="w-8 text-[10px] font-mono text-primary">C02</span>RICE</a>
+<a href="c-spec.html#c03"><span class="w-8 text-[10px] font-mono text-primary">C03</span>Stories</a>
+<a href="c-spec.html#c04"><span class="w-8 text-[10px] font-mono text-primary">C04</span>Design</a>
+<div class="toc-group">Planning</div>
+<a href="d-plan.html#d01"><span class="w-8 text-[10px] font-mono text-primary">D01</span>Backlog</a>
+<a href="d-plan.html#d02"><span class="w-8 text-[10px] font-mono text-primary">D02</span>Domains</a>
+<a href="d-plan.html#d03"><span class="w-8 text-[10px] font-mono text-primary">D03</span>Roadmap</a>
+<a href="d-plan.html#d04"><span class="w-8 text-[10px] font-mono text-primary">D04</span>Handover</a>
+<div class="toc-group">Delivery</div>
+<a href="e-ship.html#e01"><span class="w-8 text-[10px] font-mono text-primary">E01</span>Delivery</a>
+<a href="e-ship.html#e02"><span class="w-8 text-[10px] font-mono text-primary">E02</span>UAT</a>
+<a href="e-ship.html#e03"><span class="w-8 text-[10px] font-mono text-primary">E03</span>Release</a>
+<a href="e-ship.html#e04"><span class="w-8 text-[10px] font-mono text-primary">E04</span>Metrics</a>
+<div class="toc-group">Meta</div>
+<a href="z-meta.html#z01"><span class="w-8 text-[10px] font-mono text-primary">Z01</span>LLM usage</a>
+</nav>
+<div id="cover" class="screen p-12" style="scroll-margin-top:40px">
+  <div class="flex items-center gap-4 mb-10">
+    <div class="w-12 h-12 rounded-xl bg-sidebar text-white flex items-center justify-center"><span class="material-symbols-outlined msym-fill">casino</span></div>
+    <div>
+      <div class="eyebrow">Sportsbook Hub · End-to-end product case</div>
+      <h1 class="font-headline font-extrabold text-4xl tracking-tight mt-1">Cash Out — idea to release</h1>
+    </div>
+  </div>
+
+  <p class="text-on-surface-variant max-w-2xl leading-relaxed mb-10">A single realistic product proposal walked through every stage of the Hub: a punter-initiated <b>Cash Out</b> feature that lets customers settle live bets before the final whistle for a dynamic amount driven by in-play odds.</p>
+
+  <div class="grid grid-cols-4 gap-4 mb-10">
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Proposal</div><div class="font-headline font-extrabold text-2xl mt-1">Cash Out v1</div><div class="spec mt-2">Single-bet, pre-match + in-play</div></div>
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Target</div><div class="font-headline font-extrabold text-2xl mt-1">Q3 2026</div><div class="spec mt-2">Europe + LATAM rollout</div></div>
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Revenue uplift</div><div class="font-headline font-extrabold text-2xl mt-1">+€4.2M</div><div class="spec mt-2">Modelled 12-month NGR</div></div>
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Screens</div><div class="font-headline font-extrabold text-2xl mt-1">20</div><div class="spec mt-2">A–E + Z · consistent shell</div></div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-6">
+    <div class="bg-white border border-outline-variant/30 rounded-xl p-6">
+      <div class="eyebrow mb-3">The flow</div>
+      <ol class="text-sm space-y-2.5">
+        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shrink-0">A</span><div><b>Auth &amp; shell</b> — operator logs in, lands on the daily trading dashboard.</div></li>
+        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shrink-0">B</span><div><b>Idea → PRD</b> — Cash Out is raised, drafted in the PRD builder, evaluated, approved.</div></li>
+        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shrink-0">C</span><div><b>Discovery → spec</b> — research, RICE scoring, stories, design generation.</div></li>
+        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shrink-0">D</span><div><b>Planning</b> — enters backlog, splits by domain, lands on roadmap, tech handover.</div></li>
+        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[11px] font-bold shrink-0">E</span><div><b>Delivery</b> — sprint execution, UAT sign-off, release notes, success metrics.</div></li>
+        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-sidebar text-white flex items-center justify-center text-[11px] font-bold shrink-0">Z</span><div><b>Admin</b> — LLM usage &amp; costs across the journey.</div></li>
+      </ol>
+    </div>
+    <div class="bg-gradient-to-br from-primary to-[#4f46e5] text-white rounded-xl p-6 relative overflow-hidden">
+      <div class="relative z-10">
+        <div class="eyebrow text-white/80">Start here</div>
+        <h3 class="font-headline font-extrabold text-xl mt-2">Walk the journey A → Z</h3>
+        <p class="text-white/85 text-sm mt-2 max-w-sm">Every CTA links to the next stage. Use the floating index on the left, or click through screen-by-screen.</p>
+        <div class="flex gap-2 mt-5">
+          <a href="a-auth.html#a01" class="bg-white text-primary px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-1.5">Enter at A01 Login <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+          <a href="a-auth.html#a02" class="bg-white/10 border border-white/20 text-white px-4 py-2 rounded-lg text-sm font-bold">Skip to dashboard</a>
+        </div>
+      </div>
+      <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  A01  LOGIN                                                  -->
+<!-- ============================================================ -->
+
+<script>
+// Scrollspy for the floating TOC
+(function(){
+  const links = document.querySelectorAll('nav.toc a');
+  const map = new Map();
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) map.set(el, a);
+  });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a = map.get(e.target);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  map.forEach((_,el)=>io.observe(el));
+})();
+</script>
+</body>
+</html>

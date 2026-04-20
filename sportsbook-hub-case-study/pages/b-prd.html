@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sportsbook Hub — Cash Out Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+tailwind.config = {
+  darkMode:'class',
+  theme: { extend: {
+    colors: {
+      primary:'#3525cd','primary-container':'#4f46e5','primary-fixed':'#e2dfff','primary-fixed-dim':'#c3c0ff',
+      'on-primary':'#ffffff','on-primary-container':'#dad7ff',
+      secondary:'#5b598c','secondary-container':'#c7c3fe','on-secondary-container':'#514f81',
+      tertiary:'#7e3000','tertiary-container':'#a44100',
+      background:'#f7f9fb',surface:'#f7f9fb',
+      'surface-container-lowest':'#ffffff','surface-container-low':'#f2f4f6','surface-container':'#eceef0',
+      'surface-container-high':'#e6e8ea','surface-container-highest':'#e0e3e5',
+      'on-surface':'#191c1e','on-surface-variant':'#464555',
+      outline:'#777587','outline-variant':'#c7c4d8',
+      error:'#ba1a1a','error-container':'#ffdad6','on-error-container':'#93000a',
+      sidebar:'#1E1B4B',
+      'odds-up':'#047857','odds-down':'#b91c1c'
+    },
+    borderRadius:{ DEFAULT:'0.25rem', lg:'0.5rem', xl:'0.75rem', full:'9999px' },
+    fontFamily:{ body:['Inter'], headline:['Manrope'], label:['Inter'], mono:['JetBrains Mono'] }
+  }}
+};
+</script>
+<style>
+/* ===========================================================
+   Sportsbook Hub · Canonical Design System
+   Applies to every A/B/C/D/E/Z screen. Do not fork locally.
+   =========================================================== */
+:root {
+  /* Primary — indigo (Product Hub) */
+  --primary:#3525cd; --primary-container:#4f46e5;
+  --primary-fixed:#e2dfff; --primary-fixed-dim:#c3c0ff;
+  --on-primary:#ffffff; --on-primary-container:#dad7ff;
+
+  /* Secondary / Tertiary */
+  --secondary:#5b598c; --secondary-container:#c7c3fe; --on-secondary-container:#514f81;
+  --tertiary:#7e3000; --tertiary-container:#a44100;
+
+  /* Surfaces */
+  --background:#f7f9fb; --surface:#f7f9fb;
+  --surface-container-lowest:#ffffff; --surface-container-low:#f2f4f6;
+  --surface-container:#eceef0; --surface-container-high:#e6e8ea; --surface-container-highest:#e0e3e5;
+
+  /* Text + outlines */
+  --on-surface:#191c1e; --on-surface-variant:#464555;
+  --outline:#777587; --outline-variant:#c7c4d8;
+
+  /* Semantic */
+  --error:#ba1a1a; --error-container:#ffdad6; --on-error-container:#93000a;
+  --success:#047857; --warning:#b45309;
+
+  /* Sportsbook odds colours (semantic – do not reuse for UI state) */
+  --odds-up:#047857; --odds-down:#b91c1c; --odds-hold:#475569;
+
+  /* Navigation */
+  --sidebar:#1E1B4B; /* deep indigo — official shell */
+}
+
+html, body { background:#eceef0; color:var(--on-surface); }
+body { font-family:'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+/* Type — Inter body / Manrope display, as per Product Hub system */
+.font-body{font-family:'Inter',sans-serif}
+.font-headline{font-family:'Manrope',sans-serif;letter-spacing:-.01em}
+.font-mono-alt{font-family:'JetBrains Mono','SFMono-Regular',monospace}
+.eyebrow{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:var(--primary)}
+.spec{font-family:'Inter';font-size:11px;color:var(--on-surface-variant)}
+
+/* Material Symbols – fill variant */
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.msym-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+/* Sidebar shell — shared across every hub screen */
+.sidebar-nav a{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:.5rem;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);transition:all .15s;font-family:'Inter'}
+.sidebar-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+.sidebar-nav a.active{color:white;background:rgba(255,255,255,.12);font-weight:600}
+.sidebar-nav .section{font-size:10px;font-weight:800;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.16em;padding:14px 14px 6px}
+
+/* Topnav */
+.topnav{background:rgba(255,255,255,.90);backdrop-filter:blur(12px)}
+
+/* Inputs (canonical) */
+.ph-input{background:var(--surface-container-low);border:1px solid transparent;border-radius:.5rem;padding:9px 12px;font-size:13px;width:100%;transition:all .15s;color:var(--on-surface)}
+.ph-input:focus{outline:none;background:#fff;border-color:var(--primary);box-shadow:0 0 0 4px rgba(53,37,205,.10)}
+.ph-input::placeholder{color:var(--on-surface-variant);opacity:.7}
+
+/* Pills / chips */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:9999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pill-sm{padding:1px 8px;font-size:10px}
+.ph-pill-approved{background:#d1fae5;color:#065f46}
+.ph-pill-review{background:#fef3c7;color:#92400e}
+.ph-pill-revised{background:#dbeafe;color:#1d4ed8}
+.ph-pill-pending{background:#f1f5f9;color:#334155}
+.ph-pill-rejected{background:#fee2e2;color:#991b1b}
+.ph-pill-primary{background:rgba(53,37,205,.10);color:var(--primary)}
+.ph-pill-live{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-trading{background:rgba(126,48,0,.10);color:#7e3000}
+.ph-pill-domain-risk{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-frontend{background:#c7c3fe;color:#514f81}
+.ph-pill-domain-payments{background:#d1fae5;color:#065f46}
+.ph-pill-severity-critical{background:#fee2e2;color:#991b1b}
+.ph-pill-severity-high{background:#ffedd5;color:#9a3412}
+.ph-pill-severity-medium{background:#fef3c7;color:#92400e}
+.ph-pill-severity-low{background:#dbeafe;color:#1d4ed8}
+
+/* AI chip gradient — same across screens */
+.ai-chip{background:linear-gradient(135deg,#3525cd 0%,#7c3aed 100%);color:white}
+
+/* Shared screen shell */
+.screen{max-width:1440px;margin:40px auto;background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(25,28,30,.08),0 2px 6px rgba(25,28,30,.04);scroll-margin-top:80px}
+.screen-label{max-width:1440px;margin:60px auto 0;padding:0 4px;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+
+/* Floating TOC */
+.toc{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:40;background:white;border:1px solid rgba(199,196,216,.5);border-radius:12px;padding:12px 10px;box-shadow:0 12px 32px rgba(25,28,30,.08);font-family:'Inter';font-size:11px;max-height:82vh;overflow-y:auto}
+.toc a{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:6px;color:var(--on-surface-variant);font-weight:600;text-decoration:none}
+.toc a:hover{background:var(--surface-container-low);color:var(--on-surface)}
+.toc a.active{background:rgba(53,37,205,.08);color:var(--primary)}
+.toc .toc-group{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--outline);padding:8px 8px 4px}
+@media (max-width:1320px){.toc{display:none}}
+
+/* Odds display tokens (reusable across sportsbook listings) */
+.odds{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--on-surface);padding:4px 8px;border-radius:6px;background:var(--surface-container-low);border:1px solid var(--outline-variant);font-size:12px;display:inline-block;min-width:48px;text-align:center}
+.odds.up{color:var(--odds-up);border-color:rgba(4,120,87,.4);background:rgba(4,120,87,.06)}
+.odds.down{color:var(--odds-down);border-color:rgba(185,28,28,.4);background:rgba(185,28,28,.06)}
+.odds.live{color:white;background:var(--odds-down);border-color:var(--odds-down);animation:pulse-live 2s ease-in-out infinite}
+@keyframes pulse-live{0%,100%{box-shadow:0 0 0 0 rgba(185,28,28,.5)}50%{box-shadow:0 0 0 6px rgba(185,28,28,0)}}
+
+/* Bet slip + cashout pill */
+.cashout-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:800;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#7c2d12;text-transform:uppercase;letter-spacing:.04em}
+
+/* Chart grid helper */
+.chart-grid{background-image:linear-gradient(var(--surface-container-highest) 1px,transparent 1px),linear-gradient(90deg,var(--surface-container-highest) 1px,transparent 1px);background-size:100% 25%,16.66% 100%}
+
+/* Scrollbar hide */
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{scrollbar-width:none}
+
+</style>
+</head>
+<body>
+<nav class="toc">
+<div class="toc-group">Overview</div>
+<a href="cover.html"><span class="w-8 text-[10px] font-mono text-primary">•</span>Cover</a>
+<div class="toc-group">Auth · Shell</div>
+<a href="a-auth.html#a01"><span class="w-8 text-[10px] font-mono text-primary">A01</span>Login</a>
+<a href="a-auth.html#a02"><span class="w-8 text-[10px] font-mono text-primary">A02</span>Dashboard</a>
+<div class="toc-group">Idea → PRD</div>
+<a href="b-prd.html#b01"><span class="w-8 text-[10px] font-mono text-primary">B01</span>Submit idea</a>
+<a href="b-prd.html#b02"><span class="w-8 text-[10px] font-mono text-primary">B02</span>PRD Builder</a>
+<a href="b-prd.html#b03"><span class="w-8 text-[10px] font-mono text-primary">B03</span>Request track</a>
+<a href="b-prd.html#b04"><span class="w-8 text-[10px] font-mono text-primary">B04</span>PRD Document</a>
+<a href="b-prd.html#b05"><span class="w-8 text-[10px] font-mono text-primary">B05</span>PRD Eval</a>
+<div class="toc-group">Discovery → Spec</div>
+<a href="c-spec.html#c01"><span class="w-8 text-[10px] font-mono text-primary">C01</span>Research</a>
+<a href="c-spec.html#c02"><span class="w-8 text-[10px] font-mono text-primary">C02</span>RICE</a>
+<a href="c-spec.html#c03"><span class="w-8 text-[10px] font-mono text-primary">C03</span>Stories</a>
+<a href="c-spec.html#c04"><span class="w-8 text-[10px] font-mono text-primary">C04</span>Design</a>
+<div class="toc-group">Planning</div>
+<a href="d-plan.html#d01"><span class="w-8 text-[10px] font-mono text-primary">D01</span>Backlog</a>
+<a href="d-plan.html#d02"><span class="w-8 text-[10px] font-mono text-primary">D02</span>Domains</a>
+<a href="d-plan.html#d03"><span class="w-8 text-[10px] font-mono text-primary">D03</span>Roadmap</a>
+<a href="d-plan.html#d04"><span class="w-8 text-[10px] font-mono text-primary">D04</span>Handover</a>
+<div class="toc-group">Delivery</div>
+<a href="e-ship.html#e01"><span class="w-8 text-[10px] font-mono text-primary">E01</span>Delivery</a>
+<a href="e-ship.html#e02"><span class="w-8 text-[10px] font-mono text-primary">E02</span>UAT</a>
+<a href="e-ship.html#e03"><span class="w-8 text-[10px] font-mono text-primary">E03</span>Release</a>
+<a href="e-ship.html#e04"><span class="w-8 text-[10px] font-mono text-primary">E04</span>Metrics</a>
+<div class="toc-group">Meta</div>
+<a href="z-meta.html#z01"><span class="w-8 text-[10px] font-mono text-primary">Z01</span>LLM usage</a>
+</nav>
+<div class="screen-label"><div><span class="eyebrow">Idea · 01</span><h2 class="font-headline font-extrabold text-2xl mt-1">B01 · Submit an idea</h2></div><div class="spec">Three fields. Two minutes. The agent handles the rest.</div></div>
+<div id="b01" class="screen" data-screen-label="B01 Submit Idea">
+  <div class="flex h-[760px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Trading Suite</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Idea → PRD</div>
+        <a href="b-prd.html#b01" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">lightbulb</span>Submit idea</a>
+        <a href="b-prd.html#b02"><span class="material-symbols-outlined text-[18px]">edit_note</span>PRD Builder</a>
+        <a href="b-prd.html#b03"><span class="material-symbols-outlined text-[18px]">assignment</span>Requests</a>
+        <a href="b-prd.html#b05"><span class="material-symbols-outlined text-[18px]">task_alt</span>Evaluation</a>
+        <div class="section">Delivery</div>
+        <a href="c-spec.html#c02"><span class="material-symbols-outlined text-[18px]">scoreboard</span>RICE</a>
+        <a href="d-plan.html#d01"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Backlog</a>
+        <a href="d-plan.html#d03"><span class="material-symbols-outlined text-[18px]">calendar_month</span>Roadmap</a>
+        <a href="e-ship.html#e01"><span class="material-symbols-outlined text-[18px]">rocket_launch</span>Delivery</a>
+        <a href="e-ship.html#e04"><span class="material-symbols-outlined text-[18px]">monitoring</span>Metrics</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant">
+          <a href="a-auth.html#a02" class="hover:text-primary">Hub</a><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary">Submit idea</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant">Save draft</button>
+          <a href="b-prd.html#b03" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20 flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">send</span>Submit</a>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto bg-surface">
+        <div class="max-w-2xl mx-auto px-8 py-12">
+          <div class="mb-8">
+            <div class="eyebrow mb-2">New idea</div>
+            <h1 class="font-headline font-extrabold text-3xl tracking-tight">What's your idea?</h1>
+            <p class="text-sm text-on-surface-variant mt-2">Give us a title, a short brief, and anything that backs it up. The Intake Agent will shape it into a PRD on the next step — you'll get to review everything.</p>
+          </div>
+
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-8 space-y-6">
+            <!-- Title -->
+            <div>
+              <label class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-on-surface">Title</span>
+                <span class="spec">Required</span>
+              </label>
+              <input class="ph-input text-[15px] font-semibold" placeholder="e.g. Cash Out for single bets" value="Cash Out for single bets" />
+            </div>
+
+            <!-- Brief -->
+            <div>
+              <label class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-on-surface">Brief</span>
+                <span class="spec">What's the problem? Who does it help?</span>
+              </label>
+              <textarea rows="6" class="ph-input text-[14px] leading-relaxed" placeholder="A few sentences is plenty.">Punters who place a single bet have no way to settle early when their selection is winning. Competitors offer this as their #1 retention hook. Our Q1 churn survey shows 18% of lost punters cite it by name. Let punters tap a "Cash Out" button at any point to lock in a dynamic amount.</textarea>
+              <div class="flex items-center justify-between mt-2 text-[11px] text-on-surface-variant">
+                <span class="flex items-center gap-1"><span class="material-symbols-outlined text-primary text-[14px]">auto_awesome</span>Agent will expand this into a full PRD</span>
+                <span class="font-mono">318 / 2000</span>
+              </div>
+            </div>
+
+            <!-- Attachments -->
+            <div>
+              <label class="flex items-center justify-between mb-2">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-on-surface">Attachments</span>
+                <span class="spec">Optional · screenshots, data, docs</span>
+              </label>
+              <div class="space-y-2">
+                <div class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low border border-outline-variant/40">
+                  <div class="w-9 h-9 rounded-lg bg-white border border-outline-variant/40 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-[18px]">insert_chart</span></div>
+                  <div class="flex-1 min-w-0"><div class="text-[13px] font-semibold truncate">Q1-churn-survey.xlsx</div><div class="spec">248 KB · uploaded 2 min ago</div></div>
+                  <button class="text-on-surface-variant hover:text-rose-600"><span class="material-symbols-outlined text-[18px]">close</span></button>
+                </div>
+                <div class="flex items-center gap-3 p-3 rounded-lg bg-surface-container-low border border-outline-variant/40">
+                  <div class="w-9 h-9 rounded-lg bg-white border border-outline-variant/40 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-[18px]">group</span></div>
+                  <div class="flex-1 min-w-0"><div class="text-[13px] font-semibold truncate">5-punter-interviews.pdf</div><div class="spec">1.2 MB · uploaded 12 Apr</div></div>
+                  <button class="text-on-surface-variant hover:text-rose-600"><span class="material-symbols-outlined text-[18px]">close</span></button>
+                </div>
+                <button class="w-full flex items-center justify-center gap-2 py-4 rounded-lg border-2 border-dashed border-outline-variant/60 text-on-surface-variant hover:border-primary/60 hover:text-primary hover:bg-primary/5 text-xs font-semibold transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">upload_file</span>
+                  Drop files here or click to browse
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- AI preview · agent is always on; gentle, non-blocking -->
+          <div class="mt-5 flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-primary/5 to-[#7c3aed]/5 border border-primary/20">
+            <div class="w-9 h-9 rounded-lg ai-chip flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-white text-[18px]">auto_awesome</span></div>
+            <div class="flex-1 text-[12px] leading-relaxed">
+              <b>Intake Agent</b> is reading along. On submit, it'll propose a PRD skeleton, tag the right domains, and flag similar ideas. <span class="text-on-surface-variant">You stay in control.</span>
+            </div>
+          </div>
+
+          <div class="mt-8 flex items-center justify-between">
+            <a href="a-auth.html#a02" class="text-[11px] font-semibold text-on-surface-variant flex items-center gap-1 hover:text-primary"><span class="material-symbols-outlined text-[16px]">arrow_back</span>Cancel &amp; return</a>
+            <a href="b-prd.html#b03" class="px-5 py-2.5 text-sm font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20 flex items-center gap-2 hover:shadow-xl hover:shadow-primary/30 transition-shadow">
+              Submit to PRD Agent
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="border-t border-outline-variant/40 bg-surface-container-low px-8 py-4 flex items-center justify-between text-[11px] font-semibold mt-8">
+          <a href="a-auth.html#a02" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>A02 · Dashboard</a>
+          <span class="text-outline">B01 · Submit idea</span>
+          <a href="b-prd.html#b02" class="text-primary flex items-center gap-1">B02 · PRD Builder<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  B02  PRD BUILDER  (PM-BOT clarification workspace)          -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Idea → PRD · 02</span><h2 class="font-headline font-extrabold text-2xl mt-1">B02 · PRD Builder</h2></div><div class="spec">PM-BOT clarifies · you answer · PRD takes shape in real time</div></div>
+<div id="b02" class="screen" data-screen-label="B02 PRD Builder">
+
+  <!-- Top bar: progress + score + generate/regenerate -->
+  <header class="topnav h-14 flex items-center justify-between px-6 border-b border-outline-variant/40">
+    <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant">
+      <a href="a-auth.html#a02" class="hover:text-primary">Hub</a><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+      <a href="b-prd.html#b01" class="hover:text-primary">Submit idea</a><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+      <span class="text-primary font-mono">PRD-087 · Cash Out</span>
+      <span class="pill ph-pill-review pill-sm ml-3">In clarification</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <!-- Live quality score -->
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-low border border-outline-variant/40">
+        <span class="material-symbols-outlined text-emerald-600 text-[16px]">verified</span>
+        <div class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">PRD Quality</div>
+        <div class="flex items-center gap-1.5">
+          <div class="w-20 h-1.5 rounded-full bg-surface-container-highest overflow-hidden"><div class="h-full bg-gradient-to-r from-amber-500 to-emerald-500" style="width:72%"></div></div>
+          <span class="font-mono text-[12px] font-bold text-on-surface">72<span class="text-[9px] text-on-surface-variant">/100</span></span>
+        </div>
+        <span class="spec">· need 80 to submit</span>
+      </div>
+      <div class="flex -space-x-1"><div class="w-7 h-7 rounded-full bg-gradient-to-br from-primary to-secondary ring-2 ring-white"></div></div>
+      <button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant border border-outline-variant/50 rounded-lg">Save draft</button>
+      <a href="b-prd.html#b05" class="px-3 py-1.5 text-xs font-bold text-white bg-primary/40 rounded-lg shadow-lg shadow-primary/10 cursor-not-allowed flex items-center gap-1" title="Reach 80 quality to enable"><span class="material-symbols-outlined text-[16px]">lock</span>Send for evaluation</a>
+    </div>
+  </header>
+
+  <div class="flex h-[920px]">
+
+    <!-- ╔══════════════════════════════════════════════╗ -->
+    <!-- ║  LEFT · Source submission (read-only)        ║ -->
+    <!-- ╚══════════════════════════════════════════════╝ -->
+    <aside class="w-[320px] bg-surface-container-low border-r border-outline-variant/40 flex flex-col shrink-0">
+      <div class="p-5 border-b border-outline-variant/40">
+        <div class="eyebrow mb-1">Original submission</div>
+        <div class="spec">From B01 · 12 Apr · Kurt Carabott</div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-5 space-y-5 text-[13px]">
+        <!-- Title -->
+        <div>
+          <div class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mb-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">title</span>Title</div>
+          <div class="bg-white border border-outline-variant/30 rounded-lg p-3 font-semibold">Cash Out for single bets</div>
+        </div>
+
+        <!-- Brief -->
+        <div>
+          <div class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mb-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">description</span>Brief</div>
+          <div class="bg-white border border-outline-variant/30 rounded-lg p-3 leading-relaxed text-[12.5px] text-on-surface-variant">
+            Punters who place a single bet have no way to settle early when their selection is winning. Competitors offer this as their #1 retention hook. Our Q1 churn survey shows 18% of lost punters cite it by name. Let punters tap a "Cash Out" button at any point to lock in a dynamic amount.
+          </div>
+        </div>
+
+        <!-- Attachments -->
+        <div>
+          <div class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mb-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">attach_file</span>Attachments · 2</div>
+          <div class="space-y-1.5">
+            <div class="flex items-center gap-2 p-2 bg-white border border-outline-variant/30 rounded-lg">
+              <span class="material-symbols-outlined text-primary text-[16px]">insert_chart</span>
+              <div class="flex-1 min-w-0"><div class="text-[12px] font-semibold truncate">Q1-churn-survey.xlsx</div><div class="spec">248 KB</div></div>
+              <button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[14px]">visibility</span></button>
+            </div>
+            <div class="flex items-center gap-2 p-2 bg-white border border-outline-variant/30 rounded-lg">
+              <span class="material-symbols-outlined text-primary text-[16px]">group</span>
+              <div class="flex-1 min-w-0"><div class="text-[12px] font-semibold truncate">5-punter-interviews.pdf</div><div class="spec">1.2 MB</div></div>
+              <button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[14px]">visibility</span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PM-BOT grounding sources -->
+        <div class="pt-4 border-t border-outline-variant/40">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant mb-2 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">hub</span>PM-BOT is grounded on</div>
+          <div class="space-y-1.5 text-[11px]">
+            <div class="flex items-center gap-2 p-2 rounded-md bg-white border border-outline-variant/30"><span class="material-symbols-outlined text-primary text-[14px]">account_tree</span><div class="flex-1"><b>SpecKit</b> · GitHub constitution</div><span class="pill ph-pill-approved pill-sm">synced</span></div>
+            <div class="flex items-center gap-2 p-2 rounded-md bg-white border border-outline-variant/30"><span class="material-symbols-outlined text-primary text-[14px]">history</span><div class="flex-1"><b>87 previous PRDs</b> · trading squad</div></div>
+            <div class="flex items-center gap-2 p-2 rounded-md bg-white border border-outline-variant/30"><span class="material-symbols-outlined text-primary text-[14px]">architecture</span><div class="flex-1"><b>Existing stack</b> · odds-engine, risk-v4</div></div>
+            <div class="flex items-center gap-2 p-2 rounded-md bg-white border border-outline-variant/30"><span class="material-symbols-outlined text-primary text-[14px]">gavel</span><div class="flex-1"><b>Reg playbook</b> · MGA · UKGC · ONJN</div></div>
+          </div>
+        </div>
+
+        <!-- Completeness checklist -->
+        <div class="pt-4 border-t border-outline-variant/40">
+          <div class="flex items-center justify-between mb-2">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Checklist</div>
+            <span class="font-mono text-[11px] text-on-surface-variant">6 / 9</span>
+          </div>
+          <ul class="space-y-1.5 text-[12px]">
+            <li class="flex items-center gap-2 text-on-surface"><span class="material-symbols-outlined msym-fill text-emerald-600 text-[16px]">check_circle</span>Problem framed</li>
+            <li class="flex items-center gap-2 text-on-surface"><span class="material-symbols-outlined msym-fill text-emerald-600 text-[16px]">check_circle</span>Evidence attached</li>
+            <li class="flex items-center gap-2 text-on-surface"><span class="material-symbols-outlined msym-fill text-emerald-600 text-[16px]">check_circle</span>Target segments</li>
+            <li class="flex items-center gap-2 text-on-surface"><span class="material-symbols-outlined msym-fill text-emerald-600 text-[16px]">check_circle</span>Success metrics defined</li>
+            <li class="flex items-center gap-2 text-on-surface"><span class="material-symbols-outlined msym-fill text-emerald-600 text-[16px]">check_circle</span>Non-goals listed</li>
+            <li class="flex items-center gap-2 text-on-surface"><span class="material-symbols-outlined msym-fill text-emerald-600 text-[16px]">check_circle</span>Stack dependencies</li>
+            <li class="flex items-center gap-2 text-on-surface-variant"><span class="material-symbols-outlined text-amber-600 text-[16px]">pending</span>Rollout plan <span class="spec ml-auto">in progress</span></li>
+            <li class="flex items-center gap-2 text-on-surface-variant"><span class="material-symbols-outlined text-outline text-[16px]">radio_button_unchecked</span>Liability model</li>
+            <li class="flex items-center gap-2 text-on-surface-variant"><span class="material-symbols-outlined text-outline text-[16px]">radio_button_unchecked</span>Regulatory sign-off path</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+
+    <!-- ╔══════════════════════════════════════════════╗ -->
+    <!-- ║  MIDDLE · PM-BOT chat                        ║ -->
+    <!-- ╚══════════════════════════════════════════════╝ -->
+    <section class="flex-1 flex flex-col min-w-0 border-r border-outline-variant/40 bg-surface">
+      <!-- Chat header -->
+      <div class="px-6 py-4 border-b border-outline-variant/40 bg-white flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg ai-chip flex items-center justify-center"><span class="material-symbols-outlined text-white text-[20px]">smart_toy</span></div>
+          <div>
+            <div class="font-headline font-bold text-[14px] flex items-center gap-2">PM-BOT<span class="pill ph-pill-primary pill-sm">Thinking…</span></div>
+            <div class="spec">Clarifying · aiming for 80+ quality · 4 questions left</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="text-[11px] font-bold text-on-surface-variant px-2 py-1 hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">refresh</span>Regenerate</button>
+          <button class="text-[11px] font-bold text-on-surface-variant px-2 py-1 hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">settings</span>Depth</button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="flex-1 overflow-y-auto px-6 py-6 space-y-5">
+
+        <!-- Bot: kickoff -->
+        <div class="flex gap-3">
+          <div class="w-8 h-8 rounded-lg ai-chip flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-white text-[14px]">smart_toy</span></div>
+          <div class="flex-1 max-w-[640px]">
+            <div class="flex items-center gap-2 mb-1"><div class="text-[11px] font-bold">PM-BOT</div><div class="spec">12:04 · Read brief + 2 attachments · pulled 12 precedents from SpecKit</div></div>
+            <div class="bg-white border border-outline-variant/30 rounded-xl rounded-tl-sm p-4 text-[13px] leading-relaxed">
+              <p>Nice brief — this is a classic retention play and SpecKit has a clean precedent (PRD-041 · Partial Cashout spike) we can lean on.</p>
+              <p class="mt-3">I've drafted §1 Overview and §2 Problem on the right. Before I go further I need to nail down a few things. Ready?</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- User: go -->
+        <div class="flex gap-3 justify-end">
+          <div class="max-w-[520px]">
+            <div class="flex items-center gap-2 mb-1 justify-end"><div class="spec">12:04</div><div class="text-[11px] font-bold">You</div></div>
+            <div class="bg-primary text-white rounded-xl rounded-tr-sm p-3 text-[13px]">Let's go 👍</div>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary shrink-0"></div>
+        </div>
+
+        <!-- Bot: Q1 — scope -->
+        <div class="flex gap-3">
+          <div class="w-8 h-8 rounded-lg ai-chip flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-white text-[14px]">smart_toy</span></div>
+          <div class="flex-1 max-w-[640px]">
+            <div class="flex items-center gap-2 mb-1"><div class="text-[11px] font-bold">PM-BOT</div><div class="text-[10px] font-mono text-primary">Q 1 / 5 · Scope</div></div>
+            <div class="bg-white border border-outline-variant/30 rounded-xl rounded-tl-sm p-4 text-[13px] leading-relaxed">
+              <p><b>Which bet types are in scope for v1?</b></p>
+              <p class="spec mt-1">SpecKit says: start narrow, expand later. PRD-041 shipped singles-only and added accumulators in v2.</p>
+              <div class="mt-3 grid grid-cols-1 gap-1.5">
+                <button class="text-left px-3 py-2 rounded-lg border border-primary bg-primary/5 text-[12px] font-semibold flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-white text-[10px]">check</span></span>Singles only · match brief &amp; precedent</button>
+                <button class="text-left px-3 py-2 rounded-lg border border-outline-variant/40 hover:border-primary/40 bg-white text-[12px]">Singles + accumulators</button>
+                <button class="text-left px-3 py-2 rounded-lg border border-outline-variant/40 hover:border-primary/40 bg-white text-[12px]">All bet types</button>
+                <button class="text-left px-3 py-2 rounded-lg border border-dashed border-outline-variant/60 text-on-surface-variant text-[12px]">Other · type answer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User: answer -->
+        <div class="flex gap-3 justify-end">
+          <div class="max-w-[520px]">
+            <div class="flex items-center gap-2 mb-1 justify-end"><div class="spec">12:05</div><div class="text-[11px] font-bold">You</div></div>
+            <div class="bg-primary text-white rounded-xl rounded-tr-sm p-3 text-[13px]">Singles only for v1. Accumulators in phase 2.</div>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary shrink-0"></div>
+        </div>
+
+        <!-- Bot: wrote section indicator -->
+        <div class="flex gap-3">
+          <div class="w-8 h-8 rounded-lg ai-chip flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-white text-[14px]">smart_toy</span></div>
+          <div class="flex-1 max-w-[640px]">
+            <div class="flex items-center gap-2 mb-1"><div class="text-[11px] font-bold">PM-BOT</div><div class="spec">12:05</div></div>
+            <div class="rounded-xl rounded-tl-sm p-3 bg-emerald-50 border border-emerald-200 text-[12px] flex items-center gap-2">
+              <span class="material-symbols-outlined text-emerald-700 text-[16px]">auto_fix_high</span>
+              Wrote <b>§3 Scope &amp; non-goals</b> · ticked <b>Non-goals listed</b> · score +7
+            </div>
+          </div>
+        </div>
+
+        <!-- Bot: Q2 — metric -->
+        <div class="flex gap-3">
+          <div class="w-8 h-8 rounded-lg ai-chip flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-white text-[14px]">smart_toy</span></div>
+          <div class="flex-1 max-w-[640px]">
+            <div class="flex items-center gap-2 mb-1"><div class="text-[11px] font-bold">PM-BOT</div><div class="text-[10px] font-mono text-primary">Q 2 / 5 · Success metric</div></div>
+            <div class="bg-white border border-outline-variant/30 rounded-xl rounded-tl-sm p-4 text-[13px] leading-relaxed">
+              <p><b>What does success look like at launch + 30 days?</b></p>
+              <p class="spec mt-1">Pick a primary. I'll suggest guardrails.</p>
+              <div class="mt-3 space-y-1.5">
+                <div class="flex items-center justify-between p-3 rounded-lg border border-outline-variant/40 bg-white text-[12px]">
+                  <div><b>Churn reduction on single-bet punters</b><div class="spec">From brief · recommended</div></div>
+                  <span class="material-symbols-outlined text-primary text-[18px]">arrow_forward</span>
+                </div>
+                <div class="flex items-center justify-between p-3 rounded-lg border border-outline-variant/40 bg-white text-[12px]"><div><b>Cash-out acceptance rate</b><div class="spec">Usage-led</div></div><span class="material-symbols-outlined text-outline text-[18px]">arrow_forward</span></div>
+                <div class="flex items-center justify-between p-3 rounded-lg border border-outline-variant/40 bg-white text-[12px]"><div><b>Hold-margin stability</b><div class="spec">Risk-led</div></div><span class="material-symbols-outlined text-outline text-[18px]">arrow_forward</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User typed, typing… -->
+        <div class="flex gap-3 justify-end">
+          <div class="max-w-[520px]">
+            <div class="flex items-center gap-2 mb-1 justify-end"><div class="spec">12:07</div><div class="text-[11px] font-bold">You</div></div>
+            <div class="bg-primary text-white rounded-xl rounded-tr-sm p-3 text-[13px]">Churn reduction as primary, target ≥12% YoY. Guardrails on hold-margin 6.8–8.5%.</div>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary shrink-0"></div>
+        </div>
+
+        <!-- Bot typing indicator -->
+        <div class="flex gap-3">
+          <div class="w-8 h-8 rounded-lg ai-chip flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-white text-[14px]">smart_toy</span></div>
+          <div class="flex-1 max-w-[640px]">
+            <div class="flex items-center gap-2 mb-1"><div class="text-[11px] font-bold">PM-BOT</div><div class="spec">typing…</div></div>
+            <div class="bg-white border border-outline-variant/30 rounded-xl rounded-tl-sm p-4 text-[13px]">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                <span class="w-2 h-2 rounded-full bg-primary animate-pulse" style="animation-delay:150ms"></span>
+                <span class="w-2 h-2 rounded-full bg-primary animate-pulse" style="animation-delay:300ms"></span>
+                <span class="ml-2 spec">Checking liability caps in SpecKit · 2 prior PRDs cite same guardrail</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Composer -->
+      <div class="border-t border-outline-variant/40 bg-white p-4">
+        <div class="flex items-start gap-2 bg-surface-container-low border border-outline-variant/40 rounded-xl p-3 focus-within:border-primary/60 focus-within:bg-white transition-colors">
+          <span class="material-symbols-outlined text-on-surface-variant text-[18px] mt-0.5">attach_file</span>
+          <textarea rows="2" class="flex-1 bg-transparent resize-none outline-none text-[13px] leading-relaxed" placeholder="Answer PM-BOT, paste data, or ask back…"></textarea>
+          <button class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center shadow-lg shadow-primary/20 shrink-0"><span class="material-symbols-outlined text-[18px]">send</span></button>
+        </div>
+        <div class="flex items-center justify-between mt-2">
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <button class="pill ph-pill-pending pill-sm">↩ Rewrite §3</button>
+            <button class="pill ph-pill-pending pill-sm">Draft §4 Solution</button>
+            <button class="pill ph-pill-pending pill-sm">Pull liability example</button>
+            <button class="pill ph-pill-pending pill-sm">Skip to next ?</button>
+          </div>
+          <div class="spec flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">bolt</span>Haiku · grounded</div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ╔══════════════════════════════════════════════╗ -->
+    <!-- ║  RIGHT · Live PRD viewer                     ║ -->
+    <!-- ╚══════════════════════════════════════════════╝ -->
+    <aside class="w-[440px] bg-white flex flex-col shrink-0">
+      <!-- Viewer header -->
+      <div class="px-5 py-4 border-b border-outline-variant/40 flex items-center justify-between">
+        <div>
+          <div class="eyebrow text-primary">Live PRD · v3 draft</div>
+          <div class="spec">Updating as we chat</div>
+        </div>
+        <div class="flex items-center gap-1">
+          <button class="w-8 h-8 rounded-lg text-on-surface-variant hover:bg-surface-container-low flex items-center justify-center" title="Open full view"><span class="material-symbols-outlined text-[18px]">open_in_full</span></button>
+          <button class="w-8 h-8 rounded-lg text-on-surface-variant hover:bg-surface-container-low flex items-center justify-center" title="Version history"><span class="material-symbols-outlined text-[18px]">history</span></button>
+        </div>
+      </div>
+
+      <!-- Outline nav -->
+      <div class="px-5 py-3 border-b border-outline-variant/40 bg-surface-container-low">
+        <div class="flex items-center gap-1 text-[10px] font-mono overflow-x-auto no-scrollbar">
+          <a class="px-2 py-1 rounded bg-primary text-white font-bold">§1</a>
+          <a class="px-2 py-1 rounded bg-primary text-white font-bold">§2</a>
+          <a class="px-2 py-1 rounded bg-primary text-white font-bold">§3</a>
+          <a class="px-2 py-1 rounded bg-amber-500/15 text-amber-700 font-bold">§4</a>
+          <a class="px-2 py-1 rounded bg-surface-container-high text-on-surface-variant">§5</a>
+          <a class="px-2 py-1 rounded bg-surface-container-high text-on-surface-variant">§6</a>
+          <a class="px-2 py-1 rounded bg-surface-container-high text-on-surface-variant">§7</a>
+          <a class="px-2 py-1 rounded bg-surface-container-high text-on-surface-variant">§8</a>
+        </div>
+      </div>
+
+      <!-- Doc preview -->
+      <div class="flex-1 overflow-y-auto p-5">
+        <div class="flex items-center gap-2 mb-4">
+          <span class="pill ph-pill-primary">PRD-087</span>
+          <span class="pill ph-pill-domain-trading">Trading</span>
+          <span class="pill ph-pill-domain-risk">Risk</span>
+        </div>
+        <h1 class="font-headline font-extrabold text-2xl tracking-tight">Cash Out v1</h1>
+        <p class="spec mt-1">v3 · auto-drafted by PM-BOT · 4 min ago</p>
+
+        <!-- §1 -->
+        <section class="mt-6">
+          <div class="flex items-center gap-2 mb-2"><span class="text-[10px] font-mono text-primary font-bold">§1</span><h3 class="font-headline font-bold text-[14px]">Overview</h3><span class="pill ph-pill-approved pill-sm ml-auto">Settled</span></div>
+          <p class="text-[12.5px] leading-relaxed text-on-surface-variant">Cash Out is a punter-initiated early-settlement feature. Between bet placement and settlement the punter can accept a dynamic amount to close their bet and lock in a return.</p>
+        </section>
+
+        <!-- §2 -->
+        <section class="mt-6">
+          <div class="flex items-center gap-2 mb-2"><span class="text-[10px] font-mono text-primary font-bold">§2</span><h3 class="font-headline font-bold text-[14px]">Problem &amp; evidence</h3><span class="pill ph-pill-approved pill-sm ml-auto">Settled</span></div>
+          <p class="text-[12.5px] leading-relaxed text-on-surface-variant">Only top-15 EU operator without cash-out. Q1 churn analysis isolates it as the #1 cited missing feature (18% of exit surveys, 2,412 support mentions).</p>
+        </section>
+
+        <!-- §3 just written -->
+        <section class="mt-6 relative">
+          <div class="flex items-center gap-2 mb-2"><span class="text-[10px] font-mono text-primary font-bold">§3</span><h3 class="font-headline font-bold text-[14px]">Scope &amp; non-goals</h3><span class="pill ph-pill-approved pill-sm ml-auto animate-pulse">Just written</span></div>
+          <div class="bg-emerald-50 border-l-2 border-emerald-400 pl-3 py-2 -ml-3 rounded-r-md">
+            <p class="text-[12.5px] leading-relaxed text-on-surface">v1 covers <b>singles only</b> — football, tennis, basketball · pre-match &amp; in-play.</p>
+            <p class="text-[12.5px] leading-relaxed text-on-surface mt-1"><b>Non-goals:</b> accumulators, system bets, partial cash-out, auto-rules (all phase 2+).</p>
+          </div>
+        </section>
+
+        <!-- §4 in progress -->
+        <section class="mt-6">
+          <div class="flex items-center gap-2 mb-2"><span class="text-[10px] font-mono text-amber-700 font-bold">§4</span><h3 class="font-headline font-bold text-[14px]">Success metrics</h3><span class="pill ph-pill-revised pill-sm ml-auto">Drafting</span></div>
+          <div class="space-y-1.5 text-[12px]">
+            <div class="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/40"><b>Primary</b> · Churn reduction ≥ 12% YoY on single-bet punters <div class="spec mt-0.5">From your last answer</div></div>
+            <div class="p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/40"><b>Guardrail</b> · Hold margin 6.8–8.5%</div>
+            <div class="p-2.5 rounded-lg border-2 border-dashed border-outline-variant/60 text-center text-on-surface-variant">PM-BOT is proposing 2 more guardrails…</div>
+          </div>
+        </section>
+
+        <!-- §5-8 stubs -->
+        <section class="mt-6 space-y-2">
+          <div class="flex items-center gap-2 p-3 rounded-lg bg-surface-container-low border border-outline-variant/40 text-[12px]"><span class="text-[10px] font-mono text-outline font-bold">§5</span><span class="font-semibold">Solution · odds model</span><span class="pill ph-pill-pending pill-sm ml-auto">Queued</span></div>
+          <div class="flex items-center gap-2 p-3 rounded-lg bg-surface-container-low border border-outline-variant/40 text-[12px]"><span class="text-[10px] font-mono text-outline font-bold">§6</span><span class="font-semibold">Solution · punter UX</span><span class="pill ph-pill-pending pill-sm ml-auto">Queued</span></div>
+          <div class="flex items-center gap-2 p-3 rounded-lg bg-surface-container-low border border-outline-variant/40 text-[12px]"><span class="text-[10px] font-mono text-outline font-bold">§7</span><span class="font-semibold">Risk &amp; compliance</span><span class="pill ph-pill-pending pill-sm ml-auto">Needs answer</span></div>
+          <div class="flex items-center gap-2 p-3 rounded-lg bg-surface-container-low border border-outline-variant/40 text-[12px]"><span class="text-[10px] font-mono text-outline font-bold">§8</span><span class="font-semibold">Rollout</span><span class="pill ph-pill-pending pill-sm ml-auto">Needs answer</span></div>
+        </section>
+      </div>
+
+      <!-- Bottom stats -->
+      <div class="border-t border-outline-variant/40 p-4 bg-surface-container-low">
+        <div class="flex items-center justify-between text-[11px] mb-2">
+          <span class="font-bold">Heading to 80</span>
+          <span class="font-mono">+8 likely after §4 · +12 after §7</span>
+        </div>
+        <div class="w-full h-1.5 rounded-full bg-white border border-outline-variant/40 overflow-hidden">
+          <div class="h-full bg-gradient-to-r from-amber-500 to-emerald-500" style="width:72%"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Footer prev/next -->
+  <div class="border-t border-outline-variant/40 bg-surface-container-low px-8 py-3 flex items-center justify-between text-[11px] font-semibold">
+    <a href="b-prd.html#b01" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>B01 · Submit idea</a>
+    <span class="text-outline">B02 · PRD Builder</span>
+    <a href="b-prd.html#b03" class="text-primary flex items-center gap-1">B03 · Request tracking<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  B03  REQUEST TRACKING                                       -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Idea → PRD · 03</span><h2 class="font-headline font-extrabold text-2xl mt-1">B03 · Request tracking</h2></div><div class="spec">Where every idea, PRD and eval lives</div></div>
+<div id="b03" class="screen" data-screen-label="B03 Request Tracking">
+  <div class="flex h-[920px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Trading Suite</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Idea → PRD</div>
+        <a href="b-prd.html#b01"><span class="material-symbols-outlined text-[18px]">lightbulb</span>Submit idea</a>
+        <a href="b-prd.html#b02"><span class="material-symbols-outlined text-[18px]">edit_note</span>PRD Builder</a>
+        <a href="b-prd.html#b03" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">assignment</span>Requests</a>
+        <a href="b-prd.html#b05"><span class="material-symbols-outlined text-[18px]">task_alt</span>Evaluation</a>
+        <div class="section">Delivery</div>
+        <a href="c-spec.html#c02"><span class="material-symbols-outlined text-[18px]">scoreboard</span>RICE</a>
+        <a href="d-plan.html#d01"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Backlog</a>
+        <a href="d-plan.html#d03"><span class="material-symbols-outlined text-[18px]">calendar_month</span>Roadmap</a>
+        <a href="e-ship.html#e01"><span class="material-symbols-outlined text-[18px]">rocket_launch</span>Delivery</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="a-auth.html#a02" class="hover:text-primary">Hub</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Requests</span></div>
+        <div class="flex items-center gap-3">
+          <div class="relative"><span class="material-symbols-outlined absolute left-2.5 top-1.5 text-[16px] text-on-surface-variant">search</span><input class="ph-input pl-8 w-72" placeholder="Search ideas, PRDs, authors…" /></div>
+          <a href="b-prd.html#b01" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20 flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">add</span>New idea</a>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="flex items-end justify-between mb-6">
+          <div><h1 class="font-headline font-extrabold text-3xl tracking-tight">Requests</h1><p class="text-sm text-on-surface-variant mt-1">14 in flight · 3 awaiting your review · Cash Out is top of the pile</p></div>
+          <div class="flex items-center bg-white border border-outline-variant/40 rounded-lg text-xs font-semibold overflow-hidden"><button class="px-3 py-1.5 bg-primary text-white">Timeline</button><button class="px-3 py-1.5 text-on-surface-variant">Board</button><button class="px-3 py-1.5 text-on-surface-variant">Table</button></div>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="bg-white border border-outline-variant/30 rounded-xl p-3 mb-5 flex items-center gap-2 flex-wrap">
+          <span class="eyebrow mr-2">Filter</span>
+          <button class="pill ph-pill-primary">Stage: any ▾</button>
+          <button class="pill ph-pill-pending">Domain: any ▾</button>
+          <button class="pill ph-pill-pending">Owner: any ▾</button>
+          <button class="pill ph-pill-pending">Quarter: Q3 ▾</button>
+          <span class="ml-auto text-[11px] font-semibold text-on-surface-variant">Sort: <span class="text-on-surface">Recent activity ▾</span></span>
+        </div>
+
+        <!-- Featured card — Cash Out -->
+        <article class="bg-white border-2 border-primary/30 rounded-xl p-6 mb-5 ring-4 ring-primary/5">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 mb-2"><span class="pill ph-pill-primary">PRD-087</span><span class="pill ph-pill-domain-trading">Trading</span><span class="pill ph-pill-domain-risk">Risk</span><span class="pill ph-pill-review">Awaiting eval</span></div>
+              <h3 class="font-headline font-extrabold text-2xl tracking-tight">Cash Out v1</h3>
+              <p class="text-sm text-on-surface-variant mt-1">Early settlement for single bets — the #1 missing feature in Q1 churn exit survey.</p>
+
+              <div class="grid grid-cols-4 gap-4 mt-5 text-xs">
+                <div><div class="eyebrow">RICE</div><div class="font-headline font-extrabold text-lg mt-0.5">31.4</div></div>
+                <div><div class="eyebrow">Owner</div><div class="flex items-center gap-1.5 mt-0.5"><div class="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[9px] font-bold">RK</div><span class="font-semibold">R. Kim</span></div></div>
+                <div><div class="eyebrow">Last edit</div><div class="font-semibold mt-0.5">4 min ago</div></div>
+                <div><div class="eyebrow">Eval SLA</div><div class="font-semibold text-amber-700 mt-0.5">In 2 days</div></div>
+              </div>
+
+              <!-- Stage progress -->
+              <div class="mt-5">
+                <div class="flex items-center justify-between text-[10px] font-bold tracking-widest uppercase text-on-surface-variant mb-2"><span>Stage progress</span><span>4 / 8 complete</span></div>
+                <div class="flex gap-1">
+                  <div class="h-1.5 flex-1 rounded-full bg-primary"></div>
+                  <div class="h-1.5 flex-1 rounded-full bg-primary"></div>
+                  <div class="h-1.5 flex-1 rounded-full bg-primary"></div>
+                  <div class="h-1.5 flex-1 rounded-full bg-primary"></div>
+                  <div class="h-1.5 flex-1 rounded-full bg-primary/20"></div>
+                  <div class="h-1.5 flex-1 rounded-full bg-primary/20"></div>
+                  <div class="h-1.5 flex-1 rounded-full bg-primary/20"></div>
+                  <div class="h-1.5 flex-1 rounded-full bg-primary/20"></div>
+                </div>
+                <div class="flex justify-between mt-1 text-[10px] text-on-surface-variant"><span>Idea</span><span>PRD</span><span>Eval</span><span>RICE</span><span>Stories</span><span>Design</span><span>Dev</span><span>UAT</span></div>
+              </div>
+
+              <div class="flex gap-2 mt-5">
+                <a href="b-prd.html#b04" class="px-3 py-1.5 text-xs font-bold text-primary border border-primary/30 rounded-lg">Open PRD doc →</a>
+                <a href="b-prd.html#b02" class="px-3 py-1.5 text-xs font-bold text-on-surface-variant border border-outline-variant/50 rounded-lg">Continue drafting</a>
+                <a href="b-prd.html#b05" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20 ml-auto">Send to evaluation →</a>
+              </div>
+            </div>
+
+            <!-- Mini activity -->
+            <aside class="w-56 shrink-0 border-l border-outline-variant/40 pl-5">
+              <div class="eyebrow mb-2">Activity</div>
+              <ul class="space-y-2 text-[11px]">
+                <li class="flex gap-2"><div class="w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[9px] font-bold shrink-0">RK</div><div><b>R. Kim</b> commented · 12m</div></li>
+                <li class="flex gap-2"><div class="w-5 h-5 rounded-full ai-chip flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[10px] text-white">auto_awesome</span></div><div><b>Co-pilot</b> flagged §06 · 38m</div></li>
+                <li class="flex gap-2"><div class="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[9px] font-bold shrink-0">SM</div><div><b>S. Morales</b> added reviewer · 1h</div></li>
+                <li class="flex gap-2"><div class="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-secondary text-white flex items-center justify-center text-[9px] font-bold shrink-0">KC</div><div><b>You</b> created PRD · 3h</div></li>
+              </ul>
+            </aside>
+          </div>
+        </article>
+
+        <!-- Other requests -->
+        <div class="grid grid-cols-2 gap-4">
+          <article class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="flex items-center gap-2 mb-2"><span class="pill ph-pill-primary pill-sm">PRD-086</span><span class="pill ph-pill-domain-frontend pill-sm">Front-end</span><span class="pill ph-pill-review pill-sm">PRD draft</span></div>
+            <h3 class="font-bold">Bet Builder 2.0 — same-game parlays</h3>
+            <p class="spec mt-1">Allow punters to combine up to 6 selections from one match.</p>
+            <div class="flex items-center justify-between mt-4 text-[11px]"><span class="text-on-surface-variant">S. Huang · 2d ago</span><span class="font-bold">RICE 22.8</span></div>
+          </article>
+          <article class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="flex items-center gap-2 mb-2"><span class="pill ph-pill-pending pill-sm">IDEA-142</span><span class="pill ph-pill-domain-frontend pill-sm">Front-end</span></div>
+            <h3 class="font-bold">Live stream overlay odds</h3>
+            <p class="spec mt-1">Float key markets over in-app live streams.</p>
+            <div class="flex items-center justify-between mt-4 text-[11px]"><span class="text-on-surface-variant">M. Jain · 4d ago</span><span class="font-bold text-on-surface-variant">Awaiting PRD</span></div>
+          </article>
+          <article class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="flex items-center gap-2 mb-2"><span class="pill ph-pill-primary pill-sm">PRD-081</span><span class="pill ph-pill-domain-payments pill-sm">Payments</span><span class="pill ph-pill-approved pill-sm">Approved</span></div>
+            <h3 class="font-bold">Multi-currency wallet</h3>
+            <p class="spec mt-1">EUR · GBP · BRL · MXN on one account.</p>
+            <div class="flex items-center justify-between mt-4 text-[11px]"><span class="text-on-surface-variant">A. Park · 6d ago</span><span class="font-bold">In UAT</span></div>
+          </article>
+          <article class="bg-white border border-outline-variant/30 rounded-xl p-5">
+            <div class="flex items-center gap-2 mb-2"><span class="pill ph-pill-primary pill-sm">PRD-079</span><span class="pill ph-pill-domain-risk pill-sm">Compliance</span><span class="pill ph-pill-approved pill-sm">Released</span></div>
+            <h3 class="font-bold">KYC Tier-2 onboarding</h3>
+            <p class="spec mt-1">Automated ID &amp; source-of-funds for high-stakes.</p>
+            <div class="flex items-center justify-between mt-4 text-[11px]"><span class="text-on-surface-variant">Released · Mar 2026</span><span class="font-bold text-emerald-700">v2.3.0</span></div>
+          </article>
+        </div>
+
+        <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+          <a href="b-prd.html#b02" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>B02 · PRD Builder</a>
+          <span class="text-outline">B03 · Requests</span>
+          <a href="b-prd.html#b04" class="text-primary flex items-center gap-1">B04 · PRD document<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  B04  PRD DOCUMENT                                           -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Idea → PRD · 04</span><h2 class="font-headline font-extrabold text-2xl mt-1">B04 · PRD Document</h2></div><div class="spec">Read-only long-form view for stakeholders</div></div>
+<div id="b04" class="screen" data-screen-label="B04 PRD Document">
+  <div class="flex h-[1040px]">
+    <!-- Doc outline -->
+    <aside class="w-[260px] bg-white border-r border-outline-variant/40 shrink-0 p-6 overflow-y-auto">
+      <a href="b-prd.html#b03" class="text-[11px] font-semibold text-primary flex items-center gap-1 mb-6"><span class="material-symbols-outlined text-[14px]">arrow_back</span>Back to requests</a>
+      <div class="eyebrow mb-2">PRD-087 · v3</div>
+      <h3 class="font-headline font-extrabold text-lg tracking-tight">Cash Out v1</h3>
+      <div class="flex items-center gap-2 mt-2"><span class="pill ph-pill-approved pill-sm">Approved for RICE</span></div>
+      <div class="flex items-center gap-2 mt-4"><div class="w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px] font-bold">RK</div><div class="text-xs"><div class="font-semibold">R. Kim</div><div class="spec">Trading PM · owner</div></div></div>
+
+      <div class="mt-8">
+        <div class="eyebrow mb-3">Contents</div>
+        <ul class="text-xs space-y-1.5 font-semibold">
+          <li><a href="#" class="text-primary">§1 Overview</a></li>
+          <li><a href="#" class="text-on-surface-variant hover:text-primary">§2 Problem &amp; evidence</a></li>
+          <li><a href="#" class="text-on-surface-variant hover:text-primary">§3 Goals &amp; non-goals</a></li>
+          <li><a href="#" class="text-on-surface-variant hover:text-primary">§4 Odds model</a></li>
+          <li><a href="#" class="text-on-surface-variant hover:text-primary">§5 Punter UX</a></li>
+          <li><a href="#" class="text-on-surface-variant hover:text-primary">§6 Risk &amp; compliance</a></li>
+          <li><a href="#" class="text-on-surface-variant hover:text-primary">§7 Rollout</a></li>
+          <li><a href="#" class="text-on-surface-variant hover:text-primary">§8 Success metrics</a></li>
+        </ul>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-outline-variant/40">
+        <div class="eyebrow mb-2">Links</div>
+        <ul class="text-xs space-y-1.5">
+          <li><a href="c-spec.html#c01" class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[14px]">science</span>Research (C01)</a></li>
+          <li><a href="c-spec.html#c02" class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[14px]">scoreboard</span>RICE score (C02)</a></li>
+          <li><a href="c-spec.html#c03" class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[14px]">format_list_bulleted</span>User stories (C03)</a></li>
+          <li><a href="c-spec.html#c04" class="flex items-center gap-1.5 text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[14px]">palette</span>Design gen (C04)</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Doc body -->
+    <div class="flex-1 flex flex-col overflow-hidden bg-surface">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant">
+          <a href="b-prd.html#b03" class="hover:text-primary">Requests</a><span class="material-symbols-outlined text-[14px]">chevron_right</span>
+          <span class="text-primary font-mono">PRD-087 · Cash Out v1</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant border border-outline-variant/50 rounded-lg flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">download</span>PDF</button>
+          <a href="b-prd.html#b02" class="px-3 py-1.5 text-xs font-bold text-primary border border-primary/25 rounded-lg">Edit in builder</a>
+          <a href="b-prd.html#b05" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Start evaluation</a>
+        </div>
+      </header>
+      <main class="flex-1 overflow-y-auto">
+        <article class="max-w-3xl mx-auto px-12 py-14 bg-white my-10 rounded-xl shadow-[0_4px_24px_rgba(25,28,30,.05)] border border-outline-variant/30">
+          <div class="eyebrow mb-3">PRD · Cash Out v1</div>
+          <h1 class="font-headline font-extrabold text-4xl tracking-tight">Early settlement for single bets</h1>
+          <p class="text-on-surface-variant mt-3 text-sm">Authored by R. Kim, K. Carabott · 18 April 2026 · Target release Q3 2026</p>
+          <hr class="my-8 border-outline-variant/40"/>
+
+          <div class="prose prose-slate max-w-none text-[15px] leading-relaxed">
+            <h2>§1 Overview</h2>
+            <p>Cash Out is a punter-initiated early-settlement feature that lets a customer close a live bet for a dynamically-calculated amount before the final settlement event. v1 covers single bets only on football, tennis and basketball, across pre-match and in-play states.</p>
+
+            <h2>§2 Problem &amp; evidence</h2>
+            <p>Our book is the only top-15 European operator without any form of cash-out. Q1 2026 churn analysis flagged this as the <b>#1 cited missing feature</b>:</p>
+            <ul>
+              <li>18% of exit-survey respondents mentioned "cash out" unprompted</li>
+              <li>2,412 support-chat mentions in the last 90 days</li>
+              <li>Estimated €12M of NGR at risk from the single-bet segment alone</li>
+            </ul>
+
+            <h2>§3 Goals &amp; non-goals</h2>
+            <p><b>Goals</b> — available on ≥ 85% of single bets by launch+30d; reduce single-bet churn by ≥ 12% YoY; maintain book margin 6.8–8.5%.</p>
+            <p><b>Non-goals</b> — partial cash-out, accumulators &amp; system bets, and auto cash-out rules are all explicitly deferred to phase 2.</p>
+
+            <h2>§4 Odds model</h2>
+            <p>Cash-out offer is computed as <code>stake × (currentOdds / originalOdds) × (1 − margin)</code>. The dynamic margin lives in a 4–8% band, widened by liquidity, volatility, and current liability on the market. A 2-second refresh cadence keeps the offer in line with the live market; suspensions lock the offer for 800ms while the trading desk re-prices.</p>
+            <blockquote><b>Trading guard-rail:</b> if a single punter's cash-out would move liability by &gt; €5k on a thin market, the request is queued for trader approval within 1.5s.</blockquote>
+
+            <h2>§5 Punter UX</h2>
+            <p>A persistent "Cash Out" button appears under each active single bet in the Bet History drawer and on the Live Event page. The amount pulses green when rising and red when falling. Confirmation is a single tap with a 3-second undo toast.</p>
+
+            <h2>§6 Risk &amp; compliance</h2>
+            <p>Cash-out offers respect self-exclusion and deposit limits — a self-excluded punter sees existing bets run to natural settlement and cannot initiate a cash-out. Every offer and acceptance is logged with a signed hash for the regulator audit trail (MGA §3.5, UKGC LCCP 9.1).</p>
+
+            <h2>§7 Rollout</h2>
+            <p>Shadow-mode in staging for 2 weeks (no punter exposure), 1% canary on Malta, ramp to 10% over 72h, full rollout gated on GGR-margin holding within 6.8–8.5%.</p>
+
+            <h2>§8 Success metrics</h2>
+            <p>See §8 of the <a href="e-ship.html#e04" class="text-primary font-semibold">E04 Metrics dashboard</a> for live instrumentation. Primary north-star: <b>single-bet churn reduction</b>. Secondary: cash-out usage rate, 30-day return rate for cash-out users.</p>
+          </div>
+        </article>
+      </main>
+      <div class="border-t border-outline-variant/40 bg-surface-container-low px-8 py-3 flex items-center justify-between text-[11px] font-semibold">
+        <a href="b-prd.html#b03" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>B03 · Requests</a>
+        <span class="text-outline">B04 · PRD Document</span>
+        <a href="b-prd.html#b05" class="text-primary flex items-center gap-1">B05 · PRD Evaluation<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  B05  PRD EVALUATION                                         -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Idea → PRD · 05</span><h2 class="font-headline font-extrabold text-2xl mt-1">B05 · PRD Evaluation</h2></div><div class="spec">Reviewers score — agent summarises — owner ships</div></div>
+<div id="b05" class="screen" data-screen-label="B05 PRD Evaluation">
+  <div class="flex h-[960px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Trading Suite</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Idea → PRD</div>
+        <a href="b-prd.html#b01"><span class="material-symbols-outlined text-[18px]">lightbulb</span>Submit idea</a>
+        <a href="b-prd.html#b02"><span class="material-symbols-outlined text-[18px]">edit_note</span>PRD Builder</a>
+        <a href="b-prd.html#b03"><span class="material-symbols-outlined text-[18px]">assignment</span>Requests</a>
+        <a href="b-prd.html#b05" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">task_alt</span>Evaluation</a>
+        <div class="section">Delivery</div>
+        <a href="c-spec.html#c02"><span class="material-symbols-outlined text-[18px]">scoreboard</span>RICE</a>
+        <a href="d-plan.html#d01"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Backlog</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="a-auth.html#a02" class="hover:text-primary">Hub</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><a href="b-prd.html#b03" class="hover:text-primary">Requests</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Evaluation · PRD-087</span></div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 text-xs font-bold text-on-surface-variant border border-outline-variant/50 rounded-lg">Return for edits</button>
+          <a href="c-spec.html#c01" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Approve &amp; send to discovery →</a>
+        </div>
+      </header>
+
+      <div class="flex-1 flex min-h-0">
+        <!-- Main -->
+        <main class="flex-1 overflow-y-auto p-8 bg-surface min-w-0">
+          <div class="max-w-4xl mx-auto">
+            <div class="flex items-start justify-between mb-4">
+              <div>
+                <div class="flex items-center gap-2 text-[11px] font-mono text-on-surface-variant">PRD-087 · Trading · v3 · 6 reviewers</div>
+                <h1 class="font-headline font-extrabold text-3xl tracking-tight mt-1">Cash Out v1 — evaluation</h1>
+                <div class="flex items-center gap-2 mt-2">
+                  <span class="pill ph-pill-primary">Review window: 48h</span>
+                  <span class="pill ph-pill-review">5 / 6 reviewers in</span>
+                  <span class="pill ph-pill-approved">Average 4.2 / 5</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Score summary -->
+            <section class="grid grid-cols-4 gap-4 mt-6">
+              <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Problem clarity</div><div class="flex items-end gap-2 mt-1"><span class="font-headline font-extrabold text-3xl">4.6</span><span class="text-xs text-on-surface-variant mb-1">/ 5</span></div><div class="flex gap-0.5 mt-2 text-amber-500">★★★★★</div></div>
+              <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Solution fit</div><div class="flex items-end gap-2 mt-1"><span class="font-headline font-extrabold text-3xl">4.2</span><span class="text-xs text-on-surface-variant mb-1">/ 5</span></div><div class="flex gap-0.5 mt-2 text-amber-500">★★★★☆</div></div>
+              <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Commercial</div><div class="flex items-end gap-2 mt-1"><span class="font-headline font-extrabold text-3xl">4.8</span><span class="text-xs text-on-surface-variant mb-1">/ 5</span></div><div class="flex gap-0.5 mt-2 text-amber-500">★★★★★</div></div>
+              <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Feasibility</div><div class="flex items-end gap-2 mt-1"><span class="font-headline font-extrabold text-3xl text-amber-600">3.2</span><span class="text-xs text-on-surface-variant mb-1">/ 5</span></div><div class="flex gap-0.5 mt-2 text-amber-500">★★★☆☆</div></div>
+            </section>
+
+            <!-- Agent summary -->
+            <section class="mt-5 rounded-xl p-5 text-white relative overflow-hidden" style="background:linear-gradient(135deg,#3525cd 0%,#7c3aed 100%)">
+              <div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined">auto_awesome</span><span class="eyebrow text-white">Agent summary · 5 reviews synthesised</span></div>
+              <p class="text-sm leading-relaxed max-w-3xl">Strong consensus to proceed. Commercial case is unambiguous and problem evidence is well-sourced. <b>Feasibility is the main concern</b> — three reviewers flag the 2s odds-refresh cadence as tight given current Sportradar feed latency, and two request a liability stress-test on thin markets. Suggested conditions: (1) include a dedicated trading-desk approval queue &gt; €5k, (2) add a margin kill-switch for Q4 Champions League peaks.</p>
+              <div class="flex gap-2 mt-4"><button class="bg-white text-primary text-xs font-bold px-3 py-1.5 rounded-lg">Accept conditions</button><button class="bg-white/15 text-white text-xs font-bold px-3 py-1.5 rounded-lg">Open suggestion diff</button></div>
+              <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+            </section>
+
+            <!-- Reviewer rows -->
+            <section class="bg-white border border-outline-variant/30 rounded-xl mt-5 overflow-hidden">
+              <div class="px-5 py-3 border-b border-outline-variant/40 flex items-center justify-between"><h3 class="font-headline font-bold text-sm">Individual reviews</h3><span class="spec">5 of 6 complete · 1 pending</span></div>
+              <ul class="divide-y divide-outline-variant/40">
+                <li class="px-5 py-4 flex items-start gap-4">
+                  <div class="w-9 h-9 rounded-full bg-amber-500 text-white flex items-center justify-center text-[11px] font-bold">RK</div>
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between"><div><b>R. Kim</b> · Trading PM<span class="text-on-surface-variant text-xs ml-2">1h ago</span></div><div class="flex gap-0.5 text-amber-500">★★★★★</div></div>
+                    <p class="text-sm mt-1">Green light from trading. Odds model is sound. Insist on the trader-approval queue for &gt; €5k offers — I've already modelled the capacity.</p>
+                  </div>
+                </li>
+                <li class="px-5 py-4 flex items-start gap-4">
+                  <div class="w-9 h-9 rounded-full bg-rose-500 text-white flex items-center justify-center text-[11px] font-bold">MJ</div>
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between"><div><b>M. Jain</b> · Risk &amp; Compliance<span class="text-on-surface-variant text-xs ml-2">3h ago</span></div><div class="flex gap-0.5 text-amber-500">★★★★☆</div></div>
+                    <p class="text-sm mt-1">§6 covers self-exclusion cleanly. Want an additional clause on cash-out during the 15-min "responsible play" cool-down and the regulator hash format reference.</p>
+                  </div>
+                </li>
+                <li class="px-5 py-4 flex items-start gap-4">
+                  <div class="w-9 h-9 rounded-full bg-sky-500 text-white flex items-center justify-center text-[11px] font-bold">AP</div>
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between"><div><b>A. Park</b> · Backend engineer<span class="text-on-surface-variant text-xs ml-2">5h ago</span></div><div class="flex gap-0.5 text-amber-500">★★★☆☆</div></div>
+                    <p class="text-sm mt-1">2s refresh is optimistic with current Sportradar p95 at 980ms. I'd rather commit to 3s and beat it than miss. Needs a feed-latency kill-switch too.</p>
+                  </div>
+                </li>
+                <li class="px-5 py-4 flex items-start gap-4">
+                  <div class="w-9 h-9 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[11px] font-bold">SM</div>
+                  <div class="flex-1">
+                    <div class="flex items-center justify-between"><div><b>S. Morales</b> · Design lead<span class="text-on-surface-variant text-xs ml-2">7h ago</span></div><div class="flex gap-0.5 text-amber-500">★★★★★</div></div>
+                    <p class="text-sm mt-1">UX §5 is clear. Please confirm the undo toast behaviour on low-end Android — we had accessibility complaints on last cycle.</p>
+                  </div>
+                </li>
+                <li class="px-5 py-4 flex items-start gap-4 opacity-60">
+                  <div class="w-9 h-9 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">hourglass_top</span></div>
+                  <div class="flex-1"><div><b>J. Lindqvist</b> · CFO delegate<span class="text-on-surface-variant text-xs ml-2">Pending · SLA 6h</span></div><div class="spec mt-1">Awaiting commercial sign-off.</div></div>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </main>
+
+        <!-- Decision rail -->
+        <aside class="w-[320px] border-l border-outline-variant/40 bg-white shrink-0 p-5 overflow-y-auto">
+          <div class="eyebrow mb-3">Decision</div>
+          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+            <div class="flex items-center gap-2 text-emerald-800 font-bold text-sm"><span class="material-symbols-outlined">verified</span>Recommended: Approve with conditions</div>
+            <p class="text-xs text-emerald-900 mt-1">5 of 5 completed reviewers voted proceed. Two conditions to bake in before handoff.</p>
+          </div>
+
+          <div class="mt-5">
+            <div class="eyebrow mb-2">Conditions to accept</div>
+            <ul class="space-y-2 text-xs">
+              <li class="flex gap-2 items-start"><input type="checkbox" checked class="mt-0.5 rounded text-primary focus:ring-primary"/>Trader approval queue for offers &gt; €5k</li>
+              <li class="flex gap-2 items-start"><input type="checkbox" checked class="mt-0.5 rounded text-primary focus:ring-primary"/>Feed-latency kill-switch at p95 &gt; 1.5s</li>
+              <li class="flex gap-2 items-start"><input type="checkbox" class="mt-0.5 rounded text-primary focus:ring-primary"/>Undo toast QA on low-end Android</li>
+              <li class="flex gap-2 items-start"><input type="checkbox" class="mt-0.5 rounded text-primary focus:ring-primary"/>Refresh cadence: commit 3s, target 2s</li>
+            </ul>
+          </div>
+
+          <div class="mt-5">
+            <div class="eyebrow mb-2">After approval</div>
+            <div class="space-y-2 text-xs">
+              <a href="c-spec.html#c01" class="flex items-center justify-between p-2.5 rounded-lg border border-outline-variant/40 hover:border-primary/40"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[16px]">science</span>C01 · Open research</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+              <a href="c-spec.html#c02" class="flex items-center justify-between p-2.5 rounded-lg border border-outline-variant/40 hover:border-primary/40"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[16px]">scoreboard</span>C02 · Run RICE</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+              <a href="c-spec.html#c03" class="flex items-center justify-between p-2.5 rounded-lg border border-outline-variant/40 hover:border-primary/40"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-primary text-[16px]">format_list_bulleted</span>C03 · Draft stories</span><span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+            </div>
+          </div>
+
+          <a href="c-spec.html#c01" class="mt-6 block w-full text-center bg-primary text-white text-xs font-bold py-2.5 rounded-lg shadow-lg shadow-primary/25">Approve &amp; continue</a>
+        </aside>
+      </div>
+
+      <div class="border-t border-outline-variant/40 bg-surface-container-low px-8 py-3 flex items-center justify-between text-[11px] font-semibold">
+        <a href="b-prd.html#b04" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>B04 · PRD Document</a>
+        <span class="text-outline">B05 · PRD Evaluation</span>
+        <a href="c-spec.html#c01" class="text-primary flex items-center gap-1">C01 · Research<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  C01  RESEARCH & ANALYSIS                                    -->
+<!-- ============================================================ -->
+
+<script>
+// Scrollspy for the floating TOC
+(function(){
+  const links = document.querySelectorAll('nav.toc a');
+  const map = new Map();
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) map.set(el, a);
+  });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a = map.get(e.target);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  map.forEach((_,el)=>io.observe(el));
+})();
+</script>
+</body>
+</html>

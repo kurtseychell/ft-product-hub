@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sportsbook Hub — Cash Out Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+tailwind.config = {
+  darkMode:'class',
+  theme: { extend: {
+    colors: {
+      primary:'#3525cd','primary-container':'#4f46e5','primary-fixed':'#e2dfff','primary-fixed-dim':'#c3c0ff',
+      'on-primary':'#ffffff','on-primary-container':'#dad7ff',
+      secondary:'#5b598c','secondary-container':'#c7c3fe','on-secondary-container':'#514f81',
+      tertiary:'#7e3000','tertiary-container':'#a44100',
+      background:'#f7f9fb',surface:'#f7f9fb',
+      'surface-container-lowest':'#ffffff','surface-container-low':'#f2f4f6','surface-container':'#eceef0',
+      'surface-container-high':'#e6e8ea','surface-container-highest':'#e0e3e5',
+      'on-surface':'#191c1e','on-surface-variant':'#464555',
+      outline:'#777587','outline-variant':'#c7c4d8',
+      error:'#ba1a1a','error-container':'#ffdad6','on-error-container':'#93000a',
+      sidebar:'#1E1B4B',
+      'odds-up':'#047857','odds-down':'#b91c1c'
+    },
+    borderRadius:{ DEFAULT:'0.25rem', lg:'0.5rem', xl:'0.75rem', full:'9999px' },
+    fontFamily:{ body:['Inter'], headline:['Manrope'], label:['Inter'], mono:['JetBrains Mono'] }
+  }}
+};
+</script>
+<style>
+/* ===========================================================
+   Sportsbook Hub · Canonical Design System
+   Applies to every A/B/C/D/E/Z screen. Do not fork locally.
+   =========================================================== */
+:root {
+  /* Primary — indigo (Product Hub) */
+  --primary:#3525cd; --primary-container:#4f46e5;
+  --primary-fixed:#e2dfff; --primary-fixed-dim:#c3c0ff;
+  --on-primary:#ffffff; --on-primary-container:#dad7ff;
+
+  /* Secondary / Tertiary */
+  --secondary:#5b598c; --secondary-container:#c7c3fe; --on-secondary-container:#514f81;
+  --tertiary:#7e3000; --tertiary-container:#a44100;
+
+  /* Surfaces */
+  --background:#f7f9fb; --surface:#f7f9fb;
+  --surface-container-lowest:#ffffff; --surface-container-low:#f2f4f6;
+  --surface-container:#eceef0; --surface-container-high:#e6e8ea; --surface-container-highest:#e0e3e5;
+
+  /* Text + outlines */
+  --on-surface:#191c1e; --on-surface-variant:#464555;
+  --outline:#777587; --outline-variant:#c7c4d8;
+
+  /* Semantic */
+  --error:#ba1a1a; --error-container:#ffdad6; --on-error-container:#93000a;
+  --success:#047857; --warning:#b45309;
+
+  /* Sportsbook odds colours (semantic – do not reuse for UI state) */
+  --odds-up:#047857; --odds-down:#b91c1c; --odds-hold:#475569;
+
+  /* Navigation */
+  --sidebar:#1E1B4B; /* deep indigo — official shell */
+}
+
+html, body { background:#eceef0; color:var(--on-surface); }
+body { font-family:'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+/* Type — Inter body / Manrope display, as per Product Hub system */
+.font-body{font-family:'Inter',sans-serif}
+.font-headline{font-family:'Manrope',sans-serif;letter-spacing:-.01em}
+.font-mono-alt{font-family:'JetBrains Mono','SFMono-Regular',monospace}
+.eyebrow{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:var(--primary)}
+.spec{font-family:'Inter';font-size:11px;color:var(--on-surface-variant)}
+
+/* Material Symbols – fill variant */
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.msym-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+/* Sidebar shell — shared across every hub screen */
+.sidebar-nav a{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:.5rem;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);transition:all .15s;font-family:'Inter'}
+.sidebar-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+.sidebar-nav a.active{color:white;background:rgba(255,255,255,.12);font-weight:600}
+.sidebar-nav .section{font-size:10px;font-weight:800;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.16em;padding:14px 14px 6px}
+
+/* Topnav */
+.topnav{background:rgba(255,255,255,.90);backdrop-filter:blur(12px)}
+
+/* Inputs (canonical) */
+.ph-input{background:var(--surface-container-low);border:1px solid transparent;border-radius:.5rem;padding:9px 12px;font-size:13px;width:100%;transition:all .15s;color:var(--on-surface)}
+.ph-input:focus{outline:none;background:#fff;border-color:var(--primary);box-shadow:0 0 0 4px rgba(53,37,205,.10)}
+.ph-input::placeholder{color:var(--on-surface-variant);opacity:.7}
+
+/* Pills / chips */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:9999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pill-sm{padding:1px 8px;font-size:10px}
+.ph-pill-approved{background:#d1fae5;color:#065f46}
+.ph-pill-review{background:#fef3c7;color:#92400e}
+.ph-pill-revised{background:#dbeafe;color:#1d4ed8}
+.ph-pill-pending{background:#f1f5f9;color:#334155}
+.ph-pill-rejected{background:#fee2e2;color:#991b1b}
+.ph-pill-primary{background:rgba(53,37,205,.10);color:var(--primary)}
+.ph-pill-live{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-trading{background:rgba(126,48,0,.10);color:#7e3000}
+.ph-pill-domain-risk{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-frontend{background:#c7c3fe;color:#514f81}
+.ph-pill-domain-payments{background:#d1fae5;color:#065f46}
+.ph-pill-severity-critical{background:#fee2e2;color:#991b1b}
+.ph-pill-severity-high{background:#ffedd5;color:#9a3412}
+.ph-pill-severity-medium{background:#fef3c7;color:#92400e}
+.ph-pill-severity-low{background:#dbeafe;color:#1d4ed8}
+
+/* AI chip gradient — same across screens */
+.ai-chip{background:linear-gradient(135deg,#3525cd 0%,#7c3aed 100%);color:white}
+
+/* Shared screen shell */
+.screen{max-width:1440px;margin:40px auto;background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(25,28,30,.08),0 2px 6px rgba(25,28,30,.04);scroll-margin-top:80px}
+.screen-label{max-width:1440px;margin:60px auto 0;padding:0 4px;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+
+/* Floating TOC */
+.toc{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:40;background:white;border:1px solid rgba(199,196,216,.5);border-radius:12px;padding:12px 10px;box-shadow:0 12px 32px rgba(25,28,30,.08);font-family:'Inter';font-size:11px;max-height:82vh;overflow-y:auto}
+.toc a{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:6px;color:var(--on-surface-variant);font-weight:600;text-decoration:none}
+.toc a:hover{background:var(--surface-container-low);color:var(--on-surface)}
+.toc a.active{background:rgba(53,37,205,.08);color:var(--primary)}
+.toc .toc-group{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--outline);padding:8px 8px 4px}
+@media (max-width:1320px){.toc{display:none}}
+
+/* Odds display tokens (reusable across sportsbook listings) */
+.odds{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--on-surface);padding:4px 8px;border-radius:6px;background:var(--surface-container-low);border:1px solid var(--outline-variant);font-size:12px;display:inline-block;min-width:48px;text-align:center}
+.odds.up{color:var(--odds-up);border-color:rgba(4,120,87,.4);background:rgba(4,120,87,.06)}
+.odds.down{color:var(--odds-down);border-color:rgba(185,28,28,.4);background:rgba(185,28,28,.06)}
+.odds.live{color:white;background:var(--odds-down);border-color:var(--odds-down);animation:pulse-live 2s ease-in-out infinite}
+@keyframes pulse-live{0%,100%{box-shadow:0 0 0 0 rgba(185,28,28,.5)}50%{box-shadow:0 0 0 6px rgba(185,28,28,0)}}
+
+/* Bet slip + cashout pill */
+.cashout-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:800;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#7c2d12;text-transform:uppercase;letter-spacing:.04em}
+
+/* Chart grid helper */
+.chart-grid{background-image:linear-gradient(var(--surface-container-highest) 1px,transparent 1px),linear-gradient(90deg,var(--surface-container-highest) 1px,transparent 1px);background-size:100% 25%,16.66% 100%}
+
+/* Scrollbar hide */
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{scrollbar-width:none}
+
+</style>
+</head>
+<body>
+<nav class="toc">
+<div class="toc-group">Overview</div>
+<a href="cover.html"><span class="w-8 text-[10px] font-mono text-primary">•</span>Cover</a>
+<div class="toc-group">Auth · Shell</div>
+<a href="a-auth.html#a01"><span class="w-8 text-[10px] font-mono text-primary">A01</span>Login</a>
+<a href="a-auth.html#a02"><span class="w-8 text-[10px] font-mono text-primary">A02</span>Dashboard</a>
+<div class="toc-group">Idea → PRD</div>
+<a href="b-prd.html#b01"><span class="w-8 text-[10px] font-mono text-primary">B01</span>Submit idea</a>
+<a href="b-prd.html#b02"><span class="w-8 text-[10px] font-mono text-primary">B02</span>PRD Builder</a>
+<a href="b-prd.html#b03"><span class="w-8 text-[10px] font-mono text-primary">B03</span>Request track</a>
+<a href="b-prd.html#b04"><span class="w-8 text-[10px] font-mono text-primary">B04</span>PRD Document</a>
+<a href="b-prd.html#b05"><span class="w-8 text-[10px] font-mono text-primary">B05</span>PRD Eval</a>
+<div class="toc-group">Discovery → Spec</div>
+<a href="c-spec.html#c01"><span class="w-8 text-[10px] font-mono text-primary">C01</span>Research</a>
+<a href="c-spec.html#c02"><span class="w-8 text-[10px] font-mono text-primary">C02</span>RICE</a>
+<a href="c-spec.html#c03"><span class="w-8 text-[10px] font-mono text-primary">C03</span>Stories</a>
+<a href="c-spec.html#c04"><span class="w-8 text-[10px] font-mono text-primary">C04</span>Design</a>
+<div class="toc-group">Planning</div>
+<a href="d-plan.html#d01"><span class="w-8 text-[10px] font-mono text-primary">D01</span>Backlog</a>
+<a href="d-plan.html#d02"><span class="w-8 text-[10px] font-mono text-primary">D02</span>Domains</a>
+<a href="d-plan.html#d03"><span class="w-8 text-[10px] font-mono text-primary">D03</span>Roadmap</a>
+<a href="d-plan.html#d04"><span class="w-8 text-[10px] font-mono text-primary">D04</span>Handover</a>
+<div class="toc-group">Delivery</div>
+<a href="e-ship.html#e01"><span class="w-8 text-[10px] font-mono text-primary">E01</span>Delivery</a>
+<a href="e-ship.html#e02"><span class="w-8 text-[10px] font-mono text-primary">E02</span>UAT</a>
+<a href="e-ship.html#e03"><span class="w-8 text-[10px] font-mono text-primary">E03</span>Release</a>
+<a href="e-ship.html#e04"><span class="w-8 text-[10px] font-mono text-primary">E04</span>Metrics</a>
+<div class="toc-group">Meta</div>
+<a href="z-meta.html#z01"><span class="w-8 text-[10px] font-mono text-primary">Z01</span>LLM usage</a>
+</nav>
+<div class="screen-label"><div><span class="eyebrow">Delivery · 01</span><h2 class="font-headline font-extrabold text-2xl mt-1">E01 · Delivery Board</h2></div><div class="spec">Sprint 25 · Cash Out in flight</div></div>
+<div id="e01" class="screen" data-screen-label="E01 Delivery Board">
+  <div class="flex h-[960px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Delivery</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <a href="d-plan.html#d01"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Backlog</a>
+        <div class="section">Delivery</div>
+        <a href="e-ship.html#e01" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">rocket_launch</span>Sprint board</a>
+        <a href="e-ship.html#e02"><span class="material-symbols-outlined text-[18px]">science</span>UAT</a>
+        <a href="e-ship.html#e03"><span class="material-symbols-outlined text-[18px]">publish</span>Release</a>
+        <a href="e-ship.html#e04"><span class="material-symbols-outlined text-[18px]">monitoring</span>Metrics</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="d-plan.html#d04" class="hover:text-primary">Handover</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Sprint 25 · Cash Out</span></div>
+        <div class="flex items-center gap-3">
+          <span class="pill ph-pill-primary">Day 7 / 10</span>
+          <a href="e-ship.html#e02" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Send to UAT →</a>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="flex items-end justify-between mb-6">
+          <div><h1 class="font-headline font-extrabold text-3xl tracking-tight">Sprint 25 · Cash Out</h1><p class="text-sm text-on-surface-variant mt-1">Day 7 of 10 · 34 of 50 SP done · 2 tickets at risk</p></div>
+          <div class="flex gap-3 text-xs">
+            <div class="bg-white border border-outline-variant/30 rounded-lg px-4 py-2"><div class="eyebrow">Burndown</div><div class="font-mono text-on-surface mt-0.5 font-bold">16 SP remaining</div></div>
+            <div class="bg-white border border-outline-variant/30 rounded-lg px-4 py-2"><div class="eyebrow">Velocity</div><div class="font-mono text-on-surface mt-0.5 font-bold">48 / sprint</div></div>
+          </div>
+        </div>
+
+        <!-- Kanban -->
+        <div class="grid grid-cols-5 gap-3">
+          <!-- Todo -->
+          <div class="bg-surface-container-low rounded-xl p-3">
+            <div class="flex items-center justify-between mb-2 px-1"><div class="eyebrow">Todo</div><span class="text-[10px] font-mono text-on-surface-variant">3</span></div>
+            <div class="space-y-2">
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-outline-variant/30"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-12</span><span class="pill ph-pill-severity-medium pill-sm">P2</span></div><div class="text-xs font-semibold mt-1.5">Cool-down enforcement</div><div class="mt-2 flex items-center justify-between text-[10px]"><span class="pill ph-pill-domain-risk pill-sm">Risk</span><span class="font-mono">2 SP</span></div></div>
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-outline-variant/30"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-9</span><span class="pill ph-pill-severity-medium pill-sm">P2</span></div><div class="text-xs font-semibold mt-1.5">"How calculated?" drawer</div><div class="mt-2 flex items-center justify-between text-[10px]"><span class="pill ph-pill-domain-frontend pill-sm">FE</span><span class="font-mono">3 SP</span></div></div>
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-outline-variant/30"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">PAY-202</span><span class="pill ph-pill-severity-medium pill-sm">P2</span></div><div class="text-xs font-semibold mt-1.5">Currency rounding rules</div><div class="mt-2 flex items-center justify-between text-[10px]"><span class="pill ph-pill-domain-payments pill-sm">Pay</span><span class="font-mono">3 SP</span></div></div>
+            </div>
+          </div>
+          <!-- In progress -->
+          <div class="bg-surface-container-low rounded-xl p-3">
+            <div class="flex items-center justify-between mb-2 px-1"><div class="eyebrow">In progress</div><span class="text-[10px] font-mono text-on-surface-variant">3</span></div>
+            <div class="space-y-2">
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-outline-variant/30 ring-2 ring-primary/20"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-2</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="text-xs font-semibold mt-1.5">Offer-refresh ≤3s</div><div class="mt-2 flex items-center justify-between text-[10px]"><div class="flex -space-x-1"><div class="w-5 h-5 rounded-full bg-sky-500 ring-2 ring-white text-white text-[8px] font-bold flex items-center justify-center">AP</div></div><span class="font-mono">8 SP</span></div></div>
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-outline-variant/30 ring-2 ring-amber-400/40"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-3</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="text-xs font-semibold mt-1.5">Trader approval queue</div><div class="text-[10px] text-amber-700 font-bold mt-1">⚠ At risk · waiting on CO-14</div><div class="mt-2 flex items-center justify-between text-[10px]"><div class="flex -space-x-1"><div class="w-5 h-5 rounded-full bg-amber-500 ring-2 ring-white text-white text-[8px] font-bold flex items-center justify-center">RK</div></div><span class="font-mono">5 SP</span></div></div>
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-outline-variant/30"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-7</span><span class="pill ph-pill-severity-medium pill-sm">P2</span></div><div class="text-xs font-semibold mt-1.5">Pulse animation</div><div class="mt-2 flex items-center justify-between text-[10px]"><div class="flex -space-x-1"><div class="w-5 h-5 rounded-full bg-emerald-500 ring-2 ring-white text-white text-[8px] font-bold flex items-center justify-center">SM</div></div><span class="font-mono">3 SP</span></div></div>
+            </div>
+          </div>
+          <!-- In review -->
+          <div class="bg-surface-container-low rounded-xl p-3">
+            <div class="flex items-center justify-between mb-2 px-1"><div class="eyebrow">In review</div><span class="text-[10px] font-mono text-on-surface-variant">2</span></div>
+            <div class="space-y-2">
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-outline-variant/30"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-4</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="text-xs font-semibold mt-1.5">Feed latency suspend</div><div class="mt-2 flex items-center justify-between text-[10px]"><span class="pill ph-pill-review pill-sm">PR #2841</span><span class="font-mono">3 SP</span></div></div>
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-outline-variant/30"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-8</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="text-xs font-semibold mt-1.5">1-tap confirm · undo</div><div class="mt-2 flex items-center justify-between text-[10px]"><span class="pill ph-pill-review pill-sm">PR #2845</span><span class="font-mono">3 SP</span></div></div>
+            </div>
+          </div>
+          <!-- QA -->
+          <div class="bg-surface-container-low rounded-xl p-3">
+            <div class="flex items-center justify-between mb-2 px-1"><div class="eyebrow">QA</div><span class="text-[10px] font-mono text-on-surface-variant">2</span></div>
+            <div class="space-y-2">
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-outline-variant/30"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-1</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="text-xs font-semibold mt-1.5">Live cash-out amount</div><div class="mt-2 flex items-center justify-between text-[10px]"><span>QA · 12/14 cases</span><span class="font-mono">5 SP</span></div></div>
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-outline-variant/30"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-14</span><span class="pill ph-pill-severity-high pill-sm">P1</span></div><div class="text-xs font-semibold mt-1.5">Trading desk dashboard</div><div class="mt-2 flex items-center justify-between text-[10px]"><span>QA · 8/8 cases</span><span class="font-mono">3 SP</span></div></div>
+            </div>
+          </div>
+          <!-- Done -->
+          <div class="bg-emerald-50/40 rounded-xl p-3">
+            <div class="flex items-center justify-between mb-2 px-1"><div class="eyebrow text-emerald-800">Done</div><span class="text-[10px] font-mono text-emerald-700">4</span></div>
+            <div class="space-y-2">
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-emerald-200"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-6</span><span class="pill ph-pill-approved pill-sm">Merged</span></div><div class="text-xs font-semibold mt-1.5">Persistent button</div><div class="mt-1 text-[10px] text-on-surface-variant">Behind flag · shadow mode</div></div>
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-emerald-200"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-5</span><span class="pill ph-pill-approved pill-sm">Merged</span></div><div class="text-xs font-semibold mt-1.5">Audit hash</div></div>
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-emerald-200"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">CO-11</span><span class="pill ph-pill-approved pill-sm">Merged</span></div><div class="text-xs font-semibold mt-1.5">Self-exclusion block</div></div>
+              <div class="bg-white rounded-lg p-3 shadow-sm border border-emerald-200"><div class="flex items-center justify-between text-[10px]"><span class="font-mono text-primary">PAY-201</span><span class="pill ph-pill-approved pill-sm">Merged</span></div><div class="text-xs font-semibold mt-1.5">Atomic wallet credit</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Burndown -->
+        <section class="bg-white border border-outline-variant/30 rounded-xl p-6 mt-6">
+          <div class="flex items-center justify-between mb-3"><h3 class="font-headline font-bold text-sm">Sprint 25 burndown</h3><span class="spec">Day 7 · projected close day 11 (+1)</span></div>
+          <svg viewBox="0 0 600 160" class="w-full">
+            <defs><linearGradient id="bd" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3525cd" stop-opacity=".25"/><stop offset="1" stop-color="#3525cd" stop-opacity="0"/></linearGradient></defs>
+            <line x1="40" y1="20" x2="40" y2="140" stroke="#e0e3e5"/><line x1="40" y1="140" x2="580" y2="140" stroke="#e0e3e5"/>
+            <!-- ideal -->
+            <line x1="40" y1="20" x2="580" y2="140" stroke="#9aa0a6" stroke-dasharray="3 3"/>
+            <!-- actual -->
+            <path d="M40,20 L94,28 L148,45 L202,62 L256,68 L310,88 L364,98 L418,108 Z" fill="url(#bd)" />
+            <polyline points="40,20 94,28 148,45 202,62 256,68 310,88 364,98 418,108" fill="none" stroke="#3525cd" stroke-width="2.5"/>
+            <circle cx="418" cy="108" r="5" fill="#3525cd"/>
+            <text x="425" y="105" font-size="10" fill="#3525cd" font-weight="700">Today · 16 SP left</text>
+            <text x="40" y="155" font-size="10" fill="#777587">Day 1</text><text x="570" y="155" font-size="10" fill="#777587" text-anchor="end">Day 10</text>
+          </svg>
+        </section>
+
+        <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+          <a href="d-plan.html#d04" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>D04 · Handover</a>
+          <span class="text-outline">E01 · Delivery Board</span>
+          <a href="e-ship.html#e02" class="text-primary flex items-center gap-1">E02 · UAT<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  E02  UAT                                                    -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Delivery · 02</span><h2 class="font-headline font-extrabold text-2xl mt-1">E02 · UAT</h2></div><div class="spec">Trading desk + selected VIPs test drive Cash Out</div></div>
+<div id="e02" class="screen" data-screen-label="E02 UAT">
+  <div class="flex h-[940px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Delivery</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Delivery</div>
+        <a href="e-ship.html#e01"><span class="material-symbols-outlined text-[18px]">rocket_launch</span>Sprint board</a>
+        <a href="e-ship.html#e02" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">science</span>UAT</a>
+        <a href="e-ship.html#e03"><span class="material-symbols-outlined text-[18px]">publish</span>Release</a>
+        <a href="e-ship.html#e04"><span class="material-symbols-outlined text-[18px]">monitoring</span>Metrics</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="e-ship.html#e01" class="hover:text-primary">Sprint</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">UAT · Cash Out</span></div>
+        <a href="e-ship.html#e03" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">Sign off · promote to release →</a>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="flex items-end justify-between mb-6">
+          <div><h1 class="font-headline font-extrabold text-3xl tracking-tight">UAT · Cash Out</h1><p class="text-sm text-on-surface-variant mt-1">14-day window · 23 of 24 test cases passing · 3 bugs open</p></div>
+          <div class="flex gap-3">
+            <div class="bg-white border border-outline-variant/30 rounded-lg px-4 py-2 text-xs"><div class="eyebrow">Pass rate</div><div class="font-headline font-extrabold text-xl text-emerald-700 mt-0.5">96%</div></div>
+            <div class="bg-white border border-outline-variant/30 rounded-lg px-4 py-2 text-xs"><div class="eyebrow">Sign-off</div><div class="font-headline font-extrabold text-xl mt-0.5">4 / 5</div></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-5">
+          <!-- Test case matrix -->
+          <section class="col-span-2 bg-white border border-outline-variant/30 rounded-xl overflow-hidden">
+            <div class="px-5 py-3 border-b border-outline-variant/40 flex items-center justify-between"><h3 class="font-headline font-bold text-sm">Test case matrix</h3><span class="spec">24 cases · across 6 environments</span></div>
+            <table class="w-full text-xs">
+              <thead class="bg-surface-container-low text-[10px] uppercase tracking-wider text-on-surface-variant font-bold">
+                <tr><th class="px-4 py-2.5 text-left">Case</th><th class="px-2 py-2.5 text-center">iOS</th><th class="px-2 py-2.5 text-center">Android</th><th class="px-2 py-2.5 text-center">Web</th><th class="px-2 py-2.5 text-center">Desk UI</th><th class="px-2 py-2.5 text-center">Regulator</th><th class="px-4 py-2.5 text-right">Status</th></tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant/40">
+                <tr><td class="px-4 py-2.5"><b>UAT-01</b> · Offer displays under active bet</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">–</td><td class="text-center">–</td><td class="px-4 py-2.5 text-right"><span class="pill ph-pill-approved pill-sm">Pass</span></td></tr>
+                <tr><td class="px-4 py-2.5"><b>UAT-02</b> · Amount refreshes ≤3s during goal</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">–</td><td class="text-center">–</td><td class="px-4 py-2.5 text-right"><span class="pill ph-pill-approved pill-sm">Pass</span></td></tr>
+                <tr class="bg-rose-50/40"><td class="px-4 py-2.5"><b>UAT-03</b> · Undo toast dismissable on low-end Android</td><td class="text-center">✓</td><td class="text-center text-rose-600 font-bold">✗</td><td class="text-center">✓</td><td class="text-center">–</td><td class="text-center">–</td><td class="px-4 py-2.5 text-right"><span class="pill ph-pill-rejected pill-sm">Bug · BUG-4491</span></td></tr>
+                <tr><td class="px-4 py-2.5"><b>UAT-04</b> · Self-excluded punter cannot initiate</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">–</td><td class="text-center">✓</td><td class="px-4 py-2.5 text-right"><span class="pill ph-pill-approved pill-sm">Pass</span></td></tr>
+                <tr><td class="px-4 py-2.5"><b>UAT-05</b> · Trader approval on &gt; €5k offer</td><td class="text-center">–</td><td class="text-center">–</td><td class="text-center">–</td><td class="text-center">✓</td><td class="text-center">–</td><td class="px-4 py-2.5 text-right"><span class="pill ph-pill-approved pill-sm">Pass</span></td></tr>
+                <tr><td class="px-4 py-2.5"><b>UAT-06</b> · Audit hash reproducible from logs</td><td class="text-center">–</td><td class="text-center">–</td><td class="text-center">–</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="px-4 py-2.5 text-right"><span class="pill ph-pill-approved pill-sm">Pass</span></td></tr>
+                <tr class="bg-amber-50/40"><td class="px-4 py-2.5"><b>UAT-07</b> · Feed suspend locks offer in &lt;800ms</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">–</td><td class="px-4 py-2.5 text-right"><span class="pill ph-pill-revised pill-sm">Flaky · re-run</span></td></tr>
+                <tr><td class="px-4 py-2.5"><b>UAT-08</b> · Margin kill-switch stops all offers</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">✓</td><td class="text-center">–</td><td class="px-4 py-2.5 text-right"><span class="pill ph-pill-approved pill-sm">Pass</span></td></tr>
+              </tbody>
+            </table>
+            <div class="px-4 py-2 bg-surface-container-low border-t border-outline-variant/40 text-[11px] text-on-surface-variant flex items-center justify-between"><span>23 pass · 1 bug · 1 flaky · 0 untested</span><a href="#" class="font-bold text-primary">Load all 24 →</a></div>
+          </section>
+
+          <!-- Sign-off & bugs -->
+          <aside class="space-y-4">
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+              <div class="eyebrow mb-3">Stakeholder sign-off</div>
+              <ul class="text-xs space-y-2.5">
+                <li class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-amber-500 text-white text-[9px] font-bold flex items-center justify-center">RK</div><span><b>R. Kim</b> · Trading</span></div><span class="pill ph-pill-approved pill-sm">Signed</span></li>
+                <li class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center">MJ</div><span><b>M. Jain</b> · Risk</span></div><span class="pill ph-pill-approved pill-sm">Signed</span></li>
+                <li class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-emerald-500 text-white text-[9px] font-bold flex items-center justify-center">SM</div><span><b>S. Morales</b> · Design</span></div><span class="pill ph-pill-approved pill-sm">Signed</span></li>
+                <li class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-indigo-500 text-white text-[9px] font-bold flex items-center justify-center">TY</div><span><b>T. Yamada</b> · SRE</span></div><span class="pill ph-pill-approved pill-sm">Signed</span></li>
+                <li class="flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-sky-500 text-white text-[9px] font-bold flex items-center justify-center">JL</div><span><b>J. Lindqvist</b> · CFO</span></div><span class="pill ph-pill-review pill-sm">Pending</span></li>
+              </ul>
+            </div>
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+              <div class="eyebrow mb-3">Open bugs</div>
+              <ul class="text-xs space-y-2.5">
+                <li class="p-3 rounded-lg bg-rose-50 border border-rose-200"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-rose-700">BUG-4491</span><span class="pill ph-pill-severity-medium pill-sm">Medium</span></div><div class="font-semibold mt-1">Undo toast not dismissable on Android 10</div><div class="spec mt-0.5">SM · fix in Sprint 25 hotfix</div></li>
+                <li class="p-3 rounded-lg bg-amber-50 border border-amber-200"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-amber-800">BUG-4492</span><span class="pill ph-pill-severity-low pill-sm">Low</span></div><div class="font-semibold mt-1">Amber glow flickers on iOS 16 low-power</div><div class="spec mt-0.5">SM · deferred</div></li>
+                <li class="p-3 rounded-lg bg-amber-50 border border-amber-200"><div class="flex items-center justify-between"><span class="font-mono text-[10px] text-amber-800">BUG-4493</span><span class="pill ph-pill-severity-low pill-sm">Low</span></div><div class="font-semibold mt-1">Offer copy truncates at €10,000+</div><div class="spec mt-0.5">SM · deferred</div></li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+
+        <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+          <a href="e-ship.html#e01" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>E01 · Delivery</a>
+          <span class="text-outline">E02 · UAT</span>
+          <a href="e-ship.html#e03" class="text-primary flex items-center gap-1">E03 · Release<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  E03  RELEASE                                                -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Delivery · 03</span><h2 class="font-headline font-extrabold text-2xl mt-1">E03 · Release Control</h2></div><div class="spec">Cash Out rolling live · Malta 1% canary</div></div>
+<div id="e03" class="screen" data-screen-label="E03 Release">
+  <div class="flex h-[960px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Delivery</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Delivery</div>
+        <a href="e-ship.html#e01"><span class="material-symbols-outlined text-[18px]">rocket_launch</span>Sprint board</a>
+        <a href="e-ship.html#e02"><span class="material-symbols-outlined text-[18px]">science</span>UAT</a>
+        <a href="e-ship.html#e03" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">publish</span>Release</a>
+        <a href="e-ship.html#e04"><span class="material-symbols-outlined text-[18px]">monitoring</span>Metrics</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="e-ship.html#e02" class="hover:text-primary">UAT</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Release · Cash Out v1.0.0</span></div>
+        <div class="flex items-center gap-2">
+          <button class="px-3 py-1.5 text-xs font-bold text-rose-700 border border-rose-300 rounded-lg flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">pan_tool</span>Halt rollout</button>
+          <a href="e-ship.html#e04" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20">View live metrics →</a>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="flex items-end justify-between mb-6">
+          <div>
+            <div class="flex items-center gap-2 mb-2"><span class="pill ph-pill-approved"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block mr-1"></span>Rollout live</span><span class="pill ph-pill-primary">v1.0.0</span><span class="font-mono text-[11px] text-on-surface-variant">released 18 Jul 06:04 UTC</span></div>
+            <h1 class="font-headline font-extrabold text-3xl tracking-tight">Cash Out · Release control</h1>
+            <p class="text-sm text-on-surface-variant mt-1">Canary progressing through the ramp plan · all guardrails green</p>
+          </div>
+          <div class="flex gap-3">
+            <div class="bg-white border border-outline-variant/30 rounded-lg px-4 py-2 text-xs"><div class="eyebrow">Exposure</div><div class="font-headline font-extrabold text-xl mt-0.5">1.0%</div><div class="spec">Malta only</div></div>
+            <div class="bg-white border border-outline-variant/30 rounded-lg px-4 py-2 text-xs"><div class="eyebrow">Error rate</div><div class="font-headline font-extrabold text-xl text-emerald-700 mt-0.5">0.04%</div><div class="spec">vs 0.06% baseline</div></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-5">
+          <!-- Ramp stepper -->
+          <section class="col-span-2 bg-white border border-outline-variant/30 rounded-xl p-6">
+            <h3 class="font-headline font-bold text-sm mb-5">Rollout ramp</h3>
+            <ol class="space-y-5">
+              <li class="flex gap-4"><div class="flex flex-col items-center shrink-0"><div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">check</span></div><div class="w-px flex-1 bg-emerald-400 mt-1"></div></div>
+                <div class="flex-1 pb-5"><div class="flex items-center justify-between"><div><b>Stage 1 · Shadow mode</b><div class="spec">No punter exposure · offers computed and logged only</div></div><span class="pill ph-pill-approved pill-sm">Complete · 14d</span></div><div class="mt-3 grid grid-cols-3 gap-2 text-[11px]"><div class="p-2 rounded bg-surface-container-low"><div class="eyebrow">Offers</div><div class="font-mono font-bold">2.14M</div></div><div class="p-2 rounded bg-surface-container-low"><div class="eyebrow">p99 latency</div><div class="font-mono font-bold">240ms</div></div><div class="p-2 rounded bg-surface-container-low"><div class="eyebrow">Guardrails</div><div class="font-mono font-bold text-emerald-700">All OK</div></div></div></div></li>
+              <li class="flex gap-4"><div class="flex flex-col items-center shrink-0"><div class="w-8 h-8 rounded-full bg-primary text-white ring-4 ring-primary/20 flex items-center justify-center"><span class="material-symbols-outlined text-[16px]">play_arrow</span></div><div class="w-px flex-1 bg-outline-variant mt-1"></div></div>
+                <div class="flex-1 pb-5"><div class="flex items-center justify-between"><div><b>Stage 2 · 1% Malta canary</b><div class="spec">Malta-registered VIP-2+ punters only · 72h observation</div></div><span class="pill ph-pill-primary pill-sm">Live · 18h in</span></div>
+                  <div class="mt-3 h-2 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-gradient-to-r from-primary to-[#7c3aed]" style="width:25%"></div></div>
+                  <div class="flex justify-between text-[10px] mt-1 text-on-surface-variant"><span>18h / 72h</span><span>auto-ramp gated on guardrails</span></div>
+                </div></li>
+              <li class="flex gap-4"><div class="flex flex-col items-center shrink-0"><div class="w-8 h-8 rounded-full bg-surface-container border-2 border-outline-variant text-on-surface-variant flex items-center justify-center"><span class="font-mono text-[11px] font-bold">3</span></div><div class="w-px flex-1 bg-outline-variant/60 mt-1"></div></div>
+                <div class="flex-1 pb-5 opacity-60"><div class="flex items-center justify-between"><div><b>Stage 3 · 10% EU ramp</b><div class="spec">IT · DE · SE · 7d observation · margin must stay 6.8–8.5%</div></div><span class="pill ph-pill-pending pill-sm">Scheduled · 21 Jul</span></div></div></li>
+              <li class="flex gap-4"><div class="flex flex-col items-center shrink-0"><div class="w-8 h-8 rounded-full bg-surface-container border-2 border-outline-variant text-on-surface-variant flex items-center justify-center"><span class="font-mono text-[11px] font-bold">4</span></div></div>
+                <div class="flex-1 opacity-60"><div class="flex items-center justify-between"><div><b>Stage 4 · GA (all markets)</b><div class="spec">Global rollout + marketing push</div></div><span class="pill ph-pill-pending pill-sm">Scheduled · 4 Aug</span></div></div></li>
+            </ol>
+          </section>
+
+          <!-- Live guardrails -->
+          <aside class="space-y-4">
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-5">
+              <div class="eyebrow mb-3">Live guardrails</div>
+              <ul class="space-y-3 text-xs">
+                <li><div class="flex items-center justify-between"><span class="font-semibold">Book margin</span><span class="font-mono font-bold text-emerald-700">7.4%</span></div><div class="h-1.5 mt-1 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-emerald-500" style="width:48%"></div></div><div class="flex justify-between text-[10px] text-on-surface-variant mt-0.5"><span>6.8%</span><span>8.5%</span></div></li>
+                <li><div class="flex items-center justify-between"><span class="font-semibold">p99 latency</span><span class="font-mono font-bold text-emerald-700">268ms</span></div><div class="h-1.5 mt-1 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-emerald-500" style="width:54%"></div></div><div class="flex justify-between text-[10px] text-on-surface-variant mt-0.5"><span>0</span><span>500ms limit</span></div></li>
+                <li><div class="flex items-center justify-between"><span class="font-semibold">Error rate</span><span class="font-mono font-bold text-emerald-700">0.04%</span></div><div class="h-1.5 mt-1 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-emerald-500" style="width:20%"></div></div></li>
+                <li><div class="flex items-center justify-between"><span class="font-semibold">Regulator alerts</span><span class="font-mono font-bold text-emerald-700">0</span></div></li>
+              </ul>
+            </div>
+            <div class="bg-gradient-to-br from-emerald-500 to-emerald-700 text-white rounded-xl p-5">
+              <div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined">verified</span><span class="eyebrow text-white">Auto-ramp decision</span></div>
+              <p class="text-sm">All 4 guardrails green. If the trend holds for another <b>54 hours</b>, the system will auto-advance to Stage 3.</p>
+              <button class="mt-3 bg-white text-emerald-700 text-xs font-bold px-3 py-1.5 rounded-lg">Override &amp; advance now</button>
+            </div>
+          </aside>
+
+          <!-- Release notes -->
+          <section class="col-span-3 bg-white border border-outline-variant/30 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-3"><h3 class="font-headline font-bold text-sm">Release notes · v1.0.0</h3><button class="text-[11px] font-bold text-primary">Copy to Confluence</button></div>
+            <div class="grid grid-cols-3 gap-6 text-sm">
+              <div><div class="eyebrow text-emerald-700 mb-2">Added</div><ul class="list-disc pl-4 space-y-1"><li>Cash Out button on every active single bet</li><li>Live offer refresh every 3s</li><li>1-tap confirm with 3s undo toast</li><li>"How is this calculated?" drawer</li><li>Trader approval queue for &gt; €5k offers</li></ul></div>
+              <div><div class="eyebrow text-primary mb-2">Changed</div><ul class="list-disc pl-4 space-y-1"><li>Bet history drawer gets a new layout</li><li>Wallet refresh now atomic on cash-out accept</li><li>Self-exclusion flow includes cash-out state</li></ul></div>
+              <div><div class="eyebrow text-rose-700 mb-2">Deferred</div><ul class="list-disc pl-4 space-y-1"><li>Partial cash-out (phase 2)</li><li>Accumulator cash-out (phase 2)</li><li>Auto cash-out rules (phase 2)</li></ul></div>
+            </div>
+          </section>
+        </div>
+
+        <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+          <a href="e-ship.html#e02" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>E02 · UAT</a>
+          <span class="text-outline">E03 · Release</span>
+          <a href="e-ship.html#e04" class="text-primary flex items-center gap-1">E04 · Metrics<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  E04  METRICS                                                -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Delivery · 04</span><h2 class="font-headline font-extrabold text-2xl mt-1">E04 · Live Metrics</h2></div><div class="spec">Cash Out after 30 days in the wild</div></div>
+<div id="e04" class="screen" data-screen-label="E04 Metrics">
+  <div class="flex h-[980px]">
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div><div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Delivery</div></div></div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02"><span class="material-symbols-outlined text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Delivery</div>
+        <a href="e-ship.html#e01"><span class="material-symbols-outlined text-[18px]">rocket_launch</span>Sprint board</a>
+        <a href="e-ship.html#e02"><span class="material-symbols-outlined text-[18px]">science</span>UAT</a>
+        <a href="e-ship.html#e03"><span class="material-symbols-outlined text-[18px]">publish</span>Release</a>
+        <a href="e-ship.html#e04" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">monitoring</span>Metrics</a>
+        <div class="section">Meta</div>
+        <a href="z-meta.html#z01"><span class="material-symbols-outlined text-[18px]">auto_awesome</span>LLM usage</a>
+      </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col min-w-0">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-2 text-[11px] font-semibold text-on-surface-variant"><a href="e-ship.html#e03" class="hover:text-primary">Release</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-primary">Metrics · Cash Out · 30d</span></div>
+        <div class="flex items-center gap-2">
+          <div class="flex items-center bg-white border border-outline-variant/40 rounded-lg text-[11px] font-semibold overflow-hidden"><button class="px-2.5 py-1.5 text-on-surface-variant">7d</button><button class="px-2.5 py-1.5 bg-primary text-white">30d</button><button class="px-2.5 py-1.5 text-on-surface-variant">90d</button><button class="px-2.5 py-1.5 text-on-surface-variant">All</button></div>
+          <a href="b-prd.html#b01" class="px-3 py-1.5 text-xs font-bold text-white bg-primary rounded-lg shadow-lg shadow-primary/20 flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">add</span>Next idea</a>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-8 bg-surface">
+        <div class="flex items-end justify-between mb-6">
+          <div><h1 class="font-headline font-extrabold text-3xl tracking-tight">Cash Out · 30 days live</h1><p class="text-sm text-on-surface-variant mt-1">Closing the loop · North-star targets tracked from PRD-087 §8</p></div>
+          <span class="pill ph-pill-approved"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block mr-1"></span>Healthy</span>
+        </div>
+
+        <!-- North-star KPIs -->
+        <div class="grid grid-cols-4 gap-4">
+          <div class="bg-gradient-to-br from-primary to-[#7c3aed] text-white rounded-xl p-5"><div class="eyebrow text-white">North-star</div><div class="font-headline font-extrabold text-3xl mt-1 tracking-tight">−14.2%</div><div class="text-[11px] text-white/80 mt-1">Single-bet churn · beating 12% target</div><div class="mt-3 h-1.5 rounded-full bg-white/20 overflow-hidden"><div class="h-full bg-white" style="width:118%"></div></div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Cash-out rate</div><div class="font-headline font-extrabold text-3xl mt-1">31.4%</div><div class="text-[11px] text-on-surface-variant mt-1">of eligible singles settled early</div><div class="mt-3 h-1.5 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-primary" style="width:62%"></div></div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Book margin</div><div class="font-headline font-extrabold text-3xl mt-1 text-emerald-700">7.6%</div><div class="text-[11px] text-on-surface-variant mt-1">Within 6.8–8.5% guardrail</div><div class="mt-3 h-1.5 rounded-full bg-surface-container overflow-hidden"><div class="h-full bg-emerald-500" style="width:47%"></div></div></div>
+          <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">NGR uplift</div><div class="font-headline font-extrabold text-3xl mt-1 text-emerald-700">+€1.8M</div><div class="text-[11px] text-on-surface-variant mt-1">Vs. control cohort · 30d</div></div>
+        </div>
+
+        <!-- Chart + segments -->
+        <div class="grid grid-cols-3 gap-5 mt-6">
+          <section class="col-span-2 bg-white border border-outline-variant/30 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-3"><h3 class="font-headline font-bold text-sm">Single-bet churn · 30d rolling</h3><div class="flex gap-3 text-[10px]"><span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span>Cash Out cohort</span><span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-on-surface-variant"></span>Control</span></div></div>
+            <svg viewBox="0 0 600 180" class="w-full">
+              <defs><linearGradient id="ch" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3525cd" stop-opacity=".25"/><stop offset="1" stop-color="#3525cd" stop-opacity="0"/></linearGradient></defs>
+              <line x1="40" y1="30" x2="40" y2="150" stroke="#e0e3e5"/><line x1="40" y1="150" x2="580" y2="150" stroke="#e0e3e5"/>
+              <!-- launch marker -->
+              <line x1="115" y1="30" x2="115" y2="150" stroke="#9aa0a6" stroke-dasharray="3 3"/><text x="118" y="40" font-size="9" fill="#777587">Launch</text>
+              <!-- control (flat) -->
+              <polyline points="40,90 90,88 140,92 190,90 240,94 290,91 340,93 390,90 440,92 490,90 540,93 580,91" fill="none" stroke="#9aa0a6" stroke-width="2"/>
+              <!-- cohort (diverges down) -->
+              <path d="M40,90 L90,90 L115,90 L140,82 L190,72 L240,62 L290,55 L340,50 L390,48 L440,44 L490,42 L540,40 L580,38 L580,150 L40,150 Z" fill="url(#ch)"/>
+              <polyline points="40,90 90,90 115,90 140,82 190,72 240,62 290,55 340,50 390,48 440,44 490,42 540,40 580,38" fill="none" stroke="#3525cd" stroke-width="2.5"/>
+              <text x="560" y="34" font-size="10" fill="#3525cd" font-weight="700" text-anchor="end">−14.2%</text>
+            </svg>
+            <div class="grid grid-cols-4 gap-3 mt-3 text-xs">
+              <div><div class="eyebrow">Day 30</div><div class="font-mono font-bold">−14.2%</div></div>
+              <div><div class="eyebrow">Day 14</div><div class="font-mono font-bold">−9.4%</div></div>
+              <div><div class="eyebrow">Day 7</div><div class="font-mono font-bold">−5.1%</div></div>
+              <div><div class="eyebrow">Hypothesis</div><div class="font-mono font-bold text-emerald-700">Confirmed</div></div>
+            </div>
+          </section>
+
+          <!-- Segments -->
+          <section class="bg-white border border-outline-variant/30 rounded-xl p-6">
+            <h3 class="font-headline font-bold text-sm mb-3">Who uses Cash Out most</h3>
+            <ul class="space-y-3 text-xs">
+              <li><div class="flex items-center justify-between mb-1"><span class="font-semibold">VIP-2 punters</span><span class="font-mono font-bold">48%</span></div><div class="h-1.5 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:96%"></div></div></li>
+              <li><div class="flex items-center justify-between mb-1"><span class="font-semibold">Recreational · 25-34</span><span class="font-mono font-bold">34%</span></div><div class="h-1.5 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary" style="width:68%"></div></div></li>
+              <li><div class="flex items-center justify-between mb-1"><span class="font-semibold">Recreational · 35-44</span><span class="font-mono font-bold">28%</span></div><div class="h-1.5 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary/80" style="width:56%"></div></div></li>
+              <li><div class="flex items-center justify-between mb-1"><span class="font-semibold">High-stakes</span><span class="font-mono font-bold">12%</span></div><div class="h-1.5 bg-surface-container rounded-full overflow-hidden"><div class="h-full bg-primary/60" style="width:24%"></div></div></li>
+            </ul>
+            <div class="mt-5 p-3 rounded-lg bg-primary/5 border border-primary/20 text-[11px]"><b>Insight</b> — High-stakes use is lower than predicted. Research agent flags this as input for the Partial Cash Out phase-2 PRD.</div>
+          </section>
+
+          <!-- Retro -->
+          <section class="col-span-3 rounded-xl p-6 text-white relative overflow-hidden" style="background:linear-gradient(135deg,#0a0a1a 0%,#3525cd 80%)">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="eyebrow text-white">Closing retrospective · agent-drafted</div>
+                <h3 class="font-headline font-extrabold text-2xl mt-1 tracking-tight">Cash Out v1 · the loop closes</h3>
+              </div>
+              <a href="b-prd.html#b01" class="px-4 py-2 rounded-lg bg-white text-primary text-xs font-bold shadow-lg">Start phase 2 →</a>
+            </div>
+            <div class="grid grid-cols-4 gap-5 mt-6 text-sm">
+              <div><div class="eyebrow text-white/70 mb-1">What worked</div><p class="text-white/90">Shadow mode exposed the feed-latency issue (CO-4) before a single punter was affected.</p></div>
+              <div><div class="eyebrow text-white/70 mb-1">What to repeat</div><p class="text-white/90">Auto-ramp on guardrails removed a full day of manual release-review toil.</p></div>
+              <div><div class="eyebrow text-white/70 mb-1">What to fix</div><p class="text-white/90">Trading-desk P&amp;L dashboard blocked 2 sprint-25 tickets. Build dashboards <i>before</i> dependent features.</p></div>
+              <div><div class="eyebrow text-white/70 mb-1">Next bet</div><p class="text-white/90">Partial Cash Out: data says high-stakes will convert if we let them lock in part of the position.</p></div>
+            </div>
+            <div class="absolute -right-20 -top-10 w-60 h-60 bg-white/10 rounded-full blur-3xl"></div>
+          </section>
+        </div>
+
+        <div class="border-t border-outline-variant/40 bg-surface-container-low -mx-8 mt-10 px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+          <a href="e-ship.html#e03" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>E03 · Release</a>
+          <span class="text-outline">E04 · Metrics</span>
+          <a href="z-meta.html#z01" class="text-primary flex items-center gap-1">Z01 · LLM Usage<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  Z01  LLM USAGE (cross-cutting view)                         -->
+<!-- ============================================================ -->
+
+<script>
+// Scrollspy for the floating TOC
+(function(){
+  const links = document.querySelectorAll('nav.toc a');
+  const map = new Map();
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) map.set(el, a);
+  });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a = map.get(e.target);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  map.forEach((_,el)=>io.observe(el));
+})();
+</script>
+</body>
+</html>

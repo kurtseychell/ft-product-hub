@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sportsbook Hub — Cash Out Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+tailwind.config = {
+  darkMode:'class',
+  theme: { extend: {
+    colors: {
+      primary:'#3525cd','primary-container':'#4f46e5','primary-fixed':'#e2dfff','primary-fixed-dim':'#c3c0ff',
+      'on-primary':'#ffffff','on-primary-container':'#dad7ff',
+      secondary:'#5b598c','secondary-container':'#c7c3fe','on-secondary-container':'#514f81',
+      tertiary:'#7e3000','tertiary-container':'#a44100',
+      background:'#f7f9fb',surface:'#f7f9fb',
+      'surface-container-lowest':'#ffffff','surface-container-low':'#f2f4f6','surface-container':'#eceef0',
+      'surface-container-high':'#e6e8ea','surface-container-highest':'#e0e3e5',
+      'on-surface':'#191c1e','on-surface-variant':'#464555',
+      outline:'#777587','outline-variant':'#c7c4d8',
+      error:'#ba1a1a','error-container':'#ffdad6','on-error-container':'#93000a',
+      sidebar:'#1E1B4B',
+      'odds-up':'#047857','odds-down':'#b91c1c'
+    },
+    borderRadius:{ DEFAULT:'0.25rem', lg:'0.5rem', xl:'0.75rem', full:'9999px' },
+    fontFamily:{ body:['Inter'], headline:['Manrope'], label:['Inter'], mono:['JetBrains Mono'] }
+  }}
+};
+</script>
+<style>
+/* ===========================================================
+   Sportsbook Hub · Canonical Design System
+   Applies to every A/B/C/D/E/Z screen. Do not fork locally.
+   =========================================================== */
+:root {
+  /* Primary — indigo (Product Hub) */
+  --primary:#3525cd; --primary-container:#4f46e5;
+  --primary-fixed:#e2dfff; --primary-fixed-dim:#c3c0ff;
+  --on-primary:#ffffff; --on-primary-container:#dad7ff;
+
+  /* Secondary / Tertiary */
+  --secondary:#5b598c; --secondary-container:#c7c3fe; --on-secondary-container:#514f81;
+  --tertiary:#7e3000; --tertiary-container:#a44100;
+
+  /* Surfaces */
+  --background:#f7f9fb; --surface:#f7f9fb;
+  --surface-container-lowest:#ffffff; --surface-container-low:#f2f4f6;
+  --surface-container:#eceef0; --surface-container-high:#e6e8ea; --surface-container-highest:#e0e3e5;
+
+  /* Text + outlines */
+  --on-surface:#191c1e; --on-surface-variant:#464555;
+  --outline:#777587; --outline-variant:#c7c4d8;
+
+  /* Semantic */
+  --error:#ba1a1a; --error-container:#ffdad6; --on-error-container:#93000a;
+  --success:#047857; --warning:#b45309;
+
+  /* Sportsbook odds colours (semantic – do not reuse for UI state) */
+  --odds-up:#047857; --odds-down:#b91c1c; --odds-hold:#475569;
+
+  /* Navigation */
+  --sidebar:#1E1B4B; /* deep indigo — official shell */
+}
+
+html, body { background:#eceef0; color:var(--on-surface); }
+body { font-family:'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+/* Type — Inter body / Manrope display, as per Product Hub system */
+.font-body{font-family:'Inter',sans-serif}
+.font-headline{font-family:'Manrope',sans-serif;letter-spacing:-.01em}
+.font-mono-alt{font-family:'JetBrains Mono','SFMono-Regular',monospace}
+.eyebrow{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.18em;color:var(--primary)}
+.spec{font-family:'Inter';font-size:11px;color:var(--on-surface-variant)}
+
+/* Material Symbols – fill variant */
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle}
+.msym-fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
+
+/* Sidebar shell — shared across every hub screen */
+.sidebar-nav a{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:.5rem;font-size:13px;font-weight:500;color:rgba(255,255,255,.55);transition:all .15s;font-family:'Inter'}
+.sidebar-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+.sidebar-nav a.active{color:white;background:rgba(255,255,255,.12);font-weight:600}
+.sidebar-nav .section{font-size:10px;font-weight:800;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.16em;padding:14px 14px 6px}
+
+/* Topnav */
+.topnav{background:rgba(255,255,255,.90);backdrop-filter:blur(12px)}
+
+/* Inputs (canonical) */
+.ph-input{background:var(--surface-container-low);border:1px solid transparent;border-radius:.5rem;padding:9px 12px;font-size:13px;width:100%;transition:all .15s;color:var(--on-surface)}
+.ph-input:focus{outline:none;background:#fff;border-color:var(--primary);box-shadow:0 0 0 4px rgba(53,37,205,.10)}
+.ph-input::placeholder{color:var(--on-surface-variant);opacity:.7}
+
+/* Pills / chips */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:9999px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.pill-sm{padding:1px 8px;font-size:10px}
+.ph-pill-approved{background:#d1fae5;color:#065f46}
+.ph-pill-review{background:#fef3c7;color:#92400e}
+.ph-pill-revised{background:#dbeafe;color:#1d4ed8}
+.ph-pill-pending{background:#f1f5f9;color:#334155}
+.ph-pill-rejected{background:#fee2e2;color:#991b1b}
+.ph-pill-primary{background:rgba(53,37,205,.10);color:var(--primary)}
+.ph-pill-live{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-trading{background:rgba(126,48,0,.10);color:#7e3000}
+.ph-pill-domain-risk{background:#fee2e2;color:#991b1b}
+.ph-pill-domain-frontend{background:#c7c3fe;color:#514f81}
+.ph-pill-domain-payments{background:#d1fae5;color:#065f46}
+.ph-pill-severity-critical{background:#fee2e2;color:#991b1b}
+.ph-pill-severity-high{background:#ffedd5;color:#9a3412}
+.ph-pill-severity-medium{background:#fef3c7;color:#92400e}
+.ph-pill-severity-low{background:#dbeafe;color:#1d4ed8}
+
+/* AI chip gradient — same across screens */
+.ai-chip{background:linear-gradient(135deg,#3525cd 0%,#7c3aed 100%);color:white}
+
+/* Shared screen shell */
+.screen{max-width:1440px;margin:40px auto;background:var(--surface);border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(25,28,30,.08),0 2px 6px rgba(25,28,30,.04);scroll-margin-top:80px}
+.screen-label{max-width:1440px;margin:60px auto 0;padding:0 4px;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+
+/* Floating TOC */
+.toc{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:40;background:white;border:1px solid rgba(199,196,216,.5);border-radius:12px;padding:12px 10px;box-shadow:0 12px 32px rgba(25,28,30,.08);font-family:'Inter';font-size:11px;max-height:82vh;overflow-y:auto}
+.toc a{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:6px;color:var(--on-surface-variant);font-weight:600;text-decoration:none}
+.toc a:hover{background:var(--surface-container-low);color:var(--on-surface)}
+.toc a.active{background:rgba(53,37,205,.08);color:var(--primary)}
+.toc .toc-group{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.16em;color:var(--outline);padding:8px 8px 4px}
+@media (max-width:1320px){.toc{display:none}}
+
+/* Odds display tokens (reusable across sportsbook listings) */
+.odds{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--on-surface);padding:4px 8px;border-radius:6px;background:var(--surface-container-low);border:1px solid var(--outline-variant);font-size:12px;display:inline-block;min-width:48px;text-align:center}
+.odds.up{color:var(--odds-up);border-color:rgba(4,120,87,.4);background:rgba(4,120,87,.06)}
+.odds.down{color:var(--odds-down);border-color:rgba(185,28,28,.4);background:rgba(185,28,28,.06)}
+.odds.live{color:white;background:var(--odds-down);border-color:var(--odds-down);animation:pulse-live 2s ease-in-out infinite}
+@keyframes pulse-live{0%,100%{box-shadow:0 0 0 0 rgba(185,28,28,.5)}50%{box-shadow:0 0 0 6px rgba(185,28,28,0)}}
+
+/* Bet slip + cashout pill */
+.cashout-chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:9999px;font-size:11px;font-weight:800;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#7c2d12;text-transform:uppercase;letter-spacing:.04em}
+
+/* Chart grid helper */
+.chart-grid{background-image:linear-gradient(var(--surface-container-highest) 1px,transparent 1px),linear-gradient(90deg,var(--surface-container-highest) 1px,transparent 1px);background-size:100% 25%,16.66% 100%}
+
+/* Scrollbar hide */
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{scrollbar-width:none}
+
+</style>
+</head>
+<body>
+<nav class="toc">
+<div class="toc-group">Overview</div>
+<a href="cover.html"><span class="w-8 text-[10px] font-mono text-primary">•</span>Cover</a>
+<div class="toc-group">Auth · Shell</div>
+<a href="a-auth.html#a01"><span class="w-8 text-[10px] font-mono text-primary">A01</span>Login</a>
+<a href="a-auth.html#a02"><span class="w-8 text-[10px] font-mono text-primary">A02</span>Dashboard</a>
+<div class="toc-group">Idea → PRD</div>
+<a href="b-prd.html#b01"><span class="w-8 text-[10px] font-mono text-primary">B01</span>Submit idea</a>
+<a href="b-prd.html#b02"><span class="w-8 text-[10px] font-mono text-primary">B02</span>PRD Builder</a>
+<a href="b-prd.html#b03"><span class="w-8 text-[10px] font-mono text-primary">B03</span>Request track</a>
+<a href="b-prd.html#b04"><span class="w-8 text-[10px] font-mono text-primary">B04</span>PRD Document</a>
+<a href="b-prd.html#b05"><span class="w-8 text-[10px] font-mono text-primary">B05</span>PRD Eval</a>
+<div class="toc-group">Discovery → Spec</div>
+<a href="c-spec.html#c01"><span class="w-8 text-[10px] font-mono text-primary">C01</span>Research</a>
+<a href="c-spec.html#c02"><span class="w-8 text-[10px] font-mono text-primary">C02</span>RICE</a>
+<a href="c-spec.html#c03"><span class="w-8 text-[10px] font-mono text-primary">C03</span>Stories</a>
+<a href="c-spec.html#c04"><span class="w-8 text-[10px] font-mono text-primary">C04</span>Design</a>
+<div class="toc-group">Planning</div>
+<a href="d-plan.html#d01"><span class="w-8 text-[10px] font-mono text-primary">D01</span>Backlog</a>
+<a href="d-plan.html#d02"><span class="w-8 text-[10px] font-mono text-primary">D02</span>Domains</a>
+<a href="d-plan.html#d03"><span class="w-8 text-[10px] font-mono text-primary">D03</span>Roadmap</a>
+<a href="d-plan.html#d04"><span class="w-8 text-[10px] font-mono text-primary">D04</span>Handover</a>
+<div class="toc-group">Delivery</div>
+<a href="e-ship.html#e01"><span class="w-8 text-[10px] font-mono text-primary">E01</span>Delivery</a>
+<a href="e-ship.html#e02"><span class="w-8 text-[10px] font-mono text-primary">E02</span>UAT</a>
+<a href="e-ship.html#e03"><span class="w-8 text-[10px] font-mono text-primary">E03</span>Release</a>
+<a href="e-ship.html#e04"><span class="w-8 text-[10px] font-mono text-primary">E04</span>Metrics</a>
+<div class="toc-group">Meta</div>
+<a href="z-meta.html#z01"><span class="w-8 text-[10px] font-mono text-primary">Z01</span>LLM usage</a>
+</nav>
+<div class="screen-label"><div><span class="eyebrow">Auth · 01</span><h2 class="font-headline font-extrabold text-2xl mt-1">A01 · Operator Login</h2></div><div class="spec">Sign-in to the Sportsbook Hub</div></div>
+<div id="a01" class="screen" data-screen-label="A01 Login">
+  <div class="grid grid-cols-2 h-[720px]">
+    <!-- Left: brand / value -->
+    <div class="bg-sidebar text-white p-12 relative overflow-hidden flex flex-col justify-between">
+      <div class="relative z-10">
+        <div class="flex items-center gap-3 mb-10">
+          <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[28px]">casino</span></div>
+          <div><div class="font-headline font-extrabold text-xl leading-none">Sportsbook Hub</div><div class="eyebrow text-white/50 mt-1">Trading Suite</div></div>
+        </div>
+        <h1 class="font-headline font-extrabold text-4xl tracking-tight leading-[1.1]">Where ideas become live markets.</h1>
+        <p class="text-white/70 text-sm mt-4 max-w-sm leading-relaxed">From PRD to trading floor in one suite — odds, risk, CRM and compliance aligned on a single source of truth.</p>
+
+        <div class="mt-10 space-y-3">
+          <div class="flex items-center gap-3 text-sm"><div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">trending_up</span></div>€1.2B handled monthly</div>
+          <div class="flex items-center gap-3 text-sm"><div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">schedule</span>48k live events / week</div></div>
+          <div class="flex items-center gap-3 text-sm"><div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"><span class="material-symbols-outlined text-[18px]">shield</span></div>MGA · UKGC · ONJN licensed</div>
+        </div>
+      </div>
+      <div class="relative z-10 text-[11px] text-white/40">© 2026 Sportsbook Hub · v4.12</div>
+      <div class="absolute -right-24 top-1/3 w-[380px] h-[380px] bg-primary/40 rounded-full blur-3xl"></div>
+      <div class="absolute right-24 bottom-10 w-[220px] h-[220px] bg-[#7c3aed]/30 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Right: form -->
+    <div class="bg-white p-12 flex flex-col justify-center">
+      <div class="max-w-sm w-full mx-auto">
+        <div class="eyebrow mb-2">Sign in</div>
+        <h2 class="font-headline font-extrabold text-3xl tracking-tight">Welcome back</h2>
+        <p class="text-on-surface-variant text-sm mt-2">Operator accounts only. Punters use the customer app.</p>
+
+        <div class="mt-8 space-y-4">
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Work email</label>
+            <input class="ph-input" value="kurt.carabott@sportsbook.io" />
+          </div>
+          <div>
+            <label class="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant block mb-1.5">Password</label>
+            <div class="relative"><input type="password" class="ph-input pr-10" value="••••••••••••" /><span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant cursor-pointer text-[18px]">visibility</span></div>
+          </div>
+          <div class="flex items-center justify-between text-xs">
+            <label class="flex items-center gap-2"><input type="checkbox" checked class="rounded border-outline-variant text-primary focus:ring-primary"/>Remember this device</label>
+            <a href="#" class="font-semibold text-primary">Forgot password?</a>
+          </div>
+          <a href="a-auth.html#a02" class="block w-full text-center bg-primary text-white font-bold py-3 rounded-lg shadow-lg shadow-primary/25 hover:bg-primary-container transition-colors">Continue →</a>
+
+          <div class="relative py-2 text-center"><span class="relative z-10 bg-white px-3 text-[10px] font-bold uppercase tracking-widest text-outline">Or</span><div class="absolute inset-x-0 top-1/2 h-px bg-outline-variant/50"></div></div>
+
+          <button class="w-full py-2.5 rounded-lg border border-outline-variant/50 text-sm font-bold flex items-center justify-center gap-2 hover:bg-surface-container-low">
+            <span class="w-5 h-5 rounded bg-sky-600 text-white text-[10px] flex items-center justify-center font-bold">O</span>Continue with Okta SSO
+          </button>
+        </div>
+
+        <p class="text-[11px] text-on-surface-variant mt-8 text-center">Protected by MFA · Licensed jurisdictions only</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  A02  DASHBOARD                                              -->
+<!-- ============================================================ -->
+<div class="screen-label"><div><span class="eyebrow">Shell · 02</span><h2 class="font-headline font-extrabold text-2xl mt-1">A02 · Trading Dashboard</h2></div><div class="spec">Landing screen after login · cross-hub overview</div></div>
+<div id="a02" class="screen" data-screen-label="A02 Dashboard">
+  <div class="flex h-[920px]">
+    <!-- Sidebar (canonical shell) -->
+    <aside class="w-[240px] bg-sidebar flex flex-col py-6 px-3 shrink-0">
+      <div class="flex items-center gap-2 px-3 mb-6">
+        <div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined msym-fill text-white text-[20px]">casino</span></div>
+        <div><div class="font-headline font-bold text-white text-[15px] leading-none">Sportsbook Hub</div><div class="text-[9px] tracking-widest uppercase text-white/40 mt-1">Trading Suite</div></div>
+      </div>
+      <nav class="sidebar-nav flex-1 space-y-0.5">
+        <a href="a-auth.html#a02" class="active"><span class="material-symbols-outlined msym-fill text-[18px]">dashboard</span>Dashboard</a>
+        <div class="section">Idea → PRD</div>
+        <a href="b-prd.html#b01"><span class="material-symbols-outlined text-[18px]">lightbulb</span>Submit idea</a>
+        <a href="b-prd.html#b02"><span class="material-symbols-outlined text-[18px]">edit_note</span>PRD Builder</a>
+        <a href="b-prd.html#b03"><span class="material-symbols-outlined text-[18px]">assignment</span>Requests</a>
+        <a href="b-prd.html#b05"><span class="material-symbols-outlined text-[18px]">task_alt</span>Evaluation</a>
+        <div class="section">Delivery</div>
+        <a href="c-spec.html#c02"><span class="material-symbols-outlined text-[18px]">scoreboard</span>RICE</a>
+        <a href="d-plan.html#d01"><span class="material-symbols-outlined text-[18px]">inventory_2</span>Backlog</a>
+        <a href="d-plan.html#d03"><span class="material-symbols-outlined text-[18px]">calendar_month</span>Roadmap</a>
+        <a href="e-ship.html#e01"><span class="material-symbols-outlined text-[18px]">rocket_launch</span>Delivery</a>
+        <a href="e-ship.html#e04"><span class="material-symbols-outlined text-[18px]">monitoring</span>Metrics</a>
+        <div class="section">Admin</div>
+        <a href="z-meta.html#z01"><span class="material-symbols-outlined text-[18px]">smart_toy</span>LLM usage</a>
+      </nav>
+      <div class="mt-4 p-3 rounded-lg bg-white/5 border border-white/10 text-[11px] text-white/70"><div class="font-bold text-white mb-1">Kurt Carabott</div>Head of Sportsbook Product<div class="mt-1 text-white/50">acme-sportsbook · EU</div></div>
+    </aside>
+
+    <div class="flex-1 flex flex-col">
+      <header class="topnav h-14 flex items-center justify-between px-8 border-b border-outline-variant/40">
+        <div class="flex items-center gap-6">
+          <div class="relative"><span class="material-symbols-outlined absolute left-2.5 top-1.5 text-[16px] text-on-surface-variant">search</span><input class="ph-input pl-8 w-80" placeholder="Search events, markets, PRDs, punters…" /></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 text-[11px] font-bold text-rose-700 bg-rose-100 px-2.5 py-1 rounded-full"><span class="w-2 h-2 bg-rose-600 rounded-full animate-pulse"></span>LIVE · 1,284 markets</div>
+          <button class="relative w-9 h-9 rounded-lg hover:bg-surface-container-low flex items-center justify-center"><span class="material-symbols-outlined text-[20px] text-on-surface-variant">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span></button>
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-secondary"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 overflow-y-auto bg-surface">
+        <!-- Hero -->
+        <section class="relative overflow-hidden bg-gradient-to-br from-primary to-[#4f46e5] text-white px-8 py-10">
+          <div class="relative z-10 flex items-end justify-between">
+            <div>
+              <div class="eyebrow text-white/70">Workspace overview</div>
+              <h1 class="font-headline font-extrabold text-4xl tracking-tight mt-1">Good morning, Kurt</h1>
+              <p class="text-white/80 mt-2 max-w-xl text-sm leading-relaxed">Serie A &amp; Premier League are in play. 14 PRDs in pipeline, 3 awaiting your review. Cash Out proposal is cleared for RICE.</p>
+              <div class="flex gap-2 mt-4"><a href="b-prd.html#b01" class="bg-white text-primary px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]">add</span>Submit new idea</a><a href="b-prd.html#b05" class="bg-white/10 border border-white/20 text-white px-4 py-2 rounded-lg text-xs font-bold">Review PRDs (3)</a></div>
+            </div>
+            <div class="text-right text-[11px] text-white/70">
+              <div>Saturday · 18 Apr 2026 · 09:14</div>
+              <div class="mt-1">Matchday peak in <b class="text-white">5h 46m</b></div>
+            </div>
+          </div>
+          <div class="absolute -right-20 -top-20 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+        </section>
+
+        <div class="p-8 space-y-6">
+          <!-- KPI tiles -->
+          <section class="grid grid-cols-4 gap-4">
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Stakes today</div><div class="font-headline font-extrabold text-3xl mt-1">€4.82M</div><div class="flex items-center gap-1 text-[11px] text-emerald-700 mt-2"><span class="material-symbols-outlined text-[13px]">trending_up</span>+12% vs avg Sat</div></div>
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Active bets</div><div class="font-headline font-extrabold text-3xl mt-1">312k</div><div class="spec mt-2">48k in-play</div></div>
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">Gross margin</div><div class="font-headline font-extrabold text-3xl mt-1">7.2%</div><div class="spec mt-2">Target 6.8–8.5%</div></div>
+            <div class="bg-white border border-outline-variant/30 rounded-xl p-5"><div class="eyebrow">NGR · MTD</div><div class="font-headline font-extrabold text-3xl mt-1">€18.4M</div><div class="flex items-center gap-1 text-[11px] text-emerald-700 mt-2"><span class="material-symbols-outlined text-[13px]">trending_up</span>+9% vs plan</div></div>
+          </section>
+
+          <div class="grid grid-cols-3 gap-6">
+            <!-- Pipeline -->
+            <section class="col-span-2 bg-white border border-outline-variant/30 rounded-xl p-6">
+              <div class="flex items-center justify-between mb-5"><h3 class="font-headline font-bold text-lg">Product pipeline</h3><a href="d-plan.html#d01" class="text-[11px] font-bold text-primary">Open backlog →</a></div>
+              <!-- kanban-ish columns -->
+              <div class="grid grid-cols-5 gap-3">
+                <div><div class="flex items-center justify-between mb-2"><div class="eyebrow">Ideas</div><span class="text-[10px] font-mono text-on-surface-variant">7</span></div><div class="space-y-2"><a href="b-prd.html#b03" class="block p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 text-xs hover:border-primary/40"><span class="pill ph-pill-pending pill-sm">IDEA</span><div class="font-semibold mt-1">Same-game parlay builder</div></a><a href="b-prd.html#b03" class="block p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 text-xs hover:border-primary/40"><span class="pill ph-pill-pending pill-sm">IDEA</span><div class="font-semibold mt-1">Live stream overlay odds</div></a></div></div>
+                <div><div class="flex items-center justify-between mb-2"><div class="eyebrow">PRD</div><span class="text-[10px] font-mono text-on-surface-variant">4</span></div><div class="space-y-2"><a href="b-prd.html#b02" class="block p-2.5 rounded-lg bg-white border border-primary/30 text-xs ring-2 ring-primary/10"><span class="pill ph-pill-primary pill-sm">PRD v3</span><div class="font-semibold mt-1">Cash Out</div><div class="spec mt-0.5">Trading · assigned RK</div></a><a href="b-prd.html#b02" class="block p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 text-xs"><span class="pill ph-pill-primary pill-sm">PRD</span><div class="font-semibold mt-1">Bet Builder 2.0</div></a></div></div>
+                <div><div class="flex items-center justify-between mb-2"><div class="eyebrow">Eval</div><span class="text-[10px] font-mono text-on-surface-variant">3</span></div><div class="space-y-2"><a href="b-prd.html#b05" class="block p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 text-xs"><span class="pill ph-pill-review pill-sm">SCORING</span><div class="font-semibold mt-1">In-play stats panel</div></a></div></div>
+                <div><div class="flex items-center justify-between mb-2"><div class="eyebrow">In dev</div><span class="text-[10px] font-mono text-on-surface-variant">5</span></div><div class="space-y-2"><a href="e-ship.html#e01" class="block p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 text-xs"><span class="pill ph-pill-revised pill-sm">SPRINT 24</span><div class="font-semibold mt-1">Responsible play limits</div></a></div></div>
+                <div><div class="flex items-center justify-between mb-2"><div class="eyebrow">UAT/release</div><span class="text-[10px] font-mono text-on-surface-variant">2</span></div><div class="space-y-2"><a href="e-ship.html#e02" class="block p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 text-xs"><span class="pill ph-pill-approved pill-sm">UAT</span><div class="font-semibold mt-1">Multi-currency wallet</div></a><a href="e-ship.html#e03" class="block p-2.5 rounded-lg bg-surface-container-low border border-outline-variant/30 text-xs"><span class="pill ph-pill-approved pill-sm">RELEASING</span><div class="font-semibold mt-1">KYC Tier-2 flow</div></a></div></div>
+              </div>
+            </section>
+
+            <!-- Today's top markets -->
+            <section class="bg-white border border-outline-variant/30 rounded-xl p-6">
+              <div class="flex items-center justify-between mb-4"><h3 class="font-headline font-bold text-lg">Top markets · live</h3><span class="pill ph-pill-live">Live</span></div>
+              <ul class="divide-y divide-outline-variant/40 text-sm">
+                <li class="py-3"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="text-[10px] font-bold text-rose-700 bg-rose-100 px-1.5 py-0.5 rounded">67'</span><div><div class="font-semibold">Arsenal vs Chelsea</div><div class="spec">Premier League · 1X2</div></div></div><div class="flex gap-1"><span class="odds up">1.85</span><span class="odds">3.20</span><span class="odds down">4.10</span></div></div></li>
+                <li class="py-3"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="text-[10px] font-bold text-rose-700 bg-rose-100 px-1.5 py-0.5 rounded">34'</span><div><div class="font-semibold">Inter vs Milan</div><div class="spec">Serie A · BTTS</div></div></div><div class="flex gap-1"><span class="odds up">1.72</span><span class="odds down">2.05</span></div></div></li>
+                <li class="py-3"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="text-[10px] font-bold text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">20:45</span><div><div class="font-semibold">Real Madrid vs Barça</div><div class="spec">La Liga · Over 2.5</div></div></div><div class="flex gap-1"><span class="odds">1.65</span><span class="odds">2.20</span></div></div></li>
+                <li class="py-3"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="text-[10px] font-bold text-on-surface-variant bg-surface-container px-1.5 py-0.5 rounded">21:00</span><div><div class="font-semibold">Lakers vs Celtics</div><div class="spec">NBA · Handicap −3.5</div></div></div><div class="flex gap-1"><span class="odds up">1.90</span><span class="odds">1.90</span></div></div></li>
+              </ul>
+              <a href="e-ship.html#e04" class="mt-4 block text-[11px] font-bold text-primary">View full event board →</a>
+            </section>
+          </div>
+
+          <!-- Bottom row -->
+          <div class="grid grid-cols-3 gap-6">
+            <section class="bg-white border border-outline-variant/30 rounded-xl p-6 col-span-2">
+              <div class="flex items-center justify-between mb-5"><h3 class="font-headline font-bold text-lg">Handle vs margin · last 7 days</h3><div class="flex gap-4 text-[11px] font-medium text-on-surface-variant"><div class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-primary"></span>Handle</div><div class="flex items-center gap-1.5"><span class="w-3 h-0.5" style="background:#c3c0ff"></span>GGR</div><div class="flex items-center gap-1.5"><span class="w-3 h-2 bg-emerald-500/30 rounded-sm"></span>Margin %</div></div></div>
+              <div class="h-48 relative">
+                <svg viewBox="0 0 600 180" class="w-full h-full" preserveAspectRatio="none">
+                  <g stroke="#e0e3e5"><line x1="0" y1="35" x2="600" y2="35"/><line x1="0" y1="75" x2="600" y2="75"/><line x1="0" y1="115" x2="600" y2="115"/><line x1="0" y1="155" x2="600" y2="155"/></g>
+                  <polyline points="0,120 85,95 170,110 255,70 340,80 425,55 510,65 600,40" fill="none" stroke="#3525cd" stroke-width="2.5"/>
+                  <polyline points="0,140 85,125 170,130 255,100 340,105 425,85 510,90 600,70" fill="none" stroke="#c3c0ff" stroke-width="2"/>
+                  <g fill="rgba(4,120,87,.2)"><rect x="30" y="150" width="40" height="25"/><rect x="115" y="148" width="40" height="27"/><rect x="200" y="145" width="40" height="30"/><rect x="285" y="140" width="40" height="35"/><rect x="370" y="148" width="40" height="27"/><rect x="455" y="142" width="40" height="33"/><rect x="540" y="138" width="40" height="37"/></g>
+                </svg>
+              </div>
+              <div class="flex justify-between mt-2 text-[10px] font-bold tracking-widest uppercase text-on-surface-variant"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Today</span></div>
+            </section>
+            <section class="bg-white border border-outline-variant/30 rounded-xl p-6">
+              <div class="flex items-center justify-between mb-4"><h3 class="font-headline font-bold text-lg">Risk alerts</h3><a href="#" class="text-[11px] font-bold text-primary">View all</a></div>
+              <ul class="space-y-3">
+                <li class="flex gap-3"><div class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[18px]">warning</span></div><div class="text-xs"><div class="font-bold">Liability spike · Arsenal to win</div><div class="spec mt-0.5">€214k · 6× avg · auto-suspended</div></div></li>
+                <li class="flex gap-3"><div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[18px]">speed</span></div><div class="text-xs"><div class="font-bold">Arb pattern · punter #AB-9241</div><div class="spec mt-0.5">Flagged for trader review</div></div></li>
+                <li class="flex gap-3"><div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-800 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[18px]">sync_problem</span></div><div class="text-xs"><div class="font-bold">Feed latency · Sportradar NBA</div><div class="spec mt-0.5">+380ms · degraded, not down</div></div></li>
+              </ul>
+            </section>
+          </div>
+        </div>
+
+        <!-- Screen-to-screen flow footer -->
+        <div class="border-t border-outline-variant/40 bg-surface-container-low px-8 py-4 flex items-center justify-between text-[11px] font-semibold">
+          <a href="a-auth.html#a01" class="text-on-surface-variant hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">arrow_back</span>A01 · Login</a>
+          <span class="text-outline">A02 · Dashboard</span>
+          <a href="b-prd.html#b01" class="text-primary flex items-center gap-1">B01 · Submit idea<span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  B01  SUBMIT IDEA                                            -->
+<!-- ============================================================ -->
+
+<script>
+// Scrollspy for the floating TOC
+(function(){
+  const links = document.querySelectorAll('nav.toc a');
+  const map = new Map();
+  links.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) map.set(el, a);
+  });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if (e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a = map.get(e.target);
+        if (a) a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+  map.forEach((_,el)=>io.observe(el));
+})();
+</script>
+</body>
+</html>
