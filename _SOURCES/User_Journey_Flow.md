@@ -529,3 +529,24 @@ To produce consistent output from Claude Design and any other generator, all scr
 ---
 
 *End of document. For the screen files this document references, see `/screens/`. For the older specifications this document supersedes for journey questions, see `Product_Hub_Gap_Specifications.md` (feature-level detail still relevant) and `Stitch_Prompts_Product_Hub_Backoffice.md` (now stale for B-flow intake; check `/screens/B01.html` instead).*
+
+---
+
+## 12. Build-ready specifications (added 2026-04-20)
+
+Every open loop in §9.2 is now resolved in implementation-grade detail. See `build-specs/`:
+
+- `build-specs/00_README.md` — Master index + reading order
+- `build-specs/01_Algorithms.md` — Submission Score, Bug Severity, RICE Consensus, Transformation Velocity (closes OL-5, OL-B3, OL-B6)
+- `build-specs/02_Bug_Pipeline_Specification.md` — Full Stage B-Bug pipeline (closes OL-B2, OL-B4, OL-B7)
+- `build-specs/03_Brief_Lifecycle_Policy.md` — Lock semantics, supersession UX, affordance (closes OL-B1, OL-B8)
+- `build-specs/04_Database_Schema.sql` — Postgres 16 DDL
+- `build-specs/05_API_and_Events.md` — REST contract + event bus schemas
+- `build-specs/06_RBAC_Security_Observability.md` — Role × action, threat model, telemetry
+- `build-specs/07_Deployment_Testing_Phasing.md` — Infra, phasing, test strategy
+
+Sibling doc `Component_Data_Architecture.md` covers every component's data provenance across 20 screens.
+
+Case study at `/sportsbook-hub-case-study/` — worked example of this journey applied to a Cash Out PRD for a sportsbook.
+
+§9.2 remains authoritative for *decision provenance*; the build-specs are authoritative for *implementation*.
